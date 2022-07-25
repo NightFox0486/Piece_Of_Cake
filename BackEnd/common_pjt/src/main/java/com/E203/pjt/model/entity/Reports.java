@@ -24,6 +24,8 @@ public class Reports {
     @Column(name = "report_content", columnDefinition = "TEXT", nullable = true)
     private String reportContent;
 
+    @ManyToOne(targetEntity = CrimeCategory.class)
+    @JoinColumn(name = "crime_code", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     @Column(name = "crime_code", length = 3, nullable = false, unique = true)
     private String crimeCode;
 
