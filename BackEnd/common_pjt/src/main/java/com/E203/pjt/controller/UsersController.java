@@ -29,7 +29,7 @@ public class UsersController {
   }
 
   @GetMapping(value="/users")
-  public void getAllUsers(@RequestParam Integer userSeq) {
+  public void getAllUsers() {
     List<Users> userList = usersService.getAllUsers();
     for (Users user : userList) {
       System.out.println(user.getUserSeq() + " : " + user.getUserNickname());
