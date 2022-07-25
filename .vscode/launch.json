@@ -1,0 +1,21 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch CommonPjtApplication",
+      "request": "launch",
+      "mainClass": "com.E203.pjt.CommonPjtApplication",
+      "projectName": "common_pjt"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-CommonPjtApplication<common_pjt>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.common.pjt.common_pjt.CommonPjtApplication",
+      "projectName": "common_pjt",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
