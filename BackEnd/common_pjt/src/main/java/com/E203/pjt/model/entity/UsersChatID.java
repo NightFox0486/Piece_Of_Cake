@@ -1,22 +1,25 @@
-package com.E203.pjt.model.entity;
+// 예제임
 
-import lombok.*;
 
-import javax.persistence.*;
-import java.io.Serializable;
+// package com.E203.pjt.model.entity;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Embeddable
-public class UsersChatID implements Serializable {
+// import lombok.*;
 
-    @Column(name = "chat_seq")
-    private Integer chatSeq;
+// import javax.persistence.*;
+// import java.io.Serializable;
 
-    @Column(name = "user_seq")
-    private Integer userSeq;
+// // @Data
+// // @NoArgsConstructor
+// // @AllArgsConstructor
+// @Embeddable
+// public class UsersChatID implements Serializable {
 
-    @Column(name="party_seq")
-    private Integer partySeq;
-}
+//     @Column(name = "chat_seq")
+//     private Integer chatSeq;
+
+//     @Column(name = "user_seq")
+//     private Integer userSeq;
+
+//     @Column(name="party_seq")
+//     private Integer partySeq;
+// }
