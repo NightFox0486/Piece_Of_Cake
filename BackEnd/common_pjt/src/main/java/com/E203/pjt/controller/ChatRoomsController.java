@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ChatRoomsController {
@@ -27,6 +28,12 @@ public class ChatRoomsController {
         return chatRoomsList;
     }
 
+    @GetMapping(value = "/chat-rooms/{chatSeq}")
+    public Optional<ChatRooms> detailChatRooms(@PathVariable int chatSeq){
+        System.out.println(chatSeq);
+        return chatRoomsService.detailChatRooms(chatSeq);
+    }
+
     @PostMapping(value = "/chat-rooms")
     public ChatRooms createChatRooms(ChatRooms chatRoom) {
         System.out.println(chatRoom);
@@ -36,6 +43,7 @@ public class ChatRoomsController {
 
     @DeleteMapping(value = "/chat-rooms/{chatSeq}")
     public void deleteChatRooms(@PathVariable Integer chatSeq){
+        chatRoomsService.deleteChatRooms(chatSeq);
         System.out.println(chatSeq);
     }
 }
