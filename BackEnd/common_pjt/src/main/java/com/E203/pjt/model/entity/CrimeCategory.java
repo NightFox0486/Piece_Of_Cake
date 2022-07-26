@@ -14,7 +14,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "crime_category")
 public class CrimeCategory {
-
     @Id
     @Column(name = "crime_code", length = 3, nullable = false)
     private String crimeCode;

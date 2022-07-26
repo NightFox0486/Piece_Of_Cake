@@ -2,18 +2,23 @@ package com.E203.pjt.model.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users_chat")
-public class UsersChat {
+public class UsersChat implements Serializable{
 
-    @EmbeddedId
-    private UsersChatID usersChatID;
+    // @EmbeddedId
+    // private UsersChatID usersChatID;
 
+    @Id
     @ManyToOne(targetEntity = ChatRooms.class)
     @JoinColumn(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     @MapsId("chatSeq")
