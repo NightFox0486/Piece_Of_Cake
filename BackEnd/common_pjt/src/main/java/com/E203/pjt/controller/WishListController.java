@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +20,8 @@ public class WishListController {
 
     private final UsersRepository usersRepository;
     private final WishListRepository wishListRepository;
+
+
 
     @GetMapping(value = "/wish")
     public List<WishList> listWishList() {
@@ -31,6 +36,7 @@ public class WishListController {
     @PostMapping(value = "/wish/{party_seq}")
     public void insertWishList(@PathVariable("party_seq") int partySeq) {
         int userSeq = 1;
+        WishList wishList = new WishList();
 
         System.out.println("[WishListController] createWishList() called");
     }
