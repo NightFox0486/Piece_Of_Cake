@@ -20,7 +20,6 @@ class CommonPjtApplicationTests {
 	EntityManager em = emf.createEntityManager();
 
 
-
 	@Test
 	@Transactional
 	public void testEmbeddable() {
@@ -29,7 +28,7 @@ class CommonPjtApplicationTests {
 		wishListID.setPartySeq(1);
 
 		WishList wishList = new WishList();
-		wishList.setWishListID(wishListID);
+		//wishList.setWishListID(wishListID);
 
 		em.persist(wishList);
 		em.flush();
