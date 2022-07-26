@@ -1,7 +1,7 @@
 package com.E203.pjt.model.entity;
 
 import lombok.*;
-import org.springframework.data.relational.core.sql.In;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,17 +11,18 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "wish_list")
-public class WishList{
-    @EmbeddedId
-    private WishListID wishListID;
+@Transactional(readOnly = true)
+public class WishList implements Serializable {
 
-    @ManyToOne(targetEntity = Users.class)
-    @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
+    @EmbeddedId
+    private WishListPK wishListPK;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userSeq")
     private Users user;
 
-    @ManyToOne(targetEntity = Parties.class)
-    @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("partySeq")
     private Parties party;
+
 }

@@ -3,21 +3,19 @@ package com.E203.pjt.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class WishListID implements Serializable {
-    @Column(name = "user_seq")
+public class WishListPK implements Serializable {
+
+    @Column(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     private Integer userSeq;
 
-    @Column(name = "party_seq")
+    @Column(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     private Integer partySeq;
 }
