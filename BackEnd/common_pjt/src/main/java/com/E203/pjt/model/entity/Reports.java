@@ -15,9 +15,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "reports")
 public class Reports {
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_seq", nullable = false)
     private Integer reportSeq;
 
@@ -25,8 +24,8 @@ public class Reports {
     private String reportContent;
 
     @ManyToOne(targetEntity = CrimeCategory.class)
-    @JoinColumn(name = "crime_code", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-    @Column(name = "crime_code", length = 3, nullable = false, unique = true)
+    @JoinColumn(name = "crime_code", nullable = false, columnDefinition = "VARCHAR(3)")//, columnDefinition = "INT UNSIGNED UNIQUE")
+    //@Column(name = "crime_code", length = 3, nullable = false, unique = true)
     private String crimeCode;
 
     @Column(name = "reporting_user_seq", nullable = false)
