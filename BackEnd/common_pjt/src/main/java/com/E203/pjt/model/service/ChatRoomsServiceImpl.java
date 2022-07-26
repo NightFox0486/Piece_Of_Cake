@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChatRoomsServiceImpl implements ChatRoomsService{
@@ -16,6 +17,11 @@ public class ChatRoomsServiceImpl implements ChatRoomsService{
     @Override
     public ChatRooms createChatRooms(ChatRooms chatRooms) {
         return chatRoomsRepository.save(chatRooms);
+    }
+
+    @Override
+    public Optional<ChatRooms> detailChatRooms(int chatSeq) {
+        return chatRoomsRepository.findById(chatSeq);
     }
 
     @Override

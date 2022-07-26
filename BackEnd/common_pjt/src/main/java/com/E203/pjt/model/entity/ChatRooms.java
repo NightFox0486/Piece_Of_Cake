@@ -19,12 +19,11 @@ import java.time.LocalDateTime;
 public class ChatRooms {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "chat_seq", unique = true)
-    @NotNull
+    @Column(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer chatSeq;
 
-    @Column(name = "party_seq", unique = true)
-    @NotNull
+    @ManyToOne(targetEntity = Parties.class)
+    @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer partySeq;
 
     @Column(name = "host_seq")
@@ -43,8 +42,5 @@ public class ChatRooms {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "chat_log_seq", unique = true)
-    @NotNull
-    private Integer chatLogSeq;
 
 }
