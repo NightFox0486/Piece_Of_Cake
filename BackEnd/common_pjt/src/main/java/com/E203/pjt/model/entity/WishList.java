@@ -17,13 +17,15 @@ public class WishList implements Serializable {
     @EmbeddedId
     private WishListPK wishListPK;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+//    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     @MapsId("userSeq")
     private User user;
 //    private Integer userSeq;
 
-    @ManyToOne(targetEntity = Party.class, fetch = FetchType.LAZY)
+//    @ManyToOne(targetEntity = Party.class, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     @MapsId("partySeq")
     private Party party;
