@@ -6,32 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.E203.pjt.model.entity.Parties;
-import com.E203.pjt.model.service.PartiesService;
+import com.E203.pjt.model.entity.Party;
+import com.E203.pjt.model.service.PartyService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-public class PartiesController {
+public class PartyController {
   @Autowired
-  private final PartiesService partiesService;
+  private final PartyService partyService;
 
-  public PartiesController(PartiesService usersService) {
-    this.partiesService = usersService;
+  public PartyController(PartyService partyService) {
+    this.partyService = partyService;
   }
 
   @PostMapping(value = "/parties")
-  public void createUsers(Parties parties) {
-    System.out.println(parties);
-    System.out.println(partiesService.createParties(parties));
+  public void createUsers(Party party) {
+    System.out.println(party);
+    System.out.println(partyService.createParty(party));
   }
 
   @GetMapping(value="/parties")
   public void getAllUsers(@RequestParam Integer partySeq) {
-    List<Parties> partyList = partiesService.getAllParties();
-    for (Parties party : partyList) {
+    List<Party> partyList = partyService.getAllParties();
+    for (Party party : partyList) {
       System.out.println(party.getPartySeq() + " : " + party.getPartyCode());
     }
   }

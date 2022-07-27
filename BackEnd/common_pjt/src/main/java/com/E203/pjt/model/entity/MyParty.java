@@ -18,11 +18,11 @@ import javax.persistence.*;
 public class MyParty implements Serializable{
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ManyToOne(targetEntity = Parties.class)
+    @ManyToOne(targetEntity = Party.class)
     @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer partySeq;
 
-    @ManyToOne(targetEntity = Users.class)
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer userSeq;
 
