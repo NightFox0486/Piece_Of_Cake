@@ -13,9 +13,7 @@ import java.io.Serializable;
 @Embeddable
 public class WishListPK implements Serializable {
 
-    @Column(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     private Integer userSeq;
 
-    @Column(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     private Integer partySeq;
 }

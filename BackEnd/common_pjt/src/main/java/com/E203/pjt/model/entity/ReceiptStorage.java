@@ -38,7 +38,7 @@ public class ReceiptStorage {
   @Column(name = "file_reg_dt", columnDefinition = "DATETIME")
   private LocalDateTime fileRegDt;
 
-  @ManyToOne(targetEntity = Parties.class)
+  @ManyToOne(targetEntity = Party.class)
   @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
   private Integer partySeq;
 }
