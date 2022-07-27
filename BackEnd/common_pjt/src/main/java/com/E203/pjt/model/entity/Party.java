@@ -2,33 +2,24 @@ package com.E203.pjt.model.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
+//@Getter
+//@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "parties")
-public class Parties {
+public class Party {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
   private Integer partySeq;
 
-  @ManyToOne(targetEntity = Users.class)
+  @ManyToOne(targetEntity = User.class)
   @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
   // @Column(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
   private Integer userSeq;

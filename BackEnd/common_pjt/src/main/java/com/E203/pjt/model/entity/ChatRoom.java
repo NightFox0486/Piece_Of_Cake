@@ -1,6 +1,5 @@
 package com.E203.pjt.model.entity;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +15,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "chat_rooms")
-public class ChatRooms {
+public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer chatSeq;
 
-    @ManyToOne(targetEntity = Parties.class)
+    @ManyToOne(targetEntity = Party.class)
     @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer partySeq;
 
