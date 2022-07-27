@@ -23,13 +23,13 @@ public class PartyController {
   }
 
   @PostMapping(value = "/parties")
-  public void createUsers(Party party) {
+  public void createParty(Party party) {
     System.out.println(party);
     System.out.println(partyService.createParty(party));
   }
 
   @GetMapping(value="/parties")
-  public void getAllUsers(@RequestParam Integer partySeq) {
+  public void getAllParties(@RequestParam Integer partySeq) {
     List<Party> partyList = partyService.getAllParties();
     for (Party party : partyList) {
       System.out.println(party.getPartySeq() + " : " + party.getPartyCode());

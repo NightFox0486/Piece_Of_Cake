@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-//@Getter
-//@Setter
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "parties")
@@ -33,11 +33,12 @@ public class Party {
   @Column(name = "party_content", columnDefinition = "TEXT", nullable = false)
   private String partyContent;
 
-  @Column(name = "party_reg_dt", length = 45, columnDefinition = "DATETIME", nullable = false)
+  @CreationTimestamp
+  @Column(name = "party_reg_dt", columnDefinition = "DATETIME")
   private LocalDateTime partyRegDt;
 
   @Column(name = "party_rdv_lat", length = 20)
-  private Integer partyRdvLat;
+  private String partyRdvLat;
 
   @Column(name = "party_rdv_lng", length = 20)
   private String partyRdvLng;
@@ -48,6 +49,7 @@ public class Party {
   @Column(name = "party_member_num_current", nullable = false)
   private Integer partyMemberNumCurrent;
 
+  @CreationTimestamp
   @Column(name = "party_rdv_dt", columnDefinition = "DATETIME")
   private LocalDateTime partyRdvDt;
 
