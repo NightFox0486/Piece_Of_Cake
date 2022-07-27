@@ -21,7 +21,7 @@ public class ChatLog {
     @Column(name = "chat_log_seq", unique = true, nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer chatLogSeq;
 
-    @ManyToOne(targetEntity = ChatRooms.class)
+    @ManyToOne(targetEntity = ChatRoom.class)
     @JoinColumn(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer chatSeq;
 

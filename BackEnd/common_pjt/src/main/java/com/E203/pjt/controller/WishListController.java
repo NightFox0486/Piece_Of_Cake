@@ -1,20 +1,19 @@
 package com.E203.pjt.controller;
 
-import com.E203.pjt.model.entity.Parties;
-import com.E203.pjt.model.entity.Users;
+import com.E203.pjt.model.entity.Party;
+import com.E203.pjt.model.entity.User;
 import com.E203.pjt.model.entity.WishList;
 import com.E203.pjt.model.entity.WishListPK;
-import com.E203.pjt.repository.PartiesRepository;
-import com.E203.pjt.repository.UsersRepository;
+import com.E203.pjt.model.service.PartyService;
+import com.E203.pjt.model.service.UserService;
+import com.E203.pjt.repository.PartyRepository;
+import com.E203.pjt.repository.UserRepository;
 import com.E203.pjt.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +22,11 @@ import java.util.Optional;
 @Transactional(readOnly = false)
 public class WishListController {
 
-    private final UsersRepository usersRepository;
-    private final PartiesRepository partiesRepository;
+
+    private final UserService userService;
+    private final PartyService partyService;
+    private final UserRepository userRepository;
+    private final PartyRepository partyRepository;
     private final WishListRepository wishListRepository;
 
 //    @PersistenceContext
@@ -43,23 +45,24 @@ public class WishListController {
         return list;
     }
 
-    @PostMapping(value = "/wish/{party_seq}")
+    @PostMapping(value = "/wish")
     @ResponseBody
-    public WishList insertWishList(@PathVariable("party_seq") Integer partySeq) {
-        System.out.println("[WishListController] createWishList() called");
+    public WishList insertWishList(@RequestParam Integer partySeq) {
+        System.out.println("[WishListController] insertWishList() called");
         Integer userSeq = 1;
-        Optional<Users> user = usersRepository.findById(userSeq);
-        Optional<Parties> party = partiesRepository.findById(partySeq);
-
-        WishListPK pk = new WishListPK(userSeq, partySeq);
+        User user = userRepository.findById(userSeq).get();
+        Party party = partyRepository.findById(partySeq).get();
+        System.out.println(user);
+        System.out.println(party);
         WishList wishList = new WishList();
-        wishList.setWishListPK(pk);
-        wishList.setUser(user.get());
-        wishList.setParty(party.get());
-        wishListRepository.save(wishList);
-//        em.persist(wishList);
-//        em.find(WishList.class, wishList);
-        System.out.println(wishList);
+//        List<Party> parties = partyService.getAllParties();
+//        for (Party p : parties) {
+//            System.out.println(p);
+//        }
+//        List<User> users = userService.getAllUsers();
+//        for (User u : users) {
+//            System.out.println(u);
+//        }
         return wishList;
     }
 

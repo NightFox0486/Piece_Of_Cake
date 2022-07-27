@@ -11,18 +11,22 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "wish_list")
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public class WishList implements Serializable {
 
     @EmbeddedId
     private WishListPK wishListPK;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     @MapsId("userSeq")
-    private Users user;
+    private User user;
+//    private Integer userSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Party.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     @MapsId("partySeq")
-    private Parties party;
+    private Party party;
+//    private Integer partySeq;
 
 }

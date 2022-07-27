@@ -1,7 +1,6 @@
 package com.E203.pjt.model.service;
 
 import com.E203.pjt.model.entity.ChatLog;
-import com.E203.pjt.model.entity.ChatRooms;
 
 import java.util.List;
 import java.util.Optional;
