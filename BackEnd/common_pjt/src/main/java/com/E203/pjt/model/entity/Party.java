@@ -23,10 +23,7 @@ public class Party {
   @JsonBackReference
   @ManyToOne(targetEntity = User.class)
   @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-//  @MapsId("userSeq")
   private User user;
-  // @Column(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
-//  private Integer userSeq;
 
   @Column(name = "party_code", length = 3, nullable = false)
   private String partyCode;

@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class WishListPK implements Serializable {
-    private Integer userSeq;
+public class MyPartyPK implements Serializable {
     private Integer partySeq;
+    private Integer userSeq;
 }

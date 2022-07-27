@@ -1,9 +1,6 @@
 package com.E203.pjt;
 
-import com.E203.pjt.model.entity.Party;
-import com.E203.pjt.model.entity.User;
-import com.E203.pjt.model.entity.WishList;
-import com.E203.pjt.model.entity.WishListPK;
+import com.E203.pjt.model.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -21,6 +18,19 @@ public class EMTest {
     @PersistenceContext
     EntityManager em;
 
+    @Test
+    void myPartyTest() {
+        MyPartyPK pk = new MyPartyPK(2, 1);
+        MyParty myParty = new MyParty();
+        myParty.setMyPartyPK(pk);
+        myParty.setParty(em.find(Party.class, 2));
+        myParty.setUser(em.find(User.class, 1));
+        myParty.setPartyListCode("host");
+        em.persist(myParty);
+        em.flush();
+        em.clear();
+    }
+
 //    @Test
 //    void wishListTest() {
 //        WishListPK pk = new WishListPK(1, 1);
@@ -36,43 +46,38 @@ public class EMTest {
     @Test
     void partyTest() {
         Party party = new Party();
-//        party.setUserSeq(3);
-        User u = em.find(User.class, 3);
+        User u = em.find(User.class, 2);
         em.persist(u);
         party.setUser(u);
-        party.setPartyCode("002");
-        party.setPartyTitle("wwww");
-        party.setPartyContent("wwww");
+        party.setPartyCode("001");
+        party.setPartyTitle("qqqq");
+        party.setPartyContent("qqqq");
         party.setPartyRegDt(LocalDateTime.now());
-        party.setPartyRdvLat("333");
-        party.setPartyRdvLng("333");
-        party.setPartyMemberNumTotal(3);
-        party.setPartyMemberNumCurrent(2);
+        party.setPartyRdvLat("222");
+        party.setPartyRdvLng("222");
+        party.setPartyMemberNumTotal(2);
+        party.setPartyMemberNumCurrent(1);
         party.setPartyRdvDt(LocalDateTime.now());
-        party.setPartyAddr("wwww");
-        party.setPartyAddrDetail("wwww");
+        party.setPartyAddr("qqqq");
+        party.setPartyAddrDetail("qqqq");
         party.setPartyStatus(0);
-        party.setItemLink("wwww");
-        party.setTotalAmount("3333");
+        party.setItemLink("qqqq");
+        party.setTotalAmount("2222");
         em.persist(party);
-//        em.persist(party);
-//        System.out.println(em.find(User.class, 3));
-//        System.out.println(party.getUser().getUserNickname());
-//        System.out.println(party);
     }
 
     @Test
     void userTest() {
         User user = new User();
-        user.setUserEmail("zcxv@zxcv.com");
-        user.setUserPhone("010-9999-9999");
-        user.setUserNickname("zxcv");
-        user.setUserPassword("zxcv");
-        user.setUserImage("zxcv");
-        user.setUserRating(99);
-        user.setUserLat("999");
-        user.setUserLng("999");
-        user.setUserAccount("999999");
+        user.setUserEmail("qwer@qwer.com");
+        user.setUserPhone("010-4321-4321");
+        user.setUserNickname("qwer");
+        user.setUserPassword("qwer");
+        user.setUserImage("qwer");
+        user.setUserRating(43);
+        user.setUserLat("432");
+        user.setUserLng("432");
+        user.setUserAccount("4321");
         em.persist(user);
         em.flush();
         em.clear();
