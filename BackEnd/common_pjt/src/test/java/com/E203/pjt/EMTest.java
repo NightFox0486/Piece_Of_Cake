@@ -18,6 +18,7 @@ public class EMTest {
     @PersistenceContext
     EntityManager em;
 
+<<<<<<< HEAD
     @Test
     void myPartyTest() {
         MyPartyPK pk = new MyPartyPK(2, 1);
@@ -59,10 +60,24 @@ public class EMTest {
 
         em.persist(chatRoom);
     }
+=======
+//    @Test
+//    void wishListTest() {
+//        WishListPK pk = new WishListPK(1, 1);
+//        WishList wishList = new WishList();
+//        wishList.setWishListPK(pk);
+//        wishList.setUser(em.find(User.class, 1));
+//        wishList.setParty(em.find(Party.class, 1));
+//        em.persist(wishList);
+//        em.flush();
+//        em.clear();
+//    }
+>>>>>>> 58faf35 ([feat] wishlist crud & test)
 
     @Test
     void partyTest() {
         Party party = new Party();
+<<<<<<< HEAD
         User u = em.find(User.class, 2);
         em.persist(u);
         party.setUser(u);
@@ -81,11 +96,37 @@ public class EMTest {
         party.setItemLink("ee");
         party.setTotalAmount("12341234");
         em.persist(party);
+=======
+//        party.setUserSeq(3);
+        User u = em.find(User.class, 3);
+        em.persist(u);
+        party.setUser(u);
+        party.setPartyCode("002");
+        party.setPartyTitle("wwww");
+        party.setPartyContent("wwww");
+        party.setPartyRegDt(LocalDateTime.now());
+        party.setPartyRdvLat("333");
+        party.setPartyRdvLng("333");
+        party.setPartyMemberNumTotal(3);
+        party.setPartyMemberNumCurrent(2);
+        party.setPartyRdvDt(LocalDateTime.now());
+        party.setPartyAddr("wwww");
+        party.setPartyAddrDetail("wwww");
+        party.setPartyStatus(0);
+        party.setItemLink("wwww");
+        party.setTotalAmount("3333");
+        em.persist(party);
+//        em.persist(party);
+//        System.out.println(em.find(User.class, 3));
+//        System.out.println(party.getUser().getUserNickname());
+//        System.out.println(party);
+>>>>>>> 58faf35 ([feat] wishlist crud & test)
     }
 
     @Test
     void userTest() {
         User user = new User();
+<<<<<<< HEAD
         user.setUserEmail("qqqq@qqqq.com");
         user.setUserPhone("010-2222-2222");
         user.setUserNickname("qqqq");
@@ -95,10 +136,24 @@ public class EMTest {
         user.setUserLat("444");
         user.setUserLng("444");
         user.setUserAccount("44444");
+=======
+        user.setUserEmail("zcxv@zxcv.com");
+        user.setUserPhone("010-9999-9999");
+        user.setUserNickname("zxcv");
+        user.setUserPassword("zxcv");
+        user.setUserImage("zxcv");
+        user.setUserRating(99);
+        user.setUserLat("999");
+        user.setUserLng("999");
+        user.setUserAccount("999999");
+>>>>>>> 58faf35 ([feat] wishlist crud & test)
         em.persist(user);
         em.flush();
         em.clear();
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 58faf35 ([feat] wishlist crud & test)
 }
