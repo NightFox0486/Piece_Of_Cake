@@ -23,7 +23,7 @@ public class WishListServiceImpl implements WishListService{
     @Override
     @Transactional
     public WishList insertWishList(Integer partySeq) {
-        Integer userSeq = 3;
+        Integer userSeq = 2;
         User user = userRepository.findById(userSeq).get();
         Party party = partyRepository.findById(partySeq).get();
         WishList wishList = new WishList();
