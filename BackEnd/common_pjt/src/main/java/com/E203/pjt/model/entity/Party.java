@@ -22,7 +22,7 @@ public class Party {
 
   @JsonBackReference
   @ManyToOne(targetEntity = User.class)
-  @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
+  @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
   private User user;
 
   @Column(name = "party_code", length = 3, nullable = false)

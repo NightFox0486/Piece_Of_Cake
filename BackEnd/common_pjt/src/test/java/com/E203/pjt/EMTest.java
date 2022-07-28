@@ -46,38 +46,38 @@ public class EMTest {
     @Test
     void partyTest() {
         Party party = new Party();
-        User u = em.find(User.class, 2);
+        User u = em.find(User.class, 1);
         em.persist(u);
         party.setUser(u);
         party.setPartyCode("001");
-        party.setPartyTitle("qqqq");
-        party.setPartyContent("qqqq");
+        party.setPartyTitle("eee");
+        party.setPartyContent("eee");
         party.setPartyRegDt(LocalDateTime.now());
-        party.setPartyRdvLat("222");
-        party.setPartyRdvLng("222");
-        party.setPartyMemberNumTotal(2);
-        party.setPartyMemberNumCurrent(1);
+        party.setPartyRdvLat("44");
+        party.setPartyRdvLng("234");
+        party.setPartyMemberNumTotal(3);
+        party.setPartyMemberNumCurrent(2);
         party.setPartyRdvDt(LocalDateTime.now());
-        party.setPartyAddr("qqqq");
-        party.setPartyAddrDetail("qqqq");
+        party.setPartyAddr("ee");
+        party.setPartyAddrDetail("ee");
         party.setPartyStatus(0);
-        party.setItemLink("qqqq");
-        party.setTotalAmount("2222");
+        party.setItemLink("ee");
+        party.setTotalAmount("12341234");
         em.persist(party);
     }
 
     @Test
     void userTest() {
         User user = new User();
-        user.setUserEmail("qwer@qwer.com");
-        user.setUserPhone("010-4321-4321");
-        user.setUserNickname("qwer");
-        user.setUserPassword("qwer");
-        user.setUserImage("qwer");
-        user.setUserRating(43);
-        user.setUserLat("432");
-        user.setUserLng("432");
-        user.setUserAccount("4321");
+        user.setUserEmail("qqqq@qqqq.com");
+        user.setUserPhone("010-2222-2222");
+        user.setUserNickname("qqqq");
+        user.setUserPassword("qqqq");
+        user.setUserImage("qqqq");
+        user.setUserRating(44);
+        user.setUserLat("444");
+        user.setUserLng("444");
+        user.setUserAccount("44444");
         em.persist(user);
         em.flush();
         em.clear();
