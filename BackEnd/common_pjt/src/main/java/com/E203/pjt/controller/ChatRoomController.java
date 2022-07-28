@@ -30,7 +30,6 @@ public class ChatRoomController {
 
     @GetMapping(value = "/chat-rooms/{chatSeq}")
     public Optional<ChatRoom> detailChatRoom(@PathVariable int chatSeq){
-
         System.out.println(chatSeq);
         return chatRoomService.detailChatRoom(chatSeq);
     }
