@@ -85,19 +85,6 @@ public class EMTest {
 
     @Test
     void userTest() {
-        User user = new User();
-        user.setUserEmail("qqqq@qqqq.com");
-        user.setUserPhone("010-2222-2222");
-        user.setUserNickname("qqqq");
-        user.setUserPassword("qqqq");
-        user.setUserImage("qqqq");
-        user.setUserRating(44);
-        user.setUserLat("444");
-        user.setUserLng("444");
-        user.setUserAccount("44444");
-        em.persist(user);
-        em.flush();
-        em.clear();
     }
 
 
