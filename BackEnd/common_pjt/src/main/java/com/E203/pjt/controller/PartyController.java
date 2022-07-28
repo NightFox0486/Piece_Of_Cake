@@ -2,7 +2,7 @@ package com.E203.pjt.controller;
 
 import java.util.List;
 
-import com.E203.pjt.model.entity.User;
+import com.E203.pjt.model.entity.MyParty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +32,14 @@ public class PartyController {
       System.out.println(party.getPartySeq() + " : " + party.getPartyCode());
     }
     return partyList;
+  }
+
+  @GetMapping(value = "/parties/{userSeq}")
+  public List<MyParty> getMyPartyList(@PathVariable Integer userSeq) {
+    List<MyParty> myPartyList = partyService.getMyPartyList(userSeq);
+    for (MyParty mp : myPartyList) {
+      System.out.println(mp.getParty().getPartySeq()+": "+mp.getParty().getPartyTitle()+" / ");
+    }
+    return myPartyList;
   }
 }

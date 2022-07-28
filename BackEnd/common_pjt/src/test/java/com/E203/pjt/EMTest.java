@@ -63,7 +63,7 @@ public class EMTest {
     @Test
     void partyTest() {
         Party party = new Party();
-        User u = em.find(User.class, 2);
+        User u = em.find(User.class, 1);
         em.persist(u);
         party.setUser(u);
         party.setPartyCode("001");
