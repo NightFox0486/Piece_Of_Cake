@@ -38,7 +38,7 @@ public class ServiceTests {
         em.persist(myParty);
         em.flush();
         em.clear();
-        List<MyParty> myPartyList = partyService.getMyPartyList(user);
+        List<MyParty> myPartyList = partyService.getMyPartyList(user.getUserSeq());
         for (MyParty mp : myPartyList) {
             System.out.println(mp);
         }

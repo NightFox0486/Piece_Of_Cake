@@ -23,15 +23,15 @@ public class DataTests {
     void makeUsers() {
         for (int i=0; i<5; i++) {
             User user = new User();
-            user.setUserEmail(String.format("%d@%d.com", i*1000, i*1000));
-            user.setUserPhone(String.format("010-%d-%d", i*1000, i*1000));
-            user.setUserNickname(String.format("%d",i*1000));
-            user.setUserPassword(String.format("%d",i*1000));
-            user.setUserImage(String.format("%d",i*1000));
+            user.setUserEmail(String.format("%d000@%d000.com", i, i));
+            user.setUserPhone(String.format("010-%d000-%d000", i, i));
+            user.setUserNickname(String.format("%d000",i));
+            user.setUserPassword(String.format("%d000",i));
+            user.setUserImage(String.format("%d000",i));
             user.setUserRating(44);
             user.setUserLat(String.format("%d",i*111));
             user.setUserLng(String.format("%d",i*111));
-            user.setUserAccount(String.format("%d",i*10000));
+            user.setUserAccount(String.format("%d0000",i));
             em.persist(user);
             em.flush();
             em.clear();
