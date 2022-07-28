@@ -1,5 +1,7 @@
 package com.E203.pjt.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,10 +23,10 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer chatSeq;
-
+    @JsonBackReference
     @ManyToOne(targetEntity = Party.class)
     @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-    private Integer partySeq;
+    private Party party;
 
     @Column(name = "host_seq")
     private Integer hostSeq;
@@ -41,5 +44,7 @@ public class ChatRoom {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-
+    @JsonManagedReference
+    @OneToMany(mappedBy = "chatRoom", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    private List<ChatLog> chatLogList;
 }

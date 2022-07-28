@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "my_party")
-public class MyParty implements Serializable{
+public class MyParty implements Serializable {
     @EmbeddedId
     private MyPartyPK myPartyPK;
 
