@@ -1,5 +1,6 @@
 package com.E203.pjt.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,14 +17,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name = "chat_log")
 public class ChatLog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "chat_log_seq", unique = true, nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer chatLogSeq;
 
+    @JsonBackReference
     @ManyToOne(targetEntity = ChatRoom.class)
     @JoinColumn(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-    private Integer chatSeq;
+    private ChatRoom chatRoom;
 
     @Column(name = "user_nickname", length = 45)
     private String userNickname;
