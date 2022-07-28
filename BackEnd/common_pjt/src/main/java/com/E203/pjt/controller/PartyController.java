@@ -20,18 +20,26 @@ public class PartyController {
   }
 
   @PostMapping(value = "/parties")
-  public void createParty(@RequestBody Party party) {
+  public void creaetParty(Party party) {
     System.out.println(party);
     System.out.println(partyService.createParty(party));
   }
 
   @GetMapping(value="/parties")
-  public List<Party> getAllParties() {
+  public void getAllParties(@RequestParam Integer partySeq) {
     List<Party> partyList = partyService.getAllParties();
     for (Party party : partyList) {
       System.out.println(party.getPartySeq() + " : " + party.getPartyCode());
     }
-    return partyList;
+  }
+
+  @GetMapping(value = "/parties/{userSeq}")
+  public List<MyParty> getMyPartyList(@PathVariable Integer userSeq) {
+    List<MyParty> myPartyList = partyService.getMyPartyList(userSeq);
+    for (MyParty mp : myPartyList) {
+      System.out.println(mp.getParty().getPartySeq()+": "+mp.getParty().getPartyTitle()+" / ");
+    }
+    return myPartyList;
   }
 
   @GetMapping(value = "/parties/{userSeq}")
