@@ -13,10 +13,12 @@ public class ReportServiceImpl implements ReportService {
     private ReportRepository reportRepository;
 
     @Override
-    public Report createReports(Report report) {
+    public Report createReportUser(Report report) {
         return reportRepository.save(report);
     }
 
-
-
+    @Override
+    public Report createReportParty(Report report) {
+        return reportRepository.save(report);
+    }
 }
