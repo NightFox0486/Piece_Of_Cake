@@ -10,5 +10,10 @@ public interface PartyService {
   Party createParty(Party party);
   void deleteParty(Integer party_seq);
   List<Party> getAllParties();
-  List<MyParty> getMyPartyList(User user);
+  List<MyParty> getMyPartyList(Integer userSeq);
+  List<Party> getMyPartyHostList(Integer userSeq);
+  List<Party> getMyPartyGuestList(Integer userSeq);
+  List<Party> getMyPartyOngoingList(Integer userSeq);
+  List<Party> getMyPartyDoneList(Integer userSeq);
+
 }
