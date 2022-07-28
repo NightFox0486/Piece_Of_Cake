@@ -19,11 +19,12 @@ public class UserController {
   }
 
   @GetMapping(value="/users")
-  public void getAllUsers() {
+  public List<User> getAllUsers() {
     List<User> userList = userService.getAllUsers();
     for (User user : userList) {
       System.out.println(user.getUserSeq() + " : " + user.getUserNickname());
     }
+    return userList;
   }
 
   @PostMapping(value = "/users")

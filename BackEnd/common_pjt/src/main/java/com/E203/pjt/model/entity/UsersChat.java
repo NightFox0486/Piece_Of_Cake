@@ -7,30 +7,26 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-//@Data
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users_chat")
-public class UsersChat implements Serializable{
+public class UsersChat{
 
-    // @EmbeddedId
-    // private UsersChatID usersChatID;
+    @EmbeddedId
+    private UsersChatPK usersChatPK;
 
-    @Id
     @ManyToOne(targetEntity = ChatRoom.class)
     @JoinColumn(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-    //@MapsId("chatSeq")
+    @MapsId("chatSeq")
     private Integer chatSeq;
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-    //@MapsId("userSeq")
     private Integer userSeq;
 
     @ManyToOne(targetEntity = Party.class)
     @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-    //@MapsId("partySeq")
     private Integer partySeq;
+
 }
