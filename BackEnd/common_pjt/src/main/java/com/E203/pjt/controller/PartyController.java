@@ -42,12 +42,4 @@ public class PartyController {
     return myPartyList;
   }
 
-  @GetMapping(value = "/parties/{userSeq}")
-  public List<MyParty> getMyPartyList(@PathVariable Integer userSeq) {
-    List<MyParty> myPartyList = partyService.getMyPartyList(userSeq);
-    for (MyParty mp : myPartyList) {
-      System.out.println(mp.getParty().getPartySeq()+": "+mp.getParty().getPartyTitle()+" / ");
-    }
-    return myPartyList;
-  }
 }
