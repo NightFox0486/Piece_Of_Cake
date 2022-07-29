@@ -1,4 +1,4 @@
-package com.E203.pjt.model.service;
+package com.E203.pjt.service.impl;
 
 import com.E203.pjt.model.entity.Party;
 import com.E203.pjt.model.entity.User;
@@ -7,18 +7,18 @@ import com.E203.pjt.model.entity.WishListPK;
 import com.E203.pjt.repository.PartyRepository;
 import com.E203.pjt.repository.UserRepository;
 import com.E203.pjt.repository.WishListRepository;
+import com.E203.pjt.service.WishListService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class WishListServiceImpl implements WishListService{
-    @Autowired
-    private WishListRepository wishListRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PartyRepository partyRepository;
+@RequiredArgsConstructor
+public class WishListServiceImpl implements WishListService {
+    private final WishListRepository wishListRepository;
+    private final UserRepository userRepository;
+    private final PartyRepository partyRepository;
 
     @Override
     @Transactional

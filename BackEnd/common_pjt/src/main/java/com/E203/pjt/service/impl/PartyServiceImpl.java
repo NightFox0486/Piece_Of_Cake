@@ -1,29 +1,29 @@
-package com.E203.pjt.model.service;
+package com.E203.pjt.service.impl;
 
 import java.util.List;
 
 import com.E203.pjt.model.entity.MyParty;
-import com.E203.pjt.model.entity.User;
+import com.E203.pjt.repository.PhotoRepository;
 import com.E203.pjt.repository.MyPartyRepository;
 import com.E203.pjt.repository.PartyRepositorySupport;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.E203.pjt.service.PartyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.E203.pjt.model.entity.Party;
 import com.E203.pjt.repository.PartyRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor  // bean 주입 (autowired 대신)
 public class PartyServiceImpl implements PartyService {
-  @Autowired
-  private PartyRepository partyRepository;
-
-  @Autowired
-  private PartyRepositorySupport partyRepositorySupport;
-
-  @Autowired
-  private MyPartyRepository myPartyRepository;
+  private final PartyRepository partyRepository;
+  private final PhotoRepository imageStorageRepository;
+  private final PartyRepositorySupport partyRepositorySupport;
+  private final MyPartyRepository myPartyRepository;
 
   @Override
+  @Transactional
   public Party createParty(Party party) {
     return partyRepository.save(party);
   }

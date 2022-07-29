@@ -16,27 +16,4 @@
 // @SpringBootTest
 // class CommonPjtApplicationTests {
 
-// 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("commontest");
-// 	EntityManager em = emf.createEntityManager();
-
-
-// 	@Test
-// 	@Transactional
-// 	public void testEmbeddable() {
-// 		WishListPK wishListID = new WishListPK();
-// 		wishListID.setUserSeq(1);
-// 		wishListID.setPartySeq(1);
-
-// 		WishList wishList = new WishList();
-// 		//wishList.setWishListID(wishListID);
-
-// 		em.persist(wishList);
-// 		em.flush();
-// 		em.clear();
-
-// 		wishList = em.find(WishList.class, wishListID);
-
-// 	}
-
-
-// }
+}

@@ -1,4 +1,4 @@
-package com.E203.pjt.model.service;
+package com.E203.pjt.service;
 
 import com.E203.pjt.model.entity.ChatLog;
 
