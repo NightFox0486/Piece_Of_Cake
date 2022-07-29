@@ -1,20 +1,21 @@
-package com.E203.pjt.model.service;
+package com.E203.pjt.service.impl;
 
 import com.E203.pjt.model.entity.CrimeCategory;
 import com.E203.pjt.repository.CrimeCategoryRepository;
+import com.E203.pjt.service.CrimeCategoryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CrimeCategoryServiceImpl implements CrimeCategoryService{
+@RequiredArgsConstructor
+public class CrimeCategoryServiceImpl implements CrimeCategoryService {
+    private final CrimeCategoryRepository crimeCategoryRepository;
 
-    @Autowired
-    private CrimeCategoryRepository crimeCategoryRepository;
     @Override
     public List<CrimeCategory> getAllCodes() {
         return crimeCategoryRepository.findAll();
     }
-
 }

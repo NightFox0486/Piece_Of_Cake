@@ -1,6 +1,7 @@
 package com.E203.pjt.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "parties")
 public class Party {
     @Id
@@ -40,6 +42,14 @@ public class Party {
     @Column(name = "party_reg_dt", columnDefinition = "TIMESTAMP default now()")
     private LocalDateTime partyRegDt;
 
+    @CreationTimestamp
+    @Column(name = "party_upd_dt", columnDefinition = "TIMESTAMP default now()")
+    private LocalDateTime partyUpdDt;
+
+    @CreationTimestamp
+    @Column(name = "party_rdv_dt", columnDefinition = "TIMESTAMP default now()")
+    private LocalDateTime partyRdvDt;
+
     @Column(name = "party_rdv_lat", length = 20)
     private String partyRdvLat;
 
@@ -51,10 +61,6 @@ public class Party {
 
     @Column(name = "party_member_num_current", nullable = false)
     private Integer partyMemberNumCurrent;
-
-    @CreationTimestamp
-    @Column(name = "party_rdv_dt", columnDefinition = "TIMESTAMP default now()")
-    private LocalDateTime partyRdvDt;
 
     @Column(name = "party_addr", length = 100)
     private String partyAddr;
@@ -74,4 +80,12 @@ public class Party {
     @JsonManagedReference
     @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     private List<ChatRoom> chatRoomList;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    private List<Photo> photoList;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    private List<Receipt> receiptList;
 }

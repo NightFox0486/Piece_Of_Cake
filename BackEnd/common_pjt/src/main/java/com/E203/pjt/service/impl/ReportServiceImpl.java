@@ -1,5 +1,7 @@
-package com.E203.pjt.model.service;
+package com.E203.pjt.service.impl;
 
+import com.E203.pjt.service.ReportService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +10,9 @@ import com.E203.pjt.repository.ReportRepository;
 
 
 @Service
+@RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
-    @Autowired
-    private ReportRepository reportRepository;
+    private final ReportRepository reportRepository;
 
     @Override
     public Report createReportUser(Report report) {

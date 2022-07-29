@@ -23,9 +23,10 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "chat_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
     private Integer chatSeq;
+
     @JsonBackReference
     @ManyToOne(targetEntity = Party.class)
-    @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
+    @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     private Party party;
 
     @Column(name = "host_seq")
