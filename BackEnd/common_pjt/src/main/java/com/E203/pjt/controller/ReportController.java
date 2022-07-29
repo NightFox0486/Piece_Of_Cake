@@ -1,27 +1,21 @@
 package com.E203.pjt.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
 import com.E203.pjt.model.entity.Report;
-import com.E203.pjt.model.service.ReportService;
+import com.E203.pjt.service.ReportService;
 
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/report")
 public class ReportController {
-    @Autowired
     private final ReportService reportService;
-
-
-
-    public ReportController(ReportService reportService) {
-        this.reportService = reportService;
-
-    }
 
     //유저신고
     @PostMapping(value = "/chat")
