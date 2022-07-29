@@ -1,7 +1,8 @@
 package com.E203.pjt.controller;
 
 import com.E203.pjt.model.entity.ChatLog;
-import com.E203.pjt.model.service.ChatLogService;
+import com.E203.pjt.service.ChatLogService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,14 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 public class ChatLogController {
-
-    @Autowired
     private final ChatLogService chatLogService;
-
-    public ChatLogController(ChatLogService chatLogService) {
-        this.chatLogService = chatLogService;
-    }
 
     @GetMapping(value = "/chat-log")
     public List<ChatLog> getAllChatLogs(){

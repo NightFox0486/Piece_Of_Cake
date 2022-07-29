@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,23 +23,21 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "receipt_storage")
-public class ReceiptStorage {
+@Table(name = "receipts")
+public class Receipt {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "receipt_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
   private Integer receiptSeq;
 
-  @Column(name = "storage_url", length = 200)
-  private String storageUrl;
+  @JsonBackReference
+  @ManyToOne(targetEntity = Party.class)
+  @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
+  private Party party;
+
+  @Column(name = "file_url", length = 200)
+  private String fileUrl;
 
   @Column(name = "file_name", length = 45)
   private String fileName;
-
-  @Column(name = "file_reg_dt", columnDefinition = "DATETIME")
-  private LocalDateTime fileRegDt;
-
-  @ManyToOne(targetEntity = Party.class)
-  @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED UNIQUE")
-  private Integer partySeq;
 }

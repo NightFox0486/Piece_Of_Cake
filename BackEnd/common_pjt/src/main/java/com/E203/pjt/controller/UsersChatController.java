@@ -1,7 +1,8 @@
 package com.E203.pjt.controller;
 
 import com.E203.pjt.model.entity.UsersChat;
-import com.E203.pjt.model.service.UsersChatService;
+import com.E203.pjt.service.UsersChatService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 public class UsersChatController {
-
-    @Autowired
     private final UsersChatService usersChatService;
-
-    public UsersChatController(UsersChatService usersChatService) {
-        this.usersChatService = usersChatService;
-    }
 
     // 상세
     @GetMapping(value = "/users-chat/{chatSeq}")

@@ -3,26 +3,24 @@ package com.E203.pjt.controller;
 import java.util.List;
 
 import com.E203.pjt.model.entity.MyParty;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.E203.pjt.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import com.E203.pjt.model.entity.Party;
-import com.E203.pjt.model.service.PartyService;
+import com.E203.pjt.service.PartyService;
 
 
 @RestController
+@RequiredArgsConstructor
 public class PartyController {
-  @Autowired
   private final PartyService partyService;
 
-  public PartyController(PartyService partyService) {
-    this.partyService = partyService;
-  }
-
   @PostMapping(value = "/parties")
-  public void createParty(@RequestBody Party party) {
+  public Party createParty(@RequestBody Party party) {
     System.out.println(party);
-    System.out.println(partyService.createParty(party));
+    Party result = partyService.createParty(party);
+    return result;
   }
 
   @GetMapping(value="/parties")
@@ -42,4 +40,5 @@ public class PartyController {
     }
     return myPartyList;
   }
+
 }

@@ -1,8 +1,9 @@
-package com.E203.pjt.model.service;
+package com.E203.pjt.service.impl;
 
-import com.E203.pjt.model.entity.ChatRoom;
 import com.E203.pjt.model.entity.UsersChat;
 import com.E203.pjt.repository.UsersChatRepository;
+import com.E203.pjt.service.UsersChatService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsersChatServiceImpl implements UsersChatService{
-
-    @Autowired
-    private UsersChatRepository usersChatRepository;
+@RequiredArgsConstructor
+public class UsersChatServiceImpl implements UsersChatService {
+    private final UsersChatRepository usersChatRepository;
 
     @Override
     public Optional<UsersChat> detailUsersChat(Integer chatSeq) {
