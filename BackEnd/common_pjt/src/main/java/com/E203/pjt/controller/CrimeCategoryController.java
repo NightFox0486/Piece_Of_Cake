@@ -1,7 +1,6 @@
 package com.E203.pjt.controller;
 
 import com.E203.pjt.model.entity.CrimeCategory;
-import com.E203.pjt.model.service.CrimeCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import com.E203.pjt.service.CrimeCategoryService;
