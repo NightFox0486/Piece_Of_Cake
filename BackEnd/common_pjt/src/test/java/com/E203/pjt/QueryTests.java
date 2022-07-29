@@ -19,6 +19,8 @@
 //    @Autowired
 //    private JPAQueryFactory jpaQueryFactory;
 //
+//    QParty party = QParty.party;
+//
 //    @Autowired
 //    PartyRepositorySupport partyRepositorySupport;
 //
@@ -30,11 +32,19 @@
 //    @Test
 //    void getMyPartyHostDynamicQueryTest() {
 //        List<Party> partyList = partyRepositorySupport.findDynamicQueryMyPartyHostList(1);
+//        System.out.println("총 개수: "+partyList.size());
+//        for (Party p : partyList) {
+//            System.out.println("party seq: "+p.getPartySeq());
+//        }
 //    }
 //
 //    @Test
 //    void getMyPartyGuestDynamicQueryTest() {
 //        List<Party> partyList = partyRepositorySupport.findDynamicQueryMyPartyGuestList(1);
+//        System.out.println("총 개수: "+partyList.size());
+//        for (Party p : partyList) {
+//            System.out.println("party seq: "+p.getPartySeq());
+//        }
 //    }
 //
 //    @Test
