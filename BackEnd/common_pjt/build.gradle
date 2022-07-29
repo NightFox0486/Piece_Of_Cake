@@ -42,6 +42,11 @@ dependencies {
 	// querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
+
+	//https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	implementation "io.springfox:springfox-boot-starter:3.0.0"
+	implementation "io.springfox:springfox-swagger-ui:3.0.0"
+
 }
 
 tasks.named('test') {
