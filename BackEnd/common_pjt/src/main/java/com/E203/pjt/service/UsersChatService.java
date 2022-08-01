@@ -1,6 +1,5 @@
 package com.E203.pjt.service;
 
-import com.E203.pjt.model.entity.ChatRoom;
 import com.E203.pjt.model.entity.UsersChat;
 
 import java.util.List;

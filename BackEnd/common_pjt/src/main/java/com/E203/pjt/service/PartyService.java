@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.E203.pjt.model.entity.MyParty;
 import com.E203.pjt.model.entity.Party;
-import com.E203.pjt.model.entity.User;
 
 public interface PartyService {
   Party createParty(Party party);

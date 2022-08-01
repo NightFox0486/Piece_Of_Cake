@@ -9,7 +9,6 @@ import com.E203.pjt.repository.UserRepository;
 import com.E203.pjt.repository.WishListRepository;
 import com.E203.pjt.service.WishListService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
