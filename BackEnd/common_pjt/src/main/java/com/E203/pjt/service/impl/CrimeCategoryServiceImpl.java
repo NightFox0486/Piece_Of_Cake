@@ -4,7 +4,6 @@ import com.E203.pjt.model.entity.CrimeCategory;
 import com.E203.pjt.repository.CrimeCategoryRepository;
 import com.E203.pjt.service.CrimeCategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

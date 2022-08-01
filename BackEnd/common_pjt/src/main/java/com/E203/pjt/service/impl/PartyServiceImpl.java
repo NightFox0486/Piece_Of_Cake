@@ -3,8 +3,6 @@ package com.E203.pjt.service.impl;
 import java.util.List;
 
 import com.E203.pjt.model.entity.MyParty;
-import com.E203.pjt.repository.PhotoRepository;
-import com.E203.pjt.repository.MyPartyRepository;
 import com.E203.pjt.repository.PartyRepositorySupport;
 import com.E203.pjt.service.PartyService;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor  // bean 주입 (autowired 대신)
 public class PartyServiceImpl implements PartyService {
   private final PartyRepository partyRepository;
-  private final PhotoRepository imageStorageRepository;
   private final PartyRepositorySupport partyRepositorySupport;
-  private final MyPartyRepository myPartyRepository;
 
   @Override
   @Transactional

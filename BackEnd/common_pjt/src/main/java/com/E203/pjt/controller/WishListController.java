@@ -1,11 +1,7 @@
 package com.E203.pjt.controller;
 
 import com.E203.pjt.model.entity.WishList;
-import com.E203.pjt.service.PartyService;
-import com.E203.pjt.service.UserService;
 import com.E203.pjt.service.WishListService;
-import com.E203.pjt.repository.PartyRepository;
-import com.E203.pjt.repository.UserRepository;
 import com.E203.pjt.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +14,7 @@ import java.util.List;
 @Transactional(readOnly = false)
 public class WishListController {
 
-    private final UserService userService;
-    private final PartyService partyService;
     private final WishListService wishListService;
-    private final UserRepository userRepository;
-    private final PartyRepository partyRepository;
     private final WishListRepository wishListRepository;
 
     @GetMapping(value = "/wish")
