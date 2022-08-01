@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.E203.pjt.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.E203.pjt.model.entity.User;

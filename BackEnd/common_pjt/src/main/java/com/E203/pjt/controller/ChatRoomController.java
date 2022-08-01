@@ -3,7 +3,6 @@ package com.E203.pjt.controller;
 import com.E203.pjt.model.entity.ChatRoom;
 import com.E203.pjt.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -4,7 +4,6 @@ import com.E203.pjt.model.entity.UsersChat;
 import com.E203.pjt.repository.UsersChatRepository;
 import com.E203.pjt.service.UsersChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

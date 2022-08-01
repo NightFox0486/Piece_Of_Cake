@@ -3,7 +3,6 @@ package com.E203.pjt.controller;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.E203.pjt.model.entity.User;
