@@ -1,12 +1,10 @@
 # E203_common_pjt
 
-## 콩한쪽도 나눠 물까?
+## 1인가구의 희망
 
-## 콩나물
+Piece Of Cake
 
-## CongNamul
-
-- 목차
+## 목차
 
 - 1. 주제 및 기간
   
@@ -33,8 +31,6 @@
    
    - 대용량 생필품을 소비하는 게 더 경제적이지만 1인가구가 대용량 생필품을 소비하기에는 양도 많고 가격도 저렴하지 않음
    
-   - ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e4399d0c-4245-47e0-bd58-d3b3c01253db/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220725%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220725T082029Z&X-Amz-Expires=86400&X-Amz-Signature=462ccd533182a3098b6fd10e73b24e50fa5bedcbcb876934c57aef3e3a3192e5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
-   
    - 혼자서 장을 보러 갔는데, 참외가 10kg에 만원이라 덥석 사버리고 말았을 때
    
    - 이왕 사버린거 주위에 사는 주민들이랑 나누고 더치페이를 하면 좋을 것 같은데,
@@ -47,7 +43,7 @@
    
    - 
    
-   - 생필품을 소분하거나, 함께구매하거나, 배달음식을 함께 시켜서 경제적인 부담을 덜고 싶을 때 사용할 어플리케이션 서비스 CongNamul
+   - 생필품을 소분하거나, 함께구매하거나, 배달음식을 함께 시켜서 경제적인 부담을 덜고 싶을 때 사용할 어플리케이션 서비스 Cong
 
 3. 어플리케이션 기능
    
@@ -125,7 +121,7 @@
 
 5. ERD
    
-   ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8e981309-4933-43b4-bc12-e2f954963d25/KakaoTalk_20220720_165445193.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220725%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220725T072918Z&X-Amz-Expires=86400&X-Amz-Signature=790a892b5cb6dd9f3842b36bb0d1ec788ae15395f8fbe13c55d5b620d6af780e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22KakaoTalk_20220720_165445193.png%22&x-id=GetObject)
+   
 
 6. WireFrame
    
