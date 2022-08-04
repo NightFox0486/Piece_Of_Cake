@@ -4,7 +4,6 @@ import './my.dart';
 import './chat_list_my.dart';
 import './pie_create.dart';
 import './party_list.dart';
-import './home.dart';
 
 
 void main() {
@@ -138,9 +137,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int index = 0;
+  int index = 2;
   final screens = [
-    Home(),
+    HomePage(),
     PartyList(),
     PieCreate(),
     ChatListMy(),
@@ -155,6 +154,7 @@ class _HomePageState extends State<HomePage> {
       Icon(Icons.add, size:30),
       Icon(Icons.question_answer, size:30),
       Icon(Icons.person, size:30),
+
     ];
 
     return Scaffold(
@@ -207,7 +207,6 @@ class _HomePageState extends State<HomePage> {
         key: navigationKey,
         backgroundColor: Colors.white,
         color: Colors.amber,
-        height: 55,
         onTap: (index) => setState(() => this.index = index),
       ),
     );
