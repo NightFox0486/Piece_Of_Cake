@@ -1,7 +1,9 @@
 package com.E203.pjt.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.E203.pjt.model.dto.res.PartyResVO;
 import com.E203.pjt.model.entity.MyParty;
 import com.E203.pjt.repository.PartyRepositorySupport;
 import com.E203.pjt.service.PartyService;
@@ -25,13 +27,58 @@ public class PartyServiceImpl implements PartyService {
   }
 
   @Override
+  public PartyResVO detailParty(Integer partySeq) {
+    PartyResVO partyResVO = new PartyResVO();
+    Party party = partyRepository.findByPartySeq(partySeq);
+    partyResVO.setPartySeq(party.getPartySeq());
+    partyResVO.setUserSeq(party.getUser().getUserSeq());
+    partyResVO.setPartyTitle(party.getPartyTitle());
+    partyResVO.setPartyContent(party.getPartyContent());
+    partyResVO.setPartyRegDt(party.getPartyRegDt());
+    partyResVO.setPartyUpdDt(party.getPartyUpdDt());
+    partyResVO.setPartyRdvDt(party.getPartyRdvDt());
+    partyResVO.setPartyRdvLat(party.getPartyRdvLat());
+    partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+    partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
+    partyResVO.setPartyMemberNumCurrent(party.getPartyMemberNumCurrent());
+    partyResVO.setPartyAddr(party.getPartyAddr());
+    partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
+    partyResVO.setPartyStatus(party.getPartyStatus());
+    partyResVO.setItemLink(party.getItemLink());
+    partyResVO.setTotalAmount(party.getTotalAmount());
+    return partyResVO;
+  }
+
+  @Override
   public void deleteParty(Integer party_seq) {
     partyRepository.deleteById(party_seq);
   }
 
   @Override
-  public List<Party> getAllParties() {
-    return partyRepository.findAll();
+  public List<PartyResVO> getPartyList() {
+    List<Party> partyList = partyRepository.findAll();
+    List<PartyResVO> partyResVOList = new ArrayList<>();
+    for(Party party : partyList) {
+      PartyResVO partyResVO = new PartyResVO();
+      partyResVO.setPartySeq(party.getPartySeq());
+      partyResVO.setUserSeq(party.getUser().getUserSeq());
+      partyResVO.setPartyTitle(party.getPartyTitle());
+      partyResVO.setPartyContent(party.getPartyContent());
+      partyResVO.setPartyRegDt(party.getPartyRegDt());
+      partyResVO.setPartyUpdDt(party.getPartyUpdDt());
+      partyResVO.setPartyRdvDt(party.getPartyRdvDt());
+      partyResVO.setPartyRdvLat(party.getPartyRdvLat());
+      partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+      partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
+      partyResVO.setPartyMemberNumCurrent(party.getPartyMemberNumCurrent());
+      partyResVO.setPartyAddr(party.getPartyAddr());
+      partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
+      partyResVO.setPartyStatus(party.getPartyStatus());
+      partyResVO.setItemLink(party.getItemLink());
+      partyResVO.setTotalAmount(party.getTotalAmount());
+      partyResVOList.add(partyResVO);
+    }
+    return partyResVOList;
   }
 
   @Override

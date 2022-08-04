@@ -2,6 +2,8 @@ package com.E203.pjt.service.impl;
 
 import java.util.List;
 
+import com.E203.pjt.model.dto.req.UserReqVO;
+import com.E203.pjt.model.dto.res.UserResVO;
 import com.E203.pjt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,13 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   @Override
-  public User createUser(User user) {
-    return userRepository.save(user);
+  public UserResVO createUser(UserReqVO userReqVO) {
+    User user = userReqVO.toEntity();
+    User result = userRepository.save(user);
+    UserResVO userResVO = new UserResVO();
+    userResVO.setUserSeq(result.getUserSeq());
+    userResVO.setUserNickname(result.getUserNickname());
+    return userResVO;
   }
 
   @Override
