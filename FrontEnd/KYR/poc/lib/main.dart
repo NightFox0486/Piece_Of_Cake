@@ -3,304 +3,120 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+
+// https://developers.kakao.com/docs/latest/ko/kakaologin/flutter#sample-login
 void main() {
+  KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
   runApp(const MyApp());
 }
-
-class Item extends StatelessWidget {
-  // Item({Key? key}) : super(key: key);
-  final Party? party;
-  Item({
-    this.party,
-  }) : super(key: ValueKey(party));
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.amber), borderRadius: BorderRadius.circular(20)
-      ),
-      child: Row(
-        children: [
-          Flexible(flex: 3, child: Image.asset('images/harry.png', width: 150)),
-          Flexible(flex: 7,child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("title: "+party!.partyTitle, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                  Text("content: "+party!.partyContent, style: TextStyle(fontSize: 15),),
-                  Text("total amount: "+party!.totalAmount, style: TextStyle(fontSize: 20)),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(Icons.favorite),
-                        Text('4'),
-                      ]
-                  )
-                ],
-              )
-          ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-
-// class MeApp extends StatelessWidget {
-//   const MeApp({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         home: Scaffold(
-//             appBar: AppBar( title: TextField(
-//                 decoration: InputDecoration(
-//                     fillColor: Colors.white,
-//                     filled: true,
-//                     label: Icon(Icons.search)
-//                 )
-//             ), actions: [Icon(Icons.menu), Icon(Icons.notifications) ]),
-//             body: ListView(
-//               children: [
-//                 Item(),
-//                 Item(),
-//                 Item(),
-//               ],
-//
-//             )
-//         )
-//     );
-//   }
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // Remove the debug banner
-        debugShowCheckedModeBanner: false,
-        title: 'CongNamul',
-        theme: ThemeData(
-          primarySwatch: Colors.amber,
-        ),
-        home: const HomePage()
-    );
+  Future<void> kakaoSaveUserInfo() async {
+    try {
+      // 저장할 사용자 프로퍼티
+      Map<String, String> properties = {'${CUSTOM_PROPERTY_KEY}': '${CUSTOM_PROPERTY_VALUE}'};
+      await UserApi.instance.updateProfile(properties);
+      print('사용자 정보 저장 성공');
+    } catch (error) {
+      print('사용자 정보 저장 실패 $error');
+    }
   }
-}
+  Future<void> kakaoGetUserInfo() async {
+    try {
+      User user = await UserApi.instance.me();
+      print('사용자 정보 요청 성공'
+          '\n회원번호: ${user.id}'
+          '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
+          '\n이메일: ${user.kakaoAccount?.email}');
+    } catch (error) {
+      print('사용자 정보 요청 실패 $error');
+    }
+  }
+  Future<void> kakaoDisconnect() async {
+    try {
+      await UserApi.instance.unlink();
+      print('연결 끊기 성공, SDK에서 토큰 삭제');
+    } catch (error) {
+      print('연결 끊기 실패 $error');
+    }
+  }
+  Future<void> kakaoLogout() async {
+    try {
+      await UserApi.instance.logout();
+      print('로그아웃 성공, SDK에서 토큰 삭제');
+    } catch (error) {
+      print('로그아웃 실패, SDK에서 토큰 삭제 $error');
+    }
+  }
+  Future<void> kakaoLogin() async {
+    if (await AuthApi.instance.hasToken()) {
+      try {
+        AccessTokenInfo tokenInfo =
+        await UserApi.instance.accessTokenInfo();
+        print('토큰 유효성 체크 성공 ${tokenInfo.id} ${tokenInfo.expiresIn}');
+      } catch (error) {
+        if (error is KakaoException && error.isInvalidTokenError()) {
+          print('토큰 만료 $error');
+        } else {
+          print('토큰 정보 조회 실패 $error');
+        }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+        if (await isKakaoTalkInstalled()) {
+          try {
+            await UserApi.instance.loginWithKakaoTalk();
+            print('카카오톡으로 로그인 성공');
+          } catch (error) {
+            print('카카오톡으로 로그인 실패 $error');
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-
-
-class _HomePageState extends State<HomePage> {
-  int index = 2;
-
-  List<Party> partyList = [];
-  Future<void> fetchPartyList() async {
-    final response = await http.get(Uri.parse('http://localhost:9090/party'));
-    if (response.statusCode==200) {
-      this.partyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
-          .map((e) => Party.fromJson(e))
-          .toList();
-      print(partyList);
-    }else {
-      throw Exception('Failed to load party list.');
+            // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
+            // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
+            if (error is PlatformException && error.code == 'CANCELED') {
+              return;
+            }
+            // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
+            try {
+              await UserApi.instance.loginWithKakaoAccount();
+              print('카카오계정으로 로그인 성공');
+            } catch (error) {
+              print('카카오계정으로 로그인 실패 $error');
+            }
+          }
+        } else {
+          try {
+            await UserApi.instance.loginWithKakaoAccount();
+            print('카카오계정으로 로그인 성공');
+          } catch (error) {
+            print('카카오계정으로 로그인 실패 $error');
+          }
+        }
+      }
+    } else {
+      print('발급된 토큰 없음');
+      try {
+        OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
+        print('로그인 성공 ${token.accessToken}');
+      } catch (error) {
+        print('로그인 실패 $error');
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    fetchPartyList();
-    final items = <Widget>[
-      Icon(Icons.home, size:30),
-      Icon(Icons.celebration, size:30),
-      Icon(Icons.add, size:30),
-      Icon(Icons.question_answer, size:30),
-      Icon(Icons.person, size:30),
-    ];
 
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            snap: false,
-            centerTitle: false,
-            title: const Text('Piece Of Cake'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.notifications),
-                onPressed: () {},
-              ),
-            ],
-            bottom: AppBar(
-              title: Container(
-                width: double.infinity,
-                height: 40,
-                color: Colors.white,
-                child: const Center(
-                  child: TextField(
-                      decoration: InputDecoration(
-                        hintText: '파티검색',
-                        prefixIcon: Icon(Icons.search),)
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Other Sliver Widgets
-          SliverList(
-            delegate: SliverChildListDelegate([
-              for (var party in partyList)
-                ElevatedButton(
-                  child: Item(party: party),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PartyDetailScreen(party: party)),
-                    );
-                  },
-                )
-            ]),
-          ),
-        ],
-
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        items: items,
-        index: index,
-        backgroundColor: Colors.white,
-        color: Colors.amber,
-        onTap: (index) => setState(() => this.index = index),
-      ),
-    );
-  }
-}
-
-class PartyDetailScreen extends StatelessWidget {
-  final Party? party;
-  PartyDetailScreen({
-    this.party,
-  }) : super(key: ValueKey(party));
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${party!.partySeq} Party Detail'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            if (party!=null) ...[
-              Text("title: "+party!.partyTitle.toString(), style: Theme.of(context).textTheme.headline6),
-              Text("content: "+party!.partyContent.toString(), style: Theme.of(context).textTheme.subtitle1),
-              Text("reg date: "+party!.partyRegDt.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("upd date: "+party!.partyUpdDt.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("rdv date: "+party!.partyRdvDt.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("curr member num: "+party!.partyMemberNumCurrent.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("total member num: "+party!.partyMemberNumTotal.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("addr: "+party!.partyAddr.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("addr detail: "+party!.partyAddrDetail.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("status: "+party!.partyStatus.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("item link: "+party!.itemLink.toString(), style: Theme.of(context).textTheme.bodyText1),
-              Text("total amount: "+party!.totalAmount.toString(), style: Theme.of(context).textTheme.bodyText1),
-            ],
-          ],
+    return MaterialApp(
+      // Remove the debug banner
+        debugShowCheckedModeBanner: false,
+        title: 'POC',
+        theme: ThemeData(
+          primarySwatch: Colors.amber,
         ),
-      ),
+        home: Container(
+
+        )
     );
   }
 }
-
-class Party {
-  int partySeq;
-  int userSeq;
-  String partyTitle;
-  String partyContent;
-  List<dynamic> partyRegDt;
-  List<dynamic> partyUpdDt;
-  List<dynamic> partyRdvDt;
-  String partyRdvLat;
-  String partyRdvLng;
-  int partyMemberNumTotal;
-  int partyMemberNumCurrent;
-  String partyAddr;
-  String partyAddrDetail;
-  int partyStatus;
-  String itemLink;
-  String totalAmount;
-  Party({
-    required this.partySeq,
-    required this.userSeq,
-    required this.partyTitle,
-    required this.partyContent,
-    required this.partyRegDt,
-    required this.partyUpdDt,
-    required this.partyRdvDt,
-    required this.partyRdvLat,
-    required this.partyRdvLng,
-    required this.partyMemberNumTotal,
-    required this.partyMemberNumCurrent,
-    required this.partyAddr,
-    required this.partyAddrDetail,
-    required this.partyStatus,
-    required this.itemLink,
-    required this.totalAmount
-  });
-
-  factory Party.fromJson(Map<String, dynamic> json) {
-    return Party(
-      partySeq: json['partySeq'],
-      userSeq: json['userSeq'],
-      partyTitle: json['partyTitle'],
-      partyContent: json['partyContent'],
-      partyRegDt: json['partyRegDt'],
-      partyUpdDt: json['partyUpdDt'],
-      partyRdvDt: json['partyRdvDt'],
-      partyRdvLat: json['partyRdvLat'],
-      partyRdvLng: json['partyRdvLng'],
-      partyMemberNumTotal: json['partyMemberNumTotal'],
-      partyMemberNumCurrent: json['partyMemberNumCurrent'],
-      partyAddr: json['partyAddr'],
-      partyAddrDetail: json['partyAddrDetail'],
-      partyStatus: json['partyStatus'],
-      itemLink: json['itemLink'],
-      totalAmount: json['totalAmount'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['partySeq'] = this.partySeq;
-    data['userSeq'] = this.userSeq;
-    data['partyTitle'] = this.partyTitle;
-    data['partyContent'] = this.partyContent;
-    data['partyRegDt'] = this.partyRegDt;
-    data['partyUpdDt'] = this.partyUpdDt;
-    data['partyRdvDt'] = this.partyRdvDt;
-    data['partyRdvLat'] = this.partyRdvLat;
-    data['partyRdvLng'] = this.partyRdvLng;
-    data['partyMemberNumTotal'] = this.partyMemberNumTotal;
-    data['partyMemberNumCurrent'] = this.partyMemberNumCurrent;
-    data['partyAddr'] = this.partyAddr;
-    data['partyAddrDetail'] = this.partyAddrDetail;
-    data['partyStatus'] = this.partyStatus;
-    data['itemLink'] = this.itemLink;
-    data['totalAmount'] = this.totalAmount;
-    return data;
-  }
-}
-
