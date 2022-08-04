@@ -32,22 +32,22 @@ class PartyListScreen extends StatefulWidget {
     futurePartyList.then((value) {
       value.forEach((e) {
         partyList.add(
-            Party(partySeq: e.partySeq,
-                userSeq: e.userSeq,
-                partyTitle: e.partyTitle,
-                partyContent: e.partyContent,
-                partyRegDt: e.partyRegDt,
-                partyUpdDt: e.partyUpdDt,
-                partyRdvDt: e.partyRdvDt,
-                partyRdvLat: e.partyRdvLat,
-                partyRdvLng: e.partyRdvLng,
-                partyMemberNumTotal: e.partyMemberNumTotal,
-                partyMemberNumCurrent: e.partyMemberNumCurrent,
-                partyAddr: e.partyAddr,
-                partyAddrDetail: e.partyAddrDetail,
-                partyStatus: e.partyStatus,
-                itemLink: e.itemLink,
-                totalAmount: e.totalAmount)
+          Party(partySeq: e.partySeq,
+            userSeq: e.userSeq,
+            partyTitle: e.partyTitle,
+            partyContent: e.partyContent,
+            partyRegDt: e.partyRegDt,
+            partyUpdDt: e.partyUpdDt,
+            partyRdvDt: e.partyRdvDt,
+            partyRdvLat: e.partyRdvLat,
+            partyRdvLng: e.partyRdvLng,
+            partyMemberNumTotal: e.partyMemberNumTotal,
+            partyMemberNumCurrent: e.partyMemberNumCurrent,
+            partyAddr: e.partyAddr,
+            partyAddrDetail: e.partyAddrDetail,
+            partyStatus: e.partyStatus,
+            itemLink: e.itemLink,
+            totalAmount: e.totalAmount)
         );
       });
     });
