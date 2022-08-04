@@ -131,7 +131,6 @@ class HomePage extends StatefulWidget {
 
 
 class _HomePageState extends State<HomePage> {
-  int index = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -205,15 +204,40 @@ class _HomePageState extends State<HomePage> {
       // ),
       bottomNavigationBar: CurvedNavigationBar(
         items: items,
-        index: index,
         backgroundColor: Colors.white,
         color: Colors.amber,
-        onTap: (index) => setState(() => this.index = index),
         // onTap: (index) => setState(() => this.index = index),
       ),
     );
   }
 }
+
+class TestPage1 extends StatelessWidget {
+  const TestPage1({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('TestPage1')
+      ),
+    );
+  }
+}
+
+class TestPage2 extends StatelessWidget {
+  const TestPage2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('TestPage2')
+      )
+    );
+  }
+}
+
 
 
 
