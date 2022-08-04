@@ -1,16 +1,112 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 void main() {
-  runApp(MaterialApp(
-    title: 'Navigation Basics',
-    home: PartyListScreen(),
-  ));
+  runApp(const MyApp());
 }
 
-class PartyListScreen extends StatelessWidget {
-  PartyListScreen({super.key});
+class Item extends StatelessWidget {
+  // Item({Key? key}) : super(key: key);
+  final Party? party;
+  Item({
+    this.party,
+  }) : super(key: ValueKey(party));
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 150,
+      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.amber), borderRadius: BorderRadius.circular(20)
+      ),
+      child: Row(
+        children: [
+          Flexible(flex: 3, child: Image.asset('images/harry.png', width: 150)),
+          Flexible(flex: 7,child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("title: "+party!.partyTitle, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                  Text("content: "+party!.partyContent, style: TextStyle(fontSize: 15),),
+                  Text("total amount: "+party!.totalAmount, style: TextStyle(fontSize: 20)),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(Icons.favorite),
+                        Text('4'),
+                      ]
+                  )
+                ],
+              )
+          ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+// class MeApp extends StatelessWidget {
+//   const MeApp({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//         home: Scaffold(
+//             appBar: AppBar( title: TextField(
+//                 decoration: InputDecoration(
+//                     fillColor: Colors.white,
+//                     filled: true,
+//                     label: Icon(Icons.search)
+//                 )
+//             ), actions: [Icon(Icons.menu), Icon(Icons.notifications) ]),
+//             body: ListView(
+//               children: [
+//                 Item(),
+//                 Item(),
+//                 Item(),
+//               ],
+//
+//             )
+//         )
+//     );
+//   }
+// }
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      // Remove the debug banner
+        debugShowCheckedModeBanner: false,
+        title: 'CongNamul',
+        theme: ThemeData(
+          primarySwatch: Colors.amber,
+        ),
+        home: const HomePage()
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+
+
+class _HomePageState extends State<HomePage> {
+  int index = 2;
+
   List<Party> partyList = [];
   Future<void> fetchPartyList() async {
     final response = await http.get(Uri.parse('http://localhost:9090/party'));
@@ -27,33 +123,71 @@ class PartyListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fetchPartyList();
-    print(partyList);
+    final items = <Widget>[
+      Icon(Icons.home, size:30),
+      Icon(Icons.celebration, size:30),
+      Icon(Icons.add, size:30),
+      Icon(Icons.question_answer, size:30),
+      Icon(Icons.person, size:30),
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Route'),
-      ),
-      body: ListView(
-        children: [
-          for (var party in partyList)
-            ElevatedButton(
-              child: Text(party.partyTitle),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PartyDetailScreen(party: party)),
-                );
-              },
-            )
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            pinned: true,
+            snap: false,
+            centerTitle: false,
+            title: const Text('Piece Of Cake'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {},
+              ),
+            ],
+            bottom: AppBar(
+              title: Container(
+                width: double.infinity,
+                height: 40,
+                color: Colors.white,
+                child: const Center(
+                  child: TextField(
+                      decoration: InputDecoration(
+                        hintText: '파티검색',
+                        prefixIcon: Icon(Icons.search),)
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Other Sliver Widgets
+          SliverList(
+            delegate: SliverChildListDelegate([
+              for (var party in partyList)
+                ElevatedButton(
+                  child: Item(party: party),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PartyDetailScreen(party: party)),
+                    );
+                  },
+                )
+            ]),
+          ),
         ],
+
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        items: items,
+        index: index,
+        backgroundColor: Colors.white,
+        color: Colors.amber,
+        onTap: (index) => setState(() => this.index = index),
       ),
     );
   }
-
-  // @override
-  // State<StatefulWidget> createState() {
-  //   // TODO: implement createState
-  //   throw UnimplementedError();
-  // }
 }
 
 class PartyDetailScreen extends StatelessWidget {
@@ -169,3 +303,4 @@ class Party {
     return data;
   }
 }
+
