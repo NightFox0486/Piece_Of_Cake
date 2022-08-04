@@ -16,13 +16,19 @@ import com.E203.pjt.service.UserService;
 public class UserController {
   private final UserService userService;
 
-  @GetMapping(value="/users")
+  @GetMapping(value="/user")
   public List<User> getAllUsers() {
     List<User> userList = userService.getAllUsers();
     for (User user : userList) {
       System.out.println(user.getUserSeq() + " : " + user.getUserNickname());
     }
     return userList;
+  }
+
+  @GetMapping(value = "/user/{userSeq}")
+  public UserResVO detailUser(@PathVariable Integer userSeq) {
+    UserResVO userResVO = userService.detailUser(userSeq);
+    return userResVO;
   }
 
 //  @PostMapping(value = "/users")
@@ -33,7 +39,7 @@ public class UserController {
 
   //ResponseEntity<Map<String, String>>
 
-  @PostMapping(value = "/users")
+  @PostMapping(value = "/user")
   @ResponseBody
   public UserResVO createUsers(@RequestBody UserReqVO userReqVO) {
     System.out.println("[UserController] createUsers() called");

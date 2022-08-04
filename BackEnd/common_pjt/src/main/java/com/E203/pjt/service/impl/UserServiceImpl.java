@@ -35,4 +35,21 @@ public class UserServiceImpl implements UserService {
   public List<User> getAllUsers() {
     return userRepository.findAll();
   }
+
+  @Override
+  public UserResVO detailUser(Integer userSeq) {
+    User user = userRepository.findByUserSeq(userSeq);
+    UserResVO userResVO = new UserResVO();
+    userResVO.setUserSeq(user.getUserSeq());
+    userResVO.setUserEmail(user.getUserEmail());
+    userResVO.setUserPhone(user.getUserPhone());
+    userResVO.setUserNickname(user.getUserNickname());
+    userResVO.setUserPassword(user.getUserPassword());
+    userResVO.setUserImage(user.getUserImage());
+    userResVO.setUserRating(user.getUserRating());
+    userResVO.setUserLat(user.getUserLat());
+    userResVO.setUserLng(user.getUserLng());
+    userResVO.setUserAccount(user.getUserAccount());
+    return userResVO;
+  }
 }
