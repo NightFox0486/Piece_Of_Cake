@@ -212,32 +212,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class TestPage1 extends StatelessWidget {
-  const TestPage1({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('TestPage1')
-      ),
-    );
-  }
-}
-
-class TestPage2 extends StatelessWidget {
-  const TestPage2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('TestPage2')
-      )
-    );
-  }
-}
-
 
 
 
