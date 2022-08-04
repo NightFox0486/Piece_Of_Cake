@@ -1,7 +1,6 @@
 package com.E203.pjt.model.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;

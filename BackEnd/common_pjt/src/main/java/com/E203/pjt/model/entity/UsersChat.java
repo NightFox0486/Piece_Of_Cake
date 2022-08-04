@@ -2,7 +2,6 @@ package com.E203.pjt.model.entity;
 
 import lombok.*;
 
-import java.io.Serializable;
 
 import javax.persistence.*;
 

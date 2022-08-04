@@ -2,9 +2,10 @@ package com.E203.pjt.controller;
 
 import java.util.List;
 
+import com.E203.pjt.model.dto.res.PartyResVO;
 import com.E203.pjt.model.entity.MyParty;
-import com.E203.pjt.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.web.bind.annotation.*;
 
 import com.E203.pjt.model.entity.Party;
@@ -16,29 +17,35 @@ import com.E203.pjt.service.PartyService;
 public class PartyController {
   private final PartyService partyService;
 
-  @PostMapping(value = "/parties")
+  @PostMapping(value = "/party")
   public Party createParty(@RequestBody Party party) {
     System.out.println(party);
     Party result = partyService.createParty(party);
     return result;
   }
 
-  @GetMapping(value="/parties")
-  public List<Party> getAllParties() {
-    List<Party> partyList = partyService.getAllParties();
-    for (Party party : partyList) {
-      System.out.println(party.getPartySeq() + " : " + party.getPartyCode());
+  @GetMapping(value="/party")
+  public List<PartyResVO> getPartyList() {
+    List<PartyResVO> partyResVOList = partyService.getPartyList();
+    for (PartyResVO partyResVO : partyResVOList) {
+      System.out.println(partyResVO.getPartySeq() + " : " + partyResVO.getPartyTitle());
     }
-    return partyList;
+    return partyResVOList;
   }
 
-  @GetMapping(value = "/parties/{userSeq}")
-  public List<MyParty> getMyPartyList(@PathVariable Integer userSeq) {
-    List<MyParty> myPartyList = partyService.getMyPartyList(userSeq);
-    for (MyParty mp : myPartyList) {
-      System.out.println(mp.getParty().getPartySeq()+": "+mp.getParty().getPartyTitle()+" / ");
-    }
-    return myPartyList;
+  @GetMapping(value = "/party/{partySeq}")
+  public PartyResVO detailParty(@PathVariable Integer partySeq) {
+    PartyResVO partyResVO = partyService.detailParty(partySeq);
+    return partyResVO;
   }
+
+//  @GetMapping(value = "/party/{userSeq}")
+//  public List<MyParty> getMyPartyList(@PathVariable Integer userSeq) {
+//    List<MyParty> myPartyList = partyService.getMyPartyList(userSeq);
+//    for (MyParty mp : myPartyList) {
+//      System.out.println(mp.getParty().getPartySeq()+": "+mp.getParty().getPartyTitle()+" / ");
+//    }
+//    return myPartyList;
+//  }
 
 }
