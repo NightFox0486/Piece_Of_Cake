@@ -10,4 +10,5 @@ public interface UserService {
   UserResVO createUser(UserReqVO userReqVO);
   void deleteUser(Integer user_seq);
   List<User> getAllUsers();
+  UserResVO detailUser(Integer userSeq);
 }

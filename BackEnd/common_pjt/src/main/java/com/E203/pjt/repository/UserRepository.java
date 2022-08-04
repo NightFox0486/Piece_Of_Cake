@@ -7,4 +7,5 @@ import com.E203.pjt.model.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
+    User findByUserSeq(int userSeq);
 }
