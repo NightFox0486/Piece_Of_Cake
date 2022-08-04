@@ -7,4 +7,5 @@ import com.E203.pjt.model.entity.Party;
 
 @Repository
 public interface PartyRepository extends JpaRepository<Party, Integer>{
+    Party findByPartySeq(Integer partySeq);
 }
