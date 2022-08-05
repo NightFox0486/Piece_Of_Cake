@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 
 
 class MapScreen extends StatefulWidget {
@@ -10,17 +11,26 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  Completer<GoogleMapController> _controller = Completer();
+
   List<Marker> myMarker = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
-          initialCameraPosition:
+
+        initialCameraPosition:
           CameraPosition(target: LatLng(33.450701, 126.570667), zoom: 16),
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+
         markers: Set.from(myMarker),
         onTap: _handleTap,
-      ));
+        myLocationEnabled: true,
+      )
+    );
   }
 
   _handleTap(LatLng tappedPoint) async {
@@ -38,5 +48,10 @@ class _MapScreenState extends State<MapScreen> {
     final Uri clickurl = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk&language=ko');
     final response = await http.get(clickurl);
     print(jsonDecode(response.body)['results'][0]['formatted_address']);
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: tappedPoint,
+        zoom: 16)));
+
   }
 }
