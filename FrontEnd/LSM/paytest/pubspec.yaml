@@ -37,6 +37,7 @@ dependencies:
   bootpay: ^4.2.5
   bootpay_bio: ^4.2.2
   get: ^4.6.5
+  flutter_plugin_android_lifecycle: ^2.0.7
 
 dev_dependencies:
   flutter_test:
