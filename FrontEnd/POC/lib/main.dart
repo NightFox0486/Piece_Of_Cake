@@ -1,12 +1,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import './my.dart';
 import './chat_list_my.dart';
 import './pie_create.dart';
 import './party_list.dart';
+import 'kakao/kakao_login.dart';
+import 'kakao/kakao_login_view_model.dart';
 
 
 void main() {
+  KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
   runApp(const MyApp());
 }
 
@@ -137,6 +141,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
+
+  final kakaoLoginViewModel = KakaoLoginViewModel(KakaoLogin());
+
   int index = 2;
   final screens = [
     HomePage(),
