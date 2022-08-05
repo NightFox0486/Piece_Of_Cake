@@ -7,6 +7,7 @@ import './pie_create.dart';
 import './party_list.dart';
 import 'kakao/kakao_login.dart';
 import 'kakao/kakao_login_view_model.dart';
+import './home.dart';
 
 
 void main() {
@@ -146,7 +147,7 @@ class _HomePageState extends State<HomePage> {
 
   int index = 2;
   final screens = [
-    HomePage(),
+    Home(),
     PartyList(),
     PieCreate(),
     ChatListMy(),
@@ -214,7 +215,12 @@ class _HomePageState extends State<HomePage> {
         key: navigationKey,
         backgroundColor: Colors.white,
         color: Colors.amber,
+        height: 55,
         onTap: (index) => setState(() => this.index = index),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }
