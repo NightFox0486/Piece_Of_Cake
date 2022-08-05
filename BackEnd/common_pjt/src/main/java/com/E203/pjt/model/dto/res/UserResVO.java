@@ -23,4 +23,5 @@ public class UserResVO {
     private String userLat;
     private String userLng;
     private String userAccount;
+    private String userKakaoLoginId;
 }
