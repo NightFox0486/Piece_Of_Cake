@@ -4,7 +4,21 @@
         android:label="piece_of_cake"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <activity
+
+       <!-- Kakao Login Start -->
+       <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+           <intent-filter android:label="flutter_web_auth">
+               <action android:name="android.intent.action.VIEW" />
+               <category android:name="android.intent.category.DEFAULT" />
+               <category android:name="android.intent.category.BROWSABLE" />
+
+               <!-- Redirect URI, "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식 -->
+               <data android:scheme="kakao2157d1da3704b84b219793633746ca5c" android:host="oauth"/>
+           </intent-filter>
+       </activity>
+       <!-- Kakao Login End -->
+
+       <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"

@@ -1,4 +1,4 @@
-name: poc
+name: piece_of_cake
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -36,6 +36,9 @@ dependencies:
   http: ^0.13.4
   curved_navigation_bar: ^1.0.3
   kakao_flutter_sdk_user: ^1.2.1
+  flutter_plugin_android_lifecycle: ^2.0.7
+  provider: ^6.0.3
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
