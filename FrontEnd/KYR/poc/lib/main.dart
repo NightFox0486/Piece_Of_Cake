@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:poc/kakao_login_view_model.dart';
+import 'package:piece_of_cake/kakao/kakao_login_view_model.dart';
 
-import 'kakao_login.dart';
+import 'package:piece_of_cake/kakao/kakao_login.dart';
 
 void main() {
   KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final viewModel = MainViewModel(KakaoLogin());
+  final viewModel = KakaoLoginViewModel(KakaoLogin());
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.network(viewModel.user?.kakaoAccount?.profile?.profileImageUrl ?? ''),
+            // Image.network(viewModel.user?.kakaoAccount?.profile?.profileImageUrl ?? ''),
             Text(
               '${viewModel.isLogined}',
             ),
@@ -108,7 +108,8 @@ class _MyPageState extends State<MyPage> {
       body: Column(
         children: [
           Text(_user.id.toString()),
-          Text(_user.kakaoAccount.toString()),
+          Text(_user.kakaoAccount?.email ?? ''),
+          Text(_user.kakaoAccount?.profile?.nickname ?? ''),
         ],
       ),
     );
