@@ -4,6 +4,7 @@ import './my.dart';
 import './chat_list_my.dart';
 import './pie_create.dart';
 import './party_list.dart';
+import './home.dart';
 
 
 void main() {
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
   int index = 2;
   final screens = [
-    HomePage(),
+    Home(),
     PartyList(),
     PieCreate(),
     ChatListMy(),
@@ -207,7 +208,12 @@ class _HomePageState extends State<HomePage> {
         key: navigationKey,
         backgroundColor: Colors.white,
         color: Colors.amber,
+        height: 55,
         onTap: (index) => setState(() => this.index = index),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }
