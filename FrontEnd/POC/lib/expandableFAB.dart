@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
-class ExpandableFAB extends StatefulWidget {
-  const ExpandableFAB({Key? key, required this.children, required this.distance}) : super(key: key);
+class ExpandableFab extends StatefulWidget {
+  const ExpandableFab({Key? key, required this.children, required this.distance}) : super(key: key);
 
   final List<Widget> children;
   final double distance;
 
   @override
-  State<ExpandableFAB> createState() => _ExpandableFABState();
+  State<ExpandableFab> createState() => _ExpandableFabState();
 }
 
-class _ExpandableFABState extends State<ExpandableFAB> with SingleTickerProviderStateMixin{
+class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProviderStateMixin{
 
   late AnimationController _controller;
   late Animation<double> _expandAnimation;
@@ -33,7 +34,7 @@ class _ExpandableFABState extends State<ExpandableFAB> with SingleTickerProvider
     );
   }
 
-  void toggle() {
+  void _toggle() {
     setState(() {
       _open = !_open;
       if(_open) {
@@ -44,7 +45,122 @@ class _ExpandableFABState extends State<ExpandableFAB> with SingleTickerProvider
     });
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
-    return Container();
+    return SizedBox.expand(
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          _tapToClose(),
+          ..._buildExpandableFabButton(),
+          _tapToOpen(),
+
+        ],
+      ),
+    );
+  }
+
+  Widget _tapToClose() {
+    return SizedBox(
+      height: 55,
+      width: 55,
+      child: Center(
+        child: Material(
+          shape: const CircleBorder(),
+          clipBehavior: Clip.antiAlias,
+          elevation: 4,
+          child: InkWell(
+            onTap: _toggle,
+            child: Padding(
+              padding : const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.close,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _tapToOpen() {
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+    transformAlignment: Alignment.center,
+    transform: Matrix4.diagonal3Values(
+        _open ? 0.7 : 1.0,
+        _open ? 0.7 : 1.0,
+        1.0),
+      curve: Curves.easeOut,
+      child: AnimatedOpacity(
+        opacity: _open ? 0.0 : 1.0,
+        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 250),
+        child: FloatingActionButton(
+          onPressed: _toggle,
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildExpandableFabButton() {
+    final List<Widget> children = <Widget>[];
+    final count = widget.children.length;
+    final step = 90.0 / (count - 1);
+
+    for(var i=0, angleInDegrees = 0.0; i< count; i++, angleInDegrees += step){
+      children.add(
+        _ExpandableFab(directionDegress: angleInDegrees,
+            maxDistance: widget.distance,
+            progress: _expandAnimation,
+            child: widget.children[i])
+      );
+    }
+
+    return children;
   }
 }
+
+
+class _ExpandableFab extends StatelessWidget {
+  const _ExpandableFab({Key? key, required this.directionDegress, required this.maxDistance, required this.progress, required this.child}) : super(key: key);
+
+  final double directionDegress;
+  final double maxDistance;
+  final Animation<double>? progress;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+        animation: progress!,
+        builder: (context, child) {
+          final offset = Offset.fromDirection(
+            directionDegress * (math.pi / 180),
+            progress!.value * maxDistance
+          );
+
+          return Positioned(
+            right: 4.0 + offset.dx,
+            bottom: 4.0 + offset.dy,
+            child: Transform.rotate(
+                angle: (1.0 - progress!.value) * math.pi / 2,
+              child: child,
+            ),
+          );
+        },
+    child: FadeTransition(
+      opacity: progress!,
+      child: child,
+    )
+    );
+  }
+}
+
