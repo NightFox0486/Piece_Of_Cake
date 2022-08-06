@@ -67,7 +67,7 @@ class PartyList extends StatelessWidget {
             pinned: true,
             snap: false,
             centerTitle: false,
-            title: const Text('Piece Of Cake'),
+            title: const Text('PartyList'),
             actions: [
               IconButton(
                 icon: const Icon(Icons.notifications),
