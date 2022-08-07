@@ -47,6 +47,10 @@ public class User {
   @Column(name = "user_account", nullable = false, length = 45)
   private String userAccount;
 
+  // kakao login
+  @Column(name = "user_kakao_login_id")
+  private String userKakaoLoginId;
+
   @JsonManagedReference
   @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
   private List<Party> partyList;
