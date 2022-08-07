@@ -10,6 +10,11 @@ class My extends StatefulWidget {
 class _MyState extends State<My> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Page'),
+      ),
+      body: SizedBox(),
+    );
   }
 }

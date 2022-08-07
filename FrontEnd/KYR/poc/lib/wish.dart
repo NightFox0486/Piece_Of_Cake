@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Wish extends StatefulWidget {
-  const Wish({Key? key}) : super(key: key);
+class WishList extends StatefulWidget {
+  const WishList({Key? key}) : super(key: key);
 
   @override
-  State<Wish> createState() => _WishState();
+  State<WishList> createState() => _WishListState();
 }
 
-class _WishState extends State<Wish> {
+class _WishListState extends State<WishList> {
   @override
   Widget build(BuildContext context) {
     return Container();
