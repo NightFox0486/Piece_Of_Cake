@@ -18,6 +18,7 @@ public class UserReqVO {
     private String userLat;
     private String userLng;
     private String userAccount;
+    private String userKakaoLoginId;
 
     public User toEntity() {
         User user = new User();
@@ -30,6 +31,7 @@ public class UserReqVO {
         user.setUserLat(userLat);
         user.setUserLng(userLng);
         user.setUserAccount(userAccount);
+        user.setUserKakaoLoginId(userKakaoLoginId);
         return user;
     }
 }
