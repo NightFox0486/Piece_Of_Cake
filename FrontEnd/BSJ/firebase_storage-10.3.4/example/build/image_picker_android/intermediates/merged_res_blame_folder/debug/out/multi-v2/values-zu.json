@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\firebase_storage-10.3.4\\example\\build\\image_picker_android\\intermediates\\res\\merged\\debug\\values-zu\\values-zu.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\mixki\\.gradle\\caches\\transforms-2\\files-2.1\\dcf81d1d54c87bc747a471e59bac8b59\\core-1.8.0\\res\\values-zu\\values-zu.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\firebase_storage-10.3.4\\example\\build\\image_picker_android\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zu\\values-zu.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\mixki\\.gradle\\caches\\transforms-2\\files-2.1\\dcf81d1d54c87bc747a471e59bac8b59\\core-1.8.0\\res\\values-zu\\values-zu.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}
