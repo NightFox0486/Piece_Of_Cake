@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+io/flutter/plugins/firebasestorageexample/BuildConfig.java
+ io.flutter.plugins.firebasestorageexample.BuildConfig
