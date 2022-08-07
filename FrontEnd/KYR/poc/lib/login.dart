@@ -4,6 +4,23 @@ import 'package:piece_of_cake/kakao/kakao_login_view_model.dart';
 
 import 'kakao/kakao_login.dart';
 
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      // Remove the debug banner
+        debugShowCheckedModeBanner: false,
+        title: 'CongNamul',
+        theme: ThemeData(
+          primarySwatch: Colors.amber,
+        ),
+        home: const LoginPage()
+    );  }
+}
+
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
