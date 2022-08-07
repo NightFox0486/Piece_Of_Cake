@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
     userResVO.setUserLat(user.getUserLat());
     userResVO.setUserLng(user.getUserLng());
     userResVO.setUserAccount(user.getUserAccount());
+    userResVO.setUserKakaoLoginId(user.getUserKakaoLoginId());
     return userResVO;
   }
 }
