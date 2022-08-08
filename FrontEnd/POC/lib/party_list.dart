@@ -1,9 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:piece_of_cake/buy_detail.dart';
 import './my.dart';
 import './chat_list_my.dart';
 import './pie_create.dart';
 import './main.dart';
+import './notice.dart';
 
 class Item extends StatelessWidget {
   const Item({Key? key}) : super(key: key);
@@ -25,13 +27,27 @@ class Item extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('강아지 자랑해요',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                  Text('거제1동', style: TextStyle(fontSize: 15),),
-                  Text('개예쁜 말티즈예요', style: TextStyle(fontSize: 20)),
+                  Text('거제1동', style: TextStyle(fontSize: 10),),
+                  Text('개예쁜 말티즈예요', style: TextStyle(fontSize: 15)),
+
                   Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Icon(Icons.favorite),
                         Text('4'),
+                        SizedBox(
+                          height: 30,
+                          width: 70,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BuyDetail()),
+                              );
+                            },
+                            child: Text('상세'),
+                          ),
+                        ),
                       ]
                   )
                 ],
@@ -47,16 +63,6 @@ class Item extends StatelessWidget {
 class PartyList extends StatelessWidget {
   const PartyList({Key? key}) : super(key: key);
 
-  // final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  //
-  // final screens = [
-  //   HomePage(),
-  //   PartyList(),
-  //   PieCreate(),
-  //   ChatListMy(),
-  //   My(),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +77,12 @@ class PartyList extends StatelessWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.notifications),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Notice()),
+                  );
+                },
               ),
             ],
             bottom: AppBar(
@@ -100,25 +111,7 @@ class PartyList extends StatelessWidget {
             ]),
           ),
         ],
-
       ),
-      // bottomNavigationBar: BottomAppBar(
-      //
-      //   color: Colors.amber,
-      //   shape: const CircularNotchedRectangle(),
-      //   child: Container(height: 60),
-      // ),
-      //
-      //
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => setState(() {
-      //   }),
-      //   tooltip: 'Increment Counter',
-      //   child: const Icon(Icons.add),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // ),
-
     );
   }
 }
