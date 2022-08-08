@@ -5,7 +5,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
-       <!--       Kakao Login Start-->
+       <!-- Kakao Login Start -->
        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
            <intent-filter android:label="flutter_web_auth">
                <action android:name="android.intent.action.VIEW" />
@@ -16,9 +16,9 @@
                <data android:scheme="kakao2157d1da3704b84b219793633746ca5c" android:host="oauth"/>
            </intent-filter>
        </activity>
-       <!--       Kakao Login End-->
+       <!-- Kakao Login End -->
 
-        <activity
+       <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"

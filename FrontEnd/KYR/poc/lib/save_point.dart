@@ -13,19 +13,19 @@ import 'my.dart';
 
 void main() {
   KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
-  runApp(const MyApp());
-  // runApp(
-  //     MaterialApp(
-  //       initialRoute: '/',
-  //       routes: {
-  //         '/': (context) => const Home(),
-  //         '/login': (context) => const LoginPage(),
-  //         '/wish': (context) => const Wish(),
-  //         '/chat': (context) => const Chat(),
-  //         '/my': (context) => const My(),
-  //       },
-  //     )
-  // );
+  // runApp(const MyApp());
+  runApp(
+    MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Home(),
+        '/login': (context) => const LoginPage(),
+        '/wish': (context) => const Wish(),
+        '/chat': (context) => const Chat(),
+        '/my': (context) => const My(),
+      },
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -100,6 +100,7 @@ class _MainPageState extends State<MainPage> {
         ),
       );
     } else {
+      Navigator.pushReplacementNamed(context, '/login');
       return Scaffold(
         appBar: AppBar(
           title: Text('로그인 해야함'),
