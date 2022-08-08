@@ -12,51 +12,52 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+    return InkWell(
+      splashColor: Colors.amber,
+      hoverColor: Colors.lightGreenAccent,
+      highlightColor: Colors.amber,
+      child: Container(
+        height: 150,
+        margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
           border: Border.all(color: Colors.amber), borderRadius: BorderRadius.circular(20)
-      ),
-      child: Row(
-        children: [
-          Flexible(flex: 3, child: Image.asset('assets/images/harry.png', width: 150)),
-          Flexible(flex: 7,child: Container(
+        ),
+        child: Row(
+          children: [
+            Flexible(flex: 3, child: Image.asset('assets/images/harry.png', width: 150)),
+            Flexible(flex: 7,child: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('강아지 자랑해요',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                  Text('거제1동', style: TextStyle(fontSize: 10),),
-                  Text('개예쁜 말티즈예요', style: TextStyle(fontSize: 15)),
-
-                  Row(
+                  children: [
+                    Text('강아지 자랑해요',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                    Text('거제1동', style: TextStyle(fontSize: 10),),
+                    Text('개예쁜 말티즈예요', style: TextStyle(fontSize: 15)),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Icon(Icons.favorite),
                         Text('4'),
-                        SizedBox(
-                          height: 30,
-                          width: 70,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => BuyDetail()),
-                              );
-                            },
-                            child: Text('상세'),
-                          ),
-                        ),
                       ]
-                  )
-                ],
-              )
-          ),
-          )
-        ],
+                    )
+                  ],
+                )
+              ),
+            )
+          ]
+        )
       ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BuyDetail()),
+        );
+      }
     );
+
+
+
+
   }
 }
 
