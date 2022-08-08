@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
 
   int index = 0;
   final screens = [
-    Home(),
+    HomePage(),
     WishList(),
     ChatListMy(),
     My(),
