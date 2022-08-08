@@ -230,7 +230,8 @@ class _BuyDetailState extends State<BuyDetail> {
         )
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.blueGrey,
+        color: Colors.white,
+        elevation: 10,
         child:
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -263,12 +264,20 @@ class _BuyDetailState extends State<BuyDetail> {
                                   onPressed: () {
 
                                   },
-                                  child: Text('파티 취소', style: TextStyle(fontSize: 25)),
                                   style: OutlinedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
+
                                       borderRadius: BorderRadius.all(Radius.circular(25))
-                                    )
+                                    ),
+                                    side: BorderSide(width: 5.0, color: Colors.amber),
                                   ),
+                                  child: Text('파티 취소',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
                                   ),
                                 )
                             ),
@@ -281,11 +290,17 @@ class _BuyDetailState extends State<BuyDetail> {
                                 onPressed: () {
 
                                 },
-                                child: Text('파티 성공', style: TextStyle(fontSize: 25)),
                                 style: OutlinedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(25))
                                     )
+                                ),
+                                child: Text('파티 성공',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold
+                                  ),
                                 ),
                               ),
                             )
