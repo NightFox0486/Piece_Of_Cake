@@ -69,38 +69,58 @@ class Home extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => PartyList()),
-                        );
-                      },
-                      child: Text('전체')),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => PartyList()),
-                        );
-                      },
-                      child: Text('소분')),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => PartyList()),
-                        );
-                      },
-                      child: Text('나눠')),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => PartyList()),
-                        );
-                      },
-                      child: Text('배달')),
+                  SizedBox(
+                    height: 50,
+                    width: 80,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PartyList()),
+                          );
+                        },
+                        child: Text('전체', style: TextStyle(fontSize: 20),)
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: 80,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PartyList()),
+                          );
+                        },
+                        child: Text('소분', style: TextStyle(fontSize: 20),)
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: 80,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PartyList()),
+                          );
+                        },
+                        child: Text('공구', style: TextStyle(fontSize: 20),)
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: 80,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PartyList()),
+                          );
+                        },
+                        child: Text('배달', style: TextStyle(fontSize: 20),)
+                    ),
+                  ),
                 ],
               ),
               Container(
