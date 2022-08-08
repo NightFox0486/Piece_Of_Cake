@@ -6,6 +6,8 @@ class KakaoLogin implements SocialLogin {
 
   @override
   Future<bool> login() async {
+    // var keyHash = await KakaoSdk.origin;
+    // print(keyHash);
     if (await AuthApi.instance.hasToken()) {
       try {
         AccessTokenInfo tokenInfo =

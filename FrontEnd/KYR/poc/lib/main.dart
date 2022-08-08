@@ -10,10 +10,10 @@ import 'package:piece_of_cake/my.dart';
 import 'package:piece_of_cake/pie_create.dart';
 import 'package:piece_of_cake/buy_create.dart';
 import 'package:piece_of_cake/dlv_create.dart';
+import 'package:piece_of_cake/kakao/kakao_login_view_model.dart';
+import 'package:piece_of_cake/kakao/kakao_login.dart';
 
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'kakao/kakao_login.dart';
-import 'kakao/kakao_login_view_model.dart';
 
 
 
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
 
   int index = 0;
   final screens = [
-    Home(),
+    HomePage(),
     WishList(),
     ChatListMy(),
     My(),
