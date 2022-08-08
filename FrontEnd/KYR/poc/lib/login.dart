@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async{
                 await viewModel.login();
                 setState(() {
-                  Route route = MaterialPageRoute(builder: (context) => Home());
+                  Route route = MaterialPageRoute(builder: (context) => MainPage());
                   Navigator.pushReplacement(context, route);
                 });
               },
