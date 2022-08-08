@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "189872052067",
+    "project_id": "imagestorage-168a8",
+    "storage_bucket": "imagestorage-168a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189872052067:android:c80fa49926fe9465e3e556",
+        "android_client_info": {
+          "package_name": "io.flutter.plugins.firebasestorageexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189872052067-0n6df9ljcf352mqhe5r5s498poae920d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKodPwkqSFcn6yyR1kjXdrpR3O9TVcjko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189872052067-0n6df9ljcf352mqhe5r5s498poae920d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "189872052067-ou1uu74dft002jsl6njff77j1usvoamv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.newPro"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
