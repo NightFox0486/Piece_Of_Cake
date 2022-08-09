@@ -12,6 +12,7 @@ import './home.dart';
 import './action-button.dart';
 import './dlv_create.dart';
 import './buy_create.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
 
@@ -79,40 +80,89 @@ class _HomePageState extends State<HomePage> {
         height: 55,
         onTap: (index) => setState(() => this.index = index),
       ),
-      floatingActionButton: ExpandableFab(
-          distance: 120,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () {
+      // floatingActionButton: ExpandableFab(
+      //     distance: 120,
+      //     children: [
+      //       ElevatedButton.icon(
+      //         onPressed: () {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => DlvCreate()),
+      //           );
+      //         },
+      //         icon: Icon(Icons.delivery_dining),
+      //         label: Text('배달')
+      //       ),
+      //       ElevatedButton.icon(
+      //           onPressed: () {
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(builder: (context) => BuyCreate()),
+      //             );
+      //           },
+      //           icon: Icon(Icons.shopping_bag),
+      //           label: Text('공구')
+      //       ),
+      //       ElevatedButton.icon(
+      //           onPressed: () {
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(builder: (context) => PieCreate()),
+      //             );
+      //           },
+      //           icon: Icon(Icons.safety_divider),
+      //           label: Text('소분')
+      //       ),
+      //     ]),
+      floatingActionButton: SpeedDial(
+        icon: Icons.add,
+        activeIcon: Icons.close,
+        spacing: 10,
+        overlayOpacity: 0.7,
+        curve: Curves.bounceIn,
+        backgroundColor: Colors.amber,
+        activeBackgroundColor: Colors.redAccent,
+        elevation: 16.0,
+        children: [
+          SpeedDialChild(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DlvCreate()),
+              );
+            },
+            child: Icon(Icons.delivery_dining, size: 30,),
+            label: '배달',
+            labelStyle: TextStyle(fontSize: 20),
+            backgroundColor: Colors.amber
+          ),
+          SpeedDialChild(
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DlvCreate()),
+                  MaterialPageRoute(builder: (context) => BuyCreate()),
                 );
               },
-              icon: Icon(Icons.delivery_dining),
-              label: Text('배달')
-            ),
-            ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BuyCreate()),
-                  );
-                },
-                icon: Icon(Icons.shopping_bag),
-                label: Text('공구')
-            ),
-            ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PieCreate()),
-                  );
-                },
-                icon: Icon(Icons.safety_divider),
-                label: Text('소분')
-            ),
-          ]),
+            child: Icon(Icons.shopping_bag, size: 30,),
+            label: '공구',
+            labelStyle: TextStyle(fontSize: 20),
+            backgroundColor: Colors.amber
+          ),
+          SpeedDialChild(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PieCreate()),
+                );
+              },
+            child: Icon(Icons.safety_divider, size: 30,),
+            label: '소분',
+            labelStyle: TextStyle(fontSize: 20),
+            backgroundColor: Colors.amber
+          ),
+        ],
+      ),
+
     );
   }
 }
