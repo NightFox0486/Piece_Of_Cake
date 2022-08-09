@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -21,29 +23,27 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-
   _getUserLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+    if(await Permission.location.request().isGranted){
+      print('허락됨');
+    } else {
+      showDialog(context: context, barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: new Text("위치 제공 권한 거부를 누르셨습니다"),
+              content: new Text("사용하시려면 설정에서 위치 제공 권한을 허용하여 주십시오"),
+              actions: <Widget>[
+                FloatingActionButton.extended(
+                  onPressed: () {
+                    SystemNavigator.pop();
+                  },
+                  label: Text('닫기'),
+                )
+              ],
+            );
+          }
+          );
     }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
     var position = await GeolocatorPlatform.instance.getCurrentPosition(
         locationSettings: const LocationSettings(
             accuracy: LocationAccuracy.bestForNavigation));
@@ -168,10 +168,6 @@ class loading extends StatelessWidget {
                Text(''),
                Text(''),
                Text(''),
-               FloatingActionButton.extended(
-                 onPressed: () {},
-                 label: Text('실수로 위치 권한 제공 거부를 누르셨다면 클릭해 주십시오'),
-               ),
              ],
             ),
           )
