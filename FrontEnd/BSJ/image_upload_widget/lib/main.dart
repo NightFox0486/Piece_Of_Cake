@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 import 'dart:io' as io;
 
 import 'package:firebase_core/firebase_core.dart';
@@ -32,28 +32,11 @@ class _MyAppState extends State<MyApp> {
     )
   ];
 
-  addImg() {
-    setState(() async {
-      final file = await ImagePicker().pickImage(source: ImageSource.gallery);
-      UploadTask? task = await uploadFile(file);
-
-      if (task != null) {}
-      // images.insert(
-      //     0,
-      //     Container(
-      //       child: Image.asset('img/thumb.jpg',
-      //           fit: BoxFit.fill, width: 100, height: 100),
-      //     ));
-    });
-  }
-
-  Future<UploadTask?> uploadFile(XFile? file) async {
+  Future<String>? uploadFile(XFile? file) async {
     if (file == null) {
       print("input images is null");
-      return null;
+      return null!;
     }
-
-    UploadTask uploadTask;
 
     Reference ref = FirebaseStorage.instance
         .ref()
@@ -63,10 +46,32 @@ class _MyAppState extends State<MyApp> {
       contentType: 'image/jpeg',
       customMetadata: {'picked-file-path': file.path},
     );
-    print('test');
-    uploadTask = ref.putFile(io.File(file.path), metadata);
-    print('test2');
-    return Future.value(uploadTask);
+    if (kIsWeb) {
+      ref.putData(await file.readAsBytes(), metadata);
+    } else {
+      ref.putFile(io.File(file.path), metadata);
+    }
+    String url = await ref.getDownloadURL();
+    return url;
+  }
+
+  addImgStorage() async {
+    final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    String? url = await uploadFile(file);
+    if (url != null) {
+      images.insert(
+          0,
+          Container(
+            child: Image.network(url, width: 100, height: 100),
+          ));
+    }
+    setState(() {});
+  }
+
+  addImg() {
+    setState(() {
+      addImgStorage();
+    });
   }
 
   removeImg() {
