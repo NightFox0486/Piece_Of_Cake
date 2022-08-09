@@ -12,24 +12,46 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late LatLng _initialPosition;
-
+  bool isloading=true;
   @override
   void initState() {
     super.initState();
-    _getUserLocation();
+    _getUserLocation().whenComplete(() {
+      isloading = false;
+    });
   }
 
-  void _getUserLocation() async {
-    try {
-      var position = await GeolocatorPlatform.instance.getCurrentPosition(
-          locationSettings: const LocationSettings(
-              accuracy: LocationAccuracy.bestForNavigation));
-      setState(() {
-        _initialPosition = LatLng(position.latitude, position.longitude);
-      });
-    } catch (e) {
-      print(e);
+
+  _getUserLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
     }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    var position = await GeolocatorPlatform.instance.getCurrentPosition(
+        locationSettings: const LocationSettings(
+            accuracy: LocationAccuracy.bestForNavigation));
+
+    setState(() {
+      _initialPosition = LatLng(position.latitude, position.longitude);
+    });
+    return _initialPosition;
   }
 
 
@@ -42,37 +64,42 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: <Widget>[
-              GoogleMap(
-                initialCameraPosition:
-                CameraPosition(target: LatLng(_initialPosition.latitude, _initialPosition.longitude), zoom: 16),
-                onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                    },
-                markers: Set.from(myMarker),
-                onTap: _handleTap,
-                zoomGesturesEnabled: true,
-                myLocationEnabled: true,
-                compassEnabled: true,
-                myLocationButtonEnabled: false,
-              ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child:FloatingActionButton.extended(
-                      onPressed: () {},//함수 추가할 필요 없음
-                      label: Text(address),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    // add your floating action button
-                    child: FloatingActionButton.extended(
-                      onPressed: () {},//주소(jsonDecode(response.body)['results'][0]['formatted_address'])를 가지고 게시글 등록 화면으로 이동
-                      label: Text(selectaddress),
-                    ),
-                  ),
-                ]
-            )
-        );
+          isloading ?
+          loading() :
+          // CircularProgressIndicator(
+          //   semanticsLabel: 'Linear progress indicator',
+          // ) :
+          GoogleMap(
+            initialCameraPosition:
+            CameraPosition(target: LatLng(_initialPosition.latitude, _initialPosition.longitude), zoom: 16),
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+              },
+            markers: Set.from(myMarker),
+            onTap: _handleTap,
+            zoomGesturesEnabled: true,
+            myLocationEnabled: true,
+            compassEnabled: true,
+            myLocationButtonEnabled: false,
+            ),
+            Align(
+            alignment: Alignment.topCenter,
+            child:FloatingActionButton.extended(
+            onPressed: () {},//함수 추가할 필요 없음
+            label: Text(address),
+            ),
+            ),
+            Align(
+            alignment: Alignment.bottomCenter,
+            // add your floating action button
+            child: FloatingActionButton.extended(
+            onPressed: () {},//주소(jsonDecode(response.body)['results'][0]['formatted_address'])를 가지고 게시글 등록 화면으로 이동
+            label: Text(selectaddress),
+            ),
+            ),
+          ]
+        )
+    );
   }
 
   _handleTap(LatLng tappedPoint) async {
@@ -87,7 +114,6 @@ class _MapScreenState extends State<MapScreen> {
     var lon = tappedPoint.longitude;
     final Uri clickurl = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk&language=ko');
     final response = await http.get(clickurl);
-    print(jsonDecode(response.body)['results'][0]['formatted_address']);
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: tappedPoint,
@@ -96,5 +122,60 @@ class _MapScreenState extends State<MapScreen> {
       address = jsonDecode(response.body)['results'][0]['formatted_address'];
       selectaddress = '이 장소로 선택';
     });
+  }
+}
+
+class loading extends StatelessWidget {
+  const loading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      home: new Scaffold(
+          body: Center(
+            child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: <Widget>[
+               Text(''),
+               Text(''),
+               Text(''),
+               Text(
+                 'Map Loading...',
+                 style: TextStyle(fontSize: 30, color: Colors.blue),
+               ),
+               Text(''),
+               Text(''),
+               Text(''),
+               SizedBox(
+                 child: CircularProgressIndicator(),
+                 height: 250.0,
+                 width: 250.0,
+               ),
+               Text(''),
+               Text(''),
+               Text(''),
+               Text(
+                 '위치 권한을 확인해 주십시오',
+                 style: TextStyle(fontSize: 20, color: Colors.blue),
+               ),
+               Text(''),
+               Text(''),
+               Text(''),
+               Text(
+                 '로딩이 오래 걸린다면 연결 상태를 확인하여 주십시오',
+                 style: TextStyle(fontSize: 15, color: Colors.blue),
+               ),
+               Text(''),
+               Text(''),
+               Text(''),
+               FloatingActionButton.extended(
+                 onPressed: () {},
+                 label: Text('실수로 위치 권한 제공 거부를 누르셨다면 클릭해 주십시오'),
+               ),
+             ],
+            ),
+          )
+      ),
+    );
   }
 }
