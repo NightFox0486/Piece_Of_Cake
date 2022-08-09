@@ -4,7 +4,6 @@ import com.E203.pjt.model.entity.ChatLog;
 import com.E203.pjt.repository.ChatLogRepository;
 import com.E203.pjt.service.ChatLogService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

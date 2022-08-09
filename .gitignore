@@ -1,3 +1,5 @@
 BackEnd/.vscode/launch.json
 BackEnd/common_pjt/src/main/resources/application.properties
 FrontEnd/SSG/cong_namul/build
+FrontEnd/KYR/poc/build
+FrontEnd/KYR/poc_feature_impl_test/build

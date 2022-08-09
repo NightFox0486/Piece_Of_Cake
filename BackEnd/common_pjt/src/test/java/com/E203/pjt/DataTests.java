@@ -48,6 +48,7 @@ public class DataTests {
                 party.setUser(u);
                 party.setPartyCode(String.format("00%d", j));
                 party.setPartyTitle(String.format("%d-%d", i, j));
+//                party.setPartyContent(String.format("%d", i*111));
                 party.setPartyContent("ㅈㄱㄴ");
                 party.setPartyRegDt(LocalDateTime.now());
                 party.setPartyRdvLat(String.format("%d%d", i, j));

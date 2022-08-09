@@ -3,16 +3,14 @@ package com.E203.pjt.model.entity;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -49,7 +47,12 @@ public class User {
   @Column(name = "user_account", nullable = false, length = 45)
   private String userAccount;
 
+  // kakao login
+  @Column(name = "user_kakao_login_id")
+  private String userKakaoLoginId;
+
   @JsonManagedReference
   @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
   private List<Party> partyList;
+
 }

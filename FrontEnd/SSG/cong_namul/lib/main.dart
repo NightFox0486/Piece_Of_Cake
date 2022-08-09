@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -51,23 +52,23 @@ class MeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          appBar: AppBar( title: TextField(
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              label: Icon(Icons.search)
-            )
-          ), actions: [Icon(Icons.menu), Icon(Icons.notifications) ]),
-          body: ListView(
-            children: [
-              Item(),
-              Item(),
-              Item(),
-            ],
+            appBar: AppBar( title: TextField(
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    label: Icon(Icons.search)
+                )
+            ), actions: [Icon(Icons.menu), Icon(Icons.notifications) ]),
+            body: ListView(
+              children: [
+                Item(),
+                Item(),
+                Item(),
+              ],
 
-          )
-          )
-      );
+            )
+        )
+    );
   }
 }
 // return MaterialApp(
@@ -115,7 +116,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.amber,
         ),
-        home: const HomePage());
+        home: const HomePage()
+    );
   }
 }
 
@@ -126,9 +128,20 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+
+
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final items = <Widget>[
+      Icon(Icons.home, size:30),
+      Icon(Icons.celebration, size:30),
+      Icon(Icons.add, size:30),
+      Icon(Icons.question_answer, size:30),
+      Icon(Icons.person, size:30),
+
+    ];
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -137,7 +150,7 @@ class _HomePageState extends State<HomePage> {
             pinned: true,
             snap: false,
             centerTitle: false,
-            title: const Text('CongNamul'),
+            title: const Text('Piece Of Cake'),
             actions: [
               IconButton(
                 icon: const Icon(Icons.notifications),
@@ -151,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
                 child: const Center(
                   child: TextField(
-                    decoration: InputDecoration(
+                      decoration: InputDecoration(
                         hintText: '파티검색',
                         prefixIcon: Icon(Icons.search),)
                   ),
@@ -165,11 +178,38 @@ class _HomePageState extends State<HomePage> {
               Item(),
               Item(),
               Item(),
-              Item()
+              Item(),
+              Item(),
             ]),
           ),
         ],
+
+      ),
+      // bottomNavigationBar: BottomAppBar(
+      //
+      //   color: Colors.amber,
+      //   shape: const CircularNotchedRectangle(),
+      //   child: Container(height: 60),
+      // ),
+      //
+      //
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => setState(() {
+      //   }),
+      //   tooltip: 'Increment Counter',
+      //   child: const Icon(Icons.add),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // ),
+      bottomNavigationBar: CurvedNavigationBar(
+        items: items,
+        backgroundColor: Colors.white,
+        color: Colors.amber,
+        // onTap: (index) => setState(() => this.index = index),
       ),
     );
   }
 }
+
+
+
