@@ -106,14 +106,14 @@ class _BuyDetailState extends State<BuyDetail> {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.account_circle),
-                                Text('탕웨이')
+                                Icon(Icons.account_circle, size: 40,),
+                                Text('탕웨이', style: TextStyle(fontSize: 25),)
                               ],
                             ),
                             Row(
                               children: [
-                                Icon(Icons.person),
-                                Text('2/4')
+                                Icon(Icons.person, size: 40),
+                                Text('2/4', style: TextStyle(fontSize: 25))
                               ],
                             )
                           ]
@@ -142,21 +142,21 @@ class _BuyDetailState extends State<BuyDetail> {
                             borderRadius: BorderRadius.circular(10)
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('4000원'),
-                                  Text('1인 금액'),
+                                  Text('4000원', style: TextStyle(fontSize: 20)),
+                                  Text('1인 금액', style: TextStyle(fontSize: 20)),
                                 ],
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('16000원'),
-                                  Text('총 금액'),
+                                  Text('16000원', style: TextStyle(fontSize: 20)),
+                                  Text('총 금액', style: TextStyle(fontSize: 20)),
                                 ],
                               )
                             ],
@@ -195,17 +195,23 @@ class _BuyDetailState extends State<BuyDetail> {
                         ),
                         child: Column(
                           children: [
-                            Text('만남 장소',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w200),
-                              textAlign: TextAlign.center,
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              child: Text('만남 장소',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w200),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            Text('부산광역시 강서구 송정동 송정삼정그린코아더시티 로비 편의점 앞',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w100),
-                              textAlign: TextAlign.center,
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              child: Text('부산광역시 강서구 송정동 송정삼정그린코아더시티 로비 편의점 앞',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w100),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -230,7 +236,8 @@ class _BuyDetailState extends State<BuyDetail> {
         )
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.blueGrey,
+        color: Colors.white,
+        elevation: 10,
         child:
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -263,12 +270,20 @@ class _BuyDetailState extends State<BuyDetail> {
                                   onPressed: () {
 
                                   },
-                                  child: Text('파티 취소', style: TextStyle(fontSize: 25)),
                                   style: OutlinedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
+
                                       borderRadius: BorderRadius.all(Radius.circular(25))
-                                    )
+                                    ),
+                                    side: BorderSide(width: 5.0, color: Colors.amber),
                                   ),
+                                  child: Text('파티 취소',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
                                   ),
                                 )
                             ),
@@ -281,11 +296,17 @@ class _BuyDetailState extends State<BuyDetail> {
                                 onPressed: () {
 
                                 },
-                                child: Text('파티 성공', style: TextStyle(fontSize: 25)),
                                 style: OutlinedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(25))
                                     )
+                                ),
+                                child: Text('파티 성공',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold
+                                  ),
                                 ),
                               ),
                             )

@@ -6,57 +6,68 @@ import './chat_list_my.dart';
 import './pie_create.dart';
 import './main.dart';
 import './notice.dart';
+import 'package:like_button/like_button.dart';
 
 class Item extends StatelessWidget {
   const Item({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+    return InkWell(
+      splashColor: Colors.amber,
+      hoverColor: Colors.lightGreenAccent,
+      highlightColor: Colors.amber,
+      child: Container(
+        height: 150,
+        margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
           border: Border.all(color: Colors.amber), borderRadius: BorderRadius.circular(20)
-      ),
-      child: Row(
-        children: [
-          Flexible(flex: 3, child: Image.asset('assets/images/harry.png', width: 150)),
-          Flexible(flex: 7,child: Container(
+        ),
+        child: Row(
+          children: [
+            Flexible(flex: 4, child:
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  'assets/images/harry.png',
+                  fit: BoxFit.fill,
+                ), // Text(key['title']),
+              ),
+            ),
+            Flexible(flex: 6,child: Container(
+              margin: EdgeInsets.all(5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('강아지 자랑해요',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                  Text('거제1동', style: TextStyle(fontSize: 10),),
-                  Text('개예쁜 말티즈예요', style: TextStyle(fontSize: 15)),
-
-                  Row(
+                  children: [
+                    Text('강아지 자랑해요',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),overflow: TextOverflow.ellipsis,),
+                    Text('거제1동', style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis,),
+                    Text('개예쁜 말티즈예요', style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(Icons.favorite),
+                        LikeButton(),
                         Text('4'),
-                        SizedBox(
-                          height: 30,
-                          width: 70,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => BuyDetail()),
-                              );
-                            },
-                            child: Text('상세'),
-                          ),
-                        ),
                       ]
-                  )
-                ],
-              )
-          ),
-          )
-        ],
+                    )
+                  ],
+                )
+              ),
+            )
+          ]
+        )
       ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BuyDetail()),
+        );
+      }
     );
+
+
+
+
   }
 }
 
