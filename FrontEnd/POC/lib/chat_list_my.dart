@@ -23,7 +23,10 @@ class chatRoom extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.amber), borderRadius: BorderRadius.circular(20)
+            border: Border(
+              top: BorderSide(width: 1.0, color: Colors.amber),
+              // bottom: BorderSide(width: 1.0, color: Colors.amber),
+            )
         ),
         child: Row(
           children: [
@@ -81,7 +84,7 @@ class ChatListMy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('파티 대화 목록')
+          title: Text('ChatListMy')
       ),
       body: ListView(
         children: [
