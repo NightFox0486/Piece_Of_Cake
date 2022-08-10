@@ -1,8 +1,16 @@
 package com.E203.pjt;
 
+import com.E203.pjt.model.dto.req.UserReqVO;
 import com.E203.pjt.model.entity.Party;
 import com.E203.pjt.model.entity.User;
+import com.E203.pjt.model.entity.WishList;
+import com.E203.pjt.model.entity.WishListPK;
+import com.E203.pjt.repository.PartyRepository;
+import com.E203.pjt.service.PartyService;
+import com.E203.pjt.service.UserService;
+import com.E203.pjt.service.WishListService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +26,29 @@ public class DataTests {
 
     @PersistenceContext
     EntityManager em;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    PartyRepository partyRepository;
+
+    @Autowired
+    WishListService wishListService;
+
+    @Test
+    void makeKakaoUsers() {
+        UserReqVO userReqVO = new UserReqVO();
+        userReqVO.setUserEmail("asdf@asdf.com");
+        userReqVO.setUserPhone("010-1111-1111");
+        userReqVO.setUserNickname("asdf");
+        userReqVO.setUserImage("asdf");
+        userReqVO.setUserKakaoLoginId("12341234");
+        User user = userReqVO.toEntity();
+        em.persist(user);
+        em.flush();
+        em.clear();
+    }
 
     @Test
     void makeUsers() {
@@ -35,6 +66,13 @@ public class DataTests {
             em.persist(user);
             em.flush();
             em.clear();
+        }
+    }
+
+    @Test
+    void makeWishList() {
+        for (int i=1; i<5; i++) {
+            wishListService.insertWishList(i);
         }
     }
 
