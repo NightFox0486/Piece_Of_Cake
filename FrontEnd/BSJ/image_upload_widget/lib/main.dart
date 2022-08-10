@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'dart:io' as io;
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -26,7 +27,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final ImagePicker imagePicker = ImagePicker();
-
   List<XFile>? imageFileList = [];
 
   void selectImages() async {
@@ -128,7 +128,38 @@ class _MyAppState extends State<MyApp> {
                             crossAxisCount: 3
                         ),
                         itemBuilder: (BuildContext context, int index) {
-                          return Image.file(io.File(imageFileList![index].path), fit: BoxFit.cover);
+                          return index == imageFileList!.length
+                              ?Container(
+                            child: DottedBorder(
+                              color: Colors.grey,
+                              strokeWidth: 2,
+                              radius: Radius.circular(8),
+                              borderType: BorderType.RRect,
+                              dashPattern: [8,4],
+                              child: ClipRect(
+                                child: Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                              : Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                                image: DecorationImage(
+                                    image: FileImage(io.File(imageFileList![index].path)),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                          );
+                          // return Image.file(io.File(imageFileList![index].path), fit: BoxFit.cover);
                         },
                     ),
                   )
