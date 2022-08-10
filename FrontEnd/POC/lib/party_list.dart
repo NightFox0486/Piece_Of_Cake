@@ -6,6 +6,7 @@ import './chat_list_my.dart';
 import './pie_create.dart';
 import './main.dart';
 import './notice.dart';
+import './search.dart';
 import 'package:like_button/like_button.dart';
 
 class Item extends StatelessWidget {
@@ -64,65 +65,109 @@ class Item extends StatelessWidget {
         );
       }
     );
-
-
-
-
   }
 }
 
-class PartyList extends StatelessWidget {
+class PartyList extends StatefulWidget {
   const PartyList({Key? key}) : super(key: key);
 
   @override
+  State<PartyList> createState() => _PartyListState();
+}
+
+class _PartyListState extends State<PartyList> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            snap: false,
-            centerTitle: false,
-            title: const Text('PartyList'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.notifications),
+      appBar: AppBar(
+          title: Text('PartyList'),
+          actions: [
+            IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Notice()),
                   );
                 },
-              ),
-            ],
-            bottom: AppBar(
-              title: Container(
-                width: double.infinity,
-                height: 40,
-                color: Colors.white,
-                child: const Center(
-                  child: TextField(
-                      decoration: InputDecoration(
-                        hintText: '파티검색',
-                        prefixIcon: Icon(Icons.search),)
-                  ),
-                ),
-              ),
+                icon: Icon(Icons.notifications)
             ),
-          ),
-          // Other Sliver Widgets
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Item(),
-              Item(),
-              Item(),
-              Item(),
-              Item(),
-            ]),
-          ),
-        ],
+            IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: customSearch()
+                  );
+                },
+                icon: Icon(Icons.search))
+          ]
+      ),
+      body: ListView(
+          children: [
+            Item(),
+            Item(),
+            Item(),
+            Item(),
+            Item(),
+            Item(),
+          ]
       ),
     );
   }
 }
+
+
+// class PartyList extends StatelessWidget {
+//   const PartyList({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: CustomScrollView(
+//         slivers: [
+//           SliverAppBar(
+//             floating: true,
+//             pinned: true,
+//             snap: false,
+//             centerTitle: false,
+//             title: const Text('PartyList'),
+//             actions: [
+//               IconButton(
+//                 icon: const Icon(Icons.notifications),
+//                 onPressed: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(builder: (context) => Notice()),
+//                   );
+//                 },
+//               ),
+//             ],
+//             bottom: AppBar(
+//               title: Container(
+//                 width: double.infinity,
+//                 height: 40,
+//                 color: Colors.white,
+//                 child: const Center(
+//                   child: TextField(
+//                       decoration: InputDecoration(
+//                         hintText: '파티검색',
+//                         prefixIcon: Icon(Icons.search),)
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ),
+//           // Other Sliver Widgets
+//           SliverList(
+//             delegate: SliverChildListDelegate([
+//               Item(),
+//               Item(),
+//               Item(),
+//               Item(),
+//               Item(),
+//             ]),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+

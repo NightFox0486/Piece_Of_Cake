@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
 
   int index = 0;
   final screens = [
-    Home(),
+    homePage(),
     PartyList(),
     ChatListMy(),
     My(),
@@ -72,10 +72,11 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: screens[index],
+      extendBody: true,
       bottomNavigationBar: CurvedNavigationBar(
         items: items,
         key: navigationKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         color: Colors.amber,
         height: 55,
         onTap: (index) => setState(() => this.index = index),
