@@ -15,6 +15,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'kakao_login_page.dart';
 import 'models/kakao_login_model.dart';
+import 'models/party_model.dart';
 
 
 
@@ -24,6 +25,7 @@ void main() {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => KakaoLoginModel()),
+          ChangeNotifierProvider(create: (_) => PartyModel()),
         ],
         child: MyApp(),
       )

@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
                       fontSize:20,
                       fontWeight: FontWeight.bold,
                     ),),
-                  Item(),
+                  // Item(),
                 ],
               ),
               Container(
@@ -133,7 +133,7 @@ class Home extends StatelessWidget {
                       fontSize:20,
                       fontWeight: FontWeight.bold,
                     ),),
-                  Item(),
+                  // Item(),
                 ],
               ),
             ]),

@@ -77,56 +77,6 @@ class Party {
   }
 }
 
-class UserReqVO {
-  String? userEmail;
-  String? userPhone;
-  String? userNickname;
-  String? userPassword;
-  String? userImage;
-  int? userRating;
-  String? userLat;
-  String? userLng;
-  String? userAccount;
-
-  UserReqVO(
-      this.userEmail,
-      this.userPhone,
-      this.userNickname,
-      this.userPassword,
-      this.userImage,
-      this.userRating,
-      this.userLat,
-      this.userLng,
-      this.userAccount,
-      );
-
-  UserReqVO.fromJson(Map<String, dynamic> json) {
-    userEmail = json['userEmail'];
-    userPhone = json['userPhone'];
-    userNickname = json['userNickname'];
-    userPassword = json['userPassword'];
-    userImage = json['userImage'];
-    userRating = json['userRating'];
-    userLat = json['userLat'];
-    userLng = json['userLng'];
-    userAccount = json['userAccount'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userEmail'] = this.userEmail;
-    data['userPhone'] = this.userPhone;
-    data['userNickname'] = this.userNickname;
-    data['userPassword'] = this.userPassword;
-    data['userImage'] = this.userImage;
-    data['userRating'] = this.userRating;
-    data['userLat'] = this.userLat;
-    data['userLng'] = this.userLng;
-    data['userAccount'] = this.userAccount;
-    return data;
-  }
-}
-
 class User {
   int userSeq;
   String userEmail;

@@ -1,5 +1,8 @@
 package com.E203.pjt.model.dto.res;
 
+import com.E203.pjt.model.entity.Party;
+import com.E203.pjt.model.entity.User;
+import com.E203.pjt.service.UserService;
 import lombok.*;
 
 import java.time.LocalDateTime;
