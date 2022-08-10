@@ -129,26 +129,31 @@ class _MyAppState extends State<MyApp> {
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return index == imageFileList!.length
-                              ?Container(
-                            child: DottedBorder(
-                              color: Colors.grey,
-                              strokeWidth: 2,
-                              radius: Radius.circular(8),
-                              borderType: BorderType.RRect,
-                              dashPattern: [8,4],
-                              child: ClipRect(
+                              ?GestureDetector(
+                            onTap: (){
+                              selectImages();
+                            },
                                 child: Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
+                            child: DottedBorder(
+                                color: Colors.grey,
+                                strokeWidth: 2,
+                                radius: Radius.circular(8),
+                                borderType: BorderType.RRect,
+                                dashPattern: [8,4],
+                                child: ClipRect(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: double.infinity,
 
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.grey,
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
-                              ),
                             ),
-                          )
+                          ),
+                              )
                               : Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -163,18 +168,6 @@ class _MyAppState extends State<MyApp> {
                         },
                     ),
                   )
-              ),
-              MaterialButton(
-                  color: Colors.blue,
-                  child: const Text(
-                      "Pick Images from Gallery",
-                      style: TextStyle(
-                          color: Colors.white70, fontWeight: FontWeight.bold
-                      )
-                  ),
-                  onPressed: () {
-                    selectImages();
-                  }
               ),
             ],
           ),
