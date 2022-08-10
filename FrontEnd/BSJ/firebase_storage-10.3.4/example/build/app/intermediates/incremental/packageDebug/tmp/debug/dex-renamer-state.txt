@@ -1,4 +1,0 @@
-#Sun Aug 07 12:59:08 KST 2022
-base.0=D\:\\firebase_storage-10.3.4\\example\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex
