@@ -8,7 +8,7 @@ class Chat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('파티 대화 목록')
+          title: Text('Chat')
     )
     );
   }
