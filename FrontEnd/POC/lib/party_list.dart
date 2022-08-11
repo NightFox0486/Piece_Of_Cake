@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:piece_of_cake/buy_detail.dart';
+import 'package:piece_of_cake/buy_detail_host.dart';
 import './my.dart';
 import './chat_list_my.dart';
 import './pie_create.dart';
@@ -20,7 +20,7 @@ class Item extends StatelessWidget {
       highlightColor: Colors.amber,
       child: Container(
         height: 150,
-        margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.amber), borderRadius: BorderRadius.circular(20)
@@ -107,6 +107,9 @@ class _PartyListState extends State<PartyList> {
             Item(),
             Item(),
             Item(),
+            Container(
+              margin: EdgeInsets.only(bottom: 50),
+            )
           ]
       ),
     );
