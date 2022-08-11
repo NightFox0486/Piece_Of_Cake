@@ -15,8 +15,10 @@ import java.time.LocalDateTime;
 public class PartyResVO {
     Integer partySeq;
     Integer userSeq;
+    String partyCode;
     String partyTitle;
     String partyContent;
+    Integer partyWishCount;
     LocalDateTime partyRegDt;
     LocalDateTime partyUpdDt;
     LocalDateTime partyRdvDt;

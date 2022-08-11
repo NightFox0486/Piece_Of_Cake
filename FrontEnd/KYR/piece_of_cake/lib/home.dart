@@ -1,10 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import './my.dart';
 import './chat_list_my.dart';
 import './pie_create.dart';
 import './party_list.dart';
 import './notice.dart';
+import 'models/kakao_login_model.dart';
+import 'models/party_model.dart';
 
 
 class Home extends StatelessWidget {
@@ -12,6 +15,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<KakaoLoginModel>(context, listen: false);
+    final partyProvider = Provider.of<PartyModel>(context, listen: false);
+    partyProvider.fetchWishList(userProvider.userResVO?.userSeq);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
