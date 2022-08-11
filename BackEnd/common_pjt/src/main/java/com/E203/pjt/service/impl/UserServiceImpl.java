@@ -17,12 +17,40 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   @Override
+  public UserResVO createKakaoUser(UserReqVO userReqVO) {
+    User user = userReqVO.toEntity();
+    User result = userRepository.save(user);
+    UserResVO userResVO = new UserResVO();
+    userResVO.setUserSeq(result.getUserSeq());
+    userResVO.setUserEmail(result.getUserEmail());
+    userResVO.setUserPhone(result.getUserPhone());
+    userResVO.setUserNickname(result.getUserNickname());
+    userResVO.setUserPassword(result.getUserPassword());
+    userResVO.setUserImage(result.getUserImage());
+    userResVO.setUserRating(result.getUserRating());
+    userResVO.setUserLat(result.getUserLat());
+    userResVO.setUserLng(result.getUserLng());
+    userResVO.setUserAccount(result.getUserAccount());
+    userResVO.setUserKakaoLoginId(result.getUserKakaoLoginId());
+    return userResVO;
+  }
+
+  @Override
   public UserResVO createUser(UserReqVO userReqVO) {
     User user = userReqVO.toEntity();
     User result = userRepository.save(user);
     UserResVO userResVO = new UserResVO();
     userResVO.setUserSeq(result.getUserSeq());
+    userResVO.setUserEmail(result.getUserEmail());
+    userResVO.setUserPhone(result.getUserPhone());
     userResVO.setUserNickname(result.getUserNickname());
+    userResVO.setUserPassword(result.getUserPassword());
+    userResVO.setUserImage(result.getUserImage());
+    userResVO.setUserRating(result.getUserRating());
+    userResVO.setUserLat(result.getUserLat());
+    userResVO.setUserLng(result.getUserLng());
+    userResVO.setUserAccount(result.getUserAccount());
+    userResVO.setUserKakaoLoginId(result.getUserKakaoLoginId());
     return userResVO;
   }
 
