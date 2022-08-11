@@ -29,7 +29,7 @@ class _KakaoLoginPageState extends State<KakaoLoginPage> {
                 await Provider.of<KakaoLoginModel>(context, listen: false).setUser();
                 print('login');
                 print('user: ${Provider.of<KakaoLoginModel>(context, listen: false).user}');
-                Route route = MaterialPageRoute(builder: (context) => HomePage());
+                Route route = MaterialPageRoute(builder: (context) => const HomePage());
                 Navigator.pushReplacement(context, route);
               },
               child: const Text('Log In'),

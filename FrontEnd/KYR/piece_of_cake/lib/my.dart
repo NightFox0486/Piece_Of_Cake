@@ -16,7 +16,7 @@ class _MyState extends State<My> {
   Widget build(BuildContext context) {
     print('mypage');
     print(Provider.of<KakaoLoginModel>(context).user);
-    print(KakaoLoginModel().user);
+    print('userSeq: ${Provider.of<KakaoLoginModel>(context).userResVO?.userSeq}');
     return Scaffold(
       appBar: AppBar(),
       body: Column(
