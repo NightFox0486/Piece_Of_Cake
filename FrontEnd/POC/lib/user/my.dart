@@ -2,9 +2,10 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/kakao/kakao_login.dart';
 import 'package:piece_of_cake/kakao/kakao_login_view_model.dart';
-import './notice.dart';
+import '../notice.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import './party_list.dart';
+import '../party/wish/wish_list.dart';
+import 'package:piece_of_cake/widget.dart';
 
 class My extends StatefulWidget {
   const My({Key? key}) : super(key: key);
