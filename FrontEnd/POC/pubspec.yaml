@@ -40,6 +40,9 @@ dependencies:
   smooth_page_indicator: ^0.3.0-nullsafety.0
   like_button: ^2.0.4
   flutter_speed_dial: ^6.0.0
+  dropdown_button2: ^1.7.1
+  syncfusion_flutter_gauges: ^20.2.43
+
 
 dev_dependencies:
   flutter_test:
