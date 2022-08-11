@@ -1,11 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import './my.dart';
-import './chat_list_my.dart';
-import './pie_create.dart';
-import './party_list.dart';
+import 'package:piece_of_cake/party/party_list.dart';
+import 'user/my.dart';
+import 'chat/chat_list_my.dart';
+import 'party/pie/pie_create.dart';
+import 'party/wish/wish_list.dart';
 import './notice.dart';
 import './search.dart';
+import 'package:piece_of_cake/widget.dart';
 
 
 class homePage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:piece_of_cake/chat.dart';
-import './chat.dart';
-import './notice.dart';
+import 'package:piece_of_cake/chat/chat.dart';
+import 'chat.dart';
+import '../notice.dart';
 
 class chatRoom extends StatelessWidget {
   const chatRoom({Key? key}) : super(key: key);
