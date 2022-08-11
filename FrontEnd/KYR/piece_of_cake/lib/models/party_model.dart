@@ -30,7 +30,7 @@ class PartyModel with ChangeNotifier {
     notifyListeners();
   }
   
-  Future fetchWishList(userSeq) async {
+  Future fetchWishPartyList(userSeq) async {
     final response = await http.get(Uri.parse('http://10.0.2.2:9090/wish/${userSeq}'));
     if (response.statusCode==200) {
       this._wishPartyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
@@ -42,14 +42,19 @@ class PartyModel with ChangeNotifier {
     }
     notifyListeners();
   }
+  
+  void fetchWishList(userSeq) {
+    print('wishList: ${wishList}');
+    this._wishList = _wishPartyList
+        .map((e) => e.partySeq)
+        .toList();
+    print('wishList: ${wishList}');
+    notifyListeners();
+  }
 
-  Future insertWishList(userSeq, partySeq) async {
-    // final response = await http.post
-    //   (Uri.parse('http://10.0.2.2:9090/wish/${partySeq}'),
-    // );
-    print('userSeq: ${userSeq}');
-    print('partySeq: ${partySeq}');
-    WishReqVO wishReqVO = new WishReqVO(userSeq: userSeq, partySeq: partySeq);
+  Future insertWishList(WishReqVO wishReqVO) async {
+    print('[PartyModel] insertWishList()');
+    print('wishReqVO: ${wishReqVO}');
     print('wishReqVO.toJson(): ${wishReqVO.toJson()}');
     print('jsonEncode(wishReqVO): ${jsonEncode(wishReqVO)}');
     final response = await http.post(
@@ -60,12 +65,31 @@ class PartyModel with ChangeNotifier {
       // body: wishReqVO.toJson(),
       body: jsonEncode(wishReqVO),
     );
-    print('response: ${response.body}');
+    print('response.body: ${response.body}');
     if (response.statusCode==200) {
-      await fetchWishList(userSeq);
+      await fetchWishPartyList(wishReqVO.userSeq);
       await fetchPartyList();
     } else {
       throw Exception('Failed to insert wish list.');
     }
+    notifyListeners();
+  }
+
+  Future deleteWishList(WishReqVO wishReqVO) async {
+    final response = await http.delete(
+      Uri.parse('http://10.0.2.2:9090/wish'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(wishReqVO),
+    );
+    print('response.body: ${response.body}');
+    if (response.statusCode==200) {
+      await fetchWishPartyList(wishReqVO.userSeq);
+      await fetchPartyList();
+    } else {
+      throw Exception('Failed to delete wish list');
+    }
+    notifyListeners();
   }
 }

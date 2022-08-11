@@ -2,16 +2,16 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/expandableFAB.dart';
 // import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import './my.dart';
-import './chat_list_my.dart';
-import './pie_create.dart';
-import './party_list.dart';
+import 'user/my.dart';
+import 'chat/chat_list_my.dart';
+import 'party/pie/pie_create.dart';
+import 'party/wish/wish_list.dart';
 // import 'kakao/kakao_login.dart';
 // import 'kakao/kakao_login_view_model.dart';
 import './home.dart';
 import './action-button.dart';
-import './dlv_create.dart';
-import './buy_create.dart';
+import 'party/dlv/dlv_create.dart';
+import 'party/buy/buy_create.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
   int index = 0;
   final screens = [
     homePage(),
-    PartyList(),
+    WishList(),
     ChatListMy(),
     My(),
   ];
