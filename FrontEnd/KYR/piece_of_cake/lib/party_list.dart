@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/buy_detail.dart';
 import 'package:piece_of_cake/models/kakao_login_model.dart';
+import 'package:piece_of_cake/pie_detail.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:provider/provider.dart';
 import './my.dart';
@@ -11,6 +12,7 @@ import './main.dart';
 import './notice.dart';
 import 'package:like_button/like_button.dart';
 
+import 'dlv_detail.dart';
 import 'models/party_model.dart';
 
 class Item extends StatelessWidget {
@@ -55,8 +57,26 @@ class Item extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        LikeButton(),
-                        Text('4'),
+                        LikeButton(
+                          // size: 20,
+                          bubblesSize: 0,
+                          likeCount: _wish?.partyWishCount,
+                          // countBuilder: (int? count, bool isLiked, String text) {
+                          //   if (isLiked) {
+                          //     Provider.of<PartyModel>(context).insertWishList(Provider.of<KakaoLoginModel>(context).userResVO?.userSeq, _wish?.partySeq);
+                          //   }
+                          //   print('count: ${count}');
+                          //
+                          //   // var color = isLiked  ? Colors.deepPurpleAccent : Colors.grey;
+                          //   // Widget result;
+                          //   // result = Text(
+                          //   //   "${_wish?.partyWishCount}",
+                          //   //   style: TextStyle(color: color),
+                          //   // );
+                          //   // return result;
+                          // },
+                        ),
+                        // Text('4'),
                       ]
                     )
                   ],
@@ -67,10 +87,26 @@ class Item extends StatelessWidget {
         )
       ),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BuyDetail()),
-        );
+        switch (_wish?.partyCode) {
+          case '001':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PieDetail()),
+            );
+            break;
+          case '002':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BuyDetail()),
+            );
+            break;
+          case '003':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DlvDetail()),
+            );
+            break;
+        }
       }
     );
 
@@ -87,8 +123,11 @@ class PartyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('wish list');
-    Provider.of<PartyModel>(context).fetchWishList(Provider.of<KakaoLoginModel>(context).userResVO?.userSeq);
-    print(Provider.of<PartyModel>(context).wishList);
+    final userProvider = Provider.of<KakaoLoginModel>(context, listen: false);
+    final partyProvider = Provider.of<PartyModel>(context, listen: false);
+    // partyProvider.fetchWishList(userProvider.userResVO?.userSeq);
+    final _wishList = partyProvider.wishPartyList;
+    print(_wishList);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -127,7 +166,7 @@ class PartyList extends StatelessWidget {
           // Other Sliver Widgets
           SliverList(
             delegate: SliverChildListDelegate([
-              for (var wish in Provider.of<PartyModel>(context).wishList)
+              for (var wish in _wishList)
                 Item(wish)
               // Item(),
               // Item(),

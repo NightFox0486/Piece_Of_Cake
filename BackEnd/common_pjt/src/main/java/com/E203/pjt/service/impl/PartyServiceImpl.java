@@ -32,8 +32,11 @@ public class PartyServiceImpl implements PartyService {
     Party party = partyRepository.findByPartySeq(partySeq);
     partyResVO.setPartySeq(party.getPartySeq());
     partyResVO.setUserSeq(party.getUser().getUserSeq());
+    partyResVO.setPartyCode(party.getPartyCode());
     partyResVO.setPartyTitle(party.getPartyTitle());
     partyResVO.setPartyContent(party.getPartyContent());
+    partyResVO.setPartyWishCount(party.getPartyWishCount());
+    partyResVO.setPartyCode(party.getPartyCode());
     partyResVO.setPartyRegDt(party.getPartyRegDt());
     partyResVO.setPartyUpdDt(party.getPartyUpdDt());
     partyResVO.setPartyRdvDt(party.getPartyRdvDt());
@@ -62,8 +65,10 @@ public class PartyServiceImpl implements PartyService {
       PartyResVO partyResVO = new PartyResVO();
       partyResVO.setPartySeq(party.getPartySeq());
       partyResVO.setUserSeq(party.getUser().getUserSeq());
+      partyResVO.setPartyCode(party.getPartyCode());
       partyResVO.setPartyTitle(party.getPartyTitle());
       partyResVO.setPartyContent(party.getPartyContent());
+      partyResVO.setPartyWishCount(party.getPartyWishCount());
       partyResVO.setPartyRegDt(party.getPartyRegDt());
       partyResVO.setPartyUpdDt(party.getPartyUpdDt());
       partyResVO.setPartyRdvDt(party.getPartyRdvDt());

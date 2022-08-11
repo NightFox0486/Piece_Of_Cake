@@ -16,6 +16,8 @@ class KakaoLoginModel with ChangeNotifier {
   User? get user => _user;
   UserResVO? get userResVO => _userResVO;
   Future setUser() async {
+    var keyHash = await KakaoSdk.origin;
+    print('keyHash: ${keyHash}');
     isLoggedIn = await _socialLogin.login();
     if (isLoggedIn) {
       this._user = await UserApi.instance.me();

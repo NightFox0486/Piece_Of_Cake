@@ -1,8 +1,35 @@
+
+class WishReqVO {
+  int userSeq;
+  int partySeq;
+
+  WishReqVO({
+    required this.userSeq,
+    required this.partySeq,
+  });
+
+  factory WishReqVO.fromJson(Map<String, dynamic> json) {
+    return WishReqVO(
+      userSeq: json['userSeq'],
+      partySeq: json['partySeq'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userSeq'] = this.userSeq;
+    data['partySeq'] = this.partySeq;
+    return data;
+  }
+}
+
+
 class Party {
   int partySeq;
   int userSeq;
+  String partyCode;
   String partyTitle;
   String partyContent;
+  int partyWishCount;
   List<dynamic> partyRegDt;
   List<dynamic> partyUpdDt;
   List<dynamic> partyRdvDt;
@@ -18,8 +45,10 @@ class Party {
   Party({
     required this.partySeq,
     required this.userSeq,
+    required this.partyCode,
     required this.partyTitle,
     required this.partyContent,
+    required this.partyWishCount,
     required this.partyRegDt,
     required this.partyUpdDt,
     required this.partyRdvDt,
@@ -38,8 +67,10 @@ class Party {
     return Party(
       partySeq: json['partySeq'],
       userSeq: json['userSeq'],
+      partyCode: json['partyCode'],
       partyTitle: json['partyTitle'],
       partyContent: json['partyContent'],
+      partyWishCount: json['partyWishCount'],
       partyRegDt: json['partyRegDt'],
       partyUpdDt: json['partyUpdDt'],
       partyRdvDt: json['partyRdvDt'],
@@ -59,8 +90,10 @@ class Party {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['partySeq'] = this.partySeq;
     data['userSeq'] = this.userSeq;
+    data['partyCode'] = this.partyCode;
     data['partyTitle'] = this.partyTitle;
     data['partyContent'] = this.partyContent;
+    data['partyWishCount'] = this.partyWishCount;
     data['partyRegDt'] = this.partyRegDt;
     data['partyUpdDt'] = this.partyUpdDt;
     data['partyRdvDt'] = this.partyRdvDt;
