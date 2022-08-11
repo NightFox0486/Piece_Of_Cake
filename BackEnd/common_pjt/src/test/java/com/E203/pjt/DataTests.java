@@ -1,8 +1,17 @@
 package com.E203.pjt;
 
+import com.E203.pjt.model.dto.req.UserReqVO;
+import com.E203.pjt.model.dto.req.WishReqVO;
 import com.E203.pjt.model.entity.Party;
 import com.E203.pjt.model.entity.User;
+import com.E203.pjt.model.entity.WishList;
+import com.E203.pjt.model.entity.WishListPK;
+import com.E203.pjt.repository.PartyRepository;
+import com.E203.pjt.service.PartyService;
+import com.E203.pjt.service.UserService;
+import com.E203.pjt.service.WishListService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +28,29 @@ public class DataTests {
     @PersistenceContext
     EntityManager em;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    PartyRepository partyRepository;
+
+    @Autowired
+    WishListService wishListService;
+
+    @Test
+    void makeKakaoUsers() {
+        UserReqVO userReqVO = new UserReqVO();
+        userReqVO.setUserEmail("asdf@asdf.com");
+        userReqVO.setUserPhone("010-1111-1111");
+        userReqVO.setUserNickname("asdf");
+        userReqVO.setUserImage("asdf");
+        userReqVO.setUserKakaoLoginId("12341234");
+        User user = userReqVO.toEntity();
+        em.persist(user);
+        em.flush();
+        em.clear();
+    }
+
     @Test
     void makeUsers() {
         for (int i=0; i<5; i++) {
@@ -32,9 +64,20 @@ public class DataTests {
             user.setUserLat(String.format("%d",i*111));
             user.setUserLng(String.format("%d",i*111));
             user.setUserAccount(String.format("%d0000",i));
+            user.setUserKakaoLoginId(String.format("%d", i*1111111));
             em.persist(user);
             em.flush();
             em.clear();
+        }
+    }
+
+    @Test
+    void makeWishList() {
+        for (int i=1; i<5; i++) {
+            WishReqVO wishReqVO = new WishReqVO();
+            wishReqVO.setUserSeq(1);
+            wishReqVO.setPartySeq(i);
+            wishListService.insertWishList(wishReqVO);
         }
     }
 
@@ -44,12 +87,13 @@ public class DataTests {
             Party party = new Party();
             User u = em.find(User.class, i+1);
             em.persist(u);
-            for (int j=0; j<2; j++) {
+            for (int j=1; j<3; j++) {
                 party.setUser(u);
                 party.setPartyCode(String.format("00%d", j));
                 party.setPartyTitle(String.format("%d-%d", i, j));
 //                party.setPartyContent(String.format("%d", i*111));
                 party.setPartyContent("ㅈㄱㄴ");
+                party.setPartyWishCount(0);
                 party.setPartyRegDt(LocalDateTime.now());
                 party.setPartyRdvLat(String.format("%d%d", i, j));
                 party.setPartyRdvLng(String.format("%d%d", i, j));

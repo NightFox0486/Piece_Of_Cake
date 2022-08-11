@@ -10,6 +10,14 @@ class PieCreate extends StatelessWidget {
       appBar: AppBar(
           title: Text('PieCreate')
       ),
+      body: Container(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: [
+          ],
+        ),
+      )
+
     );
   }
 }
