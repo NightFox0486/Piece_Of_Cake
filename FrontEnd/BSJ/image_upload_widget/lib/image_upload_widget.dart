@@ -9,23 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_upload_widget/firebase_options.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  final storage = FirebaseStorage.instance;
-  runApp(const MyApp());
-}
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+//   final storage = FirebaseStorage.instance;
+//   runApp(const ImageUploadWidget());
+// }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ImageUploadWidget extends StatefulWidget {
+  const ImageUploadWidget({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<ImageUploadWidget> createState() => _ImageUploadState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _ImageUploadState extends State<ImageUploadWidget> {
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
 
@@ -34,8 +34,7 @@ class _MyAppState extends State<MyApp> {
     if (selectedImages!.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
     }
-    setState(() {
-    });
+    setState(() {});
   }
   // static List<Widget> images = [
   //   // Container(
@@ -110,70 +109,66 @@ class _MyAppState extends State<MyApp> {
     //         ])
     //       ]),
     // );
-    return MaterialApp(home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Image Upload Widget"),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-
-              SizedBox(height: 20,),
-              Expanded(
-                  child: Padding(
+    return MaterialApp(
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text("Image Upload Widget"),
+            ),
+            body: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                      child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GridView.builder(
-                        itemCount: imageFileList!.length+1,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return index == imageFileList!.length
-                              ?GestureDetector(
-                            onTap: (){
-                              selectImages();
-                            },
+                      itemCount: imageFileList!.length + 1,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3),
+                      itemBuilder: (BuildContext context, int index) {
+                        return index == imageFileList!.length
+                            ? GestureDetector(
+                                onTap: () {
+                                  selectImages();
+                                },
                                 child: Container(
-                            child: DottedBorder(
-                                color: Colors.grey,
-                                strokeWidth: 2,
-                                radius: Radius.circular(8),
-                                borderType: BorderType.RRect,
-                                dashPattern: [8,4],
-                                child: ClipRect(
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
-
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.grey,
+                                  child: DottedBorder(
+                                    color: Colors.grey,
+                                    strokeWidth: 2,
+                                    radius: Radius.circular(8),
+                                    borderType: BorderType.RRect,
+                                    dashPattern: [8, 4],
+                                    child: ClipRect(
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                            ),
-                          ),
                               )
-                              : Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
-                                image: DecorationImage(
-                                    image: FileImage(io.File(imageFileList![index].path)),
-                                    fit: BoxFit.cover
-                                )
-                            ),
-                          );
-                          // return Image.file(io.File(imageFileList![index].path), fit: BoxFit.cover);
-                        },
+                            : Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                        image: FileImage(io.File(
+                                            imageFileList![index].path)),
+                                        fit: BoxFit.cover)),
+                              );
+                        // return Image.file(io.File(imageFileList![index].path), fit: BoxFit.cover);
+                      },
                     ),
-                  )
+                  )),
+                ],
               ),
-            ],
-          ),
-        )
-    )
-    );
+            )));
   }
   // TextButton.icon(
   //       onPressed: addImg(), icon: Icon(Icons.add), label: Text('test'))
