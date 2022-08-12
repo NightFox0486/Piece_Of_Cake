@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android" name="Android">
+      <configuration />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/LSM/paytest/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/LSM/paytest/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/LSM/paytest/build" />
+      <excludeFolder url="file://$MODULE_DIR$/POC/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/POC/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/POC/build" />
+      <excludeFolder url="file://$MODULE_DIR$/KYR/piece_of_cake/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/KYR/piece_of_cake/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/KYR/piece_of_cake/build" />
+      <excludeFolder url="file://$MODULE_DIR$/SSG/cong_namul/build" />
+      <excludeFolder url="file://$MODULE_DIR$/SSG/cong_namul/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/SSG/cong_namul/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/BSJ/image_upload_widget/build" />
+      <excludeFolder url="file://$MODULE_DIR$/BSJ/image_upload_widget/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/BSJ/image_upload_widget/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/LTY/common_pjt/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/LTY/common_pjt/build" />
+      <excludeFolder url="file://$MODULE_DIR$/LTY/common_pjt/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/BSJ/POC/build" />
+      <excludeFolder url="file://$MODULE_DIR$/BSJ/POC/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/BSJ/POC/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/LSM/POC/build" />
+      <excludeFolder url="file://$MODULE_DIR$/LSM/POC/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/LSM/POC/.pub" />
+    </content>
+    <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
+  </component>
+</module>
