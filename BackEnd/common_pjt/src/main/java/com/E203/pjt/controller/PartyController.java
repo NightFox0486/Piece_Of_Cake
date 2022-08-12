@@ -3,9 +3,7 @@ package com.E203.pjt.controller;
 import java.util.List;
 
 import com.E203.pjt.model.dto.res.PartyResVO;
-import com.E203.pjt.model.entity.MyParty;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.web.bind.annotation.*;
 
 import com.E203.pjt.model.entity.Party;
@@ -25,8 +23,8 @@ public class PartyController {
   }
 
   @GetMapping(value="/party")
-  public List<PartyResVO> getPartyList() {
-    List<PartyResVO> partyResVOList = partyService.getPartyList();
+  public List<PartyResVO> listParty() {
+    List<PartyResVO> partyResVOList = partyService.listParty();
     for (PartyResVO partyResVO : partyResVOList) {
       System.out.println(partyResVO.getPartySeq() + " : " + partyResVO.getPartyTitle());
     }

@@ -6,7 +6,7 @@ import 'package:piece_of_cake/models/kakao_login_model.dart';
 import 'package:provider/provider.dart';
 import '../notice.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../party/wish/wish_list.dart';
+import '../party/bookmark//bookmark_list.dart';
 import 'package:piece_of_cake/widget.dart';
 
 class My extends StatefulWidget {

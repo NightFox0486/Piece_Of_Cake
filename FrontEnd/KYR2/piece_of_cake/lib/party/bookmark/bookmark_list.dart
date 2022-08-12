@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/kakao_login_model.dart';
-import '../../models/party_model.dart';
-import '../../notice.dart';
-import '../../search.dart';
+import 'package:piece_of_cake/models/kakao_login_model.dart';
+import 'package:piece_of_cake/models/party_model.dart';
+import 'package:piece_of_cake/notice.dart';
+import 'package:piece_of_cake/search.dart';
 import 'package:piece_of_cake/widget.dart';
 
-class WishList extends StatefulWidget {
-  const WishList({Key? key}) : super(key: key);
+class BookmarkList extends StatefulWidget {
+  const BookmarkList({Key? key}) : super(key: key);
 
   @override
-  State<WishList> createState() => _WishListState();
+  State<BookmarkList> createState() => _BookmarkListState();
 }
 
-class _WishListState extends State<WishList> {
+class _BookmarkListState extends State<BookmarkList> {
   @override
   Widget build(BuildContext context) {
-    print('wish list');
+    print('bookmark list');
     final userProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
-    final _wishList = partyProvider.wishPartyList;
-    print(_wishList);
+    partyProvider.fetchBookmarkPartyList(userProvider.userResVO!.userSeq);
+    final _bookmarkPartyList = partyProvider.bookmarkPartyList;
+    print(_bookmarkPartyList);
     return Scaffold(
       appBar: AppBar(
           title: Text('WishList'),
@@ -44,7 +45,7 @@ class _WishListState extends State<WishList> {
       ),
       body: ListView(
           children: [
-            for (var wish in _wishList)
+            for (var wish in _bookmarkPartyList)
               Item(wish),
             Container(
               margin: EdgeInsets.only(bottom: 50),

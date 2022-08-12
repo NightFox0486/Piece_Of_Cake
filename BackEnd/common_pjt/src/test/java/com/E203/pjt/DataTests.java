@@ -1,15 +1,12 @@
 package com.E203.pjt;
 
 import com.E203.pjt.model.dto.req.UserReqVO;
-import com.E203.pjt.model.dto.req.WishReqVO;
+import com.E203.pjt.model.dto.req.BookmarkReqVO;
 import com.E203.pjt.model.entity.Party;
 import com.E203.pjt.model.entity.User;
-import com.E203.pjt.model.entity.WishList;
-import com.E203.pjt.model.entity.WishListPK;
 import com.E203.pjt.repository.PartyRepository;
-import com.E203.pjt.service.PartyService;
 import com.E203.pjt.service.UserService;
-import com.E203.pjt.service.WishListService;
+import com.E203.pjt.service.BookmarkService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,7 +32,7 @@ public class DataTests {
     PartyRepository partyRepository;
 
     @Autowired
-    WishListService wishListService;
+    BookmarkService bookmarkService;
 
     @Test
     void makeKakaoUsers() {
@@ -72,18 +69,20 @@ public class DataTests {
     }
 
     @Test
-    void makeWishList() {
-        for (int i=1; i<5; i++) {
-            WishReqVO wishReqVO = new WishReqVO();
-            wishReqVO.setUserSeq(1);
-            wishReqVO.setPartySeq(i);
-            wishListService.insertWishList(wishReqVO);
+    void makeBookmark() {
+        for (int i=1; i<11; i++) {
+            for (int j=1; j<5; j++) {
+                BookmarkReqVO bookmarkReqVO = new BookmarkReqVO();
+                bookmarkReqVO.setUserSeq(j);
+                bookmarkReqVO.setPartySeq(i);
+                bookmarkService.insertBookmark(bookmarkReqVO);
+            }
         }
     }
 
     @Test
     void makeParties() {
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<10; i++) {
             Party party = new Party();
             User u = em.find(User.class, i+1);
             em.persist(u);
@@ -93,7 +92,7 @@ public class DataTests {
                 party.setPartyTitle(String.format("%d-%d", i, j));
 //                party.setPartyContent(String.format("%d", i*111));
                 party.setPartyContent("ㅈㄱㄴ");
-                party.setPartyWishCount(0);
+                party.setPartyBookmarkCount(0);
                 party.setPartyRegDt(LocalDateTime.now());
                 party.setPartyRdvLat(String.format("%d%d", i, j));
                 party.setPartyRdvLng(String.format("%d%d", i, j));

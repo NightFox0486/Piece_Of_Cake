@@ -9,10 +9,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "wish_list")
-public class WishList implements Serializable {
+@Table(name = "bookmarks")
+public class Bookmark implements Serializable {
     @EmbeddedId
-    private WishListPK wishListPK;
+    private BookmarkPK bookmarkPK;
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")

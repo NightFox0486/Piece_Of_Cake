@@ -16,6 +16,7 @@ public class PartyPostReqVO {
     private String partyCode;
     private String partyTitle;
     private String partyContent;
+    private Integer partyBookmarkCount;
     private LocalDateTime partyRegDt;
     private LocalDateTime partyUpdDt;
     private LocalDateTime partyRdvDt;

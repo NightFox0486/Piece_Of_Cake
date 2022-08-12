@@ -1,10 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/party/party_list.dart';
+import 'package:provider/provider.dart';
+import 'models/kakao_login_model.dart';
+import 'models/party_model.dart';
 import 'user/my.dart';
 import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
-import 'party/wish/wish_list.dart';
+import 'party/bookmark//bookmark_list.dart';
 import './notice.dart';
 import './search.dart';
 import 'package:piece_of_cake/widget.dart';
@@ -20,6 +23,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final partyProvider = Provider.of<PartyModel>(context);
+    final userProvider = Provider.of<KakaoLoginModel>(context);
+    partyProvider.fetchPartyList();
+    partyProvider.fetchBookmarkPartyList(userProvider.userResVO!.userSeq);
+    partyProvider.fetchBookmarkList(userProvider.userResVO!.userSeq);
     return Scaffold(
       appBar: AppBar(
         title: Text('Piece Of Cake'),

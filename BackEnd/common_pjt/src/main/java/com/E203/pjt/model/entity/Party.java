@@ -37,8 +37,8 @@ public class Party {
     @Column(name = "party_content", columnDefinition = "TEXT", nullable = false)
     private String partyContent;
 
-    @Column(name = "party_wish_count", columnDefinition = "INT UNSIGNED")
-    private Integer partyWishCount;
+    @Column(name = "party_bookmark_count", columnDefinition = "INT UNSIGNED")
+    private Integer partyBookmarkCount;
 
     @CreationTimestamp
     @Column(name = "party_reg_dt", columnDefinition = "TIMESTAMP default now()")

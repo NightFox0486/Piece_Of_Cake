@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class WishReqVO {
+public class BookmarkReqVO {
     Integer userSeq;
     Integer partySeq;
 }

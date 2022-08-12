@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class WishListPK implements Serializable {
+public class BookmarkPK implements Serializable {
     private Integer userSeq;
     private Integer partySeq;
 }

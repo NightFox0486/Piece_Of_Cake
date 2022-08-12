@@ -8,7 +8,7 @@ import 'models/party_model.dart';
 import 'user/my.dart';
 import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
-import 'party/wish/wish_list.dart';
+import 'party/bookmark//bookmark_list.dart';
 import './home.dart';
 import 'party/dlv/dlv_create.dart';
 import 'party/buy/buy_create.dart';
@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage> {
   int index = 0;
   final screens = [
     HomePage(),
-    WishList(),
+    BookmarkList(),
     ChatListMy(),
     My(),
   ];
