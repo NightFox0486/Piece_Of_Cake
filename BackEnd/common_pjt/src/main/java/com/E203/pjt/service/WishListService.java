@@ -10,5 +10,5 @@ import java.util.List;
 public interface WishListService {
     List<PartyResVO> listWishList(Integer userSeq);
     WishList insertWishList(WishReqVO wishReqVO);
-    boolean deleteWishList(Integer partySeq);
+    boolean deleteWishList(WishReqVO wishReqVO);
 }

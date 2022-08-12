@@ -50,17 +50,22 @@ public class WishListServiceImpl implements WishListService {
         wishList.setWishListPK(pk);
         wishList.setUser(user);
         wishList.setParty(party);
+        party.setPartyWishCount(party.getPartyWishCount()+1);
+        partyRepository.save(party);
         return wishListRepository.save(wishList);
     }
 
     @Override
     @Transactional
-    public boolean deleteWishList(Integer partySeq) {
+    public boolean deleteWishList(WishReqVO wishReqVO) {
         Integer userSeq = 3;
-        WishListPK pk = new WishListPK(userSeq, partySeq);
+        WishListPK pk = new WishListPK(userSeq, wishReqVO.getPartySeq());
         WishList wishList = wishListRepository.findById(pk).get();
+        Party party = partyRepository.findByPartySeq(wishReqVO.getPartySeq());
         if (wishList!=null) {
             wishListRepository.delete(wishList);
+            party.setPartyWishCount(party.getPartyWishCount()-1);
+            partyRepository.save(party);
             return true;
         }else {
             return false;

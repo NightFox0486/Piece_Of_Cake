@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
-    partyProvider.fetchWishList(userProvider.userResVO?.userSeq);
+    partyProvider.fetchWishPartyList(userProvider.userResVO?.userSeq);
     return Scaffold(
       body: CustomScrollView(
         slivers: [

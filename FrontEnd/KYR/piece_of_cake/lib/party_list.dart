@@ -24,6 +24,8 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
+    final partyProvider = Provider.of<PartyModel>(context);
     return InkWell(
       splashColor: Colors.amber,
       hoverColor: Colors.lightGreenAccent,
@@ -61,6 +63,27 @@ class Item extends StatelessWidget {
                           // size: 20,
                           bubblesSize: 0,
                           likeCount: _wish?.partyWishCount,
+                          likeBuilder: (bool isLiked) {
+                            if (partyProvider.wishList.contains(_wish!.partySeq)) {
+                              isLiked = true;
+                            }else {
+                              isLiked = true;
+                            }
+                            return Icon(
+                              Icons.favorite,
+                              color: isLiked ? Colors.pink : Colors.grey,
+                              // size: buttonSize,
+                            );
+                          },
+                          onTap: (bool isLiked) async {
+                            WishReqVO wishReqVO = new WishReqVO(userSeq: kakaoUserProvider.userResVO!.userSeq, partySeq: _wish!.partySeq);
+                            if (isLiked) {
+                              partyProvider.deleteWishList(wishReqVO);
+                            } else {
+                              partyProvider.insertWishList(wishReqVO);
+                            }
+                            return !isLiked;
+                          },
                           // countBuilder: (int? count, bool isLiked, String text) {
                           //   if (isLiked) {
                           //     Provider.of<PartyModel>(context).insertWishList(Provider.of<KakaoLoginModel>(context).userResVO?.userSeq, _wish?.partySeq);
