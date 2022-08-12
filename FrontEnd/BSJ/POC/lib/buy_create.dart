@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/image_upload_widget.dart';
 
+// GlobalKey<_ImageUploadState> globalKey = GlobalKey();
+
 class BuyCreate extends StatefulWidget {
   const BuyCreate({Key? key}) : super(key: key);
 
@@ -18,8 +20,8 @@ class _BuyCreateState extends State<BuyCreate> {
       appBar: AppBar(
         title: Text('BuyCreate'),
         actions: [
-          IconButton(onPressed: () {
-
+          IconButton(onPressed: (){
+            imageKey.currentState?.addImage();
           }, icon: Icon(Icons.done))
         ],
       ),
@@ -27,7 +29,8 @@ class _BuyCreateState extends State<BuyCreate> {
         children: [
           Container(
             margin: EdgeInsets.all(20),
-              child:ImageUploadWidget()),
+              child: ImageUploadWidget(key: imageKey),
+          ),
           Container(
             margin: EdgeInsets.all(10),
             child: Form(
