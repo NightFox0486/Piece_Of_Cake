@@ -91,80 +91,94 @@ class _ImageUploadState extends State<ImageUploadWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   home: Row(
-    //       textDirection: TextDirection.ltr,
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         ...images,
-    //         Column(children: [
-    //           TextButton.icon(
-    //               onPressed: addImg, icon: Icon(Icons.add), label: Text('add')),
-    //           TextButton.icon(
-    //               onPressed: removeImg,
-    //               icon: Icon(Icons.remove),
-    //               label: Text('remove'))
-    //         ])
-    //       ]),
-    // );
-    return //Column(
-        // children: [
-        //   SizedBox(
-        //     height: 10,
-        //   ),
-        //   Flexible(
-        //       child: Padding(
-        //     padding: const EdgeInsets.all(8.0),
-        //     child:
-        GridView.builder(
-      itemCount: imageFileList!.length + 1,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 1,
-        mainAxisSpacing: 1,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return index == imageFileList!.length
-            ? GestureDetector(
-                onTap: () {
-                  selectImages();
-                },
-                child: Container(
-                  child: DottedBorder(
-                    color: Colors.grey,
-                    strokeWidth: 2,
-                    radius: Radius.circular(8),
-                    borderType: BorderType.RRect,
-                    dashPattern: [8, 4],
-                    child: ClipRect(
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.grey,
+    return Wrap(
+      direction: Axis.horizontal,
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+
+      children: List.generate(imageFileList!.length+1, (index) => //Padding(
+        // padding: const EdgeInsets.symmetric(vertical: 50,  horizontal: 50),
+        // child:
+        index == imageFileList!.length ? GestureDetector(
+                  onTap: () {
+                    selectImages();
+                  },
+                  child: Container(margin: EdgeInsets.all(5),child: SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: DottedBorder(
+                      color: Colors.grey,
+                      strokeWidth: 2,
+                      radius: Radius.circular(8),
+                      borderType: BorderType.RRect,
+                      dashPattern: [8, 4],
+                      child: ClipRect(
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  )),
+                ) : Container(width: 100,height: 100,margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: FileImage(io.File(imageFileList![index].path)),
+                          fit: BoxFit.cover)),
                 ),
-              )
-            : Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    image: DecorationImage(
-                        image: FileImage(io.File(imageFileList![index].path)),
-                        fit: BoxFit.cover)),
-              );
-        // return Image.file(io.File(imageFileList![index].path), fit: BoxFit.cover);
-      },
-    ); //,
-    //     )),
-    //   ],
-    // );
+
+            //)
+    )
+    );
+    // return
+    //   GridView.builder(
+    //     itemCount: imageFileList!.length + 1,
+    //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    //       crossAxisCount: 3,
+    //       crossAxisSpacing: 1,
+    //       mainAxisSpacing: 1,
+    //     ),
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return index == imageFileList!.length
+    //           ? GestureDetector(
+    //         onTap: () {
+    //           selectImages();
+    //         },
+    //         child: Container(
+    //           child: DottedBorder(
+    //             color: Colors.grey,
+    //             strokeWidth: 2,
+    //             radius: Radius.circular(8),
+    //             borderType: BorderType.RRect,
+    //             dashPattern: [8, 4],
+    //             child: ClipRect(
+    //               child: Container(
+    //                 width: double.infinity,
+    //                 height: double.infinity,
+    //                 child: Icon(
+    //                   Icons.add,
+    //                   color: Colors.grey,
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       )
+    //           : Container(
+    //         decoration: BoxDecoration(
+    //             borderRadius: BorderRadius.circular(8),
+    //             color: Colors.white,
+    //             image: DecorationImage(
+    //                 image: FileImage(io.File(imageFileList![index].path)),
+    //                 fit: BoxFit.cover)),
+    //       );
+    //     },
+    //   ); //,
   }
-  // TextButton.icon(
-  //       onPressed: addImg(), icon: Icon(Icons.add), label: Text('test'))
 }
