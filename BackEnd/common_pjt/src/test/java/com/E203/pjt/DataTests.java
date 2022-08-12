@@ -95,8 +95,12 @@ public class DataTests {
                 em.persist(party);
             }
         }
+    
+        em.flush();
+        em.clear();
+    }
 
-        @Test
+    @Test
     void makeBookmark() {
         for (int i=1; i<11; i++) {
             for (int j=1; j<5; j++) {
@@ -106,10 +110,6 @@ public class DataTests {
                 bookmarkService.insertBookmark(bookmarkReqVO);
             }
         }
-    }
-    
-        em.flush();
-        em.clear();
     }
 }
 
