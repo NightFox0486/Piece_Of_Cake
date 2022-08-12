@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:piece_of_cake/buy_create.dart';
+import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import './chat_list_my.dart';
-import './report.dart';
+import '../../chat/chat_list_my.dart';
+import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class BuyDetail extends StatefulWidget {
