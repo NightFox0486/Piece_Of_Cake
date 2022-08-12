@@ -69,18 +69,6 @@ public class DataTests {
     }
 
     @Test
-    void makeBookmark() {
-        for (int i=1; i<11; i++) {
-            for (int j=1; j<5; j++) {
-                BookmarkReqVO bookmarkReqVO = new BookmarkReqVO();
-                bookmarkReqVO.setUserSeq(j);
-                bookmarkReqVO.setPartySeq(i);
-                bookmarkService.insertBookmark(bookmarkReqVO);
-            }
-        }
-    }
-
-    @Test
     void makeParties() {
         for (int i=0; i<10; i++) {
             Party party = new Party();
@@ -107,6 +95,19 @@ public class DataTests {
                 em.persist(party);
             }
         }
+
+        @Test
+    void makeBookmark() {
+        for (int i=1; i<11; i++) {
+            for (int j=1; j<5; j++) {
+                BookmarkReqVO bookmarkReqVO = new BookmarkReqVO();
+                bookmarkReqVO.setUserSeq(j);
+                bookmarkReqVO.setPartySeq(i);
+                bookmarkService.insertBookmark(bookmarkReqVO);
+            }
+        }
+    }
+    
         em.flush();
         em.clear();
     }
