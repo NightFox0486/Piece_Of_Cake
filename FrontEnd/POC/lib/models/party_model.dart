@@ -20,7 +20,7 @@ class PartyModel with ChangeNotifier {
   
   Future fetchPartyList() async {
     final response = await
-         http.get(Uri.parse('http://10.0.2.2:9090/party'));
+         http.get(Uri.parse('http://i7e203.p.ssafy.io:9090/party'));
     if (response.statusCode==200) {
       this._partyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
           .map((e) => Party.fromJson(e))
@@ -33,7 +33,7 @@ class PartyModel with ChangeNotifier {
   }
   
   Future fetchBookmarkPartyList(userSeq) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:9090/bookmark/${userSeq}'));
+    final response = await http.get(Uri.parse('http://i7e203.p.ssafy.io:9090/bookmark/${userSeq}'));
     if (response.statusCode==200) {
       this._bookmarkPartyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
           .map((e) => Party.fromJson(e))
@@ -54,7 +54,7 @@ class PartyModel with ChangeNotifier {
 
   Future detailBookmark(BookmarkReqVO bookmarkReqVO) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:9090/party/${bookmarkReqVO.partySeq}')
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${bookmarkReqVO.partySeq}')
     );
     if (response.statusCode==200) {
       Party party = Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
@@ -71,7 +71,7 @@ class PartyModel with ChangeNotifier {
     print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
     print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:9090/bookmark'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/bookmark'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -94,7 +94,7 @@ class PartyModel with ChangeNotifier {
     print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
     print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.delete(
-      Uri.parse('http://10.0.2.2:9090/bookmark'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/bookmark'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
