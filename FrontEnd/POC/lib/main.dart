@@ -14,11 +14,17 @@ import 'party/buy/buy_create.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:piece_of_cake/party/bookmark/bookmark_list.dart';
 import 'party/bookmark/bookmark_list.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
 
-void main() {
+void main() async {
   KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
       MultiProvider(
         providers: [
