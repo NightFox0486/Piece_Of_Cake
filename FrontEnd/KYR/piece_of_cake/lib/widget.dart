@@ -11,20 +11,22 @@ import 'package:provider/provider.dart';
 
 import 'models/kakao_login_model.dart';
 import 'models/party_model.dart';
+
 class Item extends StatefulWidget {
-  Party? _party;
-  Item(party) {
-    _party = party;
-  }
+  // Party? _party;
+  // Item(party) {
+  //   _party = party;
+  // }
+  final Function() onTap;
+  Party party;
+  Item({Key? key, required this.party, required this.onTap}) : super(key: key);
+
   @override
-  State<Item> createState() => _ItemState(_party);
+  // State<Item> createState() => _ItemState(_party);
+  State<Item> createState() => _ItemState();
 }
 
 class _ItemState extends State<Item> {
-  Party? _party;
-  _ItemState(party) {
-    _party = party;
-  }
   @override
   Widget build(BuildContext context) {
     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
@@ -32,27 +34,21 @@ class _ItemState extends State<Item> {
     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO!.userSeq);
     var bookmarkList = partyProvider.bookmarkList;
     print('bookmarkList: ${bookmarkList}');
-    print('partySeq: ${_party!.partySeq}, bookmarkList.contains(_party!.partySeq): ${bookmarkList.contains(_party!.partySeq)}');
-    print('partySeq.runtimeType: ${_party!.partySeq.runtimeType}');
+    print('partySeq: ${widget.party.partySeq}, bookmarkList.contains(_party!.partySeq): ${bookmarkList.contains(widget.party.partySeq)}');
+    print('partySeq.runtimeType: ${widget.party.partySeq.runtimeType}');
     print('bookmarkList[0].runtimeType: ${bookmarkList[0].runtimeType}');
-    var isFavorite = bookmarkList.contains(_party!.partySeq) ? true : false;
-    BookmarkReqVO bookmarkReqVO = BookmarkReqVO(userSeq: kakaoUserProvider.userResVO!.userSeq, partySeq: _party!.partySeq);
-    var bookmarkCount = _party!.partyBookmarkCount;
+    var isFavorite = bookmarkList.contains(widget.party.partySeq) ? true : false;
+    BookmarkReqVO bookmarkReqVO = BookmarkReqVO(userSeq: kakaoUserProvider.userResVO!.userSeq, partySeq: widget.party.partySeq);
+    var bookmarkCount = widget.party.partyBookmarkCount;
     Future insertBookmark() async {
       await partyProvider.insertBookmark(bookmarkReqVO);
       await partyProvider.afterBookmark(bookmarkReqVO);
       bookmarkList = partyProvider.bookmarkList;
-      await partyProvider.detailBookmark(bookmarkReqVO);
-      // Future.microtask(() => _party = _party);
-      _party = partyProvider.currentParty;
     }
     Future deleteBookmark() async{
       await partyProvider.deleteBookmark(bookmarkReqVO);
       await partyProvider.afterBookmark(bookmarkReqVO);
       bookmarkList = partyProvider.bookmarkList;
-      await partyProvider.detailBookmark(bookmarkReqVO);
-      // Future.microtask(() => _party = _party);
-      _party = partyProvider.currentParty;
     }
     void setBookmarkCountPlus() {
       bookmarkCount += 1;
@@ -61,7 +57,7 @@ class _ItemState extends State<Item> {
       bookmarkCount -= 1;
     }
     void setBookmarkCount() {
-      bookmarkCount = _party!.partyBookmarkCount;
+      bookmarkCount = widget.party.partyBookmarkCount;
     }
     Future<bool> onLikeButtonTapped(bool isLiked) async {
       if (isLiked) {
@@ -102,11 +98,12 @@ class _ItemState extends State<Item> {
                   Flexible(flex: 6,child: Container(
                       margin: EdgeInsets.all(5),
                       child: Column(
+                      // child: Wrap(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${_party?.partyTitle}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),overflow: TextOverflow.ellipsis,),
-                          Text('${_party?.partyAddr}', style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis,),
-                          Text('${_party?.partyContent}', style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,),
+                          Text('${widget.party.partyTitle}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),overflow: TextOverflow.ellipsis,),
+                          Text('${widget.party.partyAddr}', style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis,),
+                          Text('${widget.party.partyContent}', style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -114,6 +111,7 @@ class _ItemState extends State<Item> {
                                   onTap: onLikeButtonTapped,
                                   bubblesSize: 0,
                                   likeBuilder: (bool isLiked) {
+                                    widget.onTap();
                                     return Icon(
                                       isFavorite ? Icons.favorite : Icons.favorite_border,
                                       color: Colors.deepPurpleAccent,
@@ -121,7 +119,7 @@ class _ItemState extends State<Item> {
                                     );
                                   },
                                   isLiked: isFavorite ? true : false,
-                                  likeCount: _party!.partyBookmarkCount,
+                                  likeCount: widget.party.partyBookmarkCount,
 
                                 )
                                 // IconButton(
@@ -164,7 +162,7 @@ class _ItemState extends State<Item> {
             )
         ),
         onTap: () {
-          switch (_party!.partyCode) {
+          switch (widget.party.partyCode) {
             case '001':
               Navigator.push(
                 context,
@@ -188,116 +186,3 @@ class _ItemState extends State<Item> {
     );
   }
 }
-
-// class Item extends StatelessWidget {
-//   // const Item({Key? key}) : super(key: key);
-//   Party? _party;
-//   Item(Party party, {Key? key}) : super(key: key) {
-//     _party = party;
-//   }
-//   var isFavorite = false;
-//   var bookmarkList = [];
-//   @override
-//   Widget build(BuildContext context) {
-//     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
-//     final partyProvider = Provider.of<PartyModel>(context);
-//     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO!.userSeq);
-//     bookmarkList = partyProvider.bookmarkList;
-//     print('bookmarkList: ${bookmarkList}');
-//     print('partySeq: ${_party!.partySeq}, bookmarkList.contains(_party!.partySeq): ${bookmarkList.contains(_party!.partySeq)}');
-//     print('partySeq.runtimeType: ${_party!.partySeq.runtimeType}');
-//     print('bookmarkList[0].runtimeType: ${bookmarkList[0].runtimeType}');
-//     if (bookmarkList.contains(_party!.partySeq)) isFavorite = true;
-//     BookmarkReqVO bookmarkReqVO = BookmarkReqVO(userSeq: kakaoUserProvider.userResVO!.userSeq, partySeq: _party!.partySeq);
-//     void insertBookmark() {
-//       partyProvider.insertBookmark(bookmarkReqVO);
-//       partyProvider.afterBookmark(bookmarkReqVO);
-//       // _party = partyProvider.detailBookmark(bookmarkReqVO) as Party;
-//       _party = partyProvider.currentParty;
-//       Future.microtask(() => _party = _party);
-//     }
-//     void deleteBookmark() {
-//       partyProvider.deleteBookmark(bookmarkReqVO);
-//       partyProvider.afterBookmark(bookmarkReqVO);
-//       // _party = partyProvider.detailBookmark(bookmarkReqVO) as Party;
-//       _party = partyProvider.currentParty;
-//       Future.microtask(() => _party = _party);
-//     }
-//     // final partyCode = '001';
-//     return InkWell(
-//         splashColor: Colors.amber,
-//         hoverColor: Colors.lightGreenAccent,
-//         highlightColor: Colors.amber,
-//         child: Container(
-//             height: 156,
-//             margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-//             padding: EdgeInsets.all(10),
-//             decoration: BoxDecoration(
-//                 border: Border.all(color: Colors.amber), borderRadius: BorderRadius.circular(20)
-//             ),
-//             child: Row(
-//                 children: [
-//                   Flexible(flex: 4, child:
-//                   ClipRRect(
-//                     borderRadius: BorderRadius.circular(16),
-//                     child: Image.asset(
-//                       'assets/images/harry.png',
-//                       fit: BoxFit.fill,
-//                     ), // Text(key['title']),
-//                   ),
-//                   ),
-//                   Flexible(flex: 6,child: Container(
-//                       margin: EdgeInsets.all(5),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Text('${_party?.partyTitle}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),overflow: TextOverflow.ellipsis,),
-//                           Text('${_party?.partyAddr}', style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis,),
-//                           Text('${_party?.partyContent}', style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,),
-//                           Row(
-//                               mainAxisAlignment: MainAxisAlignment.end,
-//                               children: [
-//                                 IconButton(
-//                                     icon: isFavorite ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
-//                                     color: Colors.pink,
-//                                     onPressed: () {
-//                                       isFavorite ? deleteBookmark : insertBookmark;
-//
-//                                     },  // LikeButton(),
-//                                 ),
-//                                 Text('${_party!.partyBookmarkCount}'),
-//                               ]
-//                           )
-//                         ],
-//                       )
-//                   ),
-//                   )
-//                 ]
-//             )
-//         ),
-//         onTap: () {
-//           switch (_party!.partyCode) {
-//             case '001':
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(builder: (context) => PieDetail()),
-//               );
-//               break;
-//             case '002':
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(builder: (context) => BuyDetail()),
-//               );
-//               break;
-//             case '003':
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(builder: (context) => DlvDetail()),
-//               );
-//               break;
-//           }
-//         }
-//     );
-//   }
-// }
-

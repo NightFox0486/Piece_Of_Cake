@@ -2,9 +2,12 @@
 
  import com.E203.pjt.model.dto.req.UserReqVO;
  import com.E203.pjt.model.dto.req.BookmarkReqVO;
+ import com.E203.pjt.model.dto.res.PartyResVO;
  import com.E203.pjt.model.entity.Party;
  import com.E203.pjt.model.entity.User;
  import com.E203.pjt.repository.PartyRepository;
+ import com.E203.pjt.repository.PartyRepositorySupport;
+ import com.E203.pjt.repository.UserRepository;
  import com.E203.pjt.service.UserService;
  import com.E203.pjt.service.BookmarkService;
  import org.junit.jupiter.api.Test;
@@ -16,6 +19,7 @@
  import javax.persistence.EntityManager;
  import javax.persistence.PersistenceContext;
  import java.time.LocalDateTime;
+ import java.util.List;
 
  @SpringBootTest
  @Transactional
@@ -32,7 +36,13 @@
      PartyRepository partyRepository;
 
      @Autowired
+     PartyRepositorySupport partyRepositorySupport;
+
+     @Autowired
      BookmarkService bookmarkService;
+
+     @Autowired
+     UserRepository userRepository;
 
      @Test
      void makeKakaoUsers() {
@@ -89,7 +99,7 @@
                  party.setPartyRdvDt(LocalDateTime.now());
                  party.setPartyAddr(String.format("addr%d", i));
                  party.setPartyAddrDetail(String.format("addrDetail%d", j));
-                 party.setPartyStatus(0);
+                 party.setPartyStatus(1);
                  party.setItemLink(String.format("itemLink_%d-%d", i, j));
                  party.setTotalAmount(String.format("%d0000%d", i, j));
                  em.persist(party);
@@ -102,13 +112,39 @@
 
      @Test
      void makeBookmark() {
-         for (int i=1; i<11; i++) {
+         for (int i=1; i<2; i++) {
              for (int j=1; j<5; j++) {
                  BookmarkReqVO bookmarkReqVO = new BookmarkReqVO();
                  bookmarkReqVO.setUserSeq(j);
                  bookmarkReqVO.setPartySeq(i);
                  bookmarkService.insertBookmark(bookmarkReqVO);
              }
+         }
+     }
+
+     @Test
+     void fetchPartyListInProgress() {
+         List<Party> partyList = partyRepository.findAllByPartyStatus(1);
+         for (Party party : partyList) {
+             System.out.println(party.toString());
+         }
+     }
+
+     @Test
+     void fetchPartyHostList() {
+         Integer userSeq = 1;
+         List<Party> partyList = partyRepositorySupport.dynamicQueryPartyHostList(userSeq);
+         for (Party party : partyList) {
+             System.out.println(party.getPartyTitle());
+         }
+     }
+
+     @Test
+     void fetchPartyGuestList() {
+         Integer userSeq = 1;
+         List<Party> partyList = partyRepositorySupport.dynamicQueryPartyGuestList(userSeq);
+         for (Party party : partyList) {
+             System.out.println(party.getPartyTitle());
          }
      }
  }
