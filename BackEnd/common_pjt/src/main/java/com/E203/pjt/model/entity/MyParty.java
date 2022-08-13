@@ -25,6 +25,7 @@ public class MyParty implements Serializable {
     @MapsId("userSeq")
     private User user;
 
+    // "host" or "guest" : user가 party의 guest인지 host인지
     @Column(name = "party_list_code", length = 5, nullable = false)
     private String partyListCode;
 }

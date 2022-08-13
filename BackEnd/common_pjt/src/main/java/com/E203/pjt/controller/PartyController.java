@@ -4,23 +4,19 @@ import java.util.List;
 
 import com.E203.pjt.model.dto.res.PartyResVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.web.bind.annotation.*;
 
 import com.E203.pjt.model.entity.Party;
 import com.E203.pjt.service.PartyService;
+
+import javax.servlet.http.HttpSession;
 
 
 @RestController
 @RequiredArgsConstructor
 public class PartyController {
   private final PartyService partyService;
-
-  @PostMapping(value = "/party")
-  public Party createParty(@RequestBody Party party) {
-    System.out.println(party);
-    Party result = partyService.createParty(party);
-    return result;
-  }
 
   @GetMapping(value="/party")
   public List<PartyResVO> listParty() {
@@ -31,8 +27,18 @@ public class PartyController {
     return partyResVOList;
   }
 
+  @PostMapping(value = "/party")
+  public Party createParty(@RequestBody Party party, HttpSession session) {
+    System.out.println(party);
+    Party result = partyService.createParty(party, (Integer)session.getAttribute("userSeq"));
+    return result;
+  }
+
+
   @GetMapping(value = "/party/{partySeq}")
   public PartyResVO detailParty(@PathVariable Integer partySeq) {
+    System.out.println("[PartyController] detailParty() called");
+    System.out.println("parameter partySeq: "+partySeq);
     PartyResVO partyResVO = partyService.detailParty(partySeq);
     return partyResVO;
   }
