@@ -79,8 +79,9 @@ class PartyModel with ChangeNotifier {
     );
     print('response.body: ${response.body}');
     if (response.statusCode==200) {
-      await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
       await fetchPartyList();
+      await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
+      fetchBookmarkList(bookmarkReqVO.userSeq);
     } else {
       throw Exception('Failed to insert bookmark.');
     }
@@ -101,8 +102,9 @@ class PartyModel with ChangeNotifier {
     );
     print('response.body: ${response.body}');
     if (response.statusCode==200) {
-      await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
       await fetchPartyList();
+      await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
+      fetchBookmarkList(bookmarkReqVO.userSeq);
       print('_bookmarkList: ${_bookmarkList}');
     } else {
       throw Exception('Failed to delete bookmark');

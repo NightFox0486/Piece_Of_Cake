@@ -7,10 +7,16 @@ import com.E203.pjt.model.entity.MyParty;
 import com.E203.pjt.model.entity.Party;
 
 public interface PartyService {
-  Party createParty(Party party);
+  List<PartyResVO> listParty();
+  Party createParty(Party party, Integer userSeq);
   PartyResVO detailParty(Integer partySeq);
   void deleteParty(Integer party_seq);
-  List<PartyResVO> listParty();
+
+  // mypage에서 파티 개설 내역
+  List<Party> listPartyHost(Integer userSeq);
+  // mypage에서 파티 참여 내역
+  List<Party> listPartyGuest(Integer userSeq);
+
   List<MyParty> getMyPartyList(Integer userSeq);
   List<Party> getMyPartyHostList(Integer userSeq);
   List<Party> getMyPartyGuestList(Integer userSeq);

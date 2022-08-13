@@ -7,15 +7,10 @@ import com.E203.pjt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin(
-//	       // localhost:5500 과 127.0.0.1 구분
-//	       origins = "http://localhost:5500", // allowCredentials = "true" 일 경우, orogins="*" 는 X
-//	       allowCredentials = "true",
-//	       allowedHeaders = "*",
-//	       methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
-//	   )
 public class LoginController {
     private final LoginService loginService;
     private final UserService userService;
@@ -25,9 +20,10 @@ public class LoginController {
     //  kakao를 객체로 받는 이유는 kakao login 하면 회원이면 userKakaoLoginId만 가지고 판별이 되지만
     //      회원이 아니면 생성해야하기 때문
     @PostMapping(value = "/kakao-login")
-    public UserResVO kakaoLogin(@RequestBody UserReqVO userReqVO) {
+    public UserResVO kakaoLogin(@RequestBody UserReqVO userReqVO, HttpSession session) {
         System.out.println("[LoginController] kakaoLogin() called");
         UserResVO userResVO = loginService.kakaoLogin(userReqVO);
+        session.setAttribute("userSeq", userResVO.getUserSeq());
         return userResVO;
     }
 
