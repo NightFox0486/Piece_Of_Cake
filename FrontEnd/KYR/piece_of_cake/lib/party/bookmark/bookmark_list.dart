@@ -24,7 +24,7 @@ class _BookmarkListState extends State<BookmarkList> {
     print(_bookmarkPartyList);
     return Scaffold(
       appBar: AppBar(
-          title: Text('WishList'),
+          title: Text('Bookmark List'),
           actions: [
             IconButton(
                 onPressed: () {
@@ -45,8 +45,8 @@ class _BookmarkListState extends State<BookmarkList> {
       ),
       body: ListView(
           children: [
-            for (var wish in _bookmarkPartyList)
-              Item(wish),
+            for (var bookmark in _bookmarkPartyList)
+              Item(bookmark),
             Container(
               margin: EdgeInsets.only(bottom: 50),
             )
