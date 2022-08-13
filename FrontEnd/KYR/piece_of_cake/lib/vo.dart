@@ -1,15 +1,15 @@
 
-class BookmarkReqVO {
+class WishReqVO {
   int userSeq;
   int partySeq;
 
-  BookmarkReqVO({
+  WishReqVO({
     required this.userSeq,
     required this.partySeq,
   });
 
-  factory BookmarkReqVO.fromJson(Map<String, dynamic> json) {
-    return BookmarkReqVO(
+  factory WishReqVO.fromJson(Map<String, dynamic> json) {
+    return WishReqVO(
       userSeq: json['userSeq'],
       partySeq: json['partySeq'],
     );
@@ -29,7 +29,7 @@ class Party {
   String partyCode;
   String partyTitle;
   String partyContent;
-  int partyBookmarkCount;
+  int partyWishCount;
   List<dynamic> partyRegDt;
   List<dynamic> partyUpdDt;
   List<dynamic> partyRdvDt;
@@ -48,7 +48,7 @@ class Party {
     required this.partyCode,
     required this.partyTitle,
     required this.partyContent,
-    required this.partyBookmarkCount,
+    required this.partyWishCount,
     required this.partyRegDt,
     required this.partyUpdDt,
     required this.partyRdvDt,
@@ -70,7 +70,7 @@ class Party {
       partyCode: json['partyCode'],
       partyTitle: json['partyTitle'],
       partyContent: json['partyContent'],
-      partyBookmarkCount: json['partyBookmarkCount'],
+      partyWishCount: json['partyWishCount'],
       partyRegDt: json['partyRegDt'],
       partyUpdDt: json['partyUpdDt'],
       partyRdvDt: json['partyRdvDt'],
@@ -93,7 +93,7 @@ class Party {
     data['partyCode'] = this.partyCode;
     data['partyTitle'] = this.partyTitle;
     data['partyContent'] = this.partyContent;
-    data['partyBookmarkCount'] = this.partyBookmarkCount;
+    data['partyWishCount'] = this.partyWishCount;
     data['partyRegDt'] = this.partyRegDt;
     data['partyUpdDt'] = this.partyUpdDt;
     data['partyRdvDt'] = this.partyRdvDt;

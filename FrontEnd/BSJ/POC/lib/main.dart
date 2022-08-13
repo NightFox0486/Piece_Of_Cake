@@ -1,5 +1,4 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/expandableFAB.dart';
 // import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -14,16 +13,11 @@ import './action-button.dart';
 import './dlv_create.dart';
 import './buy_create.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'firebase_options.dart';
 
 
 
-void main() async {
+void main() {
   // KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(const MyApp());
 }
 

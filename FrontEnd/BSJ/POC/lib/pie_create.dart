@@ -9,16 +9,11 @@ class PieCreate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('PieCreate')),
-      body: ListView(children: [
-        Text('test'),
-        Container(
-          // height: 140,
-          child: Center(
-            child: ImageUploadWidget(),
-          ),
+      body: Container(
+        child: Center(
+          child: ImageUploadWidget(),
         ),
-        Text('test')
-      ]),
+      ),
     );
   }
 }
