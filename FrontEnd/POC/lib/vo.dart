@@ -1,8 +1,35 @@
+
+class BookmarkReqVO {
+  int userSeq;
+  int partySeq;
+
+  BookmarkReqVO({
+    required this.userSeq,
+    required this.partySeq,
+  });
+
+  factory BookmarkReqVO.fromJson(Map<String, dynamic> json) {
+    return BookmarkReqVO(
+      userSeq: json['userSeq'],
+      partySeq: json['partySeq'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userSeq'] = this.userSeq;
+    data['partySeq'] = this.partySeq;
+    return data;
+  }
+}
+
+
 class Party {
   int partySeq;
   int userSeq;
+  String partyCode;
   String partyTitle;
   String partyContent;
+  int partyBookmarkCount;
   List<dynamic> partyRegDt;
   List<dynamic> partyUpdDt;
   List<dynamic> partyRdvDt;
@@ -18,8 +45,10 @@ class Party {
   Party({
     required this.partySeq,
     required this.userSeq,
+    required this.partyCode,
     required this.partyTitle,
     required this.partyContent,
+    required this.partyBookmarkCount,
     required this.partyRegDt,
     required this.partyUpdDt,
     required this.partyRdvDt,
@@ -38,8 +67,10 @@ class Party {
     return Party(
       partySeq: json['partySeq'],
       userSeq: json['userSeq'],
+      partyCode: json['partyCode'],
       partyTitle: json['partyTitle'],
       partyContent: json['partyContent'],
+      partyBookmarkCount: json['partyBookmarkCount'],
       partyRegDt: json['partyRegDt'],
       partyUpdDt: json['partyUpdDt'],
       partyRdvDt: json['partyRdvDt'],
@@ -59,8 +90,10 @@ class Party {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['partySeq'] = this.partySeq;
     data['userSeq'] = this.userSeq;
+    data['partyCode'] = this.partyCode;
     data['partyTitle'] = this.partyTitle;
     data['partyContent'] = this.partyContent;
+    data['partyBookmarkCount'] = this.partyBookmarkCount;
     data['partyRegDt'] = this.partyRegDt;
     data['partyUpdDt'] = this.partyUpdDt;
     data['partyRdvDt'] = this.partyRdvDt;
@@ -73,56 +106,6 @@ class Party {
     data['partyStatus'] = this.partyStatus;
     data['itemLink'] = this.itemLink;
     data['totalAmount'] = this.totalAmount;
-    return data;
-  }
-}
-
-class UserReqVO {
-  String? userEmail;
-  String? userPhone;
-  String? userNickname;
-  String? userPassword;
-  String? userImage;
-  int? userRating;
-  String? userLat;
-  String? userLng;
-  String? userAccount;
-
-  UserReqVO(
-      this.userEmail,
-      this.userPhone,
-      this.userNickname,
-      this.userPassword,
-      this.userImage,
-      this.userRating,
-      this.userLat,
-      this.userLng,
-      this.userAccount,
-      );
-
-  UserReqVO.fromJson(Map<String, dynamic> json) {
-    userEmail = json['userEmail'];
-    userPhone = json['userPhone'];
-    userNickname = json['userNickname'];
-    userPassword = json['userPassword'];
-    userImage = json['userImage'];
-    userRating = json['userRating'];
-    userLat = json['userLat'];
-    userLng = json['userLng'];
-    userAccount = json['userAccount'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userEmail'] = this.userEmail;
-    data['userPhone'] = this.userPhone;
-    data['userNickname'] = this.userNickname;
-    data['userPassword'] = this.userPassword;
-    data['userImage'] = this.userImage;
-    data['userRating'] = this.userRating;
-    data['userLat'] = this.userLat;
-    data['userLng'] = this.userLng;
-    data['userAccount'] = this.userAccount;
     return data;
   }
 }

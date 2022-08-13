@@ -1,44 +1,58 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:piece_of_cake/party/buy/buy_detail_host.dart';
+import 'package:piece_of_cake/party/dlv/dlv_detail.dart';
 import 'package:piece_of_cake/party/pie/pie_detail.dart';
-
-import 'package:piece_of_cake/widget.dart';
+import 'package:piece_of_cake/vo.dart';
 import 'package:provider/provider.dart';
+import 'package:piece_of_cake/models/kakao_login_model.dart';
+import 'package:piece_of_cake/models/party_model.dart';
+import 'package:piece_of_cake/notice.dart';
+import 'package:piece_of_cake/search.dart';
+import 'package:piece_of_cake/widget.dart';
 
-import '../models/kakao_login_model.dart';
-import '../models/party_model.dart';
-import '../vo.dart';
-import 'buy/buy_detail_host.dart';
-import 'dlv/dlv_detail.dart';
+class BookmarkList extends StatefulWidget {
+  const BookmarkList({Key? key}) : super(key: key);
 
-class PartyList extends StatefulWidget {
   @override
-  State<PartyList> createState() => _PartyListState();
+  State<BookmarkList> createState() => _BookmarkListState();
 }
 
-class _PartyListState extends State<PartyList> {
-
+class _BookmarkListState extends State<BookmarkList> {
   @override
   Widget build(BuildContext context) {
-    print('party list');
+    print('bookmark list');
     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
-    partyProvider.fetchPartyList();
     partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO!.userSeq);
     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO!.userSeq);
-    var _partyList = partyProvider.partyList;
     var _bookmarkPartyList = partyProvider.bookmarkPartyList;
     var _bookmarkList = partyProvider.bookmarkList;
+    print(_bookmarkPartyList);
     return Scaffold(
       appBar: AppBar(
-          title: Text('Party List'),
+          title: Text('Bookmark List'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Notice()),
+                  );
+                },
+                icon: Icon(Icons.notifications)
+            ),
+            IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: customSearch()
+                  );
+                },
+                icon: Icon(Icons.search))
+          ]
       ),
-
       body: ListView(
         children: [
-          for (var party in _partyList)
+          for (var party in _bookmarkPartyList)
             InkWell(
               splashColor: Colors.deepPurpleAccent,
               hoverColor: Colors.pink,
@@ -141,5 +155,4 @@ class _PartyListState extends State<PartyList> {
       ),
     );
   }
-
 }
