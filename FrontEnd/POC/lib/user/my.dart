@@ -1,10 +1,11 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/kakao/kakao_login.dart';
 import 'package:piece_of_cake/kakao/kakao_login_view_model.dart';
+import 'package:provider/provider.dart';
+import '../models/kakao_login_model.dart';
 import '../notice.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../party/wish/wish_list.dart';
 import 'package:piece_of_cake/widget.dart';
 
 class My extends StatefulWidget {
@@ -49,14 +50,17 @@ class _MyState extends State<My> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text('탕웨이',
+                      Text(Provider.of<KakaoLoginModel>(context).user?.kakaoAccount?.profile?.nickname ?? '',
                       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
                       CircleAvatar(
                           radius: 60,
                           backgroundColor: Colors.transparent,
                           child: SizedBox(
                               child: ClipOval(
-                                child: Image.asset("assets/images/harry.png",
+                                child: CachedNetworkImage(
+                                  imageUrl: Provider.of<KakaoLoginModel>(context).user?.kakaoAccount?.profile?.profileImageUrl ?? '',
+                                  placeholder: (context, url) => new CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                                 ),
                               )
                           )
