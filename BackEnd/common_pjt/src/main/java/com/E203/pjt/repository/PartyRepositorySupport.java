@@ -28,7 +28,7 @@ public class PartyRepositorySupport {
     }
 
     // 사용자가 호스트인 파티
-    public List<Party> findDynamicQueryMyPartyHostList(Integer userSeq) {
+    public List<Party> dynamicQueryPartyHostList(Integer userSeq) {
         List<Party> result = jpaQueryFactory
                 .select(party)
                 .from(party, myParty)
@@ -40,7 +40,7 @@ public class PartyRepositorySupport {
 
 
     // 사용자가 게시트인 파티
-    public List<Party> findDynamicQueryMyPartyGuestList(Integer userSeq) {
+    public List<Party> dynamicQueryPartyGuestList(Integer userSeq) {
         List<Party> result = jpaQueryFactory
                 .select(party)
                 .from(party, myParty)
