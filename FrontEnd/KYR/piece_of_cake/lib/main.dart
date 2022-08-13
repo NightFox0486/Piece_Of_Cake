@@ -1,21 +1,18 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:piece_of_cake/expandableFAB.dart';
+import 'package:piece_of_cake/kakao_login_page.dart';
 import 'package:provider/provider.dart';
-import './my.dart';
-import './chat_list_my.dart';
-import './pie_create.dart';
-import './party_list.dart';
-import './home.dart';
-import './action-button.dart';
-import './dlv_create.dart';
-import './buy_create.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
-import 'kakao_login_page.dart';
 import 'models/kakao_login_model.dart';
 import 'models/party_model.dart';
+import 'user/my.dart';
+import 'chat/chat_list_my.dart';
+import 'party/pie/pie_create.dart';
+import 'party/bookmark//bookmark_list.dart';
+import './home.dart';
+import 'party/dlv/dlv_create.dart';
+import 'party/buy/buy_create.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
 
@@ -49,24 +46,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
 
   // final kakaoLoginViewModel = KakaoLoginViewModel(KakaoLogin());
 
   int index = 0;
   final screens = [
-    Home(),
-    PartyList(),
+    HomePage(),
+    BookmarkList(),
     ChatListMy(),
     My(),
   ];
@@ -83,48 +80,15 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: screens[index],
+      extendBody: true,
       bottomNavigationBar: CurvedNavigationBar(
         items: items,
         key: navigationKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         color: Colors.amber,
         height: 55,
         onTap: (index) => setState(() => this.index = index),
       ),
-      // floatingActionButton: ExpandableFab(
-      //     distance: 120,
-      //     children: [
-      //       ElevatedButton.icon(
-      //         onPressed: () {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => DlvCreate()),
-      //           );
-      //         },
-      //         icon: Icon(Icons.delivery_dining),
-      //         label: Text('배달')
-      //       ),
-      //       ElevatedButton.icon(
-      //           onPressed: () {
-      //             Navigator.push(
-      //               context,
-      //               MaterialPageRoute(builder: (context) => BuyCreate()),
-      //             );
-      //           },
-      //           icon: Icon(Icons.shopping_bag),
-      //           label: Text('공구')
-      //       ),
-      //       ElevatedButton.icon(
-      //           onPressed: () {
-      //             Navigator.push(
-      //               context,
-      //               MaterialPageRoute(builder: (context) => PieCreate()),
-      //             );
-      //           },
-      //           icon: Icon(Icons.safety_divider),
-      //           label: Text('소분')
-      //       ),
-      //     ]),
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         activeIcon: Icons.close,
@@ -173,7 +137,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-
     );
   }
 }

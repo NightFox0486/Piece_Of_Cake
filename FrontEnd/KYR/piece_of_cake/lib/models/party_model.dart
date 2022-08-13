@@ -11,10 +11,12 @@ import 'package:provider/provider.dart';
 class PartyModel with ChangeNotifier {
   List<Party> _partyList = [];
   List<Party> get partyList => _partyList;
-  List<Party> _wishPartyList = [];  // wish list의 party들 목록
-  List<Party> get wishPartyList => _wishPartyList;
-  List<int> _wishList = [];
-  List<int> get wishList => _wishList;
+  List<Party> _bookmarkPartyList = [];  // bookmark list의 party들 목록
+  List<Party> get bookmarkPartyList => _bookmarkPartyList;
+  List<int> _bookmarkList = [];
+  List<int> get bookmarkList => _bookmarkList;
+  Party? _currentParty;
+  Party? get currentParty => _currentParty;
   
   Future fetchPartyList() async {
     final response = await
@@ -27,69 +29,91 @@ class PartyModel with ChangeNotifier {
     }else {
       throw Exception('Failed to load party list.');
     }
-    notifyListeners();
+    // notifyListeners();
   }
   
-  Future fetchWishPartyList(userSeq) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:9090/wish/${userSeq}'));
+  Future fetchBookmarkPartyList(userSeq) async {
+    final response = await http.get(Uri.parse('http://10.0.2.2:9090/bookmark/${userSeq}'));
     if (response.statusCode==200) {
-      this._wishPartyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+      this._bookmarkPartyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
           .map((e) => Party.fromJson(e))
           .toList();
-      print('[PartyModel] fetchWishList() this._wishList: ${this._wishPartyList}');
+      print('[PartyModel] fetchBookmarkPartyList() this._bookmarkPartyList: ${this._bookmarkPartyList}');
     }else {
-      throw Exception('Failed to load wish list');
+      throw Exception('Failed to load bookmark party list');
     }
-    notifyListeners();
+    // notifyListeners();
   }
   
-  void fetchWishList(userSeq) {
-    print('wishList: ${wishList}');
-    this._wishList = _wishPartyList
+  void fetchBookmarkList(userSeq) {
+    this._bookmarkList = _bookmarkPartyList
         .map((e) => e.partySeq)
         .toList();
-    print('wishList: ${wishList}');
-    notifyListeners();
+    // notifyListeners();
   }
 
-  Future insertWishList(WishReqVO wishReqVO) async {
-    print('[PartyModel] insertWishList()');
-    print('wishReqVO: ${wishReqVO}');
-    print('wishReqVO.toJson(): ${wishReqVO.toJson()}');
-    print('jsonEncode(wishReqVO): ${jsonEncode(wishReqVO)}');
+  Future detailBookmark(BookmarkReqVO bookmarkReqVO) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:9090/party/${bookmarkReqVO.partySeq}')
+    );
+    if (response.statusCode==200) {
+      Party party = Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      _currentParty = party;
+    }else {
+      throw Exception('Failed to load detail bookmark.');
+    }
+    // notifyListeners();
+  }
+
+  Future insertBookmark(BookmarkReqVO bookmarkReqVO) async {
+    print('[PartyModel] insertBookmark()');
+    print('bookmarkReqVO: ${bookmarkReqVO}');
+    print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
+    print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:9090/wish'),
+      Uri.parse('http://10.0.2.2:9090/bookmark'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      // body: wishReqVO.toJson(),
-      body: jsonEncode(wishReqVO),
+      body: jsonEncode(bookmarkReqVO),
     );
     print('response.body: ${response.body}');
     if (response.statusCode==200) {
-      await fetchWishPartyList(wishReqVO.userSeq);
+      await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
       await fetchPartyList();
     } else {
-      throw Exception('Failed to insert wish list.');
+      throw Exception('Failed to insert bookmark.');
     }
-    notifyListeners();
+    // notifyListeners();
   }
 
-  Future deleteWishList(WishReqVO wishReqVO) async {
+  Future deleteBookmark(BookmarkReqVO bookmarkReqVO) async {
+    print('[PartyModel] deleteBookmark()');
+    print('bookmarkReqVO: ${bookmarkReqVO}');
+    print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
+    print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.delete(
-      Uri.parse('http://10.0.2.2:9090/wish'),
+      Uri.parse('http://10.0.2.2:9090/bookmark'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(wishReqVO),
+      body: jsonEncode(bookmarkReqVO),
     );
     print('response.body: ${response.body}');
     if (response.statusCode==200) {
-      await fetchWishPartyList(wishReqVO.userSeq);
+      await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
       await fetchPartyList();
+      print('_bookmarkList: ${_bookmarkList}');
     } else {
-      throw Exception('Failed to delete wish list');
+      throw Exception('Failed to delete bookmark');
     }
-    notifyListeners();
+    // notifyListeners();
+  }
+
+  Future afterBookmark(BookmarkReqVO bookmarkReqVO) async {
+    await fetchPartyList();
+    await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
+    fetchBookmarkList(bookmarkReqVO.userSeq);
+    // notifyListeners();
   }
 }

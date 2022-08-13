@@ -35,7 +35,7 @@ public class PartyServiceImpl implements PartyService {
     partyResVO.setPartyCode(party.getPartyCode());
     partyResVO.setPartyTitle(party.getPartyTitle());
     partyResVO.setPartyContent(party.getPartyContent());
-    partyResVO.setPartyWishCount(party.getPartyWishCount());
+    partyResVO.setPartyBookmarkCount(party.getPartyBookmarkCount());
     partyResVO.setPartyCode(party.getPartyCode());
     partyResVO.setPartyRegDt(party.getPartyRegDt());
     partyResVO.setPartyUpdDt(party.getPartyUpdDt());
@@ -58,7 +58,7 @@ public class PartyServiceImpl implements PartyService {
   }
 
   @Override
-  public List<PartyResVO> getPartyList() {
+  public List<PartyResVO> listParty() {
     List<Party> partyList = partyRepository.findAll();
     List<PartyResVO> partyResVOList = new ArrayList<>();
     for(Party party : partyList) {
@@ -68,7 +68,7 @@ public class PartyServiceImpl implements PartyService {
       partyResVO.setPartyCode(party.getPartyCode());
       partyResVO.setPartyTitle(party.getPartyTitle());
       partyResVO.setPartyContent(party.getPartyContent());
-      partyResVO.setPartyWishCount(party.getPartyWishCount());
+      partyResVO.setPartyBookmarkCount(party.getPartyBookmarkCount());
       partyResVO.setPartyRegDt(party.getPartyRegDt());
       partyResVO.setPartyUpdDt(party.getPartyUpdDt());
       partyResVO.setPartyRdvDt(party.getPartyRdvDt());

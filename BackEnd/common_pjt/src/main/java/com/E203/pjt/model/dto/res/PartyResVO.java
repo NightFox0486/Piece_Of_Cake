@@ -1,8 +1,5 @@
 package com.E203.pjt.model.dto.res;
 
-import com.E203.pjt.model.entity.Party;
-import com.E203.pjt.model.entity.User;
-import com.E203.pjt.service.UserService;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,7 +15,7 @@ public class PartyResVO {
     String partyCode;
     String partyTitle;
     String partyContent;
-    Integer partyWishCount;
+    Integer partyBookmarkCount;
     LocalDateTime partyRegDt;
     LocalDateTime partyUpdDt;
     LocalDateTime partyRdvDt;
