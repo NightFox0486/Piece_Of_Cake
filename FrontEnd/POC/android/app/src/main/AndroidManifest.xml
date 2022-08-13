@@ -3,7 +3,7 @@
    <application
         android:label="piece_of_cake"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
        <!-- Kakao Login Start -->
        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
