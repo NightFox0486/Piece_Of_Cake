@@ -4,20 +4,20 @@ import 'package:piece_of_cake/party/party_list.dart';
 import 'user/my.dart';
 import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
-import 'party/wish/wish_list.dart';
+import 'party/bookmark/bookmark_list.dart';
 import './notice.dart';
 import './search.dart';
 import 'package:piece_of_cake/widget.dart';
 
 
-class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
