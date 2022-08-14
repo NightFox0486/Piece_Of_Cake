@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import com.E203.pjt.model.entity.User;
+
 /**
  * 파티 생성 시 사용자에게 입력 받는 값
  */
@@ -20,8 +22,8 @@ public class PartyPostReqVO {
     private LocalDateTime partyRegDt;
     private LocalDateTime partyUpdDt;
     private LocalDateTime partyRdvDt;
-    private LocalDateTime partyRdvLat;
-    private LocalDateTime partyRdvLng;
+    private String partyRdvLat;
+    private String partyRdvLng;
     private Integer partyMemberNumTotal;
     private Integer partyMemberNumCurrent;
     private String partyAddr;
@@ -29,4 +31,5 @@ public class PartyPostReqVO {
     private Integer partyStatus;
     private String itemLink;
     private String totalAmount;
+    private Integer userSeq;
 }

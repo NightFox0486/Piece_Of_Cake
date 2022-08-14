@@ -2,6 +2,7 @@ package com.E203.pjt.controller;
 
 import java.util.List;
 
+import com.E203.pjt.model.dto.req.PartyPostReqVO;
 import com.E203.pjt.model.dto.res.PartyResVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.relational.core.sql.In;
@@ -28,9 +29,9 @@ public class PartyController {
   }
 
   @PostMapping(value = "/party")
-  public Party createParty(@RequestBody Party party, HttpSession session) {
-    System.out.println(party);
-    Party result = partyService.createParty(party, (Integer)session.getAttribute("userSeq"));
+  public Party createParty(@RequestBody PartyPostReqVO partyPostReqVO, HttpSession session) {
+    System.out.println(partyPostReqVO);
+    Party result = partyService.createParty(partyPostReqVO, (Integer)session.getAttribute("userSeq"));
     return result;
   }
 
