@@ -71,7 +71,7 @@ public class PartyServiceImpl implements PartyService {
     party.setPartyRdvLng(partyPostReqVO.getPartyRdvLng());
     party.setPartyTitle(partyPostReqVO.getPartyTitle());
     party.setTotalAmount(partyPostReqVO.getTotalAmount());
-    party.setUser(partyPostReqVO.getUser());
+    party.setUser(userRepository.findByUserSeq(partyPostReqVO.getUserSeq()));
 
     return partyRepository.save(party);
   }

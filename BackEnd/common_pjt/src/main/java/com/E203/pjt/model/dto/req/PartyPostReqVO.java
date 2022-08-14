@@ -31,5 +31,5 @@ public class PartyPostReqVO {
     private Integer partyStatus;
     private String itemLink;
     private String totalAmount;
-    private User user;
+    private Integer userSeq;
 }
