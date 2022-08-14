@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:piece_of_cake/image_upload_widget.dart';
+import 'package:piece_of_cake/widgets/image_upload_widget.dart';
 
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
 
@@ -29,7 +29,7 @@ class _BuyCreateState extends State<BuyCreate> {
         children: [
           Container(
             margin: EdgeInsets.all(20),
-              child: ImageUploadWidget(key: imageKey),
+            child: ImageUploadWidget(key: imageKey),
           ),
           Container(
             margin: EdgeInsets.all(10),
