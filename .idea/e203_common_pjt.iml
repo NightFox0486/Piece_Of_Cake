@@ -67,6 +67,12 @@
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/LTY/common_pjt/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/LTY/common_pjt/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/build" />
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/LTY/common_pjt/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/BSJ/POC/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/BSJ/POC/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/BSJ/POC/build" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/KYR/piece_of_cake/build" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/KYR/piece_of_cake/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/KYR/piece_of_cake/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
