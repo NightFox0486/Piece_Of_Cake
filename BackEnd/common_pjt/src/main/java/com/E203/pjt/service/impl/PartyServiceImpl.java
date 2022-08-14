@@ -3,6 +3,7 @@ package com.E203.pjt.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.E203.pjt.model.dto.req.PartyPostReqVO;
 import com.E203.pjt.model.dto.res.PartyResVO;
 import com.E203.pjt.model.entity.MyParty;
 import com.E203.pjt.repository.PartyRepositorySupport;
@@ -55,7 +56,22 @@ public class PartyServiceImpl implements PartyService {
 
   @Override
   @Transactional
-  public Party createParty(Party party, Integer userSeq) {
+  public Party createParty(PartyPostReqVO partyPostReqVO, Integer userSeq) {
+    Party party = new Party();
+    party.setItemLink(partyPostReqVO.getItemLink());
+    party.setPartyAddr(partyPostReqVO.getPartyAddr());
+    party.setPartyAddrDetail(partyPostReqVO.getPartyAddrDetail());
+    party.setPartyStatus(partyPostReqVO.getPartyStatus());
+    party.setPartyBookmarkCount(partyPostReqVO.getPartyBookmarkCount());
+    party.setPartyCode(partyPostReqVO.getPartyCode());
+    party.setPartyContent(partyPostReqVO.getPartyContent());
+    party.setPartyMemberNumCurrent(partyPostReqVO.getPartyMemberNumCurrent());
+    party.setPartyMemberNumTotal(partyPostReqVO.getPartyMemberNumTotal());
+    party.setPartyRdvLat(partyPostReqVO.getPartyRdvLat());
+    party.setPartyRdvLng(partyPostReqVO.getPartyRdvLng());
+    party.setPartyTitle(partyPostReqVO.getPartyTitle());
+    party.setTotalAmount(partyPostReqVO.getTotalAmount());
+    party.setUser(partyPostReqVO.getUser());
 
     return partyRepository.save(party);
   }
