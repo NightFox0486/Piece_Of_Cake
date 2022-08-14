@@ -20,7 +20,6 @@ class _BuyCreateState extends State<BuyCreate> {
 
   createParty(var kakaoUserProvider) {
     insertParty(kakaoUserProvider);
-    imageKey.currentState?.addImage();
   }
 
   Future insertParty(var kakaoUserProvider) async {
@@ -48,6 +47,9 @@ class _BuyCreateState extends State<BuyCreate> {
       body: jsonEncode(partyReqVO),
     );
     print('response.body: ${response.body}');
+    //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
+    int partySeq = 89;
+    imageKey.currentState?.addImage(partySeq);
   }
 
   @override
