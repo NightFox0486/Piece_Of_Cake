@@ -22,7 +22,6 @@ GlobalKey<_ImageUploadState> imageKey = GlobalKey();
 class ImageUploadWidget extends StatefulWidget {
   const ImageUploadWidget({Key? key}) : super(key: key);
 
-
   @override
   State<ImageUploadWidget> createState() => _ImageUploadState();
 }
@@ -30,6 +29,7 @@ class ImageUploadWidget extends StatefulWidget {
 class _ImageUploadState extends State<ImageUploadWidget> {
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
+  List<String> imageUrlList = [];
 
   void selectImages() async {
     final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
@@ -39,7 +39,7 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     setState(() {});
   }
 
-  Future<String>? uploadFile(XFile? file,int index) async {
+  Future<String>? uploadFile(XFile? file, int index) async {
     if (file == null) {
       print("input images is null");
       return null!;
@@ -65,23 +65,20 @@ class _ImageUploadState extends State<ImageUploadWidget> {
   addImgStorage(XFile file, int index) async {
     // final file = await ImagePicker().pickImage(source: ImageSource.gallery);
     String? url = await uploadFile(file, index);
-    // if (url != null) {
-    //   images.insert(
-    //       0,
-    //       Container(
-    //         child: Image.network(url, width: 100, height: 100),
-    //       ));
-    // }
+    if (url != null) {
+      imageUrlList.add(url);
+    }
     setState(() {});
   }
 
-   void addImage() {
+  void addImage() {
     print('test');
-      //addImgStorage(0);
-     for(int i = 0 ; i < imageFileList!.length; i++){
-       addImgStorage(imageFileList![i], i);
-     }
+    //addImgStorage(0);
+    for (int i = 0; i < imageFileList!.length; i++) {
+      addImgStorage(imageFileList![i], i);
     }
+    // db에 저장
+  }
   //
   // removeImg() {
   //   setState(() {
@@ -92,49 +89,57 @@ class _ImageUploadState extends State<ImageUploadWidget> {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      direction: Axis.horizontal,
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-
-      children: List.generate(imageFileList!.length+1, (index) => //Padding(
-        // padding: const EdgeInsets.symmetric(vertical: 50,  horizontal: 50),
-        // child:
-        index == imageFileList!.length ? GestureDetector(
-                  onTap: () {
-                    selectImages();
-                  },
-                  child: Container(margin: EdgeInsets.all(5),child: SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: DottedBorder(
-                      color: Colors.grey,
-                      strokeWidth: 2,
-                      radius: Radius.circular(8),
-                      borderType: BorderType.RRect,
-                      dashPattern: [8, 4],
-                      child: ClipRect(
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: List.generate(
+          imageFileList!.length + 1,
+          (index) => //Padding(
+              // padding: const EdgeInsets.symmetric(vertical: 50,  horizontal: 50),
+              // child:
+              index == imageFileList!.length
+                  ? GestureDetector(
+                      onTap: () {
+                        selectImages();
+                      },
+                      child: Container(
+                          margin: EdgeInsets.all(5),
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: DottedBorder(
+                              color: Colors.grey,
+                              strokeWidth: 2,
+                              radius: Radius.circular(8),
+                              borderType: BorderType.RRect,
+                              dashPattern: [8, 4],
+                              child: ClipRect(
+                                child: Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
+                    )
+                  : Container(
+                      width: 100,
+                      height: 100,
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image: FileImage(
+                                  io.File(imageFileList![index].path)),
+                              fit: BoxFit.cover)),
                     ),
-                  )),
-                ) : Container(width: 100,height: 100,margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: FileImage(io.File(imageFileList![index].path)),
-                          fit: BoxFit.cover)),
-                ),
 
-            //)
-    )
-    );
+          //)
+        ));
   }
 }
