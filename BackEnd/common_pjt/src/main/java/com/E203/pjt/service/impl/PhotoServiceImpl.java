@@ -8,19 +8,21 @@ import com.E203.pjt.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import com.E203.pjt.repository.PartyRepository;
 import com.E203.pjt.repository.PhotoRepository;
 
 @Service
 @RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
   private final PhotoRepository photoRepository;
+  private final PartyRepository partyRepository;
 
   @Override
   public Photo insertPhoto(PhotoPostReqVO photoPostReqVO) {
     Photo photo  = new Photo();
     photo.setFileName(photoPostReqVO.getFileName());
     photo.setFileUrl(photoPostReqVO.getFileUrl());
-    photo.setPhotoSeq(photoPostReqVO.getPartySeq());
+    photo.setParty(partyRepository.findByPartySeq(photoPostReqVO.getPartySeq()));
     return photoRepository.save(photo);
   }
 

@@ -75,11 +75,11 @@ class _ImageUploadState extends State<ImageUploadWidget> {
       );
 
       final response = await http.post(
-        Uri.parse('http://i7e203.p.ssafy.io:9090/party'),
+        Uri.parse('http://i7e203.p.ssafy.io:9090/photo'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(partyReqVO),
+        body: jsonEncode(imageUploadReqVO),
       );
       print('response.body: ${response.body}');
     }
