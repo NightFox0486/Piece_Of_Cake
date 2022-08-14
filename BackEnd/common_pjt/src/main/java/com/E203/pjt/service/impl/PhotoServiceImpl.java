@@ -2,6 +2,7 @@ package com.E203.pjt.service.impl;
 
 import java.util.List;
 
+import com.E203.pjt.model.dto.req.PhotoPostReqVO;
 import com.E203.pjt.model.entity.Photo;
 import com.E203.pjt.service.PhotoService;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +16,22 @@ public class PhotoServiceImpl implements PhotoService {
   private final PhotoRepository photoRepository;
 
   @Override
-  public Photo insertPhoto(Photo photo) {
+  public Photo insertPhoto(PhotoPostReqVO photoPostReqVO) {
+    Photo photo  = new Photo();
+    photo.setFileName(photoPostReqVO.getFileName());
+    photo.setFileUrl(photoPostReqVO.getFileUrl());
+    photo.setPhotoSeq(photoPostReqVO.getPartySeq());
     return photoRepository.save(photo);
   }
 
-  @Override
-  public void deletePhoto(Integer photoSeq) {
-    photoRepository.deleteById(photoSeq);
-  }
+  // @Override
+  // public void deletePhoto(Integer photoSeq) {
+  //   photoRepository.deleteById(photoSeq);
+  // }
 
-  @Override
-  public List<Photo> getAllPhotos() {
-    return photoRepository.findAll();
-  }
+  // @Override
+  // public List<Photo> getAllPhotos() {
+  //   return photoRepository.findAll();
+  // }
 
 }
