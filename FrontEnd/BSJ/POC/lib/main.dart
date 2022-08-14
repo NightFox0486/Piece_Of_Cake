@@ -17,23 +17,20 @@ import 'party/bookmark/bookmark_list.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
-
 void main() async {
   KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => KakaoLoginModel()),
-          ChangeNotifierProvider(create: (_) => PartyModel()),
-        ],
-        child: MyApp(),
-      )
-  );}
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => KakaoLoginModel()),
+      ChangeNotifierProvider(create: (_) => PartyModel()),
+    ],
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -41,14 +38,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Remove the debug banner
+        // Remove the debug banner
         debugShowCheckedModeBanner: false,
         title: 'Piece Of Cake',
         theme: ThemeData(
           primarySwatch: Colors.amber,
         ),
-        home: const KakaoLoginPage()
-    );
+        home: const KakaoLoginPage());
   }
 }
 
@@ -58,8 +54,6 @@ class MainPage extends StatefulWidget {
   @override
   State<MainPage> createState() => _MainPageState();
 }
-
-
 
 class _MainPageState extends State<MainPage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
@@ -77,11 +71,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      Icon(Icons.home, size:30),
-      Icon(Icons.celebration, size:30),
-      Icon(Icons.question_answer, size:30),
-      Icon(Icons.person, size:30),
-
+      Icon(Icons.home, size: 30),
+      Icon(Icons.celebration, size: 30),
+      Icon(Icons.question_answer, size: 30),
+      Icon(Icons.person, size: 30),
     ];
 
     return Scaffold(
@@ -140,17 +133,19 @@ class _MainPageState extends State<MainPage> {
         elevation: 16.0,
         children: [
           SpeedDialChild(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DlvCreate()),
-              );
-            },
-            child: Icon(Icons.delivery_dining, size: 30,),
-            label: '배달',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
-          ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DlvCreate()),
+                );
+              },
+              child: Icon(
+                Icons.delivery_dining,
+                size: 30,
+              ),
+              label: '배달',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber),
           SpeedDialChild(
               onTap: () {
                 Navigator.push(
@@ -158,11 +153,13 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => BuyCreate()),
                 );
               },
-            child: Icon(Icons.shopping_bag, size: 30,),
-            label: '공구',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
-          ),
+              child: Icon(
+                Icons.shopping_bag,
+                size: 30,
+              ),
+              label: '공구',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber),
           SpeedDialChild(
               onTap: () {
                 Navigator.push(
@@ -170,18 +167,15 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => PieCreate()),
                 );
               },
-            child: Icon(Icons.safety_divider, size: 30,),
-            label: '소분',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
-          ),
+              child: Icon(
+                Icons.safety_divider,
+                size: 30,
+              ),
+              label: '소분',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber),
         ],
       ),
-
     );
   }
 }
-
-
-
-
