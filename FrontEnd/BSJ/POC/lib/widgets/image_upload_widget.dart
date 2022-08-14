@@ -41,7 +41,7 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     setState(() {});
   }
 
-  Future<String>? uploadFile(XFile? file, int index) async {
+  Future<String>? uploadFile(XFile? file, int index, int partySeq) async {
     if (file == null) {
       print("input images is null");
       return null!;
@@ -61,16 +61,10 @@ class _ImageUploadState extends State<ImageUploadWidget> {
       ref.putFile(io.File(file.path), metadata);
     }
     String url = await ref.getDownloadURL();
-    return url;
-  }
-
-  addImgStorage(XFile file, int index, int partySeq) async {
-    // final file = await ImagePicker().pickImage(source: ImageSource.gallery);
-    String? url = await uploadFile(file, index);
     if (url != null) {
       ImageUploadReqVO imageUploadReqVO = ImageUploadReqVO(
-        fileName: 'test',
-        fileUrl: 'test',
+        fileName: ref.fullPath,
+        fileUrl: url,
         partySeq: partySeq,
       );
 
@@ -83,6 +77,28 @@ class _ImageUploadState extends State<ImageUploadWidget> {
       );
       print('response.body: ${response.body}');
     }
+    return url;
+  }
+
+  addImgStorage(XFile file, int index, int partySeq) async {
+    // final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    String? url = await uploadFile(file, index, partySeq);
+    // if (url != null) {
+    //   ImageUploadReqVO imageUploadReqVO = ImageUploadReqVO(
+    //     fileName: ,
+    //     fileUrl: url,
+    //     partySeq: partySeq,
+    //   );
+
+    //   final response = await http.post(
+    //     Uri.parse('http://i7e203.p.ssafy.io:9090/photo'),
+    //     headers: <String, String>{
+    //       'Content-Type': 'application/json; charset=UTF-8',
+    //     },
+    //     body: jsonEncode(imageUploadReqVO),
+    //   );
+    //   print('response.body: ${response.body}');
+    // }
     setState(() {});
   }
 

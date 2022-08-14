@@ -48,7 +48,7 @@ class _BuyCreateState extends State<BuyCreate> {
     );
     print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
-    int partySeq = 75;
+    int partySeq = 89;
     imageKey.currentState?.addImage(partySeq);
   }
 
