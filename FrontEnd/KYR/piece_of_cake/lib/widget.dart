@@ -18,7 +18,7 @@ class Item extends StatefulWidget {
   //   _party = party;
   // }
   final Function() onTap;
-  Party party;
+  PartyResVO party;
   Item({Key? key, required this.party, required this.onTap}) : super(key: key);
 
   @override
@@ -166,19 +166,19 @@ class _ItemState extends State<Item> {
             case '001':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PieDetail()),
+                MaterialPageRoute(builder: (context) => PieDetail(partyResVO: widget.party,)),
               );
               break;
             case '002':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BuyDetail()),
+                MaterialPageRoute(builder: (context) => BuyDetail(partyResVO: widget.party,)),
               );
               break;
             case '003':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DlvDetail()),
+                MaterialPageRoute(builder: (context) => DlvDetail(partyResVO: widget.party,)),
               );
               break;
           }

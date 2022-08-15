@@ -32,7 +32,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         List<PartyResVO> result = new ArrayList<>();
         User user = userRepository.findByUserSeq(userSeq);
         List<Bookmark> list = bookmarkRepository.findAllByUser(user);
-        Integer partySeqList[] = new Integer[list.size()];
+//        Integer partySeqList[] = new Integer[list.size()];
         for (Bookmark wishList : list) {
             PartyResVO partyResVO = partyService.detailParty(wishList.getParty().getPartySeq());
             result.add(partyResVO);
@@ -45,26 +45,29 @@ public class BookmarkServiceImpl implements BookmarkService {
     public Bookmark insertBookmark(BookmarkReqVO bookmarkReqVO) {
         User user = userRepository.findByUserSeq(bookmarkReqVO.getUserSeq());
         Party party = partyRepository.findByPartySeq(bookmarkReqVO.getPartySeq());
-        Bookmark bookmark = new Bookmark();
-        BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
-        bookmark.setBookmarkPK(pk);
-        bookmark.setUser(user);
-        bookmark.setParty(party);
-        party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
-        partyRepository.save(party);
-        return bookmarkRepository.save(bookmark);
+//        Bookmark bookmark = new Bookmark();
+//        BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
+//        bookmark.setBookmarkPK(pk);
+//        bookmark.setUser(user);
+//        bookmark.setParty(party);
+//        party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
+//        partyRepository.save(party);
+//        return bookmarkRepository.save(bookmark);
+
 //        Bookmark bookmark = bookmarkRepository.findBookmarkByUserAndParty(user, party);
-//        if (bookmark!=null) {
-//            BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
-//            bookmark.setBookmarkPK(pk);
-//            bookmark.setUser(user);
-//            bookmark.setParty(party);
-//            party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
-//            partyRepository.save(party);
-//            return bookmarkRepository.save(bookmark);
-//        } else {
-//            return bookmark;
-//        }
+        if (bookmarkRepository.findBookmarkByUserAndParty(user, party)==null) {
+            Bookmark bookmark = new Bookmark();
+            BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
+            bookmark.setBookmarkPK(pk);
+            bookmark.setUser(user);
+            bookmark.setParty(party);
+            party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
+            partyRepository.save(party);
+            return bookmarkRepository.save(bookmark);
+        } else {
+            Bookmark bookmark = bookmarkRepository.findBookmarkByUserAndParty(user, party);
+            return bookmark;
+        }
     }
 
     @Override

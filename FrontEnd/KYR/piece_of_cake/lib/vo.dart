@@ -1,4 +1,6 @@
 
+import 'package:piece_of_cake/models/kakao_login_model.dart';
+
 class BookmarkReqVO {
   int userSeq;
   int partySeq;
@@ -21,11 +23,81 @@ class BookmarkReqVO {
     return data;
   }
 }
+class PartyReqVO {
+  String partyCode;
+  String partyTitle;
+  String partyContent;
+  int partyBookmarkCount;
+  List<dynamic> partyRdvDt;
+  String partyRdvLat;
+  String partyRdvLng;
+  int partyMemberNumTotal;
+  int partyMemberNumCurrent;
+  String partyAddr;
+  String partyAddrDetail;
+  int partyStatus;
+  String itemLink;
+  String totalAmount;
+  PartyReqVO({
+    required this.partyCode,
+    required this.partyTitle,
+    required this.partyContent,
+    required this.partyBookmarkCount,
+    required this.partyRdvDt,
+    required this.partyRdvLat,
+    required this.partyRdvLng,
+    required this.partyMemberNumTotal,
+    required this.partyMemberNumCurrent,
+    required this.partyAddr,
+    required this.partyAddrDetail,
+    required this.partyStatus,
+    required this.itemLink,
+    required this.totalAmount
+  });
 
+  factory PartyReqVO.fromJson(Map<String, dynamic> json) {
+    return PartyReqVO(
+      partyCode: json['partyCode'],
+      partyTitle: json['partyTitle'],
+      partyContent: json['partyContent'],
+      partyBookmarkCount: json['partyBookmarkCount'],
+      partyRdvDt: json['partyRdvDt'],
+      partyRdvLat: json['partyRdvLat'],
+      partyRdvLng: json['partyRdvLng'],
+      partyMemberNumTotal: json['partyMemberNumTotal'],
+      partyMemberNumCurrent: json['partyMemberNumCurrent'],
+      partyAddr: json['partyAddr'],
+      partyAddrDetail: json['partyAddrDetail'],
+      partyStatus: json['partyStatus'],
+      itemLink: json['itemLink'],
+      totalAmount: json['totalAmount'],
+    );
+  }
 
-class Party {
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['partyCode'] = this.partyCode;
+    data['partyTitle'] = this.partyTitle;
+    data['partyContent'] = this.partyContent;
+    data['partyBookmarkCount'] = this.partyBookmarkCount;
+    data['partyRdvDt'] = this.partyRdvDt;
+    data['partyRdvLat'] = this.partyRdvLat;
+    data['partyRdvLng'] = this.partyRdvLng;
+    data['partyMemberNumTotal'] = this.partyMemberNumTotal;
+    data['partyMemberNumCurrent'] = this.partyMemberNumCurrent;
+    data['partyAddr'] = this.partyAddr;
+    data['partyAddrDetail'] = this.partyAddrDetail;
+    data['partyStatus'] = this.partyStatus;
+    data['itemLink'] = this.itemLink;
+    data['totalAmount'] = this.totalAmount;
+    return data;
+  }
+}
+
+class PartyResVO {
   int partySeq;
   int userSeq;
+  // UserResVO userResVO;
   String partyCode;
   String partyTitle;
   String partyContent;
@@ -42,9 +114,10 @@ class Party {
   int partyStatus;
   String itemLink;
   String totalAmount;
-  Party({
+  PartyResVO({
     required this.partySeq,
     required this.userSeq,
+    // required this.userResVO,
     required this.partyCode,
     required this.partyTitle,
     required this.partyContent,
@@ -63,10 +136,11 @@ class Party {
     required this.totalAmount
   });
 
-  factory Party.fromJson(Map<String, dynamic> json) {
-    return Party(
+  factory PartyResVO.fromJson(Map<String, dynamic> json) {
+    return PartyResVO(
       partySeq: json['partySeq'],
       userSeq: json['userSeq'],
+      // userResVO: UserResVO.fromJson(json['userResVO']),
       partyCode: json['partyCode'],
       partyTitle: json['partyTitle'],
       partyContent: json['partyContent'],
@@ -90,6 +164,7 @@ class Party {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['partySeq'] = this.partySeq;
     data['userSeq'] = this.userSeq;
+    // data['userResVO'] = this.userResVO.toJson();
     data['partyCode'] = this.partyCode;
     data['partyTitle'] = this.partyTitle;
     data['partyContent'] = this.partyContent;

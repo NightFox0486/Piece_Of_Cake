@@ -8,16 +8,23 @@ import 'models/party_model.dart';
 import 'user/my.dart';
 import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
-import 'party/bookmark//bookmark_list.dart';
 import './home.dart';
 import 'party/dlv/dlv_create.dart';
 import 'party/buy/buy_create.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:piece_of_cake/party/bookmark/bookmark_list.dart';
+import 'party/bookmark/bookmark_list.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
 
-void main() {
+void main() async {
   KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
       MultiProvider(
         providers: [
@@ -26,8 +33,7 @@ void main() {
         ],
         child: MyApp(),
       )
-  );
-}
+  );}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -89,6 +95,40 @@ class _MainPageState extends State<MainPage> {
         height: 55,
         onTap: (index) => setState(() => this.index = index),
       ),
+      // floatingActionButton: ExpandableFab(
+      //     distance: 120,
+      //     children: [
+      //       ElevatedButton.icon(
+      //         onPressed: () {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => DlvCreate()),
+      //           );
+      //         },
+      //         icon: Icon(Icons.delivery_dining),
+      //         label: Text('배달')
+      //       ),
+      //       ElevatedButton.icon(
+      //           onPressed: () {
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(builder: (context) => BuyCreate()),
+      //             );
+      //           },
+      //           icon: Icon(Icons.shopping_bag),
+      //           label: Text('공구')
+      //       ),
+      //       ElevatedButton.icon(
+      //           onPressed: () {
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(builder: (context) => PieCreate()),
+      //             );
+      //           },
+      //           icon: Icon(Icons.safety_divider),
+      //           label: Text('소분')
+      //       ),
+      //     ]),
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         activeIcon: Icons.close,
@@ -100,16 +140,16 @@ class _MainPageState extends State<MainPage> {
         elevation: 16.0,
         children: [
           SpeedDialChild(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DlvCreate()),
-              );
-            },
-            child: Icon(Icons.delivery_dining, size: 30,),
-            label: '배달',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DlvCreate()),
+                );
+              },
+              child: Icon(Icons.delivery_dining, size: 30,),
+              label: '배달',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
           SpeedDialChild(
               onTap: () {
@@ -118,10 +158,10 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => BuyCreate()),
                 );
               },
-            child: Icon(Icons.shopping_bag, size: 30,),
-            label: '공구',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              child: Icon(Icons.shopping_bag, size: 30,),
+              label: '공구',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
           SpeedDialChild(
               onTap: () {
@@ -130,13 +170,14 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => PieCreate()),
                 );
               },
-            child: Icon(Icons.safety_divider, size: 30,),
-            label: '소분',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              child: Icon(Icons.safety_divider, size: 30,),
+              label: '소분',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
         ],
       ),
+
     );
   }
 }

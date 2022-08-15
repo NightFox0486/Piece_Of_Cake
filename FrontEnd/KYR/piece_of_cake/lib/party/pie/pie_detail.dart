@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
-class PieDetail extends StatelessWidget {
-  const PieDetail({Key? key}) : super(key: key);
+import '../../vo.dart';
 
+class PieDetail extends StatefulWidget {
+  final PartyResVO partyResVO;
+  const PieDetail(
+      {Key? key, required this.partyResVO})
+      : super(key: key
+  );
+  @override
+  State<PieDetail> createState() => _PieDetailState();
+}
+
+class _PieDetailState extends State<PieDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

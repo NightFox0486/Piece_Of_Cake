@@ -2,6 +2,7 @@ package com.E203.pjt.controller;
 
 import java.util.List;
 
+import com.E203.pjt.model.dto.req.PartyReqVO;
 import com.E203.pjt.model.dto.res.PartyResVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.relational.core.sql.In;
@@ -27,10 +28,11 @@ public class PartyController {
     return partyResVOList;
   }
 
-  @PostMapping(value = "/party")
-  public Party createParty(@RequestBody Party party, HttpSession session) {
-    System.out.println(party);
-    Party result = partyService.createParty(party, (Integer)session.getAttribute("userSeq"));
+  @PostMapping(value = "/party/{userSeq}")
+  public PartyResVO createParty(@RequestBody PartyReqVO partyReqVO, @PathVariable Integer userSeq) {
+    System.out.println("[PartyController] createParty() called");
+    System.out.println(partyReqVO);
+    PartyResVO result = partyService.createParty(partyReqVO, userSeq);
     return result;
   }
 
@@ -43,13 +45,28 @@ public class PartyController {
     return partyResVO;
   }
 
-//  @GetMapping(value = "/party/{userSeq}")
-//  public List<MyParty> getMyPartyList(@PathVariable Integer userSeq) {
-//    List<MyParty> myPartyList = partyService.getMyPartyList(userSeq);
-//    for (MyParty mp : myPartyList) {
-//      System.out.println(mp.getParty().getPartySeq()+": "+mp.getParty().getPartyTitle()+" / ");
-//    }
-//    return myPartyList;
-//  }
+  @GetMapping(value = "/party/guest/{userSeq}")
+  public List<PartyResVO> listPartyGuest(@PathVariable Integer userSeq) {
+    System.out.println("[PartyController] listPartyGuest() called");
+    System.out.println("parameter userSeq: "+userSeq);
+    List<PartyResVO> partyGuestList = partyService.listPartyGuest(userSeq);
+    System.out.println(partyGuestList);
+    for (PartyResVO partyResVO : partyGuestList) {
+      System.out.println("title: "+ partyResVO.getPartyTitle()+", content: "+partyResVO.getPartyContent());
+    }
+    return partyGuestList;
+  }
+
+  @GetMapping(value = "/party/host/{userSeq}")
+  public List<PartyResVO> listPartyHost(@PathVariable Integer userSeq) {
+    System.out.println("[PartyController] listPartyHost() called");
+    System.out.println("parameter userSeq: "+userSeq);
+    List<PartyResVO> partyHostList = partyService.listPartyHost(userSeq);
+    System.out.println(partyHostList);
+    for (PartyResVO partyResVO : partyHostList) {
+      System.out.println("title: "+ partyResVO.getPartyTitle()+", content: "+partyResVO.getPartyContent());
+    }
+    return partyHostList;
+  }
 
 }

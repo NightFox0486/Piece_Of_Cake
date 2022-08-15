@@ -27,16 +27,26 @@ public class PartyRepositorySupport {
         return result;
     }
 
-    // 사용자가 호스트인 파티
+//    // 사용자가 호스트인 파티
+//    public List<Party> dynamicQueryPartyHostList(Integer userSeq) {
+//        List<Party> result = jpaQueryFactory
+//                .select(party)
+//                .from(party, myParty)
+//                .where(party.partySeq.eq(myParty.party.partySeq)
+//                        .and(myParty.partyListCode.eq("host")))
+//                .fetch();
+//        return result;
+//    }
     public List<Party> dynamicQueryPartyHostList(Integer userSeq) {
         List<Party> result = jpaQueryFactory
-                .select(party)
+                .selectFrom(party)
                 .from(party, myParty)
                 .where(party.partySeq.eq(myParty.party.partySeq)
                         .and(myParty.partyListCode.eq("host")))
                 .fetch();
         return result;
     }
+
 
 
     // 사용자가 게시트인 파티

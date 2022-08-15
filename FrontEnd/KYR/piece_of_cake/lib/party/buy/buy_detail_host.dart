@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:piece_of_cake/models/kakao_login_model.dart';
 import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:piece_of_cake/vo.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../chat/chat_list_my.dart';
 import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class BuyDetail extends StatefulWidget {
-  const BuyDetail({Key? key}) : super(key: key);
+  final PartyResVO partyResVO;
+  const BuyDetail(
+      {Key? key, required this.partyResVO})
+      : super(key: key
+  );
 
   @override
   State<BuyDetail> createState() => _BuyDetailState();
@@ -36,7 +43,6 @@ class _BuyDetailState extends State<BuyDetail> {
 
 
   @override
-
   Widget buildImage(String urlImage, int index) => Container(
       margin: EdgeInsets.symmetric(horizontal: 6),
       color: Colors.white,
@@ -60,6 +66,9 @@ class _BuyDetailState extends State<BuyDetail> {
   );
 
   Widget build(BuildContext context) {
+    var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
+    kakaoUserProvider.setCurrentPartyWriter(widget.partyResVO.userSeq);
+    var writer = kakaoUserProvider.writer;
     return Scaffold(
       appBar: AppBar(
           title: Text('BuyDetail'),
@@ -219,13 +228,13 @@ class _BuyDetailState extends State<BuyDetail> {
                             Row(
                               children: [
                                 Icon(Icons.account_circle, size: 40,),
-                                Text('탕웨이', style: TextStyle(fontSize: 25),)
+                                Text('${writer!.userNickname}', style: TextStyle(fontSize: 25),)
                               ],
                             ),
                             Row(
                               children: [
                                 Icon(Icons.person, size: 40),
-                                Text('2/4', style: TextStyle(fontSize: 25))
+                                Text('${widget.partyResVO.partyMemberNumCurrent}/${widget.partyResVO.partyMemberNumTotal}', style: TextStyle(fontSize: 25))
                               ],
                             )
                           ]
@@ -233,10 +242,17 @@ class _BuyDetailState extends State<BuyDetail> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text('2022/08/08 11:08:08')
+                          Text(
+                            '${widget.partyResVO.partyRegDt[0]}/'+
+                              '${widget.partyResVO.partyRegDt[1]}/'+
+                              '${widget.partyResVO.partyRegDt[2]} '+
+                              '${widget.partyResVO.partyRegDt[3]}:'+
+                              '${widget.partyResVO.partyRegDt[4]}:'+
+                              '${widget.partyResVO.partyRegDt[5]}'
+                          )
                         ],
                       ),
-                      Text('해리가 너무 귀여워요 진짜 개 예뻐요',
+                      Text('${widget.partyResVO.partyTitle}',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -260,14 +276,14 @@ class _BuyDetailState extends State<BuyDetail> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('4000원', style: TextStyle(fontSize: 20)),
+                                  Text('${(int.parse(widget.partyResVO.totalAmount)/widget.partyResVO.partyMemberNumTotal).ceil()}원', style: TextStyle(fontSize: 20)),
                                   Text('1인 금액', style: TextStyle(fontSize: 20)),
                                 ],
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('16000원', style: TextStyle(fontSize: 20)),
+                                  Text('${widget.partyResVO.totalAmount}원', style: TextStyle(fontSize: 20)),
                                   Text('총 금액', style: TextStyle(fontSize: 20)),
                                 ],
                               )
@@ -289,7 +305,7 @@ class _BuyDetailState extends State<BuyDetail> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                              '해리가 너무 예뻐요 꼭 자랑하고 싶었어요 탕웨이도 예뻐요 헤어질 결심 꼭 보세요 아직 늦지 않았어요 한산은 보지 마세요 재미 없어요',
+                              '${widget.partyResVO.partyContent}',
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100),
                           )
                         ),
@@ -361,6 +377,8 @@ class _BuyDetailState extends State<BuyDetail> {
                       child: IconButton(onPressed: () {
                         Navigator.push(
                           context,
+                          // todo: (host) 채팅이모티콘 누르면 게시글에 해당하는 채팅 목록만 가져오기
+                          // todo: (guest) 채팅이모티콘 누르면 채팅방 생성되기
                           MaterialPageRoute(builder: (context) => ChatListMy()),
                         );
 

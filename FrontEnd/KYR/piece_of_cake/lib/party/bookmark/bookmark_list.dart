@@ -58,7 +58,7 @@ class _BookmarkListState extends State<BookmarkList> {
               hoverColor: Colors.pink,
               highlightColor: Colors.amber,
               child: Container(
-                height: 156,
+                height: 146,
                 margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -129,23 +129,25 @@ class _BookmarkListState extends State<BookmarkList> {
                 ),
               ),
               onTap: () {
+                kakaoUserProvider.setCurrentPartyWriter(party.userSeq);
+                // var writer = kakaoUserProvider.writer;
                 switch (party.partyCode) {
                   case '001':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PieDetail()),
+                      MaterialPageRoute(builder: (context) => PieDetail(partyResVO: party,)),
                     );
                     break;
                   case '002':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BuyDetail()),
+                      MaterialPageRoute(builder: (context) => BuyDetail(partyResVO: party,)),
                     );
                     break;
                   case '003':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DlvDetail()),
+                      MaterialPageRoute(builder: (context) => DlvDetail(partyResVO: party,)),
                     );
                     break;
                 }
