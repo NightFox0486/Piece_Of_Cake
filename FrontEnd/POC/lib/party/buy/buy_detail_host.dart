@@ -6,14 +6,14 @@ import '../../chat/chat_list_my.dart';
 import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-class BuyDetail extends StatefulWidget {
-  const BuyDetail({Key? key}) : super(key: key);
+class BuyDetailHost extends StatefulWidget {
+  const BuyDetailHost({Key? key}) : super(key: key);
 
   @override
-  State<BuyDetail> createState() => _BuyDetailState();
+  State<BuyDetailHost> createState() => _BuyDetailHostState();
 }
 
-class _BuyDetailState extends State<BuyDetail> {
+class _BuyDetailHostState extends State<BuyDetailHost> {
   int activeIndex = 0;
   final urlImages = [
     'assets/images/harry.png',
@@ -62,7 +62,7 @@ class _BuyDetailState extends State<BuyDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('BuyDetail'),
+          title: Text('BuyDetailHost'),
           actions: [
             IconButton(
               icon: const Icon(Icons.edit),
@@ -73,105 +73,105 @@ class _BuyDetailState extends State<BuyDetail> {
                 );
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.gavel),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(
-                              Radius.circular(10.0))),
-                      content: Builder(
-                        builder: (context) {
-                          // Get available height and width of the build area of this widget. Make a choice depending on the size.
-                          var height = MediaQuery.of(context).size.height;
-                          var width = MediaQuery.of(context).size.width;
-
-                          return SizedBox(
-                            height: height - 200,
-                            width: width - 100,
-                            child: Column(
-                              children: [
-                                Text('게시글 신고', style: TextStyle(fontSize: 25),),
-                                DropdownButtonHideUnderline(
-                                  child: DropdownButtonFormField2(
-                                    isExpanded: true,
-                                    hint: Text(
-                                      'Select Sin',
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        color: Theme
-                                            .of(context)
-                                            .hintColor,
-                                      ),
-                                    ),
-                                    items: sins
-                                        .map((item) =>
-                                        DropdownMenuItem<String>(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ))
-                                        .toList(),
-                                    value: selectedValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedValue = value as String;
-                                      });
-                                    },
-                                    // buttonHeight: 40,
-                                    // buttonWidth: 140,
-                                    itemHeight: 40,
-                                  ),
-                                ),
-                                Form(
-                                    key: formKey,
-                                    child: Expanded(
-                                      child: SizedBox(
-                                        child: TextFormField(
-                                          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-                                          maxLines: 20,
-                                          onSaved: (val) {},
-                                          validator: (val) {
-                                            return null;
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                ),
-                                Container(
-                                  margin: EdgeInsets.all(10),
-                                ),
-                                SizedBox(
-                                  height: 50,
-                                  width: 130,
-                                  child: ElevatedButton(
-                                      onPressed: () {
-
-                                      },
-
-                                      child: Text('신고하기',
-                                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
-                                      ),
-                                  ),
-                                )
-
-
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                );
-              },
-            ),
+            // IconButton(
+            //   icon: const Icon(Icons.gavel),
+            //   onPressed: () {
+            //     showDialog(
+            //         context: context,
+            //         builder: (_) => AlertDialog(
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius:
+            //               BorderRadius.all(
+            //                   Radius.circular(10.0))),
+            //           content: Builder(
+            //             builder: (context) {
+            //               // Get available height and width of the build area of this widget. Make a choice depending on the size.
+            //               var height = MediaQuery.of(context).size.height;
+            //               var width = MediaQuery.of(context).size.width;
+            //
+            //               return SizedBox(
+            //                 height: height - 200,
+            //                 width: width - 100,
+            //                 child: Column(
+            //                   children: [
+            //                     Text('게시글 신고', style: TextStyle(fontSize: 25),),
+            //                     DropdownButtonHideUnderline(
+            //                       child: DropdownButtonFormField2(
+            //                         isExpanded: true,
+            //                         hint: Text(
+            //                           'Select Sin',
+            //                           style: TextStyle(
+            //                             fontSize: 25,
+            //                             color: Theme
+            //                                 .of(context)
+            //                                 .hintColor,
+            //                           ),
+            //                         ),
+            //                         items: sins
+            //                             .map((item) =>
+            //                             DropdownMenuItem<String>(
+            //                               value: item,
+            //                               child: Text(
+            //                                 item,
+            //                                 style: const TextStyle(
+            //                                   fontSize: 20,
+            //                                 ),
+            //                               ),
+            //                             ))
+            //                             .toList(),
+            //                         value: selectedValue,
+            //                         onChanged: (value) {
+            //                           setState(() {
+            //                             selectedValue = value as String;
+            //                           });
+            //                         },
+            //                         // buttonHeight: 40,
+            //                         // buttonWidth: 140,
+            //                         itemHeight: 40,
+            //                       ),
+            //                     ),
+            //                     Form(
+            //                         key: formKey,
+            //                         child: Expanded(
+            //                           child: SizedBox(
+            //                             child: TextFormField(
+            //                               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
+            //                               maxLines: 20,
+            //                               onSaved: (val) {},
+            //                               validator: (val) {
+            //                                 return null;
+            //                               },
+            //                             ),
+            //                           ),
+            //                         )
+            //                     ),
+            //                     Container(
+            //                       margin: EdgeInsets.all(10),
+            //                     ),
+            //                     SizedBox(
+            //                       height: 50,
+            //                       width: 130,
+            //                       child: ElevatedButton(
+            //                           onPressed: () {
+            //
+            //                           },
+            //
+            //                           child: Text('신고하기',
+            //                               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+            //                           ),
+            //                       ),
+            //                     )
+            //
+            //
+            //                   ],
+            //                 ),
+            //               );
+            //             },
+            //           ),
+            //         )
+            //     );
+            //   },
+            // ),
           ],
       ),
       body: Container(

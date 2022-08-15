@@ -67,7 +67,7 @@ class Item extends StatelessWidget {
             case '002':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BuyDetail()),
+                MaterialPageRoute(builder: (context) => BuyDetailGuest()),
               );
               break;
             case '003':
