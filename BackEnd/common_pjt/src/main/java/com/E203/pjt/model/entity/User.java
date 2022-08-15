@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -35,8 +35,9 @@ public class User {
   @Column(name = "user_password", nullable = true, length = 20)
   private String userPassword;
 
-  @Column(name = "user_rating", nullable = true, columnDefinition = "INT default '50'")
-  private Integer userRating;
+  @Column(name = "user_rating", nullable = true, columnDefinition = "DOUBLE default '50.0'")
+  private Double userRating;
+//  private Integer userRating;
 
   @Column(name = "user_lat", nullable = true, length = 20)
   private String userLat;
@@ -52,7 +53,14 @@ public class User {
   private String userKakaoLoginId;
 
   @JsonManagedReference
-  @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
+  @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+//  @OneToMany(mappedBy="user", cascade = {CascadeType.ALL}, orphanRemoval = true)
   private List<Party> partyList;
+
+//  @JsonManagedReference
+//  @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+////  @OneToMany(mappedBy="user", cascade = {CascadeType.ALL}, orphanRemoval = true)
+//  private List<MyParty> myPartyList;
+
 
 }

@@ -19,11 +19,11 @@ public class BookmarkController {
 
     @GetMapping(value = "/bookmark/{userSeq}")
     public List<PartyResVO> listBookmarkParty(@PathVariable Integer userSeq) {
-        System.out.println("[BookmarkController] listBookmarkParty() called");
+//        System.out.println("[BookmarkController] listBookmarkParty() called");
         List<PartyResVO> list = bookmarkService.listBookmark(userSeq);
-        for(PartyResVO partyResVO : list) {
-            System.out.println(partyResVO);
-        }
+//        for(PartyResVO partyResVO : list) {
+//            System.out.println(partyResVO);
+//        }
         return list;
     }
 
@@ -31,22 +31,23 @@ public class BookmarkController {
     @ResponseBody
     public Bookmark insertBookmark(@RequestBody BookmarkReqVO bookmarkReqVO) {
 //    public ResponseEntity<WishList> insertWishList(@RequestParam Integer partySeq) {
-        System.out.println("[BookmarkController] insertBookmark() called");
-        System.out.println("wishReqVO: "+ bookmarkReqVO);
+//        System.out.println("[BookmarkController] insertBookmark() called");
+//        System.out.println("wishReqVO: "+ bookmarkReqVO);
         Bookmark resBookmark = bookmarkService.insertBookmark(bookmarkReqVO);
-        if (resBookmark!=null) {
-            return resBookmark;
-//            return new ResponseEntity<>(resBookmark, HttpStatus.OK);
-        }else {
-            return null;
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return resBookmark;
+//        if (resBookmark!=null) {
+//            return resBookmark;
+////            return new ResponseEntity<>(resBookmark, HttpStatus.OK);
+//        }else {
+//            return null;
+////            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
     }
 
     @DeleteMapping(value= "/bookmark")
     public boolean deleteBookmark(@RequestBody BookmarkReqVO bookmarkReqVO) {
 //    public boolean deleteWishList(@RequestParam Integer partySeq) {
-        System.out.println("[BookmarkController] deleteBookmark() called");
+//        System.out.println("[BookmarkController] deleteBookmark() called");
         boolean res = bookmarkService.deleteBookmark(bookmarkReqVO);
         if (res) {
             return true;

@@ -2,7 +2,9 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
-import 'package:piece_of_cake/party/pie/pie_detail.dart';
+import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
+import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
+import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
 
 import 'package:piece_of_cake/widget.dart';
 import 'package:provider/provider.dart';
@@ -10,44 +12,106 @@ import 'package:provider/provider.dart';
 import '../models/kakao_login_model.dart';
 import '../models/party_model.dart';
 import '../vo.dart';
+import 'buy/buy_detail_guest.dart';
 import 'buy/buy_detail_host.dart';
-import 'dlv/dlv_detail.dart';
+import 'dlv/dlv_detail_guest.dart';
 
 class PartyList extends StatefulWidget {
-  // const PartyList({Key? key}) : super(key: key);
   @override
   State<PartyList> createState() => _PartyListState();
 }
 
 class _PartyListState extends State<PartyList> {
-  // GlobalKey<_PartyListState> partyListGlobalKey = GlobalKey();
-  // var refreshKey = GlobalKey<RefreshIndicatorState>();
+  List<Party> partyList = [];
+  List<PartyResVO> partyResVOList = [];
+  List<int> bookmarkList = [];
+  List<Party> bookmarkPartyList = [];
+  List<PartyResVO> bookmarkPartyResVOList = [];
+
+  void setList(kakaoUserProvider, partyProvider) async {
+    await partyProvider.fetchPartyList();
+    partyResVOList = partyProvider.partyResVOList;
+    await partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO.userSeq);
+    bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
+    partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
+    bookmarkList = partyProvider.bookmarkList;
+    for (PartyResVO partyResVO in partyResVOList) {
+      await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
+      UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
+      var party = Party(
+          partySeq: partyResVO.partySeq,
+          userResVO: userResVO,
+          partyCode: partyResVO.partyCode,
+          partyTitle: partyResVO.partyTitle,
+          partyContent: partyResVO.partyContent,
+          partyBookmarkCount: partyResVO.partyBookmarkCount,
+          partyRegDt: partyResVO.partyRegDt,
+          partyUpdDt: partyResVO.partyUpdDt,
+          partyRdvDt: partyResVO.partyRdvDt,
+          partyRdvLat: partyResVO.partyRdvLat,
+          partyRdvLng: partyResVO.partyRdvLng,
+          partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+          partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+          partyAddr: partyResVO.partyAddr,
+          partyAddrDetail: partyResVO.partyAddrDetail,
+          partyStatus: partyResVO.partyStatus,
+          itemLink: partyResVO.itemLink,
+          totalAmount: partyResVO.totalAmount,
+          partyMainImageUrl: partyResVO.partyMainImageUrl
+      );
+      partyList.add(party);
+    }
+    for (PartyResVO partyResVO in bookmarkPartyResVOList) {
+      await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
+      UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
+      var party = Party(
+          partySeq: partyResVO.partySeq,
+          userResVO: userResVO,
+          partyCode: partyResVO.partyCode,
+          partyTitle: partyResVO.partyTitle,
+          partyContent: partyResVO.partyContent,
+          partyBookmarkCount: partyResVO.partyBookmarkCount,
+          partyRegDt: partyResVO.partyRegDt,
+          partyUpdDt: partyResVO.partyUpdDt,
+          partyRdvDt: partyResVO.partyRdvDt,
+          partyRdvLat: partyResVO.partyRdvLat,
+          partyRdvLng: partyResVO.partyRdvLng,
+          partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+          partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+          partyAddr: partyResVO.partyAddr,
+          partyAddrDetail: partyResVO.partyAddrDetail,
+          partyStatus: partyResVO.partyStatus,
+          itemLink: partyResVO.itemLink,
+          totalAmount: partyResVO.totalAmount,
+          partyMainImageUrl: partyResVO.partyMainImageUrl
+      );
+      bookmarkPartyList.add(party);
+    }
+
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     print('party list');
     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
-    partyProvider.fetchPartyList();
-    partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO!.userSeq);
-    partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO!.userSeq);
-    var _partyList = partyProvider.partyList;
-    var _bookmarkPartyList = partyProvider.bookmarkPartyList;
-    var _bookmarkList = partyProvider.bookmarkList;
+    setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
           title: Text('Party List'),
       ),
-
       body: ListView(
         children: [
-          for (var party in _partyList)
+          for (var party in partyList)
             InkWell(
               splashColor: Colors.deepPurpleAccent,
               hoverColor: Colors.pink,
               highlightColor: Colors.amber,
               child: Container(
-                height: 146,
+                height: 156,
                 margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -85,14 +149,14 @@ class _PartyListState extends State<PartyList> {
                                       partySeq: party.partySeq,
                                     );
                                     if (isLiked) {
-                                      // delete bookmark
+                                      // todo: delete bookmark
                                       await partyProvider.deleteBookmark(bookmarkReqVO);
                                     } else {
-                                      // insert bookmark
+                                      // todo: insert bookmark
                                       await partyProvider.insertBookmark(bookmarkReqVO);
                                     }
-                                    _bookmarkPartyList = partyProvider.bookmarkPartyList;
-                                    _bookmarkList = partyProvider.bookmarkList;
+                                    bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
+                                    bookmarkList = partyProvider.bookmarkList;
                                     setState(() {
 
                                     });
@@ -100,12 +164,12 @@ class _PartyListState extends State<PartyList> {
                                   bubblesSize: 0,
                                   likeBuilder: (bool isLiked) {
                                     return Icon(
-                                      _bookmarkList.contains(party.partySeq) ? Icons.favorite : Icons.favorite_border,
+                                      bookmarkList.contains(party.partySeq) ? Icons.favorite : Icons.favorite_border,
                                       color: Colors.deepPurpleAccent,
                                       size: 20,
                                     );
                                   },
-                                  isLiked: _bookmarkList.contains(party.partySeq) ? true : false,
+                                  isLiked: bookmarkList.contains(party.partySeq) ? true : false,
                                   likeCount: party.partyBookmarkCount,
                                 )
                               ],
@@ -118,25 +182,37 @@ class _PartyListState extends State<PartyList> {
                 ),
               ),
               onTap: () {
-                kakaoUserProvider.setCurrentPartyWriter(party.userSeq);
+                // kakaoUserProvider.setCurrentPartyWriter(party.userSeq);
                 // var writer = kakaoUserProvider.writer;
                 switch (party.partyCode) {
                   case '001':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PieDetail(partyResVO: party,)),
+                      MaterialPageRoute(builder: (context) =>
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      PieDetailHost(party: party,) :
+                      PieDetailGuest(party: party,),
+                      ),
                     );
                     break;
                   case '002':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BuyDetail(partyResVO: party,)),
+                      MaterialPageRoute(builder: (context) =>
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      BuyDetailHost(party: party,) :
+                      BuyDetailGuest(party: party,),
+                      ),
                     );
                     break;
                   case '003':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DlvDetail(partyResVO: party,)),
+                      MaterialPageRoute(builder: (context) =>
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      DlvDetailHost(party: party,) :
+                      DlvDetailGuest(party: party,),
+                      ),
                     );
                     break;
                 }
