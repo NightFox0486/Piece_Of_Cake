@@ -72,6 +72,7 @@ class PartyReqVO {
   int partyStatus;
   String itemLink;
   String totalAmount;
+  String partyMainImageUrl;
   PartyReqVO(
       {this.partySeq,
       required this.userSeq,
@@ -90,7 +91,8 @@ class PartyReqVO {
       required this.partyAddrDetail,
       required this.partyStatus,
       required this.itemLink,
-      required this.totalAmount});
+      required this.totalAmount,
+      required this.partyMainImageUrl});
 
   factory PartyReqVO.fromJson(Map<String, dynamic> json) {
     return PartyReqVO(
@@ -112,6 +114,7 @@ class PartyReqVO {
       partyStatus: json['partyStatus'],
       itemLink: json['itemLink'],
       totalAmount: json['totalAmount'],
+      partyMainImageUrl: json['partyMainImageUrl'],
     );
   }
 
@@ -135,6 +138,7 @@ class PartyReqVO {
     data['partyStatus'] = this.partyStatus;
     data['itemLink'] = this.itemLink;
     data['totalAmount'] = this.totalAmount;
+    data['partyMainImageUrl'] = this.partyMainImageUrl;
     return data;
   }
 }
