@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResVO createKakaoUser(UserReqVO userReqVO) {
     User user = userReqVO.toEntity();
+    user.setUserRating(50.0);
     User result = userRepository.save(user);
     UserResVO userResVO = new UserResVO();
     userResVO.setUserSeq(result.getUserSeq());
