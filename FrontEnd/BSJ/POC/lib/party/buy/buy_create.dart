@@ -18,11 +18,17 @@ class BuyCreate extends StatefulWidget {
 class _BuyCreateState extends State<BuyCreate> {
   final formKey = GlobalKey<FormState>();
 
+  String? name = '';
+  String? content = '';
+
   createParty(var kakaoUserProvider) {
     insertParty(kakaoUserProvider);
   }
 
   Future insertParty(var kakaoUserProvider) async {
+    if (this.formKey.currentState!.validate()) {
+      this.formKey.currentState!.save();
+    }
     PartyReqVO partyReqVO = PartyReqVO(
         itemLink: 'test',
         partyAddr: 'test',
@@ -35,10 +41,10 @@ class _BuyCreateState extends State<BuyCreate> {
         partyMemberNumTotal: 0,
         partyRdvLat: '0',
         partyRdvLng: '0',
-        partyTitle: 'test',
+        partyTitle: this.name!,
         totalAmount: '0',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
-
+    print(this.name);
     final response = await http.post(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party'),
       headers: <String, String>{
@@ -49,7 +55,7 @@ class _BuyCreateState extends State<BuyCreate> {
     print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
     int partySeq = 89;
-    imageKey.currentState?.addImage(partySeq);
+    // imageKey.currentState?.addImage(partySeq);
   }
 
   @override
@@ -87,14 +93,22 @@ class _BuyCreateState extends State<BuyCreate> {
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
+                          autovalidateMode: AutovalidateMode.always,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: '제목',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {},
+                          onSaved: (val) {
+                            setState(() {
+                              name = val as String;
+                            });
+                          },
                           validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return "Please enter something";
+                            }
                             return null;
                           },
                         ),
