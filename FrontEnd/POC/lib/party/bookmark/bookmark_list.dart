@@ -139,7 +139,7 @@ class _BookmarkListState extends State<BookmarkList> {
                   case '002':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BuyDetail()),
+                      MaterialPageRoute(builder: (context) => BuyDetailHost()),
                     );
                     break;
                   case '003':

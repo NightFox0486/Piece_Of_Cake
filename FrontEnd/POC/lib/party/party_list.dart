@@ -125,7 +125,7 @@ class _PartyListState extends State<PartyList> {
                   case '002':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BuyDetail()),
+                      MaterialPageRoute(builder: (context) => BuyDetailHost()),
                     );
                     break;
                   case '003':
