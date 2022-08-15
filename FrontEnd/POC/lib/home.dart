@@ -20,6 +20,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // List<CardItem> items = [
+  //   CardItem(
+  //     urlImage:'assets/images/harry.png',
+  //     title: '강아지 자랑해요 진짜',
+  //     subtitle: ''
+  //   )
+  // ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

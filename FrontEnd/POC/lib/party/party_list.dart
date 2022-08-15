@@ -2,7 +2,9 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
-import 'package:piece_of_cake/party/pie/pie_detail.dart';
+import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
+import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
+import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
 
 import 'package:piece_of_cake/widget.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +13,7 @@ import '../models/kakao_login_model.dart';
 import '../models/party_model.dart';
 import '../vo.dart';
 import 'buy/buy_detail_host.dart';
-import 'dlv/dlv_detail.dart';
+import 'dlv/dlv_detail_guest.dart';
 
 class PartyList extends StatefulWidget {
   @override
@@ -119,7 +121,7 @@ class _PartyListState extends State<PartyList> {
                   case '001':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PieDetail()),
+                      MaterialPageRoute(builder: (context) => PieDetailHost()),
                     );
                     break;
                   case '002':
@@ -131,7 +133,7 @@ class _PartyListState extends State<PartyList> {
                   case '003':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DlvDetail()),
+                      MaterialPageRoute(builder: (context) => DlvDetailHost()),
                     );
                     break;
                 }
