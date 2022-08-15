@@ -21,7 +21,7 @@ public class LoginController {
     //      회원이 아니면 생성해야하기 때문
     @PostMapping(value = "/kakao-login")
     public UserResVO kakaoLogin(@RequestBody UserReqVO userReqVO, HttpSession session) {
-        System.out.println("[LoginController] kakaoLogin() called");
+//        System.out.println("[LoginController] kakaoLogin() called");
         UserResVO userResVO = loginService.kakaoLogin(userReqVO);
         session.setAttribute("userSeq", userResVO.getUserSeq());
         return userResVO;

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -32,6 +33,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         List<PartyResVO> result = new ArrayList<>();
         User user = userRepository.findByUserSeq(userSeq);
         List<Bookmark> list = bookmarkRepository.findAllByUser(user);
+        Collections.reverse(list);
 //        Integer partySeqList[] = new Integer[list.size()];
         for (Bookmark wishList : list) {
             PartyResVO partyResVO = partyService.detailParty(wishList.getParty().getPartySeq());
@@ -43,6 +45,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     @Transactional
     public Bookmark insertBookmark(BookmarkReqVO bookmarkReqVO) {
+        System.out.println("[BookmarkServiceImpl] insertBookmark() called");
         User user = userRepository.findByUserSeq(bookmarkReqVO.getUserSeq());
         Party party = partyRepository.findByPartySeq(bookmarkReqVO.getPartySeq());
 //        Bookmark bookmark = new Bookmark();
@@ -61,7 +64,8 @@ public class BookmarkServiceImpl implements BookmarkService {
             bookmark.setBookmarkPK(pk);
             bookmark.setUser(user);
             bookmark.setParty(party);
-            party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
+//            System.out.println("party"+party.toString());
+            party.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size()+1);
             partyRepository.save(party);
             return bookmarkRepository.save(bookmark);
         } else {
@@ -76,10 +80,10 @@ public class BookmarkServiceImpl implements BookmarkService {
         User user = userRepository.findByUserSeq(bookmarkReqVO.getUserSeq());
         Party party = partyRepository.findByPartySeq(bookmarkReqVO.getPartySeq());
         Bookmark bookmark = bookmarkRepository.findBookmarkByUserAndParty(user, party);
-        System.out.println("bookmark: "+bookmark);
+//        System.out.println("bookmark: "+bookmark);
         if (bookmark!=null) {
             bookmarkRepository.delete(bookmark);
-            party.setPartyBookmarkCount(party.getPartyBookmarkCount()-1);
+            party.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size());
             partyRepository.save(party);
             return true;
         }else {

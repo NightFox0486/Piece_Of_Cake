@@ -1,6 +1,3 @@
-
-import 'package:piece_of_cake/models/kakao_login_model.dart';
-
 class BookmarkReqVO {
   int userSeq;
   int partySeq;
@@ -197,58 +194,202 @@ class PartyResVO {
   }
 }
 
-class User {
+class Party {
+  int partySeq;
+  UserResVO userResVO;
+  String partyCode;
+  String partyTitle;
+  String partyContent;
+  int partyBookmarkCount;
+  List<dynamic> partyRegDt;
+  List<dynamic> partyUpdDt;
+  List<dynamic> partyRdvDt;
+  String partyRdvLat;
+  String partyRdvLng;
+  int partyMemberNumTotal;
+  int partyMemberNumCurrent;
+  String partyAddr;
+  String partyAddrDetail;
+  int partyStatus;
+  String itemLink;
+  String totalAmount;
+  String partyMainImageUrl;
+  Party({
+    required this.partySeq,
+    required this.userResVO,
+    required this.partyCode,
+    required this.partyTitle,
+    required this.partyContent,
+    required this.partyBookmarkCount,
+    required this.partyRegDt,
+    required this.partyUpdDt,
+    required this.partyRdvDt,
+    required this.partyRdvLat,
+    required this.partyRdvLng,
+    required this.partyMemberNumTotal,
+    required this.partyMemberNumCurrent,
+    required this.partyAddr,
+    required this.partyAddrDetail,
+    required this.partyStatus,
+    required this.itemLink,
+    required this.totalAmount,
+    required this.partyMainImageUrl,
+  });
+}
+
+class UserReqVO {
+  String userEmail;
+  String userPhone;
+  String userNickname;
+  String userImage;
+  String? userPassword;
+  double userRating;
+  String? userLat;
+  String? userLng;
+  String? userAccount;
+  String? userKakaoLoginId;
+  UserReqVO({
+    required this.userEmail,
+    required this.userPhone,
+    required this.userNickname,
+    required this.userImage,
+    this.userPassword,
+    required this.userRating,
+    this.userLat,
+    this.userLng,
+    this.userAccount,
+    this.userKakaoLoginId,
+  });
+  factory UserReqVO.fromJson(Map<String, dynamic> json) {
+    return UserReqVO(
+      userEmail: json['userEmail'],
+      userPhone: json['userPhone'],
+      userNickname: json['userNickname'],
+      userImage: json['userImage'],
+      userRating: json['userRating'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userEmail'] = this.userEmail;
+    data['userPhone'] = this.userPhone;
+    data['userNickname'] = this.userNickname;
+    data['userImage'] = this.userImage;
+    data['userPassword'] = this.userPassword;
+    data['userRating'] = this.userRating;
+    data['userLat'] = this.userLat;
+    data['userLng'] = this.userLng;
+    data['userAccount'] = this.userAccount;
+    data['userKakaoLoginId'] = this.userKakaoLoginId;
+    return data;
+  }
+}
+
+class UserResVO {
   int userSeq;
   String userEmail;
   String userPhone;
   String userNickname;
-  String userPassword;
   String userImage;
-  int userRating;
-  String userLat;
-  String userLng;
-  String userAccount;
-
-  User({
+  String? userPassword;
+  double userRating;
+  String? userLat;
+  String? userLng;
+  String? userAccount;
+  String? userKakaoLoginId;
+  UserResVO({
     required this.userSeq,
     required this.userEmail,
     required this.userPhone,
     required this.userNickname,
-    required this.userPassword,
     required this.userImage,
+    this.userPassword,
     required this.userRating,
-    required this.userLat,
-    required this.userLng,
-    required this.userAccount,
+    this.userLat,
+    this.userLng,
+    this.userAccount,
+    this.userKakaoLoginId,
   });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserResVO.fromJson(Map<String, dynamic> json) {
+    return UserResVO(
       userSeq: json['userSeq'],
       userEmail: json['userEmail'],
       userPhone: json['userPhone'],
       userNickname: json['userNickname'],
-      userPassword: json['userPassword'],
       userImage: json['userImage'],
       userRating: json['userRating'],
-      userLat: json['userLat'],
-      userLng: json['userLng'],
-      userAccount: json['userAccount'],
     );
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userSeq'] = this.userSeq;
     data['userEmail'] = this.userEmail;
     data['userPhone'] = this.userPhone;
     data['userNickname'] = this.userNickname;
-    data['userPassword'] = this.userPassword;
     data['userImage'] = this.userImage;
+    data['userPassword'] = this.userPassword;
     data['userRating'] = this.userRating;
     data['userLat'] = this.userLat;
     data['userLng'] = this.userLng;
     data['userAccount'] = this.userAccount;
+    data['userKakaoLoginId'] = this.userKakaoLoginId;
     return data;
   }
 }
+
+// class User {
+//   int userSeq;
+//   String userEmail;
+//   String userPhone;
+//   String userNickname;
+//   String userPassword;
+//   String userImage;
+//   int userRating;
+//   String userLat;
+//   String userLng;
+//   String userAccount;
+//
+//   User({
+//     required this.userSeq,
+//     required this.userEmail,
+//     required this.userPhone,
+//     required this.userNickname,
+//     required this.userPassword,
+//     required this.userImage,
+//     required this.userRating,
+//     required this.userLat,
+//     required this.userLng,
+//     required this.userAccount,
+//   });
+//
+//   factory User.fromJson(Map<String, dynamic> json) {
+//     return User(
+//       userSeq: json['userSeq'],
+//       userEmail: json['userEmail'],
+//       userPhone: json['userPhone'],
+//       userNickname: json['userNickname'],
+//       userPassword: json['userPassword'],
+//       userImage: json['userImage'],
+//       userRating: json['userRating'],
+//       userLat: json['userLat'],
+//       userLng: json['userLng'],
+//       userAccount: json['userAccount'],
+//     );
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['userSeq'] = this.userSeq;
+//     data['userEmail'] = this.userEmail;
+//     data['userPhone'] = this.userPhone;
+//     data['userNickname'] = this.userNickname;
+//     data['userPassword'] = this.userPassword;
+//     data['userImage'] = this.userImage;
+//     data['userRating'] = this.userRating;
+//     data['userLat'] = this.userLat;
+//     data['userLng'] = this.userLng;
+//     data['userAccount'] = this.userAccount;
+//     return data;
+//   }
+// }
+

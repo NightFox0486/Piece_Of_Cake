@@ -13,6 +13,9 @@ public interface PartyService {
   PartyResVO detailParty(Integer partySeq);
   void deleteParty(Integer partySeq);
 
+  // 최근 파티 목록
+  List<PartyResVO> listLatestParty();
+
   // mypage에서 파티 참여 내역
   List<PartyResVO> listPartyGuest(Integer userSeq);
   // mypage에서 파티 개설 내역

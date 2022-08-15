@@ -14,7 +14,8 @@ public class UserReqVO {
     private String userNickname;
     private String userPassword;
     private String userImage;
-    private Integer userRating;
+    private Double userRating;
+//    private Integer userRating;
     private String userLat;
     private String userLng;
     private String userAccount;

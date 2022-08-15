@@ -16,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//@ToString
 @Table(name = "parties")
 public class Party {
     @Id
@@ -70,7 +71,7 @@ public class Party {
     @Column(name = "party_addr_detail", length = 100)
     private String partyAddrDetail;
 
-    @Column(name = "status", columnDefinition = "TINYINT default '0'")
+    @Column(name = "party_status", columnDefinition = "TINYINT default '0'")
     private Integer partyStatus;
 
     @Column(name = "item_link", length = 200)
@@ -79,26 +80,31 @@ public class Party {
     @Column(name = "total_amount", length = 20)
     private String totalAmount;
 
-    @Column(name = "party_main_image_url")
+    @Column(name = "party_main_image_url", columnDefinition = "default 'assets/images/harry.png'")
     private String partyMainImageUrl;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
-    private List<MyParty> myPartyList;
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+////    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
+//    private List<MyParty> myPartyList;
+//
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+////    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
+//    private List<Bookmark> bookmarkList;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
-    private List<Bookmark> bookmarkList;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+//    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<ChatRoom> chatRoomList;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+//    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Photo> photoList;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+//    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Receipt> receiptList;
 }
