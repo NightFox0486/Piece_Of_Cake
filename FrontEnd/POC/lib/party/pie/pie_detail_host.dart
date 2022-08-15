@@ -6,14 +6,14 @@ import '../../chat/chat_list_my.dart';
 import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-class BuyDetailGuest extends StatefulWidget {
-  const BuyDetailGuest({Key? key}) : super(key: key);
+class PieDetailHost extends StatefulWidget {
+  const PieDetailHost({Key? key}) : super(key: key);
 
   @override
-  State<BuyDetailGuest> createState() => _BuyDetailGuestState();
+  State<PieDetailHost> createState() => _PieDetailHostState();
 }
 
-class _BuyDetailGuestState extends State<BuyDetailGuest> {
+class _PieDetailHostState extends State<PieDetailHost> {
   int activeIndex = 0;
   final urlImages = [
     'assets/images/harry.png',
@@ -62,116 +62,116 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyDetailGuest'),
+        title: Text('BuyDetailHost'),
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.edit),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => BuyCreate()),
-          //     );
-          //   },
-          // ),
           IconButton(
-            icon: const Icon(Icons.gavel),
+            icon: const Icon(Icons.edit),
             onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (_) => AlertDialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(
-                            Radius.circular(10.0))),
-                    content: Builder(
-                      builder: (context) {
-                        // Get available height and width of the build area of this widget. Make a choice depending on the size.
-                        var height = MediaQuery.of(context).size.height;
-                        var width = MediaQuery.of(context).size.width;
-
-                        return SizedBox(
-                          height: height - 200,
-                          width: width - 100,
-                          child: Column(
-                            children: [
-                              Text('게시글 신고', style: TextStyle(fontSize: 25),),
-                              DropdownButtonHideUnderline(
-                                child: DropdownButtonFormField2(
-                                  isExpanded: true,
-                                  hint: Text(
-                                    'Select Sin',
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      color: Theme
-                                          .of(context)
-                                          .hintColor,
-                                    ),
-                                  ),
-                                  items: sins
-                                      .map((item) =>
-                                      DropdownMenuItem<String>(
-                                        value: item,
-                                        child: Text(
-                                          item,
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ))
-                                      .toList(),
-                                  value: selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedValue = value as String;
-                                    });
-                                  },
-                                  // buttonHeight: 40,
-                                  // buttonWidth: 140,
-                                  itemHeight: 40,
-                                ),
-                              ),
-                              Form(
-                                  key: formKey,
-                                  child: Expanded(
-                                    child: SizedBox(
-                                      child: TextFormField(
-                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-                                        maxLines: 20,
-                                        onSaved: (val) {},
-                                        validator: (val) {
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                  )
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(10),
-                              ),
-                              SizedBox(
-                                height: 50,
-                                width: 130,
-                                child: ElevatedButton(
-                                  onPressed: () {
-
-                                  },
-
-                                  child: Text('신고하기',
-                                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
-                                  ),
-                                ),
-                              )
-
-
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  )
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BuyCreate()),
               );
             },
           ),
+          // IconButton(
+          //   icon: const Icon(Icons.gavel),
+          //   onPressed: () {
+          //     showDialog(
+          //         context: context,
+          //         builder: (_) => AlertDialog(
+          //           shape: RoundedRectangleBorder(
+          //               borderRadius:
+          //               BorderRadius.all(
+          //                   Radius.circular(10.0))),
+          //           content: Builder(
+          //             builder: (context) {
+          //               // Get available height and width of the build area of this widget. Make a choice depending on the size.
+          //               var height = MediaQuery.of(context).size.height;
+          //               var width = MediaQuery.of(context).size.width;
+          //
+          //               return SizedBox(
+          //                 height: height - 200,
+          //                 width: width - 100,
+          //                 child: Column(
+          //                   children: [
+          //                     Text('게시글 신고', style: TextStyle(fontSize: 25),),
+          //                     DropdownButtonHideUnderline(
+          //                       child: DropdownButtonFormField2(
+          //                         isExpanded: true,
+          //                         hint: Text(
+          //                           'Select Sin',
+          //                           style: TextStyle(
+          //                             fontSize: 25,
+          //                             color: Theme
+          //                                 .of(context)
+          //                                 .hintColor,
+          //                           ),
+          //                         ),
+          //                         items: sins
+          //                             .map((item) =>
+          //                             DropdownMenuItem<String>(
+          //                               value: item,
+          //                               child: Text(
+          //                                 item,
+          //                                 style: const TextStyle(
+          //                                   fontSize: 20,
+          //                                 ),
+          //                               ),
+          //                             ))
+          //                             .toList(),
+          //                         value: selectedValue,
+          //                         onChanged: (value) {
+          //                           setState(() {
+          //                             selectedValue = value as String;
+          //                           });
+          //                         },
+          //                         // buttonHeight: 40,
+          //                         // buttonWidth: 140,
+          //                         itemHeight: 40,
+          //                       ),
+          //                     ),
+          //                     Form(
+          //                         key: formKey,
+          //                         child: Expanded(
+          //                           child: SizedBox(
+          //                             child: TextFormField(
+          //                               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
+          //                               maxLines: 20,
+          //                               onSaved: (val) {},
+          //                               validator: (val) {
+          //                                 return null;
+          //                               },
+          //                             ),
+          //                           ),
+          //                         )
+          //                     ),
+          //                     Container(
+          //                       margin: EdgeInsets.all(10),
+          //                     ),
+          //                     SizedBox(
+          //                       height: 50,
+          //                       width: 130,
+          //                       child: ElevatedButton(
+          //                           onPressed: () {
+          //
+          //                           },
+          //
+          //                           child: Text('신고하기',
+          //                               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+          //                           ),
+          //                       ),
+          //                     )
+          //
+          //
+          //                   ],
+          //                 ),
+          //               );
+          //             },
+          //           ),
+          //         )
+          //     );
+          //   },
+          // ),
         ],
       ),
       body: Container(
@@ -363,6 +363,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                         context,
                         MaterialPageRoute(builder: (context) => ChatListMy()),
                       );
+
                     },
                       icon: Icon(Icons.question_answer, size: 35,),
                     )),
@@ -388,7 +389,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                 ),
                                 side: BorderSide(width: 5.0, color: Colors.amber),
                               ),
-                              child: Text('대화 걸기',
+                              child: Text('파티 취소',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
@@ -412,7 +413,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                       borderRadius: BorderRadius.all(Radius.circular(25))
                                   )
                               ),
-                              child: Text('파티 참여',
+                              child: Text('파티 성공',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,

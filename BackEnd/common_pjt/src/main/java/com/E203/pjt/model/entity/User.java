@@ -35,7 +35,7 @@ public class User {
   @Column(name = "user_password", nullable = true, length = 20)
   private String userPassword;
 
-  @Column(name = "user_rating", nullable = true)
+  @Column(name = "user_rating", nullable = true, columnDefinition = "INT default '50'")
   private Integer userRating;
 
   @Column(name = "user_lat", nullable = true, length = 20)
@@ -52,7 +52,7 @@ public class User {
   private String userKakaoLoginId;
 
   @JsonManagedReference
-  @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+  @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
   private List<Party> partyList;
 
 }

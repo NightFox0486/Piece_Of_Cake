@@ -46,6 +46,6 @@ public class ChatRoom {
     private LocalDateTime createdAt;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "chatRoom", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "chatRoom", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
     private List<ChatLog> chatLogList;
 }

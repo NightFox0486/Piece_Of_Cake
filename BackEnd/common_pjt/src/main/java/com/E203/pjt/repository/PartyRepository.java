@@ -14,4 +14,5 @@ public interface PartyRepository extends JpaRepository<Party, Integer>{
     List<Party> findAllByPartyStatus(Integer partyStatus);
     List<Party> findAllByUser(User user);
 
+
 }

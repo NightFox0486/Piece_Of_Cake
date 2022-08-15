@@ -3,16 +3,20 @@ package com.E203.pjt.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.E203.pjt.model.dto.req.PartyPostReqVO;
+import com.E203.pjt.model.dto.req.PartyReqVO;
 import com.E203.pjt.model.dto.res.PartyResVO;
 import com.E203.pjt.model.entity.MyParty;
+import com.E203.pjt.model.entity.MyPartyPK;
+import com.E203.pjt.model.entity.Party;
+import com.E203.pjt.model.entity.User;
+import com.E203.pjt.repository.MyPartyRepository;
 import com.E203.pjt.repository.PartyRepositorySupport;
 import com.E203.pjt.repository.UserRepository;
 import com.E203.pjt.service.PartyService;
+import com.E203.pjt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.E203.pjt.model.entity.Party;
 import com.E203.pjt.repository.PartyRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +26,8 @@ public class PartyServiceImpl implements PartyService {
   private final UserRepository userRepository;
   private final PartyRepository partyRepository;
   private final PartyRepositorySupport partyRepositorySupport;
+  private final MyPartyRepository myPartyRepository;
+  private final UserService userService;
 
   @Override
   public List<PartyResVO> listParty() {
@@ -33,6 +39,7 @@ public class PartyServiceImpl implements PartyService {
       PartyResVO partyResVO = new PartyResVO();
       partyResVO.setPartySeq(party.getPartySeq());
       partyResVO.setUserSeq(party.getUser().getUserSeq());
+//      partyResVO.setUserResVO(userService.detailUser(party.getUser().getUserSeq()));
       partyResVO.setPartyCode(party.getPartyCode());
       partyResVO.setPartyTitle(party.getPartyTitle());
       partyResVO.setPartyContent(party.getPartyContent());
@@ -49,6 +56,7 @@ public class PartyServiceImpl implements PartyService {
       partyResVO.setPartyStatus(party.getPartyStatus());
       partyResVO.setItemLink(party.getItemLink());
       partyResVO.setTotalAmount(party.getTotalAmount());
+      partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
       partyResVOList.add(partyResVO);
     }
     return partyResVOList;
@@ -56,32 +64,23 @@ public class PartyServiceImpl implements PartyService {
 
   @Override
   @Transactional
-  public Party createParty(PartyPostReqVO partyPostReqVO, Integer userSeq) {
-    Party party = new Party();
-    party.setItemLink(partyPostReqVO.getItemLink());
-    party.setPartyAddr(partyPostReqVO.getPartyAddr());
-    party.setPartyAddrDetail(partyPostReqVO.getPartyAddrDetail());
-    party.setPartyStatus(partyPostReqVO.getPartyStatus());
-    party.setPartyBookmarkCount(partyPostReqVO.getPartyBookmarkCount());
-    party.setPartyCode(partyPostReqVO.getPartyCode());
-    party.setPartyContent(partyPostReqVO.getPartyContent());
-    party.setPartyMemberNumCurrent(partyPostReqVO.getPartyMemberNumCurrent());
-    party.setPartyMemberNumTotal(partyPostReqVO.getPartyMemberNumTotal());
-    party.setPartyRdvLat(partyPostReqVO.getPartyRdvLat());
-    party.setPartyRdvLng(partyPostReqVO.getPartyRdvLng());
-    party.setPartyTitle(partyPostReqVO.getPartyTitle());
-    party.setTotalAmount(partyPostReqVO.getTotalAmount());
-    party.setUser(userRepository.findByUserSeq(partyPostReqVO.getUserSeq()));
-
-    return partyRepository.save(party);
-  }
-
-  @Override
-  public PartyResVO detailParty(Integer partySeq) {
+  public PartyResVO createParty(PartyReqVO partyReqVO) {
+    User u = userRepository.findByUserSeq(partyReqVO.getUserSeq());
+    Party req = partyReqVO.toEntity(u);
+    Party party = partyRepository.save(req);
+    MyPartyPK pk = new MyPartyPK();
+    pk.setPartySeq(party.getPartySeq());
+    pk.setUserSeq(partyReqVO.getUserSeq());
+    MyParty myParty = new MyParty();
+    myParty.setMyPartyPK(pk);
+    myParty.setParty(party);
+    myParty.setUser(userRepository.findByUserSeq(partyReqVO.getUserSeq()));
+    myParty.setPartyListCode("host");
+    myPartyRepository.save(myParty);
     PartyResVO partyResVO = new PartyResVO();
-    Party party = partyRepository.findByPartySeq(partySeq);
     partyResVO.setPartySeq(party.getPartySeq());
     partyResVO.setUserSeq(party.getUser().getUserSeq());
+//    partyResVO.setUserResVO(userService.detailUser(party.getUser().getUserSeq()));
     partyResVO.setPartyCode(party.getPartyCode());
     partyResVO.setPartyTitle(party.getPartyTitle());
     partyResVO.setPartyContent(party.getPartyContent());
@@ -99,25 +98,70 @@ public class PartyServiceImpl implements PartyService {
     partyResVO.setPartyStatus(party.getPartyStatus());
     partyResVO.setItemLink(party.getItemLink());
     partyResVO.setTotalAmount(party.getTotalAmount());
+    partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
     return partyResVO;
   }
 
   @Override
-  public void deleteParty(Integer party_seq) {
-    partyRepository.deleteById(party_seq);
+  public PartyResVO detailParty(Integer partySeq) {
+    PartyResVO partyResVO = new PartyResVO();
+    Party party = partyRepository.findByPartySeq(partySeq);
+    partyResVO.setPartySeq(party.getPartySeq());
+    partyResVO.setUserSeq(party.getUser().getUserSeq());
+//    partyResVO.setUserResVO(userService.detailUser(party.getUser().getUserSeq()));
+    partyResVO.setPartyCode(party.getPartyCode());
+    partyResVO.setPartyTitle(party.getPartyTitle());
+    partyResVO.setPartyContent(party.getPartyContent());
+    partyResVO.setPartyBookmarkCount(party.getPartyBookmarkCount());
+    partyResVO.setPartyCode(party.getPartyCode());
+    partyResVO.setPartyRegDt(party.getPartyRegDt());
+    partyResVO.setPartyUpdDt(party.getPartyUpdDt());
+    partyResVO.setPartyRdvDt(party.getPartyRdvDt());
+    partyResVO.setPartyRdvLat(party.getPartyRdvLat());
+    partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+    partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
+    partyResVO.setPartyMemberNumCurrent(party.getPartyMemberNumCurrent());
+    partyResVO.setPartyAddr(party.getPartyAddr());
+    partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
+    partyResVO.setPartyStatus(party.getPartyStatus());
+    partyResVO.setItemLink(party.getItemLink());
+    partyResVO.setTotalAmount(party.getTotalAmount());
+    partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
+    return partyResVO;
   }
 
   @Override
-  public List<Party> listPartyHost(Integer userSeq) {
-    List<Party> partyHostList = partyRepositorySupport.dynamicQueryPartyHostList(userSeq);
-    return partyHostList;
+  public void deleteParty(Integer partySeq) {
+    Party party = partyRepository.findByPartySeq(partySeq);
+    partyRepository.delete(party);
   }
 
   @Override
-  public List<Party> listPartyGuest(Integer userSeq) {
-    List<Party> partyGuestList = partyRepositorySupport.dynamicQueryPartyGuestList(userSeq);
-    return partyGuestList;
+  public List<PartyResVO> listPartyGuest(Integer userSeq) {
+    System.out.println("[PartyServiceImpl] listPartyGuest() called");
+    List<PartyResVO> result = new ArrayList<>();
+    User user = userRepository.findByUserSeq(userSeq);
+    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndPartyListCode(user, "guest");
+    for (MyParty myParty : myPartyList) {
+      PartyResVO partyResVO = detailParty(myParty.getParty().getPartySeq());
+      result.add(partyResVO);
+    }
+    return result;
   }
+
+  @Override
+  public List<PartyResVO> listPartyHost(Integer userSeq) {
+    System.out.println("[PartyServiceImpl] listPartyHost() called");
+    List<PartyResVO> result = new ArrayList<>();
+    User user = userRepository.findByUserSeq(userSeq);
+    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndPartyListCode(user, "host");
+    for (MyParty myParty : myPartyList) {
+      PartyResVO partyResVO = detailParty(myParty.getParty().getPartySeq());
+      result.add(partyResVO);
+    }
+    return result;
+  }
+
 
   @Override
   public List<MyParty> getMyPartyList(Integer userSeq) {

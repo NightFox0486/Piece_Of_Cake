@@ -1,26 +1,30 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:piece_of_cake/expandableFAB.dart';
+import 'package:piece_of_cake/kakao_login_page.dart';
 import 'package:provider/provider.dart';
-import './my.dart';
-import './chat_list_my.dart';
-import './pie_create.dart';
-import './party_list.dart';
-import './home.dart';
-import './action-button.dart';
-import './dlv_create.dart';
-import './buy_create.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
-import 'kakao_login_page.dart';
 import 'models/kakao_login_model.dart';
 import 'models/party_model.dart';
+import 'user/my.dart';
+import 'chat/chat_list_my.dart';
+import 'party/pie/pie_create.dart';
+import './home.dart';
+import 'party/dlv/dlv_create.dart';
+import 'party/buy/buy_create.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:piece_of_cake/party/bookmark/bookmark_list.dart';
+import 'party/bookmark/bookmark_list.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
 
-void main() {
+void main() async {
   KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
       MultiProvider(
         providers: [
@@ -29,8 +33,7 @@ void main() {
         ],
         child: MyApp(),
       )
-  );
-}
+  );}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -49,24 +52,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
 
   // final kakaoLoginViewModel = KakaoLoginViewModel(KakaoLogin());
 
   int index = 0;
   final screens = [
-    Home(),
-    PartyList(),
+    HomePage(),
+    BookmarkList(),
     ChatListMy(),
     My(),
   ];
@@ -83,10 +86,11 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: screens[index],
+      extendBody: true,
       bottomNavigationBar: CurvedNavigationBar(
         items: items,
         key: navigationKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         color: Colors.amber,
         height: 55,
         onTap: (index) => setState(() => this.index = index),
@@ -136,16 +140,16 @@ class _HomePageState extends State<HomePage> {
         elevation: 16.0,
         children: [
           SpeedDialChild(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DlvCreate()),
-              );
-            },
-            child: Icon(Icons.delivery_dining, size: 30,),
-            label: '배달',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DlvCreate()),
+                );
+              },
+              child: Icon(Icons.delivery_dining, size: 30,),
+              label: '배달',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
           SpeedDialChild(
               onTap: () {
@@ -154,10 +158,10 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => BuyCreate()),
                 );
               },
-            child: Icon(Icons.shopping_bag, size: 30,),
-            label: '공구',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              child: Icon(Icons.shopping_bag, size: 30,),
+              label: '공구',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
           SpeedDialChild(
               onTap: () {
@@ -166,10 +170,10 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => PieCreate()),
                 );
               },
-            child: Icon(Icons.safety_divider, size: 30,),
-            label: '소분',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              child: Icon(Icons.safety_divider, size: 30,),
+              label: '소분',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
         ],
       ),

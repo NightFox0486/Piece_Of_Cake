@@ -6,14 +6,14 @@ import '../../chat/chat_list_my.dart';
 import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-class BuyDetailGuest extends StatefulWidget {
-  const BuyDetailGuest({Key? key}) : super(key: key);
+class PieDetailGuest extends StatefulWidget {
+  const PieDetailGuest({Key? key}) : super(key: key);
 
   @override
-  State<BuyDetailGuest> createState() => _BuyDetailGuestState();
+  State<PieDetailGuest> createState() => _PieDetailGuestState();
 }
 
-class _BuyDetailGuestState extends State<BuyDetailGuest> {
+class _PieDetailGuestState extends State<PieDetailGuest> {
   int activeIndex = 0;
   final urlImages = [
     'assets/images/harry.png',
