@@ -80,14 +80,22 @@ public class Party {
     private String totalAmount;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
+    private List<MyParty> myPartyList;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
+    private List<Bookmark> bookmarkList;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
     private List<ChatRoom> chatRoomList;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
     private List<Photo> photoList;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
     private List<Receipt> receiptList;
 }
