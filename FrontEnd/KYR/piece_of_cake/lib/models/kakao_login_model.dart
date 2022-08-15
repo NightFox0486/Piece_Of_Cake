@@ -11,10 +11,11 @@ class KakaoLoginModel with ChangeNotifier {
   SocialLogin _socialLogin = KakaoLogin();
   bool isLoggedIn = false;
   User? _user;
-  UserResVO? _userResVO;  // _userResVO.userSeq
-  // int? userSeq;
   User? get user => _user;
+  UserResVO? _userResVO;  // _userResVO.userSeq
   UserResVO? get userResVO => _userResVO;
+  UserResVO? _currentPartyWriter;
+  UserResVO? get writer => _currentPartyWriter;
   Future setUser() async {
     var keyHash = await KakaoSdk.origin;
     print('keyHash: ${keyHash}');
@@ -44,12 +45,22 @@ class KakaoLoginModel with ChangeNotifier {
         print('response.statusCode: ${response.statusCode}');
       }
     }
-
-
     print('kakao login model');
     print('_user: ${_user}');
     print('_userResVO: ${_userResVO}');
     notifyListeners();
+  }
+  
+  Future setCurrentPartyWriter(int userSeq) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:9090/user/${userSeq}')
+    );
+    if (response.statusCode==200) {
+      UserResVO userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      _currentPartyWriter = _userResVO;
+    } else {
+      throw Exception('Failed to load current party writer.');
+    }
   }
 
   Future logOut() async {
