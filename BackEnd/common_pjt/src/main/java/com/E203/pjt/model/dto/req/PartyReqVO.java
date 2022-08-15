@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 //@ApiModel("PartyPostReq")
 public class PartyReqVO {
 //    @ApiModelProperty(name="")
+    private Integer userSeq; // !!!!
     private String partyCode;
     private String partyTitle;
     private String partyContent;
@@ -29,6 +30,7 @@ public class PartyReqVO {
     private Integer partyStatus;
     private String itemLink;
     private String totalAmount;
+    private String partyMainImageUrl;
 
     public Party toEntity(User user) {
         Party party = new Party();
@@ -47,6 +49,7 @@ public class PartyReqVO {
         party.setPartyStatus(partyStatus);
         party.setItemLink(itemLink);
         party.setTotalAmount(totalAmount);
+        party.setPartyMainImageUrl(partyMainImageUrl);
         return party;
     }
 }

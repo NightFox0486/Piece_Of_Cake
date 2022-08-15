@@ -28,11 +28,11 @@ public class PartyController {
     return partyResVOList;
   }
 
-  @PostMapping(value = "/party/{userSeq}")
-  public PartyResVO createParty(@RequestBody PartyReqVO partyReqVO, @PathVariable Integer userSeq) {
+  @PostMapping(value = "/party")
+  public PartyResVO createParty(@RequestBody PartyReqVO partyReqVO) {
     System.out.println("[PartyController] createParty() called");
     System.out.println(partyReqVO);
-    PartyResVO result = partyService.createParty(partyReqVO, userSeq);
+    PartyResVO result = partyService.createParty(partyReqVO);
     return result;
   }
 

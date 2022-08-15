@@ -56,6 +56,7 @@ public class PartyServiceImpl implements PartyService {
       partyResVO.setPartyStatus(party.getPartyStatus());
       partyResVO.setItemLink(party.getItemLink());
       partyResVO.setTotalAmount(party.getTotalAmount());
+      partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
       partyResVOList.add(partyResVO);
     }
     return partyResVOList;
@@ -63,17 +64,17 @@ public class PartyServiceImpl implements PartyService {
 
   @Override
   @Transactional
-  public PartyResVO createParty(PartyReqVO partyReqVO, Integer userSeq) {
-    User u = userRepository.findByUserSeq(userSeq);
+  public PartyResVO createParty(PartyReqVO partyReqVO) {
+    User u = userRepository.findByUserSeq(partyReqVO.getUserSeq());
     Party req = partyReqVO.toEntity(u);
     Party party = partyRepository.save(req);
     MyPartyPK pk = new MyPartyPK();
     pk.setPartySeq(party.getPartySeq());
-    pk.setUserSeq(userSeq);
+    pk.setUserSeq(partyReqVO.getUserSeq());
     MyParty myParty = new MyParty();
     myParty.setMyPartyPK(pk);
     myParty.setParty(party);
-    myParty.setUser(userRepository.findByUserSeq(userSeq));
+    myParty.setUser(userRepository.findByUserSeq(partyReqVO.getUserSeq()));
     myParty.setPartyListCode("host");
     myPartyRepository.save(myParty);
     PartyResVO partyResVO = new PartyResVO();
@@ -97,6 +98,7 @@ public class PartyServiceImpl implements PartyService {
     partyResVO.setPartyStatus(party.getPartyStatus());
     partyResVO.setItemLink(party.getItemLink());
     partyResVO.setTotalAmount(party.getTotalAmount());
+    partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
     return partyResVO;
   }
 
@@ -124,6 +126,7 @@ public class PartyServiceImpl implements PartyService {
     partyResVO.setPartyStatus(party.getPartyStatus());
     partyResVO.setItemLink(party.getItemLink());
     partyResVO.setTotalAmount(party.getTotalAmount());
+    partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
     return partyResVO;
   }
 

@@ -24,6 +24,7 @@ class BookmarkReqVO {
   }
 }
 class PartyReqVO {
+  int userSeq;
   String partyCode;
   String partyTitle;
   String partyContent;
@@ -38,7 +39,9 @@ class PartyReqVO {
   int partyStatus;
   String itemLink;
   String totalAmount;
+  String partyMainImageUrl;
   PartyReqVO({
+    required this.userSeq,
     required this.partyCode,
     required this.partyTitle,
     required this.partyContent,
@@ -52,11 +55,13 @@ class PartyReqVO {
     required this.partyAddrDetail,
     required this.partyStatus,
     required this.itemLink,
-    required this.totalAmount
+    required this.totalAmount,
+    required this.partyMainImageUrl,
   });
 
   factory PartyReqVO.fromJson(Map<String, dynamic> json) {
     return PartyReqVO(
+      userSeq: json['userSeq'],
       partyCode: json['partyCode'],
       partyTitle: json['partyTitle'],
       partyContent: json['partyContent'],
@@ -71,11 +76,13 @@ class PartyReqVO {
       partyStatus: json['partyStatus'],
       itemLink: json['itemLink'],
       totalAmount: json['totalAmount'],
+      partyMainImageUrl: json['partyMainImageUrl'],
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userSeq'] = this.userSeq;
     data['partyCode'] = this.partyCode;
     data['partyTitle'] = this.partyTitle;
     data['partyContent'] = this.partyContent;
@@ -90,6 +97,7 @@ class PartyReqVO {
     data['partyStatus'] = this.partyStatus;
     data['itemLink'] = this.itemLink;
     data['totalAmount'] = this.totalAmount;
+    data['partyMainImageUrl'] = this.partyMainImageUrl;
     return data;
   }
 }
@@ -114,6 +122,7 @@ class PartyResVO {
   int partyStatus;
   String itemLink;
   String totalAmount;
+  String partyMainImageUrl;
   PartyResVO({
     required this.partySeq,
     required this.userSeq,
@@ -133,7 +142,8 @@ class PartyResVO {
     required this.partyAddrDetail,
     required this.partyStatus,
     required this.itemLink,
-    required this.totalAmount
+    required this.totalAmount,
+    required this.partyMainImageUrl,
   });
 
   factory PartyResVO.fromJson(Map<String, dynamic> json) {
@@ -157,6 +167,7 @@ class PartyResVO {
       partyStatus: json['partyStatus'],
       itemLink: json['itemLink'],
       totalAmount: json['totalAmount'],
+      partyMainImageUrl: json['partyMainImageUrl'],
     );
   }
 
@@ -181,6 +192,7 @@ class PartyResVO {
     data['partyStatus'] = this.partyStatus;
     data['itemLink'] = this.itemLink;
     data['totalAmount'] = this.totalAmount;
+    data['partyMainImageUrl'] = this.partyMainImageUrl;
     return data;
   }
 }

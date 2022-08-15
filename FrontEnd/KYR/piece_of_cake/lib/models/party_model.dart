@@ -36,27 +36,26 @@ class PartyModel with ChangeNotifier {
     // notifyListeners();
   }
 
-  Future createParty(partyReqVO, userSeq) async {
-    print('[PartyModel] createParty(partyReqVO, userSeq) called');
-    print('partyReqVO: ${partyReqVO}');
-    print('userSeq: ${userSeq}');
-    final response = await http.post(
-      Uri.parse('http://10.0.2.2:9090/party/${userSeq}'),
-      headers: <String, String> {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(partyReqVO),
-    );
-    print('response.statusCode: ${response.statusCode}');
-    if (response.statusCode==200) {
-      PartyResVO party = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-      _currentParty = party;
-      print('!!!!!!!!!![PartyModel] createParty() _currentParty: ${_currentParty}');
-      // print('!!!!!!!!!!this._currentParty.userResVO: ${this._currentParty!.userResVO}');
-    }else {
-      throw Exception('Failed to load detail party.');
-    }
-  }
+  // Future createParty(partyReqVO,) async {
+  //   print('[PartyModel] createParty(partyReqVO, userSeq) called');
+  //   print('partyReqVO: ${partyReqVO}');
+  //   final response = await http.post(
+  //     Uri.parse('http://10.0.2.2:9090/party'),
+  //     headers: <String, String> {
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(partyReqVO),
+  //   );
+  //   print('response.statusCode: ${response.statusCode}');
+  //   if (response.statusCode==200) {
+  //     PartyResVO party = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+  //     _currentParty = party;
+  //     print('!!!!!!!!!![PartyModel] createParty() _currentParty: ${_currentParty}');
+  //     // print('!!!!!!!!!!this._currentParty.userResVO: ${this._currentParty!.userResVO}');
+  //   }else {
+  //     throw Exception('Failed to load detail party.');
+  //   }
+  // }
 
   Future fetchPartyGuestList(int userSeq) async {
     print('[PartyModel] fetchPartyGuestList()');

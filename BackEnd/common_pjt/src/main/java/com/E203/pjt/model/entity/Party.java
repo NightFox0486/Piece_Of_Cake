@@ -79,6 +79,9 @@ public class Party {
     @Column(name = "total_amount", length = 20)
     private String totalAmount;
 
+    @Column(name = "party_main_image_url")
+    private String partyMainImageUrl;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
     private List<MyParty> myPartyList;

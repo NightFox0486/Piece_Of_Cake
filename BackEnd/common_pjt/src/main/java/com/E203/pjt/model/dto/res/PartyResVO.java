@@ -30,4 +30,5 @@ public class PartyResVO {
     Integer partyStatus;
     String itemLink;
     String totalAmount;
+    String partyMainImageUrl;
 }

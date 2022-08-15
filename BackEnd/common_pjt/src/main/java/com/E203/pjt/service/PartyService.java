@@ -9,7 +9,7 @@ import com.E203.pjt.model.entity.Party;
 
 public interface PartyService {
   List<PartyResVO> listParty();
-  PartyResVO createParty(PartyReqVO partyReqVO, Integer userSeq);
+  PartyResVO createParty(PartyReqVO partyReqVO);
   PartyResVO detailParty(Integer partySeq);
   void deleteParty(Integer partySeq);
 

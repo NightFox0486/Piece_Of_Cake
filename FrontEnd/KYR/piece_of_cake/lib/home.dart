@@ -32,24 +32,26 @@ class _HomePageState extends State<HomePage> {
     partyProvider.fetchPartyGuestList(kakaoUserProvider.userResVO!.userSeq);
     partyProvider.fetchPartyHostList(kakaoUserProvider.userResVO!.userSeq);
 
-    // create party result test
-    var partyReqVO = PartyReqVO(
-        partyCode: '002',
-        partyTitle: 'create test',
-        partyContent: '[_HomePageState] partymodel createParty() test',
-        partyBookmarkCount: 0,
-        partyRdvDt: [22, 1, 1, 1, 1, 1],
-        partyRdvLat: '1234',
-        partyRdvLng: '1234',
-        partyMemberNumTotal: 2,
-        partyMemberNumCurrent: 0,
-        partyAddr: 'songsam',
-        partyAddrDetail: '2층',
-        partyStatus: 1,
-        itemLink: 'this is item link',
-        totalAmount: '20000'
-    );
-    partyProvider.createParty(partyReqVO, kakaoUserProvider.userResVO!.userSeq);
+    // // create party result test
+    // var partyReqVO = PartyReqVO(
+    //     userSeq: kakaoUserProvider.userResVO!.userSeq,
+    //     partyCode: '002',
+    //     partyTitle: 'create test',
+    //     partyContent: '[_HomePageState] partymodel createParty() test',
+    //     partyBookmarkCount: 0,
+    //     partyRdvDt: [22, 1, 1, 1, 1, 1],
+    //     partyRdvLat: '1234',
+    //     partyRdvLng: '1234',
+    //     partyMemberNumTotal: 2,
+    //     partyMemberNumCurrent: 0,
+    //     partyAddr: 'songsam',
+    //     partyAddrDetail: '2층',
+    //     partyStatus: 1,
+    //     itemLink: 'this is item link',
+    //     totalAmount: '20000',
+    //     partyMainImageUrl: '11111',
+    // );
+    // partyProvider.createParty(partyReqVO);
     return Scaffold(
       appBar: AppBar(
         title: Text('Piece Of Cake'),

@@ -91,6 +91,7 @@ public class DataTests {
             User u = userRepository.findByUserSeq(i+1);
             for (int j=1; j<6; j++) {
                 PartyReqVO partyReqVO = new PartyReqVO();
+                partyReqVO.setUserSeq(u.getUserSeq());
                 partyReqVO.setPartyCode(String.format("00%d", j));
                 partyReqVO.setPartyTitle(String.format("%d-%d", i, j));
                 //                party.setPartyContent(String.format("%d", i*111));
@@ -106,7 +107,8 @@ public class DataTests {
                 partyReqVO.setPartyStatus(1);
                 partyReqVO.setItemLink(String.format("itemLink_%d-%d", i, j));
                 partyReqVO.setTotalAmount(String.format("%d0000%d", i, j));
-                partyService.createParty(partyReqVO, u.getUserSeq());
+                partyReqVO.setPartyMainImageUrl(String.format("%d", i*111111));
+                partyService.createParty(partyReqVO);
             }
         }
 
@@ -164,6 +166,7 @@ public class DataTests {
         PartyReqVO partyReqVO = new PartyReqVO();
         User u = em.find(User.class, 8);
         int i = 7, j = 8;
+        partyReqVO.setUserSeq(u.getUserSeq());
         partyReqVO.setPartyCode(String.format("00%d", j));
         partyReqVO.setPartyTitle(String.format("%d-%d", i, j));
         //                party.setPartyContent(String.format("%d", i*111));
@@ -180,7 +183,7 @@ public class DataTests {
         partyReqVO.setPartyStatus(1);
         partyReqVO.setItemLink(String.format("itemLink_%d-%d", i, j));
         partyReqVO.setTotalAmount(String.format("%d0000%d", i, j));
-        PartyResVO result = partyService.createParty(partyReqVO, u.getUserSeq());
+        PartyResVO result = partyService.createParty(partyReqVO);
         System.out.println("result: "+result.toString());
     }
 
