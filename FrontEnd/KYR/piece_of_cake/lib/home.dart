@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/party/party_list.dart';
+import 'package:piece_of_cake/vo.dart';
 import 'package:provider/provider.dart';
 import 'models/kakao_login_model.dart';
 import 'models/party_model.dart';
@@ -24,10 +25,33 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final partyProvider = Provider.of<PartyModel>(context);
-    final userProvider = Provider.of<KakaoLoginModel>(context);
+    final kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     partyProvider.fetchPartyList();
-    partyProvider.fetchBookmarkPartyList(userProvider.userResVO!.userSeq);
-    partyProvider.fetchBookmarkList(userProvider.userResVO!.userSeq);
+    partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO!.userSeq);
+    partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO!.userSeq);
+    partyProvider.fetchPartyGuestList(kakaoUserProvider.userResVO!.userSeq);
+    partyProvider.fetchPartyHostList(kakaoUserProvider.userResVO!.userSeq);
+
+    // // create party result test
+    // var partyReqVO = PartyReqVO(
+    //     userSeq: kakaoUserProvider.userResVO!.userSeq,
+    //     partyCode: '002',
+    //     partyTitle: 'create test',
+    //     partyContent: '[_HomePageState] partymodel createParty() test',
+    //     partyBookmarkCount: 0,
+    //     partyRdvDt: [22, 1, 1, 1, 1, 1],
+    //     partyRdvLat: '1234',
+    //     partyRdvLng: '1234',
+    //     partyMemberNumTotal: 2,
+    //     partyMemberNumCurrent: 0,
+    //     partyAddr: 'songsam',
+    //     partyAddrDetail: '2층',
+    //     partyStatus: 1,
+    //     itemLink: 'this is item link',
+    //     totalAmount: '20000',
+    //     partyMainImageUrl: '11111',
+    // );
+    // partyProvider.createParty(partyReqVO);
     return Scaffold(
       appBar: AppBar(
         title: Text('Piece Of Cake'),
