@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:piece_of_cake/party/buy/buy_detail_guest.dart';
+import 'package:piece_of_cake/party/buy/buy_detail_host.dart';
 import 'package:piece_of_cake/party/party_list.dart';
 import 'user/my.dart';
 import 'chat/chat_list_my.dart';
@@ -26,6 +28,15 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => gps()),
+                // );
+              },
+              icon: Icon(Icons.my_location)
+          ),
+          IconButton(
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Notice()),
@@ -38,23 +49,41 @@ class _HomePageState extends State<HomePage> {
                 showSearch(context: context, delegate: customSearch()
                 );
               },
-              icon: Icon(Icons.search))
+              icon: Icon(Icons.search)),
         ]
       ),
       body: ListView(
         children: [
           Container(
-              margin: EdgeInsets.all(5)
-          ),
-          Column(
-            children: [
-              Text('최신 파티',
-                style: TextStyle(
-                  fontSize:20,
-                  fontWeight: FontWeight.bold,
-                ),),
-              Item(),
-            ],
+            margin: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Text('최신 파티',
+                  style: TextStyle(
+                    fontSize:20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top:10),
+                  height: 250,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      buildCard(),
+                      SizedBox(width:12),
+                      buildCard(),
+                      SizedBox(width:12),
+                      buildCard(),
+                      SizedBox(width:12),
+                      buildCard(),
+                      SizedBox(width:12),
+                      buildCard(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           Container(
               margin: EdgeInsets.all(5)
@@ -133,6 +162,40 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+  Widget buildCard() => InkWell(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BuyDetailGuest()),
+      );
+    },
+    child: Container(
+      width: 200,
+      height: 200,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.asset(
+              'assets/images/harry.png',
+              fit: BoxFit.fill,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            '강아지 자랑해요 진짜 개예뻐요',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
+          ),
+          Text(
+            '값을 매길 수 없음 ₩',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          ),
+        ],
+
+
+      ),
+    ),
+  );
 }
 
 
