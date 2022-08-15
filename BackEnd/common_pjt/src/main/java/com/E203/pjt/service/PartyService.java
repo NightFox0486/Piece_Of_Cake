@@ -25,4 +25,5 @@ public interface PartyService {
   List<Party> getMyPartyOngoingList(Integer userSeq);
   List<Party> getMyPartyDoneList(Integer userSeq);
 
+  void putPartyMainImageUrl(Integer partySeq, String partyMainImageUrl);
 }
