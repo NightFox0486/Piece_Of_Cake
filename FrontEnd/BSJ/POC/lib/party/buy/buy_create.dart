@@ -43,6 +43,7 @@ class _BuyCreateState extends State<BuyCreate> {
         partyRdvLng: '0',
         partyTitle: name!,
         totalAmount: '0',
+        partyMainImageUrl: 'assets/images/harry.png',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
     print(name);
     final response = await http.post(

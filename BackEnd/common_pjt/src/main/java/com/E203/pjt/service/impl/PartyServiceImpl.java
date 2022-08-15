@@ -188,4 +188,11 @@ public class PartyServiceImpl implements PartyService {
     return partyRepositorySupport.findDynamicQueryDoneMypartyList(userSeq);
   }
 
+  @Override
+  public void putPartyMainImageUrl(Integer partySeq, String partyMainImageUrl) {
+    Party party = partyRepository.findByPartySeq(partySeq);
+    party.setPartyMainImageUrl(partyMainImageUrl);
+    partyRepository.save(party);
+  }
+
 }

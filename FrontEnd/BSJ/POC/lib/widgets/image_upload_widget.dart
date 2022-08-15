@@ -77,6 +77,9 @@ class _ImageUploadState extends State<ImageUploadWidget> {
       );
       print('response.body: ${response.body}');
     }
+    if (index == 0) {
+      // main image 저장
+    }
     return url;
   }
 
