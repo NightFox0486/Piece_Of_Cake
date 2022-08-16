@@ -1,5 +1,6 @@
 package com.E203.pjt.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,11 +16,13 @@ public class MyParty implements Serializable {
     @EmbeddedId
     private MyPartyPK myPartyPK;
 
+    @JsonBackReference
     @ManyToOne(targetEntity = Party.class)
     @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     @MapsId("partySeq")
     private Party party;
 
+    @JsonBackReference
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_seq", nullable = false, columnDefinition = "INT UNSIGNED")
     @MapsId("userSeq")
@@ -27,5 +30,6 @@ public class MyParty implements Serializable {
 
     // "host" or "guest" : user가 party의 guest인지 host인지
     @Column(name = "my_party_role", length = 5, nullable = false)
+    @MapsId("myPartyRole")
     private String myPartyRole;
 }

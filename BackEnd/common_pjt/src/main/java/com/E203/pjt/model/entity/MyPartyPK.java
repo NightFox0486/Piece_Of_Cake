@@ -14,4 +14,5 @@ import java.io.Serializable;
 public class MyPartyPK implements Serializable {
     private Integer partySeq;
     private Integer userSeq;
+    private String myPartyRole;
 }

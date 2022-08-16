@@ -57,10 +57,10 @@ public class User {
 //  @OneToMany(mappedBy="user", cascade = {CascadeType.ALL}, orphanRemoval = true)
   private List<Party> partyList;
 
-//  @JsonManagedReference
-//  @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
-////  @OneToMany(mappedBy="user", cascade = {CascadeType.ALL}, orphanRemoval = true)
-//  private List<MyParty> myPartyList;
+  @JsonManagedReference
+  @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+//  @OneToMany(mappedBy="user", cascade = {CascadeType.ALL}, orphanRemoval = true)
+  private List<MyParty> myPartyList;
 
 
 }
