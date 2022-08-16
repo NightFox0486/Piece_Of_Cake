@@ -80,7 +80,7 @@ public class Party {
     @Column(name = "total_amount", length = 20)
     private String totalAmount;
 
-    @Column(name = "party_main_image_url", columnDefinition = "default 'assets/images/harry.png'")
+    @Column(name = "party_main_image_url")//, columnDefinition = "default \"assets/images/harry.png\"")
     private String partyMainImageUrl;
 
 //    @JsonManagedReference
