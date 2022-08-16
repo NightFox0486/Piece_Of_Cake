@@ -78,11 +78,11 @@ public class PartyController {
     return partyHostList;
   }
 
-  @PatchMapping(value = "/party/{partySeq}/{partyMainImageUrl}")
-  public void addPartyMainImage(@PathVariable Integer partySeq, @PathVariable partyMainImageUrl){
+  @PatchMapping(value = "/party/{partySeq}")
+  public void addPartyMainImage(@PathVariable Integer partySeq){
     System.out.println("patchtest");
     System.out.println(partySeq);
-    System.out.println(partyMainImageUrl);
+    // System.out.println(partyMainImageUrl);
     // partyService.putPartyMainImageUrl(partySeq, partyMainImageUrl);
   }
 
