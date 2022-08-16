@@ -26,7 +26,7 @@ class PartyModel with ChangeNotifier {
 
   Future fetchPartyList() async {
     final response = await
-    http.get(Uri.parse('http://10.0.2.2:9090/party'));
+    http.get(Uri.parse('http://i7e203.p.ssafy.io:9090/party'));
     if (response.statusCode==200) {
       this._partyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
           .map((e) => PartyResVO.fromJson(e))
@@ -40,7 +40,7 @@ class PartyModel with ChangeNotifier {
 
   Future fetchLatestPartyList() async {
     final response = await http.get(
-        Uri.parse('http://10.0.2.2:9090/latest-party')
+        Uri.parse('http://i7e203.p.ssafy.io:9090/latest-party')
     );
     if (response.statusCode==200) {
       this._latestPartyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
@@ -55,7 +55,7 @@ class PartyModel with ChangeNotifier {
 
   Future fetchPartyGuestList(int userSeq) async {
     // print('[PartyModel] fetchPartyGuestList()');
-    final response = await http.get(Uri.parse('http://10.0.2.2:9090/party/guest/${userSeq}'));
+    final response = await http.get(Uri.parse('http://i7e203.p.ssafy.io:9090/party/guest/${userSeq}'));
     // print('response.statusCode: ${response.statusCode}');
     if (response.statusCode==200) {
       this._partyGuestList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
@@ -70,7 +70,7 @@ class PartyModel with ChangeNotifier {
 
   Future fetchPartyHostList(int userSeq) async {
     // print('[PartyModel] fetchPartyHostList()');
-    final response = await http.get(Uri.parse('http://10.0.2.2:9090/party/host/${userSeq}'));
+    final response = await http.get(Uri.parse('http://i7e203.p.ssafy.io:9090/party/host/${userSeq}'));
     // print('response.statusCode: ${response.statusCode}');
     if (response.statusCode==200) {
       this._partyHostList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
@@ -84,7 +84,7 @@ class PartyModel with ChangeNotifier {
   }
 
   Future fetchBookmarkPartyList(userSeq) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:9090/bookmark/${userSeq}'));
+    final response = await http.get(Uri.parse('http://i7e203.p.ssafy.io:9090/bookmark/${userSeq}'));
     if (response.statusCode==200) {
       this._bookmarkPartyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
           .map((e) => PartyResVO.fromJson(e))
@@ -105,7 +105,7 @@ class PartyModel with ChangeNotifier {
 
   Future detailBookmark(BookmarkReqVO bookmarkReqVO) async {
     final response = await http.get(
-        Uri.parse('http://10.0.2.2:9090/party/${bookmarkReqVO.partySeq}')
+        Uri.parse('http://i7e203.p.ssafy.io:9090/party/${bookmarkReqVO.partySeq}')
     );
     if (response.statusCode==200) {
       PartyResVO party = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
@@ -122,7 +122,7 @@ class PartyModel with ChangeNotifier {
     // print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
     // print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:9090/bookmark'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/bookmark'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -145,7 +145,7 @@ class PartyModel with ChangeNotifier {
     // print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
     // print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.delete(
-      Uri.parse('http://10.0.2.2:9090/bookmark'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/bookmark'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
