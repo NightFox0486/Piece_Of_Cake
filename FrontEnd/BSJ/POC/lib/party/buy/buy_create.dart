@@ -5,6 +5,8 @@ import 'package:piece_of_cake/models/kakao_login_model.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:piece_of_cake/widgets/image_upload_widget.dart';
 import 'package:provider/provider.dart';
+// import 'package:piece_of_cake/widgets/map_screen.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
 
@@ -37,8 +39,8 @@ class _BuyCreateState extends State<BuyCreate> {
         partyBookmarkCount: 0,
         partyCode: '002',
         partyContent: content!,
-        partyMemberNumCurrent: 0,
-        partyMemberNumTotal: 0,
+        partyMemberNumCurrent: 1,
+        partyMemberNumTotal: 5,
         partyRdvLat: '0',
         partyRdvLng: '0',
         partyTitle: name!,
@@ -60,6 +62,14 @@ class _BuyCreateState extends State<BuyCreate> {
         response.body.indexOf("partySeq") + 10,
         response.body.indexOf("userSeq") - 2));
     imageKey.currentState?.addImage(partySeq);
+  }
+
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   @override
@@ -214,27 +224,56 @@ class _BuyCreateState extends State<BuyCreate> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.amber),
-                          borderRadius: BorderRadius.circular((15))),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              border: InputBorder.none, hintText: '랑데뷰 포인트'),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {},
-                          validator: (val) {
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
                   ],
                 )),
+          ),
+          Container(
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.amber),
+                borderRadius: BorderRadius.circular((15))),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: TextButton(
+                child: Text('랑데뷰 포인트 설정'),
+                onPressed: () {},
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.amber),
+                borderRadius: BorderRadius.circular((15))),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                    border: InputBorder.none, hintText: '주소  적힐곳'),
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+                onSaved: (val) {},
+                validator: (val) {
+                  return null;
+                },
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(20),
+            child: Wrap(children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: GoogleMap(
+                  mapType: MapType.normal,
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: _center,
+                    zoom: 11.0,
+                  ),
+                ),
+              ),
+            ]),
           ),
         ],
       ),
