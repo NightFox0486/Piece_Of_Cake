@@ -1,15 +1,7 @@
 package com.E203.pjt.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-
-import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
@@ -29,6 +21,7 @@ public class Photo {
   @JsonBackReference
   @ManyToOne(targetEntity = Party.class)
   @JoinColumn(name = "party_seq", nullable = false, columnDefinition = "INT UNSIGNED")
+//  @MapsId("partySeq")
   private Party party;
 
   @Column(name = "file_url", length = 200)
