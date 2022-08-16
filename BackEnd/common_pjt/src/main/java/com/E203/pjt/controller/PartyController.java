@@ -82,7 +82,7 @@ public class PartyController {
   public void addPartyMainImage(@PathVariable Integer partySeq, String partyMainImageUrl){
     System.out.println("patchtest");
     System.out.println(partySeq);
-    System.out.println(url);
+    System.out.println(partyMainImageUrl);
     // partyService.putPartyMainImageUrl(partySeq, partyMainImageUrl);
   }
 
