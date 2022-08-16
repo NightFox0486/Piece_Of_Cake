@@ -96,11 +96,6 @@ public class Party {
     @JsonManagedReference
     @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
 //    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private List<ChatRoom> chatRoomList;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
-//    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Photo> photoList;
 
     @JsonManagedReference
