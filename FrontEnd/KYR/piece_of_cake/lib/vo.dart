@@ -1,3 +1,27 @@
+class MyPartyReqVO {
+  int userSeq;
+  int partySeq;
+  String myPartyRole;
+  MyPartyReqVO({
+    required this.userSeq,
+    required this.partySeq,
+    required this.myPartyRole,
+  });
+  factory MyPartyReqVO.fromJson(Map<String, dynamic> json) {
+    return MyPartyReqVO(
+      userSeq: json['userSeq'],
+      partySeq: json['partySeq'],
+      myPartyRole: json['myPartyRole']
+    );
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userSeq'] = this.userSeq;
+    data['partySeq'] = this.partySeq;
+    data['myPartyRole'] = this.myPartyRole;
+    return data;
+  }
+}
 class BookmarkReqVO {
   int userSeq;
   int partySeq;
