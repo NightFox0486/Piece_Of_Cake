@@ -83,15 +83,15 @@ public class Party {
     @Column(name = "party_main_image_url")//, columnDefinition = "default \"assets/images/harry.png\"")
     private String partyMainImageUrl;
 
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
-////    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
-//    private List<MyParty> myPartyList;
-//
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
-////    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
-//    private List<Bookmark> bookmarkList;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+//    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private List<MyParty> myPartyList;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+//    @OneToMany(mappedBy = "party", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private List<Bookmark> bookmarkList;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "party", cascade = {CascadeType.REMOVE}, orphanRemoval = true)

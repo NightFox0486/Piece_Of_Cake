@@ -45,6 +45,11 @@ public class PartyController {
     return partyResVO;
   }
 
+  // 파티 호스트가 파티 완료를 누르면 !!!
+//  public void doneParty(@PathVariable Integer partySeq) {
+//
+//  }
+
   @GetMapping(value = "/latest-party")
   public List<PartyResVO> listLatestParty() {
     List<PartyResVO> partyResVOList = partyService.listLatestParty();
