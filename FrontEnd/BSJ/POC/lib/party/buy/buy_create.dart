@@ -76,10 +76,15 @@ class _BuyCreateState extends State<BuyCreate> {
     mapController = controller;
   }
 
-  void _setRdvPoint() {
+  void _setRdvPoint() async {
     print('testRdv');
-    Rdv_Address = '변경된 주소';
-    _center = LatLng(35.08947, 128.85354);
+    var Lat = 35.08947;
+    var Lng = 128.85354;
+    _center = LatLng(Lat, Lng);
+    final Uri getAddress = Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$Lat,$Lng&key=AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk&language=ko');
+    final response = await http.get(getAddress);
+    Rdv_Address = jsonDecode(response.body)['results'][0]['formatted_address'];
     mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: _center, zoom: 15.0)));
     _markers.add(Marker(markerId: MarkerId("1"), position: _center));
@@ -261,7 +266,7 @@ class _BuyCreateState extends State<BuyCreate> {
             decoration: BoxDecoration(
                 border: Border.all(width: 1, color: Colors.amber),
                 borderRadius: BorderRadius.circular((15))),
-            height: 40,
+            // height: 40,
             child: Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 10),
