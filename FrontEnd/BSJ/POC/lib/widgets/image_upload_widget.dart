@@ -78,7 +78,14 @@ class _ImageUploadState extends State<ImageUploadWidget> {
       print('response.body: ${response.body}');
     }
     if (index == 0) {
-      // main image 저장
+      final response = await http.put(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/photo/${partySeq}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(url),
+      );
+      print('response.body: ${response.body}');
     }
     return url;
   }
