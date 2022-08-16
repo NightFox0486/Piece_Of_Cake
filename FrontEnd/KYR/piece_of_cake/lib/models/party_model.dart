@@ -82,6 +82,36 @@ class PartyModel with ChangeNotifier {
     }
     // notifyListeners();
   }
+  
+  Future insertMyParty(int partySeq, int userSeq) async {
+    MyPartyReqVO myPartyReqVO = MyPartyReqVO(
+        userSeq: userSeq,
+        partySeq: partySeq,
+        myPartyRole: "guest"
+    );
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:9090/my-party'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(myPartyReqVO),
+    );
+    if (response.statusCode==200) {
+      // 할거 없나
+    }else {
+      throw Exception('Failed to insert my party.');
+    }
+    // notifyListeners();
+  }
+
+  Future deleteMyParty(int partySeq, int userSeq) async {
+    MyPartyReqVO myPartyReqVO = MyPartyReqVO(
+      userSeq: userSeq,
+      partySeq: partySeq,
+      myPartyRole: "guest"
+    );
+    // final
+  }
 
   Future fetchBookmarkPartyList(userSeq) async {
     final response = await http.get(Uri.parse('http://10.0.2.2:9090/bookmark/${userSeq}'));
