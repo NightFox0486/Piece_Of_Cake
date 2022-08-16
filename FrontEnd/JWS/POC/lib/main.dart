@@ -1,25 +1,40 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:piece_of_cake/expandableFAB.dart';
-// import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:piece_of_cake/kakao_login_page.dart';
+import 'package:provider/provider.dart';
+import 'chat/chatroom_my_route.dart';
+import 'models/kakao_login_model.dart';
+import 'models/party_model.dart';
 import 'user/my.dart';
 import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
-import 'party/wish/wish_list.dart';
-// import 'kakao/kakao_login.dart';
-// import 'kakao/kakao_login_view_model.dart';
 import './home.dart';
-import './action-button.dart';
 import 'party/dlv/dlv_create.dart';
 import 'party/buy/buy_create.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:piece_of_cake/party/bookmark/bookmark_list.dart';
+import 'party/bookmark/bookmark_list.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
 
-void main() {
-  // KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
-  runApp(const MyApp());
-}
+void main() async {
+  KakaoSdk.init(nativeAppKey: '2157d1da3704b84b219793633746ca5c');
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => KakaoLoginModel()),
+          ChangeNotifierProvider(create: (_) => PartyModel()),
+        ],
+        child: MyApp(),
+      )
+  );}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -33,30 +48,30 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.amber,
         ),
-        home: const HomePage()
+        home: const KakaoLoginPage()
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
 
   // final kakaoLoginViewModel = KakaoLoginViewModel(KakaoLogin());
 
   int index = 0;
   final screens = [
-    homePage(),
-    WishList(),
-    ChatListMy(),
+    HomePage(),
+    BookmarkList(),
+    ChatRoomListMy(),
     My(),
   ];
 

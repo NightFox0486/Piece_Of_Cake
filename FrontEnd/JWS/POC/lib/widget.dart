@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
-import 'package:piece_of_cake/party/pie/pie_detail.dart';
+import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
 import 'package:piece_of_cake/party/buy/buy_detail_guest.dart';
 import 'package:piece_of_cake/party/buy/buy_detail_host.dart';
-import 'package:piece_of_cake/party/dlv/dlv_detail.dart';
+import 'package:piece_of_cake/party/dlv/dlv_detail_guest.dart';
 
 class Item extends StatelessWidget {
   const Item({Key? key}) : super(key: key);
@@ -61,19 +61,19 @@ class Item extends StatelessWidget {
             case '001':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PieDetail()),
+                MaterialPageRoute(builder: (context) => PieDetailGuest()),
               );
               break;
             case '002':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BuyDetail()),
+                MaterialPageRoute(builder: (context) => BuyDetailGuest()),
               );
               break;
             case '003':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DlvDetail()),
+                MaterialPageRoute(builder: (context) => DlvDetailGuest()),
               );
               break;
           }
