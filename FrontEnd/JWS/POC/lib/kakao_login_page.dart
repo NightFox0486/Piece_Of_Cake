@@ -18,7 +18,6 @@ class _KakaoLoginPageState extends State<KakaoLoginPage> {
   final _database = FirebaseFirestore.instance;
   kakao.User? user;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +30,6 @@ class _KakaoLoginPageState extends State<KakaoLoginPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () async {
-                user = await kakao.UserApi.instance.me();
                 // await KakaoLoginModel().setUser();
                 await Provider.of<KakaoLoginModel>(context, listen: false).setUser();
                 print('login');

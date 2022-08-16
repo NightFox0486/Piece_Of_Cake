@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:piece_of_cake/kakao_login_page.dart';
 import 'package:provider/provider.dart';
-import 'chat/chatroom_my_route.dart';
 import 'models/kakao_login_model.dart';
 import 'models/party_model.dart';
 import 'user/my.dart';
@@ -71,7 +70,7 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     HomePage(),
     BookmarkList(),
-    ChatRoomListMy(),
+    ChatListMy(),
     My(),
   ];
 
@@ -141,16 +140,16 @@ class _MainPageState extends State<MainPage> {
         elevation: 16.0,
         children: [
           SpeedDialChild(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DlvCreate()),
-              );
-            },
-            child: Icon(Icons.delivery_dining, size: 30,),
-            label: '배달',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DlvCreate()),
+                );
+              },
+              child: Icon(Icons.delivery_dining, size: 30,),
+              label: '배달',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
           SpeedDialChild(
               onTap: () {
@@ -159,10 +158,10 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => BuyCreate()),
                 );
               },
-            child: Icon(Icons.shopping_bag, size: 30,),
-            label: '공구',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              child: Icon(Icons.shopping_bag, size: 30,),
+              label: '공구',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
           SpeedDialChild(
               onTap: () {
@@ -171,10 +170,10 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => PieCreate()),
                 );
               },
-            child: Icon(Icons.safety_divider, size: 30,),
-            label: '소분',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+              child: Icon(Icons.safety_divider, size: 30,),
+              label: '소분',
+              labelStyle: TextStyle(fontSize: 20),
+              backgroundColor: Colors.amber
           ),
         ],
       ),
@@ -182,7 +181,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
-
-
-
