@@ -64,7 +64,7 @@ public class PartyRepositorySupport {
                 .selectFrom(party)
                 .from(party, myParty)
                 .where(party.partySeq.eq(myParty.party.partySeq)
-                        .and(myParty.partyListCode.eq("host")))
+                        .and(myParty.myPartyRole.eq("host")))
                 .fetch();
         return result;
     }
@@ -77,7 +77,7 @@ public class PartyRepositorySupport {
                 .select(party)
                 .from(party, myParty)
                 .where(party.partySeq.eq(myParty.party.partySeq)
-                        .and(myParty.partyListCode.eq("guest")))
+                        .and(myParty.myPartyRole.eq("guest")))
                 .fetch();
         return result;
     }

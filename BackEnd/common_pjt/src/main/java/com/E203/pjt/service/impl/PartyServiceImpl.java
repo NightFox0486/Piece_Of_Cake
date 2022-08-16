@@ -73,7 +73,7 @@ public class PartyServiceImpl implements PartyService {
     myParty.setMyPartyPK(pk);
     myParty.setParty(party);
     myParty.setUser(userRepository.findByUserSeq(partyReqVO.getUserSeq()));
-    myParty.setPartyListCode("host");
+    myParty.setMyPartyRole("host");
     myPartyRepository.save(myParty);
     PartyResVO partyResVO = new PartyResVO();
     partyResVO.setPartySeq(party.getPartySeq());
@@ -173,7 +173,7 @@ public class PartyServiceImpl implements PartyService {
 //    System.out.println("[PartyServiceImpl] listPartyGuest() called");
     List<PartyResVO> result = new ArrayList<>();
     User user = userRepository.findByUserSeq(userSeq);
-    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndPartyListCode(user, "guest");
+    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndMyPartyRole(user, "guest");
     Collections.reverse(myPartyList);
     for (MyParty myParty : myPartyList) {
       PartyResVO partyResVO = detailParty(myParty.getParty().getPartySeq());
@@ -187,7 +187,7 @@ public class PartyServiceImpl implements PartyService {
 //    System.out.println("[PartyServiceImpl] listPartyHost() called");
     List<PartyResVO> result = new ArrayList<>();
     User user = userRepository.findByUserSeq(userSeq);
-    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndPartyListCode(user, "host");
+    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndMyPartyRole(user, "host");
     Collections.reverse(myPartyList);
     for (MyParty myParty : myPartyList) {
       PartyResVO partyResVO = detailParty(myParty.getParty().getPartySeq());
