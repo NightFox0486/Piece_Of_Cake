@@ -8,6 +8,7 @@ import com.E203.pjt.model.dto.req.PartyReqVO;
 import com.E203.pjt.model.dto.res.PartyResVO;
 import com.E203.pjt.model.entity.*;
 import com.E203.pjt.repository.*;
+import com.E203.pjt.service.MyPartyService;
 import com.E203.pjt.service.PartyService;
 import com.E203.pjt.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +74,7 @@ public class PartyServiceImpl implements PartyService {
     myParty.setMyPartyPK(pk);
     myParty.setParty(party);
     myParty.setUser(userRepository.findByUserSeq(partyReqVO.getUserSeq()));
-    myParty.setPartyListCode("host");
+    myParty.setMyPartyRole("host");
     myPartyRepository.save(myParty);
     PartyResVO partyResVO = new PartyResVO();
     partyResVO.setPartySeq(party.getPartySeq());
@@ -133,6 +134,11 @@ public class PartyServiceImpl implements PartyService {
   @Override
   public void deleteParty(Integer partySeq) {
     Party party = partyRepository.findByPartySeq(partySeq);
+    MyPartyPK myPartyPK = new MyPartyPK();
+    myPartyPK.setPartySeq(partySeq);
+    myPartyPK.setUserSeq(party.getUser().getUserSeq());
+    MyParty myParty = myPartyRepository.findByMyPartyPKAndAndMyPartyRole(myPartyPK, "host").get(0);
+    myPartyRepository.delete(myParty);
     partyRepository.delete(party);
   }
 
@@ -173,7 +179,7 @@ public class PartyServiceImpl implements PartyService {
 //    System.out.println("[PartyServiceImpl] listPartyGuest() called");
     List<PartyResVO> result = new ArrayList<>();
     User user = userRepository.findByUserSeq(userSeq);
-    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndPartyListCode(user, "guest");
+    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndMyPartyRole(user, "guest");
     Collections.reverse(myPartyList);
     for (MyParty myParty : myPartyList) {
       PartyResVO partyResVO = detailParty(myParty.getParty().getPartySeq());
@@ -187,7 +193,7 @@ public class PartyServiceImpl implements PartyService {
 //    System.out.println("[PartyServiceImpl] listPartyHost() called");
     List<PartyResVO> result = new ArrayList<>();
     User user = userRepository.findByUserSeq(userSeq);
-    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndPartyListCode(user, "host");
+    List<MyParty> myPartyList = myPartyRepository.findAllByUserAndMyPartyRole(user, "host");
     Collections.reverse(myPartyList);
     for (MyParty myParty : myPartyList) {
       PartyResVO partyResVO = detailParty(myParty.getParty().getPartySeq());
