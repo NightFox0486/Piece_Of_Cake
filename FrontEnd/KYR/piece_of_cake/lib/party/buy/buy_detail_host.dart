@@ -1,19 +1,31 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../chat/chat_list_my.dart';
+import '../../models/kakao_login_model.dart';
 import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-class BuyDetail extends StatefulWidget {
-  const BuyDetail({Key? key}) : super(key: key);
+import '../../vo.dart';
+
+class BuyDetailHost extends StatefulWidget {
+  // final PartyResVO partyResVO;
+  final Party party;
+  // final UserResVO writer;
+  const BuyDetailHost(
+      // {Key? key, required this.partyResVO, required this.writer})
+      {Key? key, required this.party})
+      : super(key: key
+  );
 
   @override
-  State<BuyDetail> createState() => _BuyDetailState();
+  State<BuyDetailHost> createState() => _BuyDetailHostState();
 }
 
-class _BuyDetailState extends State<BuyDetail> {
+class _BuyDetailHostState extends State<BuyDetailHost> {
   int activeIndex = 0;
   final urlImages = [
     'assets/images/harry.png',
@@ -60,9 +72,12 @@ class _BuyDetailState extends State<BuyDetail> {
   );
 
   Widget build(BuildContext context) {
+    var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
+    // kakaoUserProvider.setCurrentPartyWriter(widget.partyResVO.userSeq);
+    // var writer = kakaoUserProvider.writer;
     return Scaffold(
       appBar: AppBar(
-          title: Text('BuyDetail'),
+          title: Text('BuyDetailHost'),
           actions: [
             IconButton(
               icon: const Icon(Icons.edit),
@@ -73,105 +88,105 @@ class _BuyDetailState extends State<BuyDetail> {
                 );
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.gavel),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(
-                              Radius.circular(10.0))),
-                      content: Builder(
-                        builder: (context) {
-                          // Get available height and width of the build area of this widget. Make a choice depending on the size.
-                          var height = MediaQuery.of(context).size.height;
-                          var width = MediaQuery.of(context).size.width;
-
-                          return SizedBox(
-                            height: height - 200,
-                            width: width - 100,
-                            child: Column(
-                              children: [
-                                Text('게시글 신고', style: TextStyle(fontSize: 25),),
-                                DropdownButtonHideUnderline(
-                                  child: DropdownButtonFormField2(
-                                    isExpanded: true,
-                                    hint: Text(
-                                      'Select Sin',
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        color: Theme
-                                            .of(context)
-                                            .hintColor,
-                                      ),
-                                    ),
-                                    items: sins
-                                        .map((item) =>
-                                        DropdownMenuItem<String>(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ))
-                                        .toList(),
-                                    value: selectedValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedValue = value as String;
-                                      });
-                                    },
-                                    // buttonHeight: 40,
-                                    // buttonWidth: 140,
-                                    itemHeight: 40,
-                                  ),
-                                ),
-                                Form(
-                                    key: formKey,
-                                    child: Expanded(
-                                      child: SizedBox(
-                                        child: TextFormField(
-                                          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-                                          maxLines: 20,
-                                          onSaved: (val) {},
-                                          validator: (val) {
-                                            return null;
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                ),
-                                Container(
-                                  margin: EdgeInsets.all(10),
-                                ),
-                                SizedBox(
-                                  height: 50,
-                                  width: 130,
-                                  child: ElevatedButton(
-                                      onPressed: () {
-
-                                      },
-
-                                      child: Text('신고하기',
-                                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
-                                      ),
-                                  ),
-                                )
-
-
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                );
-              },
-            ),
+            // IconButton(
+            //   icon: const Icon(Icons.gavel),
+            //   onPressed: () {
+            //     showDialog(
+            //         context: context,
+            //         builder: (_) => AlertDialog(
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius:
+            //               BorderRadius.all(
+            //                   Radius.circular(10.0))),
+            //           content: Builder(
+            //             builder: (context) {
+            //               // Get available height and width of the build area of this widget. Make a choice depending on the size.
+            //               var height = MediaQuery.of(context).size.height;
+            //               var width = MediaQuery.of(context).size.width;
+            //
+            //               return SizedBox(
+            //                 height: height - 200,
+            //                 width: width - 100,
+            //                 child: Column(
+            //                   children: [
+            //                     Text('게시글 신고', style: TextStyle(fontSize: 25),),
+            //                     DropdownButtonHideUnderline(
+            //                       child: DropdownButtonFormField2(
+            //                         isExpanded: true,
+            //                         hint: Text(
+            //                           'Select Sin',
+            //                           style: TextStyle(
+            //                             fontSize: 25,
+            //                             color: Theme
+            //                                 .of(context)
+            //                                 .hintColor,
+            //                           ),
+            //                         ),
+            //                         items: sins
+            //                             .map((item) =>
+            //                             DropdownMenuItem<String>(
+            //                               value: item,
+            //                               child: Text(
+            //                                 item,
+            //                                 style: const TextStyle(
+            //                                   fontSize: 20,
+            //                                 ),
+            //                               ),
+            //                             ))
+            //                             .toList(),
+            //                         value: selectedValue,
+            //                         onChanged: (value) {
+            //                           setState(() {
+            //                             selectedValue = value as String;
+            //                           });
+            //                         },
+            //                         // buttonHeight: 40,
+            //                         // buttonWidth: 140,
+            //                         itemHeight: 40,
+            //                       ),
+            //                     ),
+            //                     Form(
+            //                         key: formKey,
+            //                         child: Expanded(
+            //                           child: SizedBox(
+            //                             child: TextFormField(
+            //                               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
+            //                               maxLines: 20,
+            //                               onSaved: (val) {},
+            //                               validator: (val) {
+            //                                 return null;
+            //                               },
+            //                             ),
+            //                           ),
+            //                         )
+            //                     ),
+            //                     Container(
+            //                       margin: EdgeInsets.all(10),
+            //                     ),
+            //                     SizedBox(
+            //                       height: 50,
+            //                       width: 130,
+            //                       child: ElevatedButton(
+            //                           onPressed: () {
+            //
+            //                           },
+            //
+            //                           child: Text('신고하기',
+            //                               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+            //                           ),
+            //                       ),
+            //                     )
+            //
+            //
+            //                   ],
+            //                 ),
+            //               );
+            //             },
+            //           ),
+            //         )
+            //     );
+            //   },
+            // ),
           ],
       ),
       body: Container(
@@ -219,13 +234,13 @@ class _BuyDetailState extends State<BuyDetail> {
                             Row(
                               children: [
                                 Icon(Icons.account_circle, size: 40,),
-                                Text('탕웨이', style: TextStyle(fontSize: 25),)
+                                Text('${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
                               ],
                             ),
                             Row(
                               children: [
                                 Icon(Icons.person, size: 40),
-                                Text('2/4', style: TextStyle(fontSize: 25))
+                                Text('${widget.party.partyMemberNumCurrent}/${widget.party.partyMemberNumTotal}', style: TextStyle(fontSize: 25))
                               ],
                             )
                           ]
@@ -233,10 +248,17 @@ class _BuyDetailState extends State<BuyDetail> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text('2022/08/08 11:08:08')
+                          Text(
+                              '${widget.party.partyRegDt[0]}/'+
+                                  '${widget.party.partyRegDt[1]}/'+
+                                  '${widget.party.partyRegDt[2]} '+
+                                  '${widget.party.partyRegDt[3]}:'+
+                                  '${widget.party.partyRegDt[4]}:'+
+                                  '${widget.party.partyRegDt[5]}'
+                          )
                         ],
                       ),
-                      Text('해리가 너무 귀여워요 진짜 개 예뻐요',
+                      Text('${widget.party.partyTitle}',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -260,14 +282,14 @@ class _BuyDetailState extends State<BuyDetail> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('4000원', style: TextStyle(fontSize: 20)),
+                                  Text('${(int.parse(widget.party.totalAmount)/widget.party.partyMemberNumTotal).ceil()}원', style: TextStyle(fontSize: 20)),
                                   Text('1인 금액', style: TextStyle(fontSize: 20)),
                                 ],
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('16000원', style: TextStyle(fontSize: 20)),
+                                  Text('${widget.party.totalAmount}원', style: TextStyle(fontSize: 20)),
                                   Text('총 금액', style: TextStyle(fontSize: 20)),
                                 ],
                               )
@@ -289,7 +311,7 @@ class _BuyDetailState extends State<BuyDetail> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                              '해리가 너무 예뻐요 꼭 자랑하고 싶었어요 탕웨이도 예뻐요 헤어질 결심 꼭 보세요 아직 늦지 않았어요 한산은 보지 마세요 재미 없어요',
+                            '${widget.party.partyContent}',
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100),
                           )
                         ),
@@ -329,12 +351,11 @@ class _BuyDetailState extends State<BuyDetail> {
                               padding: const EdgeInsets.all(8.0),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset('assets/images/harry.png',
-                                  fit: BoxFit.fill,
+                                child: Container(
+                                  // todo: map
+                                ),
                                 ), // Text(key['title']),
                               ),
-
-                            )
                           ],
                         )
                       ),

@@ -19,9 +19,9 @@ public class UserController {
   @GetMapping(value="/user")
   public List<User> getAllUsers() {
     List<User> userList = userService.getAllUsers();
-    for (User user : userList) {
-      System.out.println(user.getUserSeq() + " : " + user.getUserNickname());
-    }
+//    for (User user : userList) {
+//      System.out.println(user.getUserSeq() + " : " + user.getUserNickname());
+//    }
     return userList;
   }
 
@@ -42,20 +42,10 @@ public class UserController {
   @PostMapping(value = "/user")
   @ResponseBody
   public UserResVO createUsers(@RequestBody UserReqVO userReqVO) {
-    System.out.println("[UserController] createUsers() called");
-    System.out.println("userReqVO: "+userReqVO);
+//    System.out.println("[UserController] createUsers() called");
+//    System.out.println("userReqVO: "+userReqVO);
     UserResVO userResVO = userService.createUser(userReqVO);
-    System.out.println("userResVO: "+userResVO);
-//    Map<String, String> map = new HashMap<>();
-//    if (userResVO!=null) {
-//      map.put("result", "success");
-//      map.put("userSeq", userResVO.getUserSeq().toString());
-//      map.put("userNickname", userResVO.getUserNickname());
-//      return new ResponseEntity<>(map, HttpStatus.OK);
-//    }else {
-//      map.put("result", "fail");
-//      return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+//    System.out.println("userResVO: "+userResVO);
     return userResVO;
   }
 

@@ -18,6 +18,28 @@ public class PartyRepositorySupport {
     QParty party = QParty.party;
     QMyParty myParty = QMyParty.myParty;
 
+    public List<Party> dynamicQueryPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.eq(1))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
+    // 최신 파티 목록 10개
+    public List<Party> dynamicQueryLatestPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.eq(1))
+                .orderBy(party.partyRegDt.desc())
+                .limit(10)
+                .fetch();
+        return result;
+    }
+
     // 사용자가 참여한 모든 파티
     public List<MyParty> findDynamicQueryMyPartyList(Integer userSeq){
         List<MyParty> result = jpaQueryFactory
@@ -27,16 +49,26 @@ public class PartyRepositorySupport {
         return result;
     }
 
-    // 사용자가 호스트인 파티
+//    // 사용자가 호스트인 파티
+//    public List<Party> dynamicQueryPartyHostList(Integer userSeq) {
+//        List<Party> result = jpaQueryFactory
+//                .select(party)
+//                .from(party, myParty)
+//                .where(party.partySeq.eq(myParty.party.partySeq)
+//                        .and(myParty.partyListCode.eq("host")))
+//                .fetch();
+//        return result;
+//    }
     public List<Party> dynamicQueryPartyHostList(Integer userSeq) {
         List<Party> result = jpaQueryFactory
-                .select(party)
+                .selectFrom(party)
                 .from(party, myParty)
                 .where(party.partySeq.eq(myParty.party.partySeq)
-                        .and(myParty.partyListCode.eq("host")))
+                        .and(myParty.myPartyRole.eq("host")))
                 .fetch();
         return result;
     }
+
 
 
     // 사용자가 게시트인 파티
@@ -45,7 +77,7 @@ public class PartyRepositorySupport {
                 .select(party)
                 .from(party, myParty)
                 .where(party.partySeq.eq(myParty.party.partySeq)
-                        .and(myParty.partyListCode.eq("guest")))
+                        .and(myParty.myPartyRole.eq("guest")))
                 .fetch();
         return result;
     }

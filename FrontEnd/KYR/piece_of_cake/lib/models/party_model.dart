@@ -9,44 +9,137 @@ import 'package:piece_of_cake/vo.dart';
 import 'package:provider/provider.dart';
 
 class PartyModel with ChangeNotifier {
-  List<Party> _partyList = [];
-  List<Party> get partyList => _partyList;
-  List<Party> _bookmarkPartyList = [];  // bookmark list의 party들 목록
-  List<Party> get bookmarkPartyList => _bookmarkPartyList;
+  List<PartyResVO> _partyResVOList = [];
+  List<PartyResVO> get partyResVOList => _partyResVOList;
+  List<PartyResVO> _latestPartyResVOList = [];
+  List<PartyResVO> get latestPartyResVOList => _latestPartyResVOList;
+  List<PartyResVO> _bookmarkPartyResVOList = [];  // bookmark list의 party들 목록
+  List<PartyResVO> get bookmarkPartyResVOList => _bookmarkPartyResVOList;
   List<int> _bookmarkList = [];
   List<int> get bookmarkList => _bookmarkList;
-  Party? _currentParty;
-  Party? get currentParty => _currentParty;
-  
+  List<PartyResVO> _partyGuestList = [];
+  List<PartyResVO> get partyResVOGuestList => _partyGuestList;
+  List<PartyResVO> _partyHostList = [];
+  List<PartyResVO> get partyResVOHostList => _partyHostList;
+  PartyResVO? _currentParty;
+  PartyResVO? get currentParty => _currentParty;
+
   Future fetchPartyList() async {
     final response = await
-         http.get(Uri.parse('http://10.0.2.2:9090/party'));
+    http.get(Uri.parse('http://10.0.2.2:9090/party'));
     if (response.statusCode==200) {
-      this._partyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
-          .map((e) => Party.fromJson(e))
+      this._partyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
           .toList();
-      print('[PartyModel] fetchPartyList() this._partyList: ${this._partyList}');
+      // print('[PartyModel] fetchPartyList() this._partyList: ${this._partyResVOList}');
     }else {
       throw Exception('Failed to load party list.');
     }
     // notifyListeners();
   }
+
+  Future fetchLatestPartyList() async {
+    final response = await http.get(
+        Uri.parse('http://10.0.2.2:9090/latest-party')
+    );
+    if (response.statusCode==200) {
+      this._latestPartyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
+          .toList();
+      // print('[PartyModel] fetchLatestPartyList() this._latestPartyList: ${this._latestPartyResVOList}');
+    }else {
+      throw Exception('Failed to laod latest party list.');
+    }
+    // notifyListeners()
+  }
+
+  Future fetchPartyGuestList(int userSeq) async {
+    // print('[PartyModel] fetchPartyGuestList()');
+    final response = await http.get(Uri.parse('http://10.0.2.2:9090/party/guest/${userSeq}'));
+    // print('response.statusCode: ${response.statusCode}');
+    if (response.statusCode==200) {
+      this._partyGuestList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
+          .toList();
+      // print('[PartyModel] fetchPartyGuestList() this._partyGuestList: ${this._partyGuestList}');
+    } else {
+      throw Exception('Failed to load party guest list.');
+    }
+    // notifyListeners();기
+  }
+
+  Future fetchPartyHostList(int userSeq) async {
+    // print('[PartyModel] fetchPartyHostList()');
+    final response = await http.get(Uri.parse('http://10.0.2.2:9090/party/host/${userSeq}'));
+    // print('response.statusCode: ${response.statusCode}');
+    if (response.statusCode==200) {
+      this._partyHostList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
+          .toList();
+      // print('[PartyModel] fetchPartyHostList() this._partyHostList: ${this._partyHostList}');
+    } else {
+      throw Exception('Failed to load party host list.');
+    }
+    // notifyListeners();
+  }
   
+  Future insertMyParty(int partySeq, int userSeq) async {
+    MyPartyReqVO myPartyReqVO = MyPartyReqVO(
+        userSeq: userSeq,
+        partySeq: partySeq,
+        myPartyRole: "guest"
+    );
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:9090/my-party'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(myPartyReqVO),
+    );
+    if (response.statusCode==200) {
+      // 할 거 없 ?
+    }else {
+      throw Exception('Failed to insert my party.');
+    }
+    // notifyListeners();
+  }
+
+  Future deleteMyParty(int partySeq, int userSeq) async {
+    MyPartyReqVO myPartyReqVO = MyPartyReqVO(
+      userSeq: userSeq,
+      partySeq: partySeq,
+      myPartyRole: "guest"
+    );
+    final response = await http.delete(
+      Uri.parse('http://10.0.2.2:9090/my-party'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(myPartyReqVO),
+    );
+    if (response.statusCode==200) {
+      // 할 거 없 ?
+    }else {
+      throw Exception('Failed to delete my party.');
+    }
+    // notifyListeners();
+  }
+
   Future fetchBookmarkPartyList(userSeq) async {
     final response = await http.get(Uri.parse('http://10.0.2.2:9090/bookmark/${userSeq}'));
     if (response.statusCode==200) {
-      this._bookmarkPartyList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
-          .map((e) => Party.fromJson(e))
+      this._bookmarkPartyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
           .toList();
-      print('[PartyModel] fetchBookmarkPartyList() this._bookmarkPartyList: ${this._bookmarkPartyList}');
+      // print('[PartyModel] fetchBookmarkPartyList() this._bookmarkPartyList: ${this._bookmarkPartyResVOList}');
     }else {
       throw Exception('Failed to load bookmark party list');
     }
     // notifyListeners();
   }
-  
+
   void fetchBookmarkList(userSeq) {
-    this._bookmarkList = _bookmarkPartyList
+    this._bookmarkList = _bookmarkPartyResVOList
         .map((e) => e.partySeq)
         .toList();
     // notifyListeners();
@@ -54,10 +147,10 @@ class PartyModel with ChangeNotifier {
 
   Future detailBookmark(BookmarkReqVO bookmarkReqVO) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:9090/party/${bookmarkReqVO.partySeq}')
+        Uri.parse('http://10.0.2.2:9090/party/${bookmarkReqVO.partySeq}')
     );
     if (response.statusCode==200) {
-      Party party = Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      PartyResVO party = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       _currentParty = party;
     }else {
       throw Exception('Failed to load detail bookmark.');
@@ -66,10 +159,10 @@ class PartyModel with ChangeNotifier {
   }
 
   Future insertBookmark(BookmarkReqVO bookmarkReqVO) async {
-    print('[PartyModel] insertBookmark()');
-    print('bookmarkReqVO: ${bookmarkReqVO}');
-    print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
-    print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
+    // print('[PartyModel] insertBookmark()');
+    // print('bookmarkReqVO: ${bookmarkReqVO}');
+    // print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
+    // print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.post(
       Uri.parse('http://10.0.2.2:9090/bookmark'),
       headers: <String, String>{
@@ -77,7 +170,7 @@ class PartyModel with ChangeNotifier {
       },
       body: jsonEncode(bookmarkReqVO),
     );
-    print('response.body: ${response.body}');
+    // print('response.body: ${response.body}');
     if (response.statusCode==200) {
       await fetchPartyList();
       await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
@@ -89,10 +182,10 @@ class PartyModel with ChangeNotifier {
   }
 
   Future deleteBookmark(BookmarkReqVO bookmarkReqVO) async {
-    print('[PartyModel] deleteBookmark()');
-    print('bookmarkReqVO: ${bookmarkReqVO}');
-    print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
-    print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
+    // print('[PartyModel] deleteBookmark()');
+    // print('bookmarkReqVO: ${bookmarkReqVO}');
+    // print('bookmarkReqVO.toJson(): ${bookmarkReqVO.toJson()}');
+    // print('jsonEncode(bookmarkReqVO): ${jsonEncode(bookmarkReqVO)}');
     final response = await http.delete(
       Uri.parse('http://10.0.2.2:9090/bookmark'),
       headers: <String, String>{
@@ -100,12 +193,12 @@ class PartyModel with ChangeNotifier {
       },
       body: jsonEncode(bookmarkReqVO),
     );
-    print('response.body: ${response.body}');
+    // print('response.body: ${response.body}');
     if (response.statusCode==200) {
       await fetchPartyList();
       await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
       fetchBookmarkList(bookmarkReqVO.userSeq);
-      print('_bookmarkList: ${_bookmarkList}');
+      // print('_bookmarkList: ${_bookmarkList}');
     } else {
       throw Exception('Failed to delete bookmark');
     }
@@ -118,4 +211,25 @@ class PartyModel with ChangeNotifier {
     fetchBookmarkList(bookmarkReqVO.userSeq);
     // notifyListeners();
   }
+
+// Future createParty(partyReqVO,) async {
+//   print('[PartyModel] createParty(partyReqVO, userSeq) called');
+//   print('partyReqVO: ${partyReqVO}');
+//   final response = await http.post(
+//     Uri.parse('http://10.0.2.2:9090/party'),
+//     headers: <String, String> {
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     },
+//     body: jsonEncode(partyReqVO),
+//   );
+//   print('response.statusCode: ${response.statusCode}');
+//   if (response.statusCode==200) {
+//     PartyResVO party = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+//     _currentParty = party;
+//     print('!!!!!!!!!![PartyModel] createParty() _currentParty: ${_currentParty}');
+//     // print('!!!!!!!!!!this._currentParty.userResVO: ${this._currentParty!.userResVO}');
+//   }else {
+//     throw Exception('Failed to load detail party.');
+//   }
+// }
 }

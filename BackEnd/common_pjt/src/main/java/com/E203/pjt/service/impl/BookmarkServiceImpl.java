@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -32,7 +33,8 @@ public class BookmarkServiceImpl implements BookmarkService {
         List<PartyResVO> result = new ArrayList<>();
         User user = userRepository.findByUserSeq(userSeq);
         List<Bookmark> list = bookmarkRepository.findAllByUser(user);
-        Integer partySeqList[] = new Integer[list.size()];
+        Collections.reverse(list);
+//        Integer partySeqList[] = new Integer[list.size()];
         for (Bookmark wishList : list) {
             PartyResVO partyResVO = partyService.detailParty(wishList.getParty().getPartySeq());
             result.add(partyResVO);
@@ -43,28 +45,33 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     @Transactional
     public Bookmark insertBookmark(BookmarkReqVO bookmarkReqVO) {
+        System.out.println("[BookmarkServiceImpl] insertBookmark() called");
         User user = userRepository.findByUserSeq(bookmarkReqVO.getUserSeq());
         Party party = partyRepository.findByPartySeq(bookmarkReqVO.getPartySeq());
-        Bookmark bookmark = new Bookmark();
-        BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
-        bookmark.setBookmarkPK(pk);
-        bookmark.setUser(user);
-        bookmark.setParty(party);
-        party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
-        partyRepository.save(party);
-        return bookmarkRepository.save(bookmark);
+//        Bookmark bookmark = new Bookmark();
+//        BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
+//        bookmark.setBookmarkPK(pk);
+//        bookmark.setUser(user);
+//        bookmark.setParty(party);
+//        party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
+//        partyRepository.save(party);
+//        return bookmarkRepository.save(bookmark);
+
 //        Bookmark bookmark = bookmarkRepository.findBookmarkByUserAndParty(user, party);
-//        if (bookmark!=null) {
-//            BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
-//            bookmark.setBookmarkPK(pk);
-//            bookmark.setUser(user);
-//            bookmark.setParty(party);
-//            party.setPartyBookmarkCount(party.getPartyBookmarkCount()+1);
-//            partyRepository.save(party);
-//            return bookmarkRepository.save(bookmark);
-//        } else {
-//            return bookmark;
-//        }
+        if (bookmarkRepository.findBookmarkByUserAndParty(user, party)==null) {
+            Bookmark bookmark = new Bookmark();
+            BookmarkPK pk = new BookmarkPK(bookmarkReqVO.getUserSeq(), bookmarkReqVO.getPartySeq());
+            bookmark.setBookmarkPK(pk);
+            bookmark.setUser(user);
+            bookmark.setParty(party);
+//            System.out.println("party"+party.toString());
+            party.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size()+1);
+            partyRepository.save(party);
+            return bookmarkRepository.save(bookmark);
+        } else {
+            Bookmark bookmark = bookmarkRepository.findBookmarkByUserAndParty(user, party);
+            return bookmark;
+        }
     }
 
     @Override
@@ -73,10 +80,10 @@ public class BookmarkServiceImpl implements BookmarkService {
         User user = userRepository.findByUserSeq(bookmarkReqVO.getUserSeq());
         Party party = partyRepository.findByPartySeq(bookmarkReqVO.getPartySeq());
         Bookmark bookmark = bookmarkRepository.findBookmarkByUserAndParty(user, party);
-        System.out.println("bookmark: "+bookmark);
+//        System.out.println("bookmark: "+bookmark);
         if (bookmark!=null) {
             bookmarkRepository.delete(bookmark);
-            party.setPartyBookmarkCount(party.getPartyBookmarkCount()-1);
+            party.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size());
             partyRepository.save(party);
             return true;
         }else {

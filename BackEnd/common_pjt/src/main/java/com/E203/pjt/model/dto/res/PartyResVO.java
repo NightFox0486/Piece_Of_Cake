@@ -1,5 +1,6 @@
 package com.E203.pjt.model.dto.res;
 
+import com.E203.pjt.model.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 public class PartyResVO {
     Integer partySeq;
     Integer userSeq;
+//    UserResVO userResVO;
+//    Integer userNickname;
     String partyCode;
     String partyTitle;
     String partyContent;
@@ -28,4 +31,5 @@ public class PartyResVO {
     Integer partyStatus;
     String itemLink;
     String totalAmount;
+    String partyMainImageUrl;
 }
