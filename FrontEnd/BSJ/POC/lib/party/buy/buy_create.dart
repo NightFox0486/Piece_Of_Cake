@@ -45,7 +45,7 @@ class _BuyCreateState extends State<BuyCreate> {
         totalAmount: '0',
         partyMainImageUrl: 'assets/images/harry.png',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
-    print(name);
+    // print(name);
     final response = await http.post(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party'),
       headers: <String, String>{
@@ -53,10 +53,9 @@ class _BuyCreateState extends State<BuyCreate> {
       },
       body: jsonEncode(partyReqVO),
     );
-    print('response.body: ${response.body}');
+    // print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
-    print(response.body.substring(response.body.indexOf("partySeq") + 10,
-        response.body.indexOf("userSeq") - 2));
+    // print(response.body.substring(response.body.indexOf("partySeq") + 10, response.body.indexOf("userSeq") - 2));
     int partySeq = int.parse(response.body.substring(
         response.body.indexOf("partySeq") + 10,
         response.body.indexOf("userSeq") - 2));

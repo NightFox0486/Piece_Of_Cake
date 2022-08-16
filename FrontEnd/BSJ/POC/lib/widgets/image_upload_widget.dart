@@ -50,15 +50,15 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     Reference ref = FirebaseStorage.instance
         .ref()
         .child('image-test')
-        .child('/test-image$index.jpg');
+        .child('/test-image$partySeq-$index.jpg');
     final metadata = SettableMetadata(
       contentType: 'image/jpeg',
       customMetadata: {'picked-file-path': file.path},
     );
     if (kIsWeb) {
-      ref.putData(await file.readAsBytes(), metadata);
+      await ref.putData(await file.readAsBytes(), metadata);
     } else {
-      ref.putFile(io.File(file.path), metadata);
+      await ref.putFile(io.File(file.path), metadata);
     }
     String url = await ref.getDownloadURL();
     if (url != null) {
@@ -78,12 +78,14 @@ class _ImageUploadState extends State<ImageUploadWidget> {
       print('response.body: ${response.body}');
     }
     if (index == 0) {
-      final response = await http.put(
-        Uri.parse('http://i7e203.p.ssafy.io:9090/photo/${partySeq}'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(url),
+      var partyMainImageUrl = url;
+      final response = await http.patch(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+        // headers: <String, String>{
+        //   'Content-Type': 'application/json; charset=UTF-8',
+        // },
+        body: partyMainImageUrl,
+        // body: jsonEncode({'partyMainImageUrl': url}),
       );
       print('response.body: ${response.body}');
     }
