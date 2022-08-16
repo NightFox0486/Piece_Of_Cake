@@ -66,10 +66,24 @@ class _BuyCreateState extends State<BuyCreate> {
 
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  LatLng _center = LatLng(45.521563, -122.677433);
+
+  String Rdv_Address = '주소 적힐곳';
+
+  List<Marker> _markers = [];
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  void _setRdvPoint() {
+    print('testRdv');
+    Rdv_Address = '변경된 주소';
+    _center = LatLng(35.08947, 128.85354);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: _center, zoom: 15.0)));
+    _markers.add(Marker(markerId: MarkerId("1"), position: _center));
+    setState(() {});
   }
 
   @override
@@ -228,7 +242,7 @@ class _BuyCreateState extends State<BuyCreate> {
                 )),
           ),
           Container(
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
             decoration: BoxDecoration(
                 border: Border.all(width: 1, color: Colors.amber),
                 borderRadius: BorderRadius.circular((15))),
@@ -236,35 +250,36 @@ class _BuyCreateState extends State<BuyCreate> {
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: TextButton(
                 child: Text('랑데뷰 포인트 설정'),
-                onPressed: () {},
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.amber),
-                borderRadius: BorderRadius.circular((15))),
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: '주소  적힐곳'),
-                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
-                onSaved: (val) {},
-                validator: (val) {
-                  return null;
+                onPressed: () {
+                  _setRdvPoint();
                 },
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.amber),
+                borderRadius: BorderRadius.circular((15))),
+            height: 40,
+            child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  Rdv_Address,
+                  style: TextStyle(fontSize: 20),
+                )),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
             child: Wrap(children: [
               SizedBox(
                 width: 400,
                 height: 400,
                 child: GoogleMap(
+                  markers: Set.from(_markers),
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
                   mapType: MapType.normal,
                   onMapCreated: _onMapCreated,
                   initialCameraPosition: CameraPosition(
