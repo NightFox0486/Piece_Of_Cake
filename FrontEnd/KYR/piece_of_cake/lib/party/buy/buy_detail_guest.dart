@@ -434,6 +434,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                       borderRadius: BorderRadius.all(Radius.circular(25))
                                   )
                               ),
+                              // todo: 파티 참여 / 참여 취소 (모집중일때만 가능)
                               child: Text('파티 참여',
                                 style: TextStyle(
                                     fontSize: 20,
