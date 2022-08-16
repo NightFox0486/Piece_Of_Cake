@@ -79,7 +79,7 @@ public class PartyController {
   }
 
   @PutMapping(value = "/party/{partySeq}")
-  public void addPartyMainImage(@PathVariable Integer partySeq, @RequestBody String partyMainImageUrl){
+  public void addPartyMainImage(@RequestParam Integer partySeq, String partyMainImageUrl){
     System.out.println(partySeq);
     System.out.println(partyMainImageUrl);
     partyService.putPartyMainImageUrl(partySeq, partyMainImageUrl);

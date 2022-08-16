@@ -35,7 +35,7 @@ class _BuyCreateState extends State<BuyCreate> {
         partyAddrDetail: 'test',
         partyStatus: 1,
         partyBookmarkCount: 0,
-        partyCode: '009',
+        partyCode: '002',
         partyContent: content!,
         partyMemberNumCurrent: 0,
         partyMemberNumTotal: 0,
@@ -55,8 +55,11 @@ class _BuyCreateState extends State<BuyCreate> {
     );
     print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
-    print(response.body.substring(12, 14));
-    int partySeq = int.parse(response.body.substring(12, 14));
+    print(response.body.substring(response.body.indexOf("partySeq") + 10,
+        response.body.indexOf("userSeq") - 2));
+    int partySeq = int.parse(response.body.substring(
+        response.body.indexOf("partySeq") + 10,
+        response.body.indexOf("userSeq") - 2));
     imageKey.currentState?.addImage(partySeq);
   }
 
