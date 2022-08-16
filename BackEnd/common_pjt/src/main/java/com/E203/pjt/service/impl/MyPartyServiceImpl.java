@@ -32,16 +32,13 @@ public class MyPartyServiceImpl implements MyPartyService {
         myParty.setParty(partyRepository.findByPartySeq(myPartyReqVO.getPartySeq()));
         myParty.setUser(userRepository.findByUserSeq(myPartyReqVO.getUserSeq()));
         myParty.setMyPartyRole(myPartyReqVO.getMyPartyRole());
-        Integer partyMemberNumCurrent = partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(myPartyReqVO.getPartySeq()).intValue();
-        System.out.println(partyMemberNumCurrent);
-        Party party = partyRepository.findByPartySeq(myPartyReqVO.getPartySeq());
-        if (partyMemberNumCurrent==party.getPartyMemberNumTotal()) {
-            System.out.println("same");
-            Party target = partyRepository.findByPartySeq(party.getPartySeq());
-            target.setPartyStatus(2);
-            partyRepository.save(target);
-        }
         myPartyRepository.save(myParty);
+        Party party = partyRepository.findByPartySeq(myPartyReqVO.getPartySeq());
+        party.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
+        if (party.getPartyMemberNumCurrent().equals(party.getPartyMemberNumTotal())) {
+            party.setPartyStatus(2);
+        }
+        partyRepository.save(party);
     }
 
     @Override
@@ -51,5 +48,8 @@ public class MyPartyServiceImpl implements MyPartyService {
         myPartyPK.setUserSeq(myPartyReqVO.getUserSeq());
         MyParty myParty = myPartyRepository.findByMyPartyPK(myPartyPK);
         myPartyRepository.delete(myParty);
+        Party party = partyRepository.findByPartySeq(myPartyReqVO.getPartySeq());
+        party.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
+        partyRepository.save(party);
     }
 }

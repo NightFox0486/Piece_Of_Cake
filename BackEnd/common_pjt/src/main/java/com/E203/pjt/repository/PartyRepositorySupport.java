@@ -32,7 +32,7 @@ public class PartyRepositorySupport {
         List<Party> result = jpaQueryFactory
                 .select(party)
                 .from(party)
-                .where(party.partyStatus.eq(1))
+                .where(party.partyStatus.ne(0))
                 .orderBy(party.partyRegDt.desc())
                 .fetch();
         return result;
@@ -43,7 +43,7 @@ public class PartyRepositorySupport {
         List<Party> result = jpaQueryFactory
                 .select(party)
                 .from(party)
-                .where(party.partyStatus.eq(1))
+                .where(party.partyStatus.ne(0))
                 .orderBy(party.partyRegDt.desc())
                 .limit(10)
                 .fetch();
