@@ -35,6 +35,7 @@ class _PartyListState extends State<PartyList> {
     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
     bookmarkList = partyProvider.bookmarkList;
+    List<Party> list = [];
     for (PartyResVO partyResVO in partyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
       UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
@@ -59,8 +60,11 @@ class _PartyListState extends State<PartyList> {
           totalAmount: partyResVO.totalAmount,
           partyMainImageUrl: partyResVO.partyMainImageUrl
       );
-      partyList.add(party);
+      // partyList.add(party);
+      list.add(party);
     }
+    partyList = list;
+    list = [];
     for (PartyResVO partyResVO in bookmarkPartyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
       UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
@@ -85,8 +89,10 @@ class _PartyListState extends State<PartyList> {
           totalAmount: partyResVO.totalAmount,
           partyMainImageUrl: partyResVO.partyMainImageUrl
       );
-      bookmarkPartyList.add(party);
+      // bookmarkPartyList.add(party);
+      list.add(party);
     }
+    bookmarkPartyList = list;
 
     setState(() {
 
