@@ -18,6 +18,16 @@ public class PartyRepositorySupport {
     QParty party = QParty.party;
     QMyParty myParty = QMyParty.myParty;
 
+    public Long dynamicQueryPartyMemberNumCurrent(Integer partySeq) {
+        Long result = jpaQueryFactory
+                .select(myParty.user.userSeq)
+                .from(myParty)
+                .where(myParty.party.partySeq.eq(partySeq))
+                .stream().count();
+        return result;
+    }
+
+    // 파티 목록 최신순
     public List<Party> dynamicQueryPartyList() {
         List<Party> result = jpaQueryFactory
                 .select(party)

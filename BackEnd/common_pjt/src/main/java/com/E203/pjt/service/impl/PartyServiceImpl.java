@@ -47,8 +47,8 @@ public class PartyServiceImpl implements PartyService {
       partyResVO.setPartyRdvDt(party.getPartyRdvDt());
       partyResVO.setPartyRdvLat(party.getPartyRdvLat());
       partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+      partyResVO.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
       partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
-      partyResVO.setPartyMemberNumCurrent(party.getPartyMemberNumCurrent());
       partyResVO.setPartyAddr(party.getPartyAddr());
       partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
       partyResVO.setPartyStatus(party.getPartyStatus());
@@ -90,8 +90,8 @@ public class PartyServiceImpl implements PartyService {
     partyResVO.setPartyRdvDt(party.getPartyRdvDt());
     partyResVO.setPartyRdvLat(party.getPartyRdvLat());
     partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+    partyResVO.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
     partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
-    partyResVO.setPartyMemberNumCurrent(party.getPartyMemberNumCurrent());
     partyResVO.setPartyAddr(party.getPartyAddr());
     partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
     partyResVO.setPartyStatus(party.getPartyStatus());
@@ -119,8 +119,8 @@ public class PartyServiceImpl implements PartyService {
     partyResVO.setPartyRdvDt(party.getPartyRdvDt());
     partyResVO.setPartyRdvLat(party.getPartyRdvLat());
     partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+    partyResVO.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
     partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
-    partyResVO.setPartyMemberNumCurrent(party.getPartyMemberNumCurrent());
     partyResVO.setPartyAddr(party.getPartyAddr());
     partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
     partyResVO.setPartyStatus(party.getPartyStatus());
@@ -155,8 +155,8 @@ public class PartyServiceImpl implements PartyService {
       partyResVO.setPartyRdvDt(party.getPartyRdvDt());
       partyResVO.setPartyRdvLat(party.getPartyRdvLat());
       partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+      partyResVO.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
       partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
-      partyResVO.setPartyMemberNumCurrent(party.getPartyMemberNumCurrent());
       partyResVO.setPartyAddr(party.getPartyAddr());
       partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
       partyResVO.setPartyStatus(party.getPartyStatus());
