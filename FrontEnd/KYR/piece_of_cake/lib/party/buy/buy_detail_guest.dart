@@ -29,13 +29,6 @@ class BuyDetailGuest extends StatefulWidget {
 
 class _BuyDetailGuestState extends State<BuyDetailGuest> {
   int activeIndex = 0;
-  final urlImages = [
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-  ];
 
   final List<String> sins = [
     '부정적인 태도',
@@ -62,6 +55,8 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
 
   );
 
+  List<String> urlImages = [];
+
   Widget buildIndicator() => AnimatedSmoothIndicator(
       activeIndex: activeIndex,
       count: urlImages.length,
@@ -74,7 +69,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
   List<int> partySeqListGuest = [];
   List<PartyResVO> partyResVOGuestList = [];
   List<int> bookmarkList = [];
-
 
   void setList(kakaoUserProvider, partyProvider) async {
     await partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO.userSeq);
@@ -286,6 +280,9 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                               )
                             ]
                         ),
+                        Container(
+                          margin: EdgeInsets.all(1),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -295,7 +292,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                     '${widget.party.partyRegDt[2]} '+
                                     '${widget.party.partyRegDt[3]}:'+
                                     '${widget.party.partyRegDt[4]}:'+
-                                    '${widget.party.partyRegDt[5]}'
+                                    '${widget.party.partyRegDt[5]}',
                             )
                           ],
                         ),
