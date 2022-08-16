@@ -176,7 +176,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
           children: [
             Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.fromLTRB(10, 30, 10, 10),
               child: Column(
                 children: [
                   Text('최신 파티',
@@ -186,14 +186,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:10),
+                    margin: EdgeInsets.only(top:20),
                     height: 250,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
                         for (var party in latestPartyList)
                           buildCard(kakaoUserProvider, party),
-                        SizedBox(width:12),
+                          SizedBox(width:12),
                       ],
                     ),
                   ),
@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-                margin: EdgeInsets.all(5)
+                margin: EdgeInsets.all(10)
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -305,8 +305,9 @@ class _HomePageState extends State<HomePage> {
       }
     },
     child: Container(
+      margin: EdgeInsets.all(10),
       width: 200,
-      height: 200,
+      // height: 200,
       child: Column(
         children: [
           ClipRRect(
@@ -316,6 +317,8 @@ class _HomePageState extends State<HomePage> {
               placeholder: (context, url) => new CircularProgressIndicator(),
               errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
               fit: BoxFit.fill,
+              width: 180,
+              height: 180,
             ),
           ),
           const SizedBox(height: 4),
