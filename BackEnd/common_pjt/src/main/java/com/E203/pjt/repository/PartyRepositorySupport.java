@@ -18,6 +18,28 @@ public class PartyRepositorySupport {
     QParty party = QParty.party;
     QMyParty myParty = QMyParty.myParty;
 
+    public List<Party> dynamicQueryPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.eq(1))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
+    // 최신 파티 목록 10개
+    public List<Party> dynamicQueryLatestPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.eq(1))
+                .orderBy(party.partyRegDt.desc())
+                .limit(10)
+                .fetch();
+        return result;
+    }
+
     // 사용자가 참여한 모든 파티
     public List<MyParty> findDynamicQueryMyPartyList(Integer userSeq){
         List<MyParty> result = jpaQueryFactory

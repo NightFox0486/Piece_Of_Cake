@@ -13,5 +13,6 @@ import java.util.List;
 public interface BookmarkRepository extends JpaRepository<Bookmark, BookmarkPK> {
     Bookmark findBookmarkByUserAndParty(User user, Party party);
     List<Bookmark> findAllByUser(User user);
+    List<Bookmark> findAllByParty(Party party);
 
 }

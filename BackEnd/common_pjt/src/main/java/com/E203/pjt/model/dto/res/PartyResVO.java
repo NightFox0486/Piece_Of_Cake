@@ -14,6 +14,7 @@ public class PartyResVO {
     Integer partySeq;
     Integer userSeq;
 //    UserResVO userResVO;
+//    Integer userNickname;
     String partyCode;
     String partyTitle;
     String partyContent;
