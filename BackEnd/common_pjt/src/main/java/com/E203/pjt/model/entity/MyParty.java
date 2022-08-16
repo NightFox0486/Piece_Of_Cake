@@ -28,6 +28,6 @@ public class MyParty implements Serializable {
     private User user;
 
     // "host" or "guest" : user가 party의 guest인지 host인지
-    @Column(name = "party_list_code", length = 5, nullable = false)
-    private String partyListCode;
+    @Column(name = "my_party_role", length = 5, nullable = false)
+    private String myPartyRole;
 }

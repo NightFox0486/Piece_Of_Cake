@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface MyPartyRepository extends JpaRepository<MyParty, MyPartyPK> {
     List<MyParty> findByUser(User user);
-    List<MyParty> findAllByUserAndPartyListCode(User user, String partyListCode);
+    List<MyParty> findAllByUserAndMyPartyRole(User user, String myPartyRole);
+    MyParty findByMyPartyPK(MyPartyPK myPartyPK);
 }
