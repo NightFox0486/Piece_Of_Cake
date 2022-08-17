@@ -398,7 +398,7 @@ class _MyState extends State<My> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                '${party.partyTitle}',
+                                '${party.partyTitle.length >= 10 ? party.partyTitle.substring(0, 10).padRight(3, '.') : party.partyTitle}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18)
@@ -407,7 +407,7 @@ class _MyState extends State<My> {
                               height: 8,
                             ),
                             Text(
-                              '${party.partyAddr}',
+                              '${party.partyAddr.length >= 20 ? party.partyAddr.substring(0, 20).padRight(3, '.') : party.partyAddr}',
                               style: TextStyle(fontSize: 12),
                             ),
                             SizedBox(
