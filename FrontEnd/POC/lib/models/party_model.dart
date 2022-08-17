@@ -81,7 +81,7 @@ class PartyModel with ChangeNotifier {
     }
     // notifyListeners();
   }
-
+  
   Future insertMyParty(int partySeq, int userSeq) async {
     MyPartyReqVO myPartyReqVO = MyPartyReqVO(
         userSeq: userSeq,
@@ -105,9 +105,9 @@ class PartyModel with ChangeNotifier {
 
   Future deleteMyParty(int partySeq, int userSeq) async {
     MyPartyReqVO myPartyReqVO = MyPartyReqVO(
-        userSeq: userSeq,
-        partySeq: partySeq,
-        myPartyRole: "guest"
+      userSeq: userSeq,
+      partySeq: partySeq,
+      myPartyRole: "guest"
     );
     final response = await http.delete(
       Uri.parse('http://i7e203.p.ssafy.io:9090/my-party'),
@@ -120,6 +120,42 @@ class PartyModel with ChangeNotifier {
       // 할 거 없 ?
     }else {
       throw Exception('Failed to delete my party.');
+    }
+    // notifyListeners();
+  }
+
+  Future fetchDetailParty(int partySeq) async {
+    final response =  await http.get(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      _currentParty = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    } else {
+      throw Exception('Failed to load deteail party');
+    }
+  }
+
+  Future cancelParty(int partySeq) async {
+    final response = await http.delete(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+    );
+    print('[PartyModel] cancelParty() response.statusCode: ${response.statusCode}');
+    if (response.statusCode==200 ){
+      // 할 거 없 ?
+    } else {
+      throw Exception('Failed to delete party.');
+    }
+  }
+
+  Future doneParty(int partySeq) async {
+    final response = await http.post(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      var result = jsonDecode(utf8.decode(response.bodyBytes));
+      print('[PartyModel] doneParty() result: ${result}');
+    } else {
+      throw Exception('Failed to process party done.');
     }
     // notifyListeners();
   }
