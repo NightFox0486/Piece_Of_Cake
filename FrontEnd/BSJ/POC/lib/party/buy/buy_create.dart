@@ -36,6 +36,7 @@ class BuyCreate extends StatefulWidget {
 class _BuyCreateState extends State<BuyCreate> {
   final formKey = GlobalKey<FormState>();
 
+  String? itemLink = '';
   String? name = '';
   String? content = '';
   String? totalAmount = '';
@@ -53,7 +54,7 @@ class _BuyCreateState extends State<BuyCreate> {
       formKey.currentState!.save();
     }
     PartyReqVO partyReqVO = PartyReqVO(
-        itemLink: 'test',
+        itemLink: this.itemLink!,
         partyAddr: this.addr,
         partyAddrDetail: this.addrDetail!,
         partyStatus: 1,
@@ -85,7 +86,7 @@ class _BuyCreateState extends State<BuyCreate> {
     imageKey.currentState?.addImage(partySeq);
   }
 
-  late GoogleMapController mapController;
+  // late GoogleMapController mapController;
 
   LatLng _center = LatLng(45.521563, -122.677433);
 
@@ -93,9 +94,9 @@ class _BuyCreateState extends State<BuyCreate> {
 
   List<Marker> _markers = [];
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
+  // void _onMapCreated(GoogleMapController controller) {
+  //   mapController = controller;
+  // }
 
   // int setRdvValue(LatLng center) {
   //   this._center = center;
@@ -125,10 +126,10 @@ class _BuyCreateState extends State<BuyCreate> {
       if (i != splitAddr.length - 1) addr += ' ';
     }
     ;
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: _center, zoom: 15.0)));
-    _markers = [];
-    _markers.add(Marker(markerId: MarkerId("1"), position: _center));
+    // mapController.animateCamera(CameraUpdate.newCameraPosition(
+    //     CameraPosition(target: _center, zoom: 15.0)));
+    // _markers = [];
+    // _markers.add(Marker(markerId: MarkerId("1"), position: _center));
     setState(() {});
   }
 
@@ -159,6 +160,35 @@ class _BuyCreateState extends State<BuyCreate> {
                 key: formKey,
                 child: Column(
                   children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.amber),
+                          borderRadius: BorderRadius.circular((15))),
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: TextFormField(
+                          autovalidateMode: AutovalidateMode.always,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: '제품링크',
+                          ),
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 20),
+                          onSaved: (val) {
+                            setState(() {
+                              itemLink = val as String;
+                            });
+                          },
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return "Please enter something";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -296,49 +326,41 @@ class _BuyCreateState extends State<BuyCreate> {
                   style: TextStyle(fontSize: 20),
                 )),
           ),
-          Row(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(20, 5, 0, 5),
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.amber),
-                        borderRadius: BorderRadius.circular((15))),
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      child: TextButton(
-                        child: Text('랑데뷰 포인트 설정'),
-                        onPressed: () {
-                          _setRdvPoint(context, _center);
-                        },
-                      ),
-                    ),
-                  ),
-                ],
+          Container(
+            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.amber),
+                borderRadius: BorderRadius.circular((15))),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: TextButton(
+                child: Text('랑데뷰 포인트 설정'),
+                onPressed: () {
+                  _setRdvPoint(context, _center);
+                },
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                child: Wrap(children: [
-                  SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: GoogleMap(
-                      markers: Set.from(_markers),
-                      myLocationEnabled: true,
-                      myLocationButtonEnabled: false,
-                      mapType: MapType.normal,
-                      onMapCreated: _onMapCreated,
-                      initialCameraPosition: CameraPosition(
-                        target: _center,
-                        zoom: 11.0,
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-            ],
+            ),
           ),
+          // Container(
+          //   margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+          //   child: Wrap(children: [
+          //     SizedBox(
+          //       width: 200,
+          //       height: 200,
+          //       child: GoogleMap(
+          //         markers: Set.from(_markers),
+          //         myLocationEnabled: true,
+          //         myLocationButtonEnabled: false,
+          //         mapType: MapType.normal,
+          //         onMapCreated: _onMapCreated,
+          //         initialCameraPosition: CameraPosition(
+          //           target: _center,
+          //           zoom: 11.0,
+          //         ),
+          //       ),
+          //     ),
+          //   ]),
+          // ),
         ],
       ),
     );

@@ -53,6 +53,38 @@ class ImageUploadReqVO {
   }
 }
 
+class ReceiptUploadReqVO {
+  int? photoSeq;
+  String fileName;
+  String fileUrl;
+  int partySeq;
+
+  ReceiptUploadReqVO({
+    this.photoSeq,
+    required this.fileName,
+    required this.fileUrl,
+    required this.partySeq,
+  });
+
+  factory ReceiptUploadReqVO.fromJson(Map<String, dynamic> json) {
+    return ReceiptUploadReqVO(
+      // photoSeq: json['photoSeq'],
+      fileName: json['fileName'],
+      fileUrl: json['fileUrl'],
+      partySeq: json['partySeq'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    // data['photoSeq'] = this.photoSeq;
+    data['fileName'] = this.fileName;
+    data['fileUrl'] = this.fileUrl;
+    data['partySeq'] = this.partySeq;
+    return data;
+  }
+}
+
 class PartyReqVO {
   int? partySeq;
   int userSeq;

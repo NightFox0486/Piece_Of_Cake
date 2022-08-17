@@ -148,8 +148,8 @@ class _ImageUploadState extends State<ImageUploadWidget> {
                       child: Container(
                           margin: EdgeInsets.all(5),
                           child: SizedBox(
-                            height: 100,
-                            width: 100,
+                            height: 80,
+                            width: 80,
                             child: DottedBorder(
                               color: Colors.grey,
                               strokeWidth: 2,
