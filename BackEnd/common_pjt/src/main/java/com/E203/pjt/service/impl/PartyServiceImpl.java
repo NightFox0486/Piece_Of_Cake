@@ -137,6 +137,15 @@ public class PartyServiceImpl implements PartyService {
   }
 
   @Override
+  public Boolean doneParty(Integer partySeq) {
+    Party party = partyRepository.findByPartySeq(partySeq);
+    party.setPartyStatus(0);
+    partyRepository.save(party);
+    party = partyRepository.findByPartySeq(partySeq);
+    return party.getPartyStatus().equals(0);
+  }
+
+  @Override
   public List<PartyResVO> listLatestParty() {
     List<Party> latestPartyList = partyRepositorySupport.dynamicQueryLatestPartyList();
     List<PartyResVO> result = new ArrayList<>();

@@ -307,7 +307,7 @@ class _HomePageState extends State<HomePage> {
     child: Container(
       margin: EdgeInsets.all(10),
       width: 200,
-      // height: 200,
+      // height: 300,
       child: Column(
         children: [
           ClipRRect(
@@ -324,11 +324,12 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 4),
           Text(
             '${party.partyTitle}',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
           ),
+          SizedBox(height: 4,),
           Text(
             '${int.parse(party.totalAmount)==0 ? 0 : (int.parse(party.totalAmount)/party.partyMemberNumTotal).ceil()}',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis),
           ),
         ],
 

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../chat/chat_list_my.dart';
 import '../../models/kakao_login_model.dart';
-
 import '../../models/party_model.dart';
 import '../../vo.dart';
 
@@ -53,14 +52,21 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
       list.add(partyResVO.partySeq);
     }
     partySeqListGuest = list;
-    setState(() {
+    setState(() {});
+  }
 
-    });
+  void cancelParty(kakaoUserProvider, partyProvider, partySeq) async {
+    await partyProvider.cancelParty(partySeq);
+    setState(() {});
+  }
+
+  void setPartySuccess(kakaoUserProvider, partyProvider, partySeq) async {
+    await partyProvider.doneParty(partySeq);
+    setState(() {});
   }
 
   void loadSetState() async {
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -92,7 +98,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyDetailHost'),
+        title: Text('DlvDetailHost'),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -328,11 +334,14 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                           child: SizedBox.expand(
                             child: OutlinedButton(
                               onPressed: () {
-
+                                // todo: host가 파티 취소를 누르면 파티 삭제
+                                if (widget.party.partyMemberNumCurrent!=widget.party.partyMemberNumTotal) {
+                                  cancelParty(kakaoUserProvider, partyProvider, widget.party.partySeq);
+                                  Navigator.pop(context);
+                                }
                               },
                               style: OutlinedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(
-
                                     borderRadius: BorderRadius.all(Radius.circular(25))
                                 ),
                                 side: BorderSide(
@@ -357,7 +366,11 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                           child: SizedBox.expand(
                             child: ElevatedButton(
                               onPressed: () {
-
+                                // todo: host가 파티 완료를 누르면
+                                if (widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal) {
+                                  setPartySuccess(kakaoUserProvider, partyProvider, widget.party.partySeq);
+                                  Navigator.pop(context);
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(
@@ -365,7 +378,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                                 ),
                                 primary: widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? Colors.pink : Colors.grey,
                               ),
-                              child: Text(widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? '파티 성공' : '모집중',
+                              child: Text(widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? '파티 완료' : '모집중',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,

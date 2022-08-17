@@ -82,7 +82,9 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
     });
   }
 
-  void loadSetState() async {
+  void loadSetState(partyProvider, partySeq) async {
+    await partyProvider.fetchDetailParty(partySeq);
+    widget.party.partyMemberNumCurrent = partyProvider.currentParty.partyMemberNumCurrent;
     setState(() {
     });
   }
@@ -93,17 +95,8 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyDetailGuest'),
+        title: Text('PieDetailGuest'),
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.edit),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => BuyCreate()),
-          //     );
-          //   },
-          // ),
           IconButton(
             icon: const Icon(Icons.gavel),
             onPressed: () {
@@ -186,14 +179,11 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                   onPressed: () {
 
                                   },
-
                                   child: Text('신고하기',
                                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
                                   ),
                                 ),
                               )
-
-
                             ],
                           ),
                         );
@@ -386,12 +376,10 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                       // todo: map
                                     ),
                                   ),
-
                                 )
                               ],
                             )
                         ),
-
                       ],
                     ),
                   ),
@@ -425,10 +413,8 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                           await partyProvider.insertBookmark(bookmarkReqVO);
                         }
                         // setBookmark(kakaoUserProvider, partyProvider);
-                        setState(() {
-
-                        });
-                        loadSetState();
+                        setState(() {});
+                        loadSetState(partyProvider, widget.party.partySeq);
                       },
                       bubblesSize: 0,
                       likeBuilder: (bool isLiked) {
@@ -484,18 +470,16 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                 if (partySeqListGuest.contains(widget.party.partySeq)) {
                                   if (widget.party.partyStatus==2) {
                                     // '파티 성사': 파티 성사
-                                    setState(() { });
                                   } else {
                                     // '참여 취소': 파티 모집중 & 참여 ㅇㅇ 상태
                                     await partyProvider.deleteMyParty(widget.party.partySeq, kakaoUserProvider.userResVO!.userSeq);
-                                    setState(() { });
                                   }
                                 } else {
                                   // '파티 참여': 파티 모집중 & 참여 ㄴㄴ 상태
                                   await partyProvider.insertMyParty(widget.party.partySeq, kakaoUserProvider.userResVO!.userSeq);
-                                  setState(() { });
                                 }
-                                loadSetState();
+                                setState(() { });
+                                loadSetState(partyProvider, widget.party.partySeq);
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(
