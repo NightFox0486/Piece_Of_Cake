@@ -1,12 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:piece_of_cake/models/kakao_login_model.dart';
-
 import 'package:piece_of_cake/vo.dart';
-import 'package:provider/provider.dart';
 
 class PartyModel with ChangeNotifier {
   List<PartyResVO> _partyResVOList = [];
@@ -21,6 +16,10 @@ class PartyModel with ChangeNotifier {
   List<PartyResVO> get partyResVOGuestList => _partyGuestList;
   List<PartyResVO> _partyHostList = [];
   List<PartyResVO> get partyResVOHostList => _partyHostList;
+  // List<String> _partyPhotoFileUrlList = [];
+  // List<String> get partyPhotoFileUrlList => _partyPhotoFileUrlList;
+  var _partyPhotoFileUrlList = [];
+  List get partyPhotoFileUrlList => _partyPhotoFileUrlList;
   PartyResVO? _currentParty;
   PartyResVO? get currentParty => _currentParty;
 
@@ -209,6 +208,18 @@ class PartyModel with ChangeNotifier {
     await fetchPartyList();
     await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
     fetchBookmarkList(bookmarkReqVO.userSeq);
+    // notifyListeners();
+  }
+
+  Future fetchPartyPhotoList(int partySeq) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:9090/photo/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      this._partyPhotoFileUrlList = jsonDecode(utf8.decode(response.bodyBytes));
+    } else {
+      throw Exception('Failed to load party photo list');
+    }
     // notifyListeners();
   }
 

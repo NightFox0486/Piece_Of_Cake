@@ -299,9 +299,13 @@ class _MyState extends State<My> {
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
                     ),
@@ -424,9 +428,13 @@ class _MyState extends State<My> {
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
                     ),

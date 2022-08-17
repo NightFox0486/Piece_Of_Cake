@@ -1,12 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:piece_of_cake/models/kakao_login_model.dart';
-
 import 'package:piece_of_cake/vo.dart';
-import 'package:provider/provider.dart';
 
 class PartyModel with ChangeNotifier {
   List<PartyResVO> _partyResVOList = [];
@@ -21,6 +16,10 @@ class PartyModel with ChangeNotifier {
   List<PartyResVO> get partyResVOGuestList => _partyGuestList;
   List<PartyResVO> _partyHostList = [];
   List<PartyResVO> get partyResVOHostList => _partyHostList;
+  // List<String> _partyPhotoFileUrlList = [];
+  // List<String> get partyPhotoFileUrlList => _partyPhotoFileUrlList;
+  var _partyPhotoFileUrlList = [];
+  List get partyPhotoFileUrlList => _partyPhotoFileUrlList;
   PartyResVO? _currentParty;
   PartyResVO? get currentParty => _currentParty;
 
@@ -79,6 +78,48 @@ class PartyModel with ChangeNotifier {
       // print('[PartyModel] fetchPartyHostList() this._partyHostList: ${this._partyHostList}');
     } else {
       throw Exception('Failed to load party host list.');
+    }
+    // notifyListeners();
+  }
+
+  Future insertMyParty(int partySeq, int userSeq) async {
+    MyPartyReqVO myPartyReqVO = MyPartyReqVO(
+        userSeq: userSeq,
+        partySeq: partySeq,
+        myPartyRole: "guest"
+    );
+    final response = await http.post(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/my-party'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(myPartyReqVO),
+    );
+    if (response.statusCode==200) {
+      // 할 거 없 ?
+    }else {
+      throw Exception('Failed to insert my party.');
+    }
+    // notifyListeners();
+  }
+
+  Future deleteMyParty(int partySeq, int userSeq) async {
+    MyPartyReqVO myPartyReqVO = MyPartyReqVO(
+        userSeq: userSeq,
+        partySeq: partySeq,
+        myPartyRole: "guest"
+    );
+    final response = await http.delete(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/my-party'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(myPartyReqVO),
+    );
+    if (response.statusCode==200) {
+      // 할 거 없 ?
+    }else {
+      throw Exception('Failed to delete my party.');
     }
     // notifyListeners();
   }
@@ -167,6 +208,18 @@ class PartyModel with ChangeNotifier {
     await fetchPartyList();
     await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
     fetchBookmarkList(bookmarkReqVO.userSeq);
+    // notifyListeners();
+  }
+
+  Future fetchPartyPhotoList(int partySeq) async {
+    final response = await http.get(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/photo/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      this._partyPhotoFileUrlList = jsonDecode(utf8.decode(response.bodyBytes));
+    } else {
+      throw Exception('Failed to load party photo list');
+    }
     // notifyListeners();
   }
 
