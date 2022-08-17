@@ -1,14 +1,30 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:piece_of_cake/main.dart';
 import 'package:piece_of_cake/models/kakao_login_model.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:piece_of_cake/widgets/image_upload_widget.dart';
+import 'package:piece_of_cake/widgets/map_screen.dart';
+import 'package:piece_of_cake/widgets/map_setting.dart';
 import 'package:provider/provider.dart';
 // import 'package:piece_of_cake/widgets/map_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
+// GlobalKey<_MapSettingState> mapKey = GlobalKey();
+GlobalKey<_BuyCreateState> buyCreateKey = GlobalKey();
+
+class ReturnValue {
+  String? result;
+  ReturnValue({this.result});
+}
+
+class Arguments {
+  LatLng center;
+  ReturnValue? returnValue;
+  Arguments({this.center: const LatLng(0.0, 0.0), this.returnValue});
+}
 
 class BuyCreate extends StatefulWidget {
   const BuyCreate({Key? key}) : super(key: key);
@@ -41,8 +57,8 @@ class _BuyCreateState extends State<BuyCreate> {
         partyContent: content!,
         partyMemberNumCurrent: 1,
         partyMemberNumTotal: 5,
-        partyRdvLat: '0',
-        partyRdvLng: '0',
+        partyRdvLat: this._center.latitude.toString(),
+        partyRdvLng: this._center.longitude.toString(),
         partyTitle: name!,
         totalAmount: '0',
         partyMainImageUrl: 'assets/images/harry.png',
@@ -76,17 +92,29 @@ class _BuyCreateState extends State<BuyCreate> {
     mapController = controller;
   }
 
-  void _setRdvPoint() async {
+  int setRdvValue(LatLng center) {
+    this._center = center;
+    print(center);
+    return 1;
+  }
+
+  void _setRdvPoint(BuildContext context, LatLng center) async {
     print('testRdv');
-    var Lat = 35.08947;
-    var Lng = 128.85354;
-    _center = LatLng(Lat, Lng);
+    _center = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapSetting()),
+    );
+    setState(() {});
+    var Lat = _center.latitude;
+    var Lng = _center.longitude;
+    // _center = LatLng(Lat, Lng);
     final Uri getAddress = Uri.parse(
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$Lat,$Lng&key=AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk&language=ko');
     final response = await http.get(getAddress);
     Rdv_Address = jsonDecode(response.body)['results'][0]['formatted_address'];
     mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: _center, zoom: 15.0)));
+    _markers = [];
     _markers.add(Marker(markerId: MarkerId("1"), position: _center));
     setState(() {});
   }
@@ -256,7 +284,7 @@ class _BuyCreateState extends State<BuyCreate> {
               child: TextButton(
                 child: Text('랑데뷰 포인트 설정'),
                 onPressed: () {
-                  _setRdvPoint();
+                  _setRdvPoint(context, _center);
                 },
               ),
             ),
