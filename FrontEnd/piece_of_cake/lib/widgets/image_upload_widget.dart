@@ -59,6 +59,34 @@ class _ImageUploadState extends State<ImageUploadWidget> {
       ref.putFile(io.File(file.path), metadata);
     }
     String url = await ref.getDownloadURL();
+    if (url != null) {
+      ImageUploadReqVO imageUploadReqVO = ImageUploadReqVO(
+        fileName: ref.fullPath,
+        fileUrl: url,
+        partySeq: partySeq,
+      );
+
+      final response = await http.post(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/photo'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(imageUploadReqVO),
+      );
+      print('response.body: ${response.body}');
+    }
+    if (index == 0) {
+      var partyMainImageUrl = url;
+      final response = await http.patch(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/partyimage/${partySeq}'),
+        // headers: <String, String>{
+        //   'Content-Type': 'application/json; charset=UTF-8',
+        // },
+        body: partyMainImageUrl,
+        // body: jsonEncode({'partyMainImageUrl': url}),
+      );
+      print('response.body: ${response.body}');
+    }
     return url;
   }
 
