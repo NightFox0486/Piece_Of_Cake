@@ -1,42 +1,41 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
-import 'package:piece_of_cake/party/buy/buy_detail_guest.dart';
-import 'package:piece_of_cake/party/buy/buy_detail_host.dart';
-import 'package:piece_of_cake/party/dlv/dlv_detail_guest.dart';
 import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
-import 'package:piece_of_cake/vo.dart';
+
 import 'package:provider/provider.dart';
-import 'package:piece_of_cake/models/kakao_login_model.dart';
-import 'package:piece_of_cake/models/party_model.dart';
-import 'package:piece_of_cake/notice.dart';
-import 'package:piece_of_cake/search.dart';
-import 'package:piece_of_cake/widget.dart';
 
-class BookmarkList extends StatefulWidget {
-  const BookmarkList({Key? key}) : super(key: key);
+import '../../models/kakao_login_model.dart';
+import '../../models/party_model.dart';
+import '../../vo.dart';
+import '../buy/buy_detail_guest.dart';
+import '../buy/buy_detail_host.dart';
+import '../dlv/dlv_detail_guest.dart';
 
+
+class DlvPartyList extends StatefulWidget {
   @override
-  State<BookmarkList> createState() => _BookmarkListState();
+  State<DlvPartyList> createState() => _DlvPartyListState();
 }
 
-class _BookmarkListState extends State<BookmarkList> {
-  List<Party> partyList = [];
-  List<PartyResVO> partyResVOList = [];
+class _DlvPartyListState extends State<DlvPartyList> {
+  List<Party> dlvPartyList = [];
+  List<PartyResVO> dlvPartyResVOList = [];
   List<int> bookmarkList = [];
   List<Party> bookmarkPartyList = [];
   List<PartyResVO> bookmarkPartyResVOList = [];
 
   void setList(kakaoUserProvider, partyProvider) async {
-    await partyProvider.fetchPartyList();
-    partyResVOList = partyProvider.partyResVOList;
+    await partyProvider.fetchDlvPartyList();
+    dlvPartyResVOList = partyProvider.dlvPartyResVOList;
     await partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO.userSeq);
     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
     bookmarkList = partyProvider.bookmarkList;
     List<Party> list = [];
-    for (PartyResVO partyResVO in partyResVOList) {
+    for (PartyResVO partyResVO in dlvPartyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
       UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
       var party = Party(
@@ -63,7 +62,7 @@ class _BookmarkListState extends State<BookmarkList> {
       // partyList.add(party);
       list.add(party);
     }
-    partyList = list;
+    dlvPartyList = list;
     list = [];
     for (PartyResVO partyResVO in bookmarkPartyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
@@ -98,36 +97,19 @@ class _BookmarkListState extends State<BookmarkList> {
 
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    print('bookmark list');
     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-          title: Text('Bookmark List'),
-          // actions: [
-          //   IconButton(
-          //       onPressed: () {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(builder: (context) => Notice()),
-          //         );
-          //       },
-          //       icon: Icon(Icons.notifications)
-          //   ),
-          //   IconButton(
-          //       onPressed: () {
-          //         showSearch(context: context, delegate: customSearch()
-          //         );
-          //       },
-          //       icon: Icon(Icons.search))
-          // ]
+        title: Text('Dlv Party List'),
       ),
       body: ListView(
         children: [
-          for (var party in bookmarkPartyList)
+          for (var party in dlvPartyList)
             InkWell(
               splashColor: Colors.deepPurpleAccent,
               hoverColor: Colors.pink,
@@ -145,9 +127,13 @@ class _BookmarkListState extends State<BookmarkList> {
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
                     ),
@@ -211,9 +197,9 @@ class _BookmarkListState extends State<BookmarkList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>
-                        kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
-                        PieDetailHost(party: party,) :
-                        PieDetailGuest(party: party,),
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      PieDetailHost(party: party,) :
+                      PieDetailGuest(party: party,),
                       ),
                     );
                     break;
@@ -221,9 +207,9 @@ class _BookmarkListState extends State<BookmarkList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>
-                        kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
-                        BuyDetailHost(party: party,) :
-                        BuyDetailGuest(party: party,),
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      BuyDetailHost(party: party,) :
+                      BuyDetailGuest(party: party,),
                       ),
                     );
                     break;
@@ -231,9 +217,9 @@ class _BookmarkListState extends State<BookmarkList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>
-                        kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
-                        DlvDetailHost(party: party,) :
-                        DlvDetailGuest(party: party,),
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      DlvDetailHost(party: party,) :
+                      DlvDetailGuest(party: party,),
                       ),
                     );
                     break;
@@ -244,4 +230,5 @@ class _BookmarkListState extends State<BookmarkList> {
       ),
     );
   }
+
 }
