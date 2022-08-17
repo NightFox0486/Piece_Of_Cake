@@ -79,16 +79,17 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
       list.add(partyResVO.partySeq);
     }
     partySeqListGuest = list;
-    setState(() {
-
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void loadSetState(partyProvider, partySeq) async {
     await partyProvider.fetchDetailParty(partySeq);
     widget.party.partyMemberNumCurrent = partyProvider.currentParty.partyMemberNumCurrent;
-    setState(() {
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Widget build(BuildContext context) {

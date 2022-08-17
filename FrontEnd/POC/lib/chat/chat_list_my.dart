@@ -55,7 +55,7 @@ class chatRoom extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text('율2는1004', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
-                          Text('송삼 편의점에서 만나쉴?', style: TextStyle(fontSize: 17, overflow: TextOverflow.ellipsis,)),
+                          Text('송삼 편의점에서 만나쉴? ', style: TextStyle(fontSize: 17, overflow: TextOverflow.ellipsis,)),
                         ],
                       ),
                     ),
