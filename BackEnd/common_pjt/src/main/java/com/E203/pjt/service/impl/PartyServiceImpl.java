@@ -27,21 +27,106 @@ public class PartyServiceImpl implements PartyService {
 
   @Override
   public List<PartyResVO> listParty() {
-//    List<Party> partyList = partyRepository.findAll();
-//    List<Party> partyList = partyRepository.findAllByPartyStatus(1);
     List<Party> partyList = partyRepositorySupport.dynamicQueryPartyList();
-//    System.out.println(partyList);
     List<PartyResVO> partyResVOList = new ArrayList<>();
     for(Party party : partyList) {
       PartyResVO partyResVO = new PartyResVO();
       partyResVO.setPartySeq(party.getPartySeq());
       partyResVO.setUserSeq(party.getUser().getUserSeq());
-//      partyResVO.setUserResVO(userService.detailUser(party.getUser().getUserSeq()));
       partyResVO.setPartyCode(party.getPartyCode());
       partyResVO.setPartyTitle(party.getPartyTitle());
       partyResVO.setPartyContent(party.getPartyContent());
       partyResVO.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size());
-//      partyResVO.setPartyBookmarkCount(party.getPartyBookmarkCount());
+      partyResVO.setPartyRegDt(party.getPartyRegDt());
+      partyResVO.setPartyUpdDt(party.getPartyUpdDt());
+      partyResVO.setPartyRdvDt(party.getPartyRdvDt());
+      partyResVO.setPartyRdvLat(party.getPartyRdvLat());
+      partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+      partyResVO.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
+      partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
+      partyResVO.setPartyAddr(party.getPartyAddr());
+      partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
+      partyResVO.setPartyStatus(party.getPartyStatus());
+      partyResVO.setItemLink(party.getItemLink());
+      partyResVO.setTotalAmount(party.getTotalAmount());
+      partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
+      partyResVOList.add(partyResVO);
+    }
+    return partyResVOList;
+  }
+
+  @Override
+  public List<PartyResVO> listPieParty() {
+    List<Party> piePartyList = partyRepositorySupport.dynamicQueryPiePartyList();
+    List<PartyResVO> partyResVOList = new ArrayList<>();
+    for(Party party : piePartyList) {
+      PartyResVO partyResVO = new PartyResVO();
+      partyResVO.setPartySeq(party.getPartySeq());
+      partyResVO.setUserSeq(party.getUser().getUserSeq());
+      partyResVO.setPartyCode(party.getPartyCode());
+      partyResVO.setPartyTitle(party.getPartyTitle());
+      partyResVO.setPartyContent(party.getPartyContent());
+      partyResVO.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size());
+      partyResVO.setPartyRegDt(party.getPartyRegDt());
+      partyResVO.setPartyUpdDt(party.getPartyUpdDt());
+      partyResVO.setPartyRdvDt(party.getPartyRdvDt());
+      partyResVO.setPartyRdvLat(party.getPartyRdvLat());
+      partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+      partyResVO.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
+      partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
+      partyResVO.setPartyAddr(party.getPartyAddr());
+      partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
+      partyResVO.setPartyStatus(party.getPartyStatus());
+      partyResVO.setItemLink(party.getItemLink());
+      partyResVO.setTotalAmount(party.getTotalAmount());
+      partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
+      partyResVOList.add(partyResVO);
+    }
+    return partyResVOList;
+  }
+
+  @Override
+  public List<PartyResVO> listBuyParty() {
+    List<Party> buyPartyList = partyRepositorySupport.dynamicQueryBuyPartyList();
+    List<PartyResVO> partyResVOList = new ArrayList<>();
+    for(Party party : buyPartyList) {
+      PartyResVO partyResVO = new PartyResVO();
+      partyResVO.setPartySeq(party.getPartySeq());
+      partyResVO.setUserSeq(party.getUser().getUserSeq());
+      partyResVO.setPartyCode(party.getPartyCode());
+      partyResVO.setPartyTitle(party.getPartyTitle());
+      partyResVO.setPartyContent(party.getPartyContent());
+      partyResVO.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size());
+      partyResVO.setPartyRegDt(party.getPartyRegDt());
+      partyResVO.setPartyUpdDt(party.getPartyUpdDt());
+      partyResVO.setPartyRdvDt(party.getPartyRdvDt());
+      partyResVO.setPartyRdvLat(party.getPartyRdvLat());
+      partyResVO.setPartyRdvLng(party.getPartyRdvLng());
+      partyResVO.setPartyMemberNumCurrent(partyRepositorySupport.dynamicQueryPartyMemberNumCurrent(party.getPartySeq()).intValue());
+      partyResVO.setPartyMemberNumTotal(party.getPartyMemberNumTotal());
+      partyResVO.setPartyAddr(party.getPartyAddr());
+      partyResVO.setPartyAddrDetail(party.getPartyAddrDetail());
+      partyResVO.setPartyStatus(party.getPartyStatus());
+      partyResVO.setItemLink(party.getItemLink());
+      partyResVO.setTotalAmount(party.getTotalAmount());
+      partyResVO.setPartyMainImageUrl(party.getPartyMainImageUrl());
+      partyResVOList.add(partyResVO);
+    }
+    return partyResVOList;
+  }
+
+  @Override
+  public List<PartyResVO> listDlvParty() {
+    List<Party> dlvPartyList = partyRepositorySupport.dynamicQueryDlvPartyList();
+    List<PartyResVO> partyResVOList = new ArrayList<>();
+    for(Party party : dlvPartyList) {
+      PartyResVO partyResVO = new PartyResVO();
+      partyResVO.setPartySeq(party.getPartySeq());
+      partyResVO.setUserSeq(party.getUser().getUserSeq());
+      partyResVO.setPartyCode(party.getPartyCode());
+      partyResVO.setPartyTitle(party.getPartyTitle());
+      partyResVO.setPartyContent(party.getPartyContent());
+      partyResVO.setPartyBookmarkCount(bookmarkRepository.findAllByParty(party).size());
       partyResVO.setPartyRegDt(party.getPartyRegDt());
       partyResVO.setPartyUpdDt(party.getPartyUpdDt());
       partyResVO.setPartyRdvDt(party.getPartyRdvDt());
