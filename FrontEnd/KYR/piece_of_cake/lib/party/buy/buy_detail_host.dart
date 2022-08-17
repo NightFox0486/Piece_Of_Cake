@@ -52,18 +52,21 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
       list.add(partyResVO.partySeq);
     }
     partySeqListGuest = list;
-    setState(() {
-
-    });
+    setState(() {});
   }
 
-  void setPartySuccess(KakaoUserProvider, partyProvider) async {
-    // await partyProvider
+  void cancelParty(kakaoUserProvider, partyProvider, partySeq) async {
+    await partyProvider.cancelParty(partySeq);
+    setState(() {});
+  }
+
+  void setPartySuccess(kakaoUserProvider, partyProvider, partySeq) async {
+    await partyProvider.doneParty(partySeq);
+    setState(() {});
   }
 
   void loadSetState() async {
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -330,7 +333,11 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                             child: SizedBox.expand(
                                 child: OutlinedButton(
                                   onPressed: () {
-
+                                    // todo: host가 파티 취소를 누르면 파티 삭제
+                                    if (widget.party.partyMemberNumCurrent!=widget.party.partyMemberNumTotal) {
+                                      cancelParty(kakaoUserProvider, partyProvider, widget.party.partySeq);
+                                      Navigator.pop(context);
+                                    }
                                   },
                                   style: OutlinedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
@@ -358,9 +365,11 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                             child: SizedBox.expand(
                               child: ElevatedButton(
                                 onPressed: () {
-                                  // todo: host가 파티 성공을 누르면
-
-
+                                  // todo: host가 파티 완료를 누르면
+                                  if (widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal) {
+                                    setPartySuccess(kakaoUserProvider, partyProvider, widget.party.partySeq);
+                                    Navigator.pop(context);
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: const RoundedRectangleBorder(
@@ -368,7 +377,7 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                                   ),
                                   primary: widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? Colors.pink : Colors.grey,
                                 ),
-                                child: Text(widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? '파티 성공' : '모집중',
+                                child: Text(widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? '파티 완료' : '모집중',
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.black,
