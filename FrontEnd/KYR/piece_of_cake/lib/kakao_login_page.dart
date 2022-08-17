@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+import 'package:cached_network_image/cached_network_image.dart';
+=======
 import 'package:piece_of_cake/models/palette.dart';
+>>>>>>> develop
 import 'package:provider/provider.dart';
 
 import 'main.dart';
@@ -48,7 +52,7 @@ class _KakaoLoginPageState extends State<KakaoLoginPage> {
                 await Provider.of<KakaoLoginModel>(context, listen: false).setUser();
                 print('login');
                 print('user: ${Provider.of<KakaoLoginModel>(context, listen: false).user}');
-                Route route = MaterialPageRoute(builder: (context) => const MainPage());
+                Route route = MaterialPageRoute(builder: (context) => const HomePage());
                 Navigator.pushReplacement(context, route);
               },
               style: ElevatedButton.styleFrom(
