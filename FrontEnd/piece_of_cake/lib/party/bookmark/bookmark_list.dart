@@ -208,16 +208,16 @@ class _BookmarkListState extends State<BookmarkList> {
                 ),
               ),
               onTap: () {
-                // kakaoUserProvider.setCurrentPartyWriter(party.userSeq);
-                // var writer = kakaoUserProvider.writer;
+                kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+                var writer = kakaoUserProvider.currentPartyWriter;
                 switch (party.partyCode) {
                   case '001':
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>
-                        kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
-                        PieDetailHost(party: party,) :
-                        PieDetailGuest(party: party,),
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      PieDetailHost(party: party,) :
+                      PieDetailGuest(party: party, writer: writer,),
                       ),
                     );
                     break;
@@ -225,9 +225,9 @@ class _BookmarkListState extends State<BookmarkList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>
-                        kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
-                        BuyDetailHost(party: party,) :
-                        BuyDetailGuest(party: party,),
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      BuyDetailHost(party: party,) :
+                      BuyDetailGuest(party: party, writer: writer,),
                       ),
                     );
                     break;
@@ -235,9 +235,9 @@ class _BookmarkListState extends State<BookmarkList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>
-                        kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
-                        DlvDetailHost(party: party,) :
-                        DlvDetailGuest(party: party,),
+                      kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
+                      DlvDetailHost(party: party,) :
+                      DlvDetailGuest(party: party, writer: writer,),
                       ),
                     );
                     break;
