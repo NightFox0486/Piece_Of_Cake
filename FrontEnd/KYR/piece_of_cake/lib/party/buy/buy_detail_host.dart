@@ -57,6 +57,10 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
     });
   }
 
+  void setPartySuccess(KakaoUserProvider, partyProvider) async {
+    // await partyProvider
+  }
+
   void loadSetState() async {
     setState(() {
     });
@@ -354,6 +358,8 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                             child: SizedBox.expand(
                               child: ElevatedButton(
                                 onPressed: () {
+                                  // todo: host가 파티 성공을 누르면
+
 
                                 },
                                 style: ElevatedButton.styleFrom(
