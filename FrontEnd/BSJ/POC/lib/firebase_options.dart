@@ -55,6 +55,11 @@ class DefaultFirebaseOptions {
     messagingSenderId: '189872052067',
     projectId: 'imagestorage-168a8',
     storageBucket: 'imagestorage-168a8.appspot.com',
+    // apiKey: 'AIzaSyAzZ4yzikQ8kEC_fKqBmZhbE2W8-YjkT_k',
+    // appId: '1:505795639238:android:77111a3f2604a297b3a4c7',
+    // messagingSenderId: '505795639238',
+    // projectId: 'chat-ad85f',
+    // storageBucket: 'chat-ad85f.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -63,7 +68,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '189872052067',
     projectId: 'imagestorage-168a8',
     storageBucket: 'imagestorage-168a8.appspot.com',
-    iosClientId: '189872052067-7h5f3anb3tfuksdoqsvb71m7atusqru2.apps.googleusercontent.com',
+    iosClientId:
+        '189872052067-7h5f3anb3tfuksdoqsvb71m7atusqru2.apps.googleusercontent.com',
     iosBundleId: 'com.example.pieceOfCake',
   );
 }

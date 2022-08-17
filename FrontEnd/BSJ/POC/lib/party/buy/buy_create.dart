@@ -1,12 +1,30 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:piece_of_cake/main.dart';
 import 'package:piece_of_cake/models/kakao_login_model.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:piece_of_cake/widgets/image_upload_widget.dart';
+import 'package:piece_of_cake/widgets/map_screen.dart';
+import 'package:piece_of_cake/widgets/map_setting.dart';
 import 'package:provider/provider.dart';
+// import 'package:piece_of_cake/widgets/map_screen.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
+// GlobalKey<_MapSettingState> mapKey = GlobalKey();
+GlobalKey<_BuyCreateState> buyCreateKey = GlobalKey();
+
+class ReturnValue {
+  String? result;
+  ReturnValue({this.result});
+}
+
+class Arguments {
+  LatLng center;
+  ReturnValue? returnValue;
+  Arguments({this.center: const LatLng(0.0, 0.0), this.returnValue});
+}
 
 class BuyCreate extends StatefulWidget {
   const BuyCreate({Key? key}) : super(key: key);
@@ -37,15 +55,15 @@ class _BuyCreateState extends State<BuyCreate> {
         partyBookmarkCount: 0,
         partyCode: '002',
         partyContent: content!,
-        partyMemberNumCurrent: 0,
-        partyMemberNumTotal: 0,
-        partyRdvLat: '0',
-        partyRdvLng: '0',
+        partyMemberNumCurrent: 1,
+        partyMemberNumTotal: 5,
+        partyRdvLat: this._center.latitude.toString(),
+        partyRdvLng: this._center.longitude.toString(),
         partyTitle: name!,
         totalAmount: '0',
         partyMainImageUrl: 'assets/images/harry.png',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
-    print(name);
+    // print(name);
     final response = await http.post(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party'),
       headers: <String, String>{
@@ -53,14 +71,52 @@ class _BuyCreateState extends State<BuyCreate> {
       },
       body: jsonEncode(partyReqVO),
     );
-    print('response.body: ${response.body}');
+    // print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
-    print(response.body.substring(response.body.indexOf("partySeq") + 10,
-        response.body.indexOf("userSeq") - 2));
+    // print(response.body.substring(response.body.indexOf("partySeq") + 10, response.body.indexOf("userSeq") - 2));
     int partySeq = int.parse(response.body.substring(
         response.body.indexOf("partySeq") + 10,
         response.body.indexOf("userSeq") - 2));
     imageKey.currentState?.addImage(partySeq);
+  }
+
+  late GoogleMapController mapController;
+
+  LatLng _center = LatLng(45.521563, -122.677433);
+
+  String Rdv_Address = '주소 적힐곳';
+
+  List<Marker> _markers = [];
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
+  int setRdvValue(LatLng center) {
+    this._center = center;
+    print(center);
+    return 1;
+  }
+
+  void _setRdvPoint(BuildContext context, LatLng center) async {
+    print('testRdv');
+    _center = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapSetting()),
+    );
+    setState(() {});
+    var Lat = _center.latitude;
+    var Lng = _center.longitude;
+    // _center = LatLng(Lat, Lng);
+    final Uri getAddress = Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$Lat,$Lng&key=AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk&language=ko');
+    final response = await http.get(getAddress);
+    Rdv_Address = jsonDecode(response.body)['results'][0]['formatted_address'];
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: _center, zoom: 15.0)));
+    _markers = [];
+    _markers.add(Marker(markerId: MarkerId("1"), position: _center));
+    setState(() {});
   }
 
   @override
@@ -215,27 +271,57 @@ class _BuyCreateState extends State<BuyCreate> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.amber),
-                          borderRadius: BorderRadius.circular((15))),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              border: InputBorder.none, hintText: '랑데뷰 포인트'),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {},
-                          validator: (val) {
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
                   ],
                 )),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.amber),
+                borderRadius: BorderRadius.circular((15))),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: TextButton(
+                child: Text('랑데뷰 포인트 설정'),
+                onPressed: () {
+                  _setRdvPoint(context, _center);
+                },
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.amber),
+                borderRadius: BorderRadius.circular((15))),
+            // height: 40,
+            child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  Rdv_Address,
+                  style: TextStyle(fontSize: 20),
+                )),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+            child: Wrap(children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: GoogleMap(
+                  markers: Set.from(_markers),
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  mapType: MapType.normal,
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: _center,
+                    zoom: 11.0,
+                  ),
+                ),
+              ),
+            ]),
           ),
         ],
       ),
