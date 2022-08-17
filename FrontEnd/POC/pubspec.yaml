@@ -51,6 +51,10 @@ dependencies:
   firebase_storage: ^10.3.4
   image_picker: ^0.8.5+3
   dotted_border: ^2.0.0+2
+  bootpay: ^4.2.5
+  bootpay_bio: ^4.2.2
+  get: ^4.6.5
+
 
 
 dev_dependencies:
