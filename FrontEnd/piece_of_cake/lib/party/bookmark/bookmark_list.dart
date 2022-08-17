@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:piece_of_cake/models/palette.dart';
@@ -173,9 +174,13 @@ class _BookmarkListState extends State<BookmarkList> {
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.cover,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
                     ),
@@ -190,7 +195,7 @@ class _BookmarkListState extends State<BookmarkList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              '${party.partyTitle}',
+                              '${party.partyTitle.length >= 10 ? party.partyTitle.substring(0, 10).padRight(3, '.') : party.partyTitle}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18)
@@ -199,7 +204,7 @@ class _BookmarkListState extends State<BookmarkList> {
                             height: 8,
                           ),
                           Text(
-                            '${party.partyAddr}',
+                            '${party.partyAddr.length >= 20 ? party.partyAddr.substring(0, 20).padRight(3, '.') : party.partyAddr}',
                             style: TextStyle(fontSize: 12),
                           ),
                           SizedBox(
