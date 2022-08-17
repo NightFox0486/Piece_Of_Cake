@@ -24,6 +24,7 @@ class BuyDetailGuest extends StatefulWidget {
 class _BuyDetailGuestState extends State<BuyDetailGuest> {
   int activeIndex = 0;
 
+  String? content = '';
   final List<String> sins = [
     '부정적인 태도',
     '자리비움',
@@ -35,6 +36,23 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
 
   final formKey = GlobalKey<FormState>();
 
+  Future insertReport(Report report) async {
+
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:9090/report/party'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(report),
+    );
+    // print('response.body: ${response.body}');
+    if (response.statusCode==200) {
+      return Report.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to insert report.');
+    }
+    // notifyListeners();
+  }
   @override
   Widget buildImage(String urlImage, int index) => Container(
     margin: EdgeInsets.symmetric(horizontal: 6),
@@ -162,8 +180,15 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                       child: TextFormField(
                                         style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
                                         maxLines: 20,
-                                        onSaved: (val) {},
+                                        onSaved: (val) {
+                                          setState(() {
+                                            content = val as String;
+                                          });
+                                        },
                                         validator: (val) {
+                                          if (val == null || val.isEmpty) {
+                                            return "Please enter content";
+                                          }
                                           return null;
                                         },
                                       ),
@@ -178,7 +203,16 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                 width: 130,
                                 child: ElevatedButton(
                                   onPressed: () {
-
+                                    setState(() {
+                                      Report report = Report(
+                                        reportSeq: 0,
+                                        reportedUserSeq: 123,
+                                        reportingUserSeq: 456,
+                                        reportContent: content!,
+                                        crimeName: selectedValue!,
+                                      );
+                                      insertReport(report);
+                                    });
                                   },
                                   child: Text('신고하기',
                                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
