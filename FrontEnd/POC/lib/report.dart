@@ -1,10 +1,34 @@
-import 'package:flutter/material.dart';
+class Report{
+  int reportSeq;
+  int reportedUserSeq;
+  int reportingUserSeq;
+  String reportContent;
+  String crimeName;
 
-class Report extends StatelessWidget {
-  const Report({Key? key}) : super(key: key);
+  Report({
+    required this.reportSeq,
+    required this.reportedUserSeq,
+    required this.reportingUserSeq,
+    required this.reportContent,
+    required this.crimeName
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
+});
+  factory Report.fromJson(Map<String, dynamic> json){
+    return Report(
+        reportSeq: json['reportSeq'],
+        reportedUserSeq: json['reportedUserSeq'],
+        reportingUserSeq: json['reportingUserSeq'],
+        reportContent: json['reportContent'],
+        crimeName: json['crimeName']
+    );
   }
+  // Map<String, dynamic> toJson(){
+  //   final Map<String, dynamic> data = new Map<string, dynamic>();
+  //   data['reportSeq'] = this.reportSeq;
+  //   data['reportedUserSeq'] = this.reportedUserSeq;
+  //   data['reportingUserSeq'] = this.reportingUserSeq;
+  //   data['reportContent'] = this.reportContent;
+  //   data['crimeName'] = this.crimeName;
+  //   return data;
+  // }
 }
