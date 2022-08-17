@@ -20,5 +20,4 @@ class Palette with ChangeNotifier {
     });
     return MaterialColor(color.value, swatch);
   }
-
 }
