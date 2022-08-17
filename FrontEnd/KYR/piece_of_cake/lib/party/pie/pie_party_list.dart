@@ -7,34 +7,35 @@ import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
 
 import 'package:provider/provider.dart';
 
-import '../models/kakao_login_model.dart';
-import '../models/party_model.dart';
-import '../vo.dart';
-import 'buy/buy_detail_guest.dart';
-import 'buy/buy_detail_host.dart';
-import 'dlv/dlv_detail_guest.dart';
+import '../../models/kakao_login_model.dart';
+import '../../models/party_model.dart';
+import '../../vo.dart';
+import '../buy/buy_detail_guest.dart';
+import '../buy/buy_detail_host.dart';
+import '../dlv/dlv_detail_guest.dart';
 
-class PartyList extends StatefulWidget {
+
+class PiePartyList extends StatefulWidget {
   @override
-  State<PartyList> createState() => _PartyListState();
+  State<PiePartyList> createState() => _PiePartyListState();
 }
 
-class _PartyListState extends State<PartyList> {
-  List<Party> partyList = [];
-  List<PartyResVO> partyResVOList = [];
+class _PiePartyListState extends State<PiePartyList> {
+  List<Party> piePartyList = [];
+  List<PartyResVO> piePartyResVOList = [];
   List<int> bookmarkList = [];
   List<Party> bookmarkPartyList = [];
   List<PartyResVO> bookmarkPartyResVOList = [];
 
   void setList(kakaoUserProvider, partyProvider) async {
-    await partyProvider.fetchPartyList();
-    partyResVOList = partyProvider.partyResVOList;
+    await partyProvider.fetchPiePartyList();
+    piePartyResVOList = partyProvider.piePartyResVOList;
     await partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO.userSeq);
     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
     bookmarkList = partyProvider.bookmarkList;
     List<Party> list = [];
-    for (PartyResVO partyResVO in partyResVOList) {
+    for (PartyResVO partyResVO in piePartyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
       UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
       var party = Party(
@@ -61,7 +62,7 @@ class _PartyListState extends State<PartyList> {
       // partyList.add(party);
       list.add(party);
     }
-    partyList = list;
+    piePartyList = list;
     list = [];
     for (PartyResVO partyResVO in bookmarkPartyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
@@ -99,17 +100,16 @@ class _PartyListState extends State<PartyList> {
 
   @override
   Widget build(BuildContext context) {
-    print('party list');
     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-          title: Text('Party List'),
+        title: Text('Pie Party List'),
       ),
       body: ListView(
         children: [
-          for (var party in partyList)
+          for (var party in piePartyList)
             InkWell(
               splashColor: Colors.deepPurpleAccent,
               hoverColor: Colors.pink,
