@@ -97,11 +97,11 @@ class _BuyCreateState extends State<BuyCreate> {
     mapController = controller;
   }
 
-  int setRdvValue(LatLng center) {
-    this._center = center;
-    print(center);
-    return 1;
-  }
+  // int setRdvValue(LatLng center) {
+  //   this._center = center;
+  //   print(center);
+  //   return 1;
+  // }
 
   void _setRdvPoint(BuildContext context, LatLng center) async {
     print('testRdv');
@@ -109,7 +109,7 @@ class _BuyCreateState extends State<BuyCreate> {
       context,
       MaterialPageRoute(builder: (context) => MapSetting()),
     );
-    setState(() {});
+    //setState(() {});
     var Lat = _center.latitude;
     var Lng = _center.longitude;
     // _center = LatLng(Lat, Lng);
@@ -251,25 +251,6 @@ class _BuyCreateState extends State<BuyCreate> {
                       decoration: BoxDecoration(
                           border: Border.all(width: 1, color: Colors.amber),
                           borderRadius: BorderRadius.circular((15))),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              border: InputBorder.none, hintText: '개별 금액'),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {},
-                          validator: (val) {
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.amber),
-                          borderRadius: BorderRadius.circular((15))),
                       child: SizedBox(
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
@@ -279,7 +260,7 @@ class _BuyCreateState extends State<BuyCreate> {
                               border: InputBorder.none,
                               hintText: '내용',
                             ),
-                            maxLines: 15,
+                            maxLines: 5,
                             keyboardType: TextInputType.multiline,
                             style: TextStyle(
                                 fontWeight: FontWeight.normal, fontSize: 20),
@@ -306,21 +287,6 @@ class _BuyCreateState extends State<BuyCreate> {
             decoration: BoxDecoration(
                 border: Border.all(width: 1, color: Colors.amber),
                 borderRadius: BorderRadius.circular((15))),
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: TextButton(
-                child: Text('랑데뷰 포인트 설정'),
-                onPressed: () {
-                  _setRdvPoint(context, _center);
-                },
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.amber),
-                borderRadius: BorderRadius.circular((15))),
             // height: 40,
             child: Container(
                 alignment: Alignment.center,
@@ -330,25 +296,48 @@ class _BuyCreateState extends State<BuyCreate> {
                   style: TextStyle(fontSize: 20),
                 )),
           ),
-          Container(
-            margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
-            child: Wrap(children: [
-              SizedBox(
-                width: 400,
-                height: 400,
-                child: GoogleMap(
-                  markers: Set.from(_markers),
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  mapType: MapType.normal,
-                  onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(
-                    target: _center,
-                    zoom: 11.0,
+          Row(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 5, 0, 5),
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.amber),
+                        borderRadius: BorderRadius.circular((15))),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: TextButton(
+                        child: Text('랑데뷰 포인트 설정'),
+                        onPressed: () {
+                          _setRdvPoint(context, _center);
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ]),
+              Container(
+                margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: Wrap(children: [
+                  SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: GoogleMap(
+                      markers: Set.from(_markers),
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: false,
+                      mapType: MapType.normal,
+                      onMapCreated: _onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                        target: _center,
+                        zoom: 11.0,
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
           ),
         ],
       ),
