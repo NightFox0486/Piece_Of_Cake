@@ -1,12 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
 
-import 'package:piece_of_cake/widget.dart';
 import 'package:provider/provider.dart';
 
 import '../models/kakao_login_model.dart';

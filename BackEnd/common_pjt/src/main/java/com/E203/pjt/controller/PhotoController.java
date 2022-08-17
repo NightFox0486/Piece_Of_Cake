@@ -27,6 +27,11 @@ public class PhotoController {
   //   }
   //   return photoResVOList;
   // }
+  @GetMapping(value = "/photo/{partySeq}")
+  public List<String> listPartyPhoto(@PathVariable Integer partySeq) {
+    List<String> result = PhotoService.listPartyPhoto(partySeq);
+    return result;
+  }
 
   @PostMapping(value = "/photo")
   public Photo createParty(@RequestBody PhotoPostReqVO photoPostReqVO, HttpSession session) {
