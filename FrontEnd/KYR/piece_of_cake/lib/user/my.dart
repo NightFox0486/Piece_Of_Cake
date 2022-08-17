@@ -162,9 +162,9 @@ class _MyState extends State<My> {
     }
     partyHostList = list;
 
-    setState(() {
-
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Widget _iconWidget() {
@@ -376,12 +376,12 @@ class _MyState extends State<My> {
                     Flexible(
                       flex: 4,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(10),
                         child: CachedNetworkImage(
                           imageUrl: party.partyMainImageUrl,
                           placeholder: (context, url) => new CircularProgressIndicator(),
                           errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           width: 180,
                           height: 180,
                         ),
@@ -398,11 +398,10 @@ class _MyState extends State<My> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${party.partyTitle}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18)
-                              ,overflow: TextOverflow.ellipsis,
+                                '${party.partyTitle}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18)
                             ),
                             SizedBox(
                               height: 8,
@@ -410,15 +409,13 @@ class _MyState extends State<My> {
                             Text(
                               '${party.partyAddr}',
                               style: TextStyle(fontSize: 12),
-                              overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(
                               height: 8,
                             ),
                             Text(
-                              '${party.partyContent}',
+                              '${party.partyContent.length >= 20 ? party.partyContent.substring(0, 20).padRight(3, '.') : party.partyContent}',
                               style: TextStyle(fontSize: 15),
-                              overflow: TextOverflow.ellipsis,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -547,12 +544,12 @@ class _MyState extends State<My> {
                     Flexible(
                       flex: 4,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(10),
                         child: CachedNetworkImage(
                           imageUrl: party.partyMainImageUrl,
                           placeholder: (context, url) => new CircularProgressIndicator(),
                           errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           width: 180,
                           height: 180,
                         ),
@@ -573,7 +570,6 @@ class _MyState extends State<My> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18)
-                              ,overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(
                               height: 8,
@@ -581,15 +577,13 @@ class _MyState extends State<My> {
                             Text(
                               '${party.partyAddr}',
                               style: TextStyle(fontSize: 12),
-                              overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(
                               height: 8,
                             ),
                             Text(
-                              '${party.partyContent.substring(0, 20)}...',
+                              '${party.partyContent.length >= 20 ? party.partyContent.substring(0, 20).padRight(3, '.') : party.partyContent}',
                               style: TextStyle(fontSize: 15),
-                              overflow: TextOverflow.ellipsis,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
