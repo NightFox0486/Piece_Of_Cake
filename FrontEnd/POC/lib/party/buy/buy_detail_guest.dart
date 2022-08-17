@@ -39,7 +39,7 @@ Future insertReport(Report report) async {
   );
   // print('response.body: ${response.body}');
   if (response.statusCode==200) {
-
+    return Report.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to insert report.');
   }
@@ -202,7 +202,9 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                 width: 130,
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    setState(() {
 
+                                    });
                                   },
 
                                   child: Text('신고하기',
