@@ -23,10 +23,12 @@ public class Report {
     @Column(name = "report_content", columnDefinition = "TEXT", nullable = true)
     private String reportContent;
 
-    @OneToOne(targetEntity = CrimeCategory.class)
-    @JoinColumn(name = "crime_code", nullable = false, columnDefinition = "VARCHAR(3)")//, columnDefinition = "INT UNSIGNED UNIQUE")
-    //@Column(name = "crime_code", length = 3, nullable = false, unique = true)
-    private String crimeCode;
+//    @OneToOne(targetEntity = CrimeCategory.class)
+//    @JoinColumn(name = "crime_code", nullable = false, columnDefinition = "VARCHAR(3)")//, columnDefinition = "INT UNSIGNED UNIQUE")
+//    //@Column(name = "crime_code", length = 3, nullable = false, unique = true)
+//    private String crimeCode;
+    @Column(name = "crime_name", columnDefinition = "VARCHAR(45)", nullable = false)
+    private String crimeName;
 
     @Column(name = "reporting_user_seq", nullable = false)
     private Integer reportingUserSeq;
