@@ -5,7 +5,7 @@ import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../chat/chatroom_party_route.dart';
+import '../../chat/chat_list_my.dart';
 import '../../models/kakao_login_model.dart';
 import '../../vo.dart';
 
@@ -52,21 +52,29 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
       list.add(partyResVO.partySeq);
     }
     partySeqListGuest = list;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void cancelParty(kakaoUserProvider, partyProvider, partySeq) async {
     await partyProvider.cancelParty(partySeq);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void setPartySuccess(kakaoUserProvider, partyProvider, partySeq) async {
     await partyProvider.doneParty(partySeq);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void loadSetState() async {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -314,7 +322,7 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                       child: IconButton(onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChatRoomListParty(partySeq: widget.party.partySeq,)),
+                          MaterialPageRoute(builder: (context) => ChatListMy()),
                         );
 
                        },
