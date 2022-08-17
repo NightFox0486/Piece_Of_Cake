@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
 import 'default_payment.dart';
 
 
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'bootpay',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -51,40 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               TextButton(
                   onPressed: () => Get.to(DefaultPayment()),
-                  child: const Text('PG일반 결제', style: TextStyle(fontSize: 16.0))
-              ),
-              // TextButton(
-              //     onPressed: () => Get.to(TotalPayment()),
-              //     child: const Text('2. 통합결제 테스트', style: TextStyle(fontSize: 16.0))
-              // ),
-              // TextButton(
-              //     onPressed: () => Get.to(SubscriptionPayment()),
-              //     child: const Text('3. 카드자동 결제 테스트(인증)', style: TextStyle(fontSize: 16.0))
-              // ),
-              // TextButton(
-              //     onPressed: () => Get.to(SubscriptionBootpayPayment()),
-              //     child: const Text('4. 카드자동 결제 테스트 (비인증)', style: TextStyle(fontSize: 16.0))
-              // ),
-              // TextButton(
-              //     onPressed: () => Get.to(AuthenticationPayment()),
-              //     child: const Text('5. 본인인증 테스트', style: TextStyle(fontSize: 16.0))
-              // ),
-              // TextButton(
-              //     onPressed: () => Get.to(BioPayment()),
-              //     child: const Text('6. 생체인증 결제 테스트', style: TextStyle(fontSize: 16.0))
-              // ),
-              // TextButton(
-              //     onPressed: () => Get.to(PasswordPayment()),
-              //     child: const Text('7. 비밀번호 결제 테스트 - Bootpay', style: TextStyle(fontSize: 16.0))
-              // ),
-              // TextButton(
-              //     onPressed: () => Get.to(PasswordWebPayment()),
-              //     child: const Text('8. 비밀번호 결제 테스트 - BootpayUI', style: TextStyle(fontSize: 16.0))
-              // ),
-              // TextButton(
-              //     onPressed: () => Get.to(WebAppPayment()),
-              //     child: const Text('9. 웹앱으로 연동하기', style: TextStyle(fontSize: 16.0))
-              // ),
+                  child: const Text('PG 결제', style: TextStyle(fontSize: 16.0))
+              )
             ],
           ),
         ),

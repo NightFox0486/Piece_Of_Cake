@@ -119,11 +119,11 @@ class DefaultPayment extends StatelessWidget {
     payload.items = itemList; // 상품정보 배열
 
     User user = User(); // 구매자 정보
-    user.username = "사용자 이름";
+    user.username = "서상균";
     user.email = "user1234@gmail.com";
-    user.area = "서울";
+    user.area = "부산";
     user.phone = "010-4033-4678";
-    user.addr = '서울시 동작구 상도로 222';
+    user.addr = '부산시 부산진구 새싹로';
 
     Extra extra = Extra(); // 결제 옵션
     extra.appScheme = 'bootpayFlutterExample';
