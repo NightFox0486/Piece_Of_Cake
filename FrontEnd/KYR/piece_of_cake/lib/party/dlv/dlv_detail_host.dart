@@ -168,7 +168,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                                         ),
                                       )
                                   ),
-                                  Text('${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
+                                  Text(' ${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
                                 ],
                               ),
                               Row(

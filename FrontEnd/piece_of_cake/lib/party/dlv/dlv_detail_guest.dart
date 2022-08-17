@@ -14,8 +14,9 @@ import '../../vo.dart';
 
 class DlvDetailGuest extends StatefulWidget {
   final Party party;
+  final writer;
   const DlvDetailGuest(
-      {Key? key, required this.party})
+      {Key? key, required this.party, required this.writer})
   : super(key: key
   );
 
@@ -271,14 +272,14 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                                       child: SizedBox(
                                         child: ClipOval(
                                           child: CachedNetworkImage(
-                                            imageUrl: kakaoUserProvider.user?.kakaoAccount?.profile?.profileImageUrl ?? '',
+                                            imageUrl: widget.writer.userImage ?? '',
                                             placeholder: (context, url) => new CircularProgressIndicator(),
                                             errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                                           ),
                                         ),
                                       )
                                   ),
-                                  Text('${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
+                                  Text(' ${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
                                 ],
                               ),
                               Row(

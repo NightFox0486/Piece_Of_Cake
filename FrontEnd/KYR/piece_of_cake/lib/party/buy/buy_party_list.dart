@@ -190,8 +190,8 @@ class _BuyPartyListState extends State<BuyPartyList> {
                 ),
               ),
               onTap: () {
-                // kakaoUserProvider.setCurrentPartyWriter(party.userSeq);
-                // var writer = kakaoUserProvider.writer;
+                kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+                var writer = kakaoUserProvider.currentPartyWriter;
                 switch (party.partyCode) {
                   case '001':
                     Navigator.push(
@@ -199,7 +199,7 @@ class _BuyPartyListState extends State<BuyPartyList> {
                       MaterialPageRoute(builder: (context) =>
                       kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
                       PieDetailHost(party: party,) :
-                      PieDetailGuest(party: party,),
+                      PieDetailGuest(party: party, writer: writer,),
                       ),
                     );
                     break;
@@ -209,7 +209,7 @@ class _BuyPartyListState extends State<BuyPartyList> {
                       MaterialPageRoute(builder: (context) =>
                       kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
                       BuyDetailHost(party: party,) :
-                      BuyDetailGuest(party: party,),
+                      BuyDetailGuest(party: party, writer: writer,),
                       ),
                     );
                     break;
@@ -219,7 +219,7 @@ class _BuyPartyListState extends State<BuyPartyList> {
                       MaterialPageRoute(builder: (context) =>
                       kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
                       DlvDetailHost(party: party,) :
-                      DlvDetailGuest(party: party,),
+                      DlvDetailGuest(party: party, writer: writer,),
                       ),
                     );
                     break;
