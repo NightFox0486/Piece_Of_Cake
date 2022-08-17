@@ -91,39 +91,6 @@ flutter:
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
-  fonts:
-    - family: Hahmlet
-      fonts:
-        - asset: fonts/Hahmlet/static/Hahmlet-Black.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Bold.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-ExtraBold.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-ExtraLight.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Light.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Medium.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Regular.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-SemiBold.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Thin.ttf
-    - family: DungGeunMo
-      fonts:
-        - asset: fonts/DungGeunMo.ttf
-    - family: IBM_Plex_Sans_KR
-      fonts:
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Bold.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-ExtraLight.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Light.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Medium.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Regular.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-SemiBold.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Thin.ttf
-    - family: Noto_Sans_KR
-      fonts:
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Black.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Bold.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Light.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Medium.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Regular.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Thin.otf
-
   # example:
   # fonts:
   #   - family: Schyler

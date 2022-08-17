@@ -18,9 +18,6 @@
         </activity>
         <!--       Kakao Login End-->
 
-<meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk"/>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
