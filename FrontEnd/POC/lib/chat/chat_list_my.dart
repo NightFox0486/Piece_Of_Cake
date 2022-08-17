@@ -92,17 +92,17 @@ class ChatListMy extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: Text('ChatListMy'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Notice()),
-                  );
-                },
-                icon: Icon(Icons.notifications)
-            ),
-        ],
+        //   actions: [
+        //     IconButton(
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => Notice()),
+        //           );
+        //         },
+        //         icon: Icon(Icons.notifications)
+        //     ),
+        // ],
       ),
       body: ListView(
         children: [
