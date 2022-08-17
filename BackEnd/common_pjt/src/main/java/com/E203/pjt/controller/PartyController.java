@@ -28,6 +28,24 @@ public class PartyController {
     return partyResVOList;
   }
 
+  @GetMapping(value = "/party/pie")
+  public List<PartyResVO> listPieParty() {
+    List<PartyResVO> piePartyResVOList = partyService.listPieParty();
+    return piePartyResVOList;
+  }
+
+  @GetMapping(value = "/party/buy")
+  public List<PartyResVO> listBuyParty() {
+    List<PartyResVO> buyPartyResVOList = partyService.listBuyParty();
+    return buyPartyResVOList;
+  }
+
+  @GetMapping(value = "/party/dlv")
+  public List<PartyResVO> listDlvParty() {
+    List<PartyResVO> dlvPartyResVOList = partyService.listDlvParty();
+    return dlvPartyResVOList;
+  }
+
   @PostMapping(value = "/party")
   public PartyResVO createParty(@RequestBody PartyReqVO partyReqVO) {
 //    System.out.println("[PartyController] createParty() called");
