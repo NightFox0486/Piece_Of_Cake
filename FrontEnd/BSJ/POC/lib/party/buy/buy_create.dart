@@ -38,6 +38,11 @@ class _BuyCreateState extends State<BuyCreate> {
 
   String? name = '';
   String? content = '';
+  String? totalAmount = '';
+  int memberNumTotal = 2;
+  int? memberNumCurrent = 1;
+  String addr = '';
+  String? addrDetail = '';
 
   createParty(var kakaoUserProvider) {
     insertParty(kakaoUserProvider);
@@ -49,18 +54,18 @@ class _BuyCreateState extends State<BuyCreate> {
     }
     PartyReqVO partyReqVO = PartyReqVO(
         itemLink: 'test',
-        partyAddr: 'test',
-        partyAddrDetail: 'test',
+        partyAddr: this.addr,
+        partyAddrDetail: this.addrDetail!,
         partyStatus: 1,
         partyBookmarkCount: 0,
         partyCode: '002',
         partyContent: content!,
-        partyMemberNumCurrent: 1,
-        partyMemberNumTotal: 5,
+        partyMemberNumCurrent: memberNumCurrent!,
+        partyMemberNumTotal: memberNumTotal,
         partyRdvLat: this._center.latitude.toString(),
         partyRdvLng: this._center.longitude.toString(),
         partyTitle: name!,
-        totalAmount: '0',
+        totalAmount: this.totalAmount!,
         partyMainImageUrl: 'assets/images/harry.png',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
     // print(name);
@@ -112,6 +117,14 @@ class _BuyCreateState extends State<BuyCreate> {
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$Lat,$Lng&key=AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk&language=ko');
     final response = await http.get(getAddress);
     Rdv_Address = jsonDecode(response.body)['results'][0]['formatted_address'];
+    List<String> splitAddr = Rdv_Address.split(' ');
+    addrDetail = splitAddr[splitAddr.length - 1];
+    splitAddr.removeAt(0);
+    for (int i = 0; i < splitAddr.length; i++) {
+      addr += '${splitAddr[i]}';
+      if (i != splitAddr.length - 1) addr += ' ';
+    }
+    ;
     mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: _center, zoom: 15.0)));
     _markers = [];
@@ -190,8 +203,15 @@ class _BuyCreateState extends State<BuyCreate> {
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {},
+                          onSaved: (val) {
+                            setState(() {
+                              totalAmount = val as String;
+                            });
+                          },
                           validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return "Please enter something";
+                            }
                             return null;
                           },
                         ),
@@ -212,8 +232,15 @@ class _BuyCreateState extends State<BuyCreate> {
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {},
+                          onSaved: (val) {
+                            setState(() {
+                              memberNumTotal = int.parse(val!);
+                            });
+                          },
                           validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return "Please enter something";
+                            }
                             return null;
                           },
                         ),
