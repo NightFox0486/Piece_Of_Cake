@@ -17,6 +17,7 @@ import 'package:piece_of_cake/party/pie/pie_party_list.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:provider/provider.dart';
 import 'user/my.dart';
+import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
 import 'party/bookmark/bookmark_list.dart';
 import './notice.dart';
@@ -235,9 +236,9 @@ class _HomePageState extends State<HomePage> {
     }
     latestPartyList = list;
 
-    setState(() {
-
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -487,19 +488,25 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           Container(
-            height: 146,
-            // margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+            height: 230,
+            // width: 200,
+            margin: EdgeInsets.only(top: 5),
             child: Column(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    imageUrl: party.partyMainImageUrl,
-                    placeholder: (context, url) => new CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
-                    fit: BoxFit.fill,
-                    width: 180,
-                    height: 180,
+                Expanded(
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: party.partyMainImageUrl,
+                        placeholder: (context, url) => new CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+                        fit: BoxFit.cover,
+                        width: 180,
+                        height: 180,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 10),

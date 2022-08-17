@@ -1,6 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/chat/chat.dart';
+import 'package:piece_of_cake/models/palette.dart';
+import 'package:provider/provider.dart';
 import 'chat.dart';
 import '../notice.dart';
 
@@ -89,9 +91,19 @@ class ChatListMy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
-          title: Text('ChatListMy'),
+        title: new Center(
+            child: new Text(
+              '당신의 채팅 리스트',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: palette.createMaterialColor(Color(0xff8581E1)),
+                fontWeight: FontWeight.bold,
+              ),
+            )
+        ),
         //   actions: [
         //     IconButton(
         //         onPressed: () {
