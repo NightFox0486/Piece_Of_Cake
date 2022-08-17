@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/models/kakao_login_model.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:piece_of_cake/models/party_model.dart';
 import 'package:piece_of_cake/party/buy/buy_detail_guest.dart';
 import 'package:piece_of_cake/party/buy/buy_detail_host.dart';
@@ -244,36 +245,57 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-          title: Text('Piece Of Cake'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => gps()),
-                  // );
-                },
-                icon: Icon(Icons.my_location)
-            ),
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Notice()),
-                  );
-                },
-                icon: Icon(Icons.notifications)
-            ),
-            IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: customSearch()
-                  );
-                },
-                icon: Icon(Icons.search)),
-          ]
+        title: Text(
+          '${kakaoUserProvider.userResVO!.userNickname}님',
+          style: TextStyle(
+            // color: palette.createMaterialColor(Color(0xffCCE8FC)),
+            color: Colors.grey,
+            fontSize: 15
+          ),
+        ),
+        // title: Row(
+        //   children: [
+        //     Text(
+        //       'Piece ',
+        //       style: TextStyle(
+        //         color: palette.createMaterialColor(Color(0xffFF9EB1)),
+        //       ),
+        //     ),
+        //     Text(
+        //       'Of ',
+        //       style: TextStyle(
+        //         color: palette.createMaterialColor(Color(0xffD6F6BD)),
+        //       ),
+        //     ),
+        //     Text(
+        //       'Cake',
+        //       style: TextStyle(
+        //         color: palette.createMaterialColor(Color(0xffCCE8FC))
+        //       ),
+        //     )
+        //   ],
+        // ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => gps()),
+                // );
+              },
+              icon: Icon(Icons.my_location)
+          ),
+          // IconButton(
+          //     onPressed: () {
+          //       showSearch(context: context, delegate: customSearch()
+          //       );
+          //     },
+          //     icon: Icon(Icons.search)),
+        ]
       ),
       body: ListView(
           children: [
@@ -285,6 +307,8 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize:20,
                       fontWeight: FontWeight.bold,
+                      // color: palette.createMaterialColor(Color(0xff8581E1)),
+                      color: palette.createMaterialColor(Color(0xff5b5b5b)),
                     ),
                   ),
                   Container(
