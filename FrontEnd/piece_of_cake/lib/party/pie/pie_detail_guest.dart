@@ -12,8 +12,9 @@ import '../../vo.dart';
 
 class PieDetailGuest extends StatefulWidget {
   final Party party;
+  final writer;
   const PieDetailGuest(
-      {Key? key, required this.party})
+      {Key? key, required this.party, required this.writer})
       : super(key: key
   );
 
@@ -245,14 +246,14 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                       child: SizedBox(
                                         child: ClipOval(
                                           child: CachedNetworkImage(
-                                            imageUrl: kakaoUserProvider.user?.kakaoAccount?.profile?.profileImageUrl ?? '',
+                                            imageUrl: widget.writer.userImage ?? '',
                                             placeholder: (context, url) => new CircularProgressIndicator(),
                                             errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                                           ),
                                         ),
                                       )
                                   ),
-                                  Text('${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
+                                  Text(' ${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
                                 ],
                               ),
                               Row(

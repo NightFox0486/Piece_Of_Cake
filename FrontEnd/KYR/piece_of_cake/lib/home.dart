@@ -313,8 +313,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:20),
-                    height: 280,
+                    margin: EdgeInsets.only(top:10),
+                    height: 300,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
@@ -430,8 +430,8 @@ class _HomePageState extends State<HomePage> {
   }
   Widget buildCard(kakaoUserProvider, Party party, palette) => InkWell(
     onTap: () {
-      // kakaoUserProvider.setCurrentPartyWriter(party.userSeq);
-      // var writer = kakaoUserProvider.writer;
+      kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+      var writer = kakaoUserProvider.currentPartyWriter;
       switch (party.partyCode) {
         case '001':
           Navigator.push(
@@ -439,7 +439,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) =>
             kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
             PieDetailHost(party: party,) :
-            PieDetailGuest(party: party,),
+            PieDetailGuest(party: party, writer: writer,),
             ),
           );
           break;
@@ -449,7 +449,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) =>
             kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
             BuyDetailHost(party: party,) :
-            BuyDetailGuest(party: party,),
+            BuyDetailGuest(party: party, writer: writer,),
             ),
           );
           break;
@@ -459,7 +459,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) =>
             kakaoUserProvider.userResVO!.userSeq==party.userResVO.userSeq ?
             DlvDetailHost(party: party,) :
-            DlvDetailGuest(party: party,),
+            DlvDetailGuest(party: party, writer: writer,),
             ),
           );
           break;
@@ -467,81 +467,79 @@ class _HomePageState extends State<HomePage> {
     },
     child: Container(
       margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        // color: palette.createMaterialColor(Color(0xffCCF5FC)),
+          border: Border.all(
+            // color: Colors.pink,
+            // color: palette.createMaterialColor(Color(0xffD1ADE6)),
+            color: party.partyCode=='001' ?
+            palette.createMaterialColor(Color(0xffFFF3DA)) :
+            party.partyCode=='002' ?
+            palette.createMaterialColor(Color(0xffEAF6BD)) :
+            palette.createMaterialColor(Color(0xffCCF5FC))
+            ,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(20)
+      ),
       width: 200,
       // height: 300,
-      // child: Column(
-      //   children: [
-      //     Container(
-      //       height: 146,
-      //       margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
-      //       padding: EdgeInsets.all(10),
-      //       decoration: BoxDecoration(
-      //         // color: palette.createMaterialColor(Color(0xffCCF5FC)),
-      //           border: Border.all(
-      //             // color: Colors.pink,
-      //             // color: palette.createMaterialColor(Color(0xffD1ADE6)),
-      //             color: party.partyCode=='001' ?
-      //             palette.createMaterialColor(Color(0xffFFF3DA)) :
-      //             party.partyCode=='002' ?
-      //             palette.createMaterialColor(Color(0xffEAF6BD)) :
-      //             palette.createMaterialColor(Color(0xffCCF5FC))
-      //             ,
-      //             width: 2,
-      //           ),
-      //           borderRadius: BorderRadius.circular(20)
-      //       ),
-      //       child: Column(
-      //         children: [
-      //           ClipRRect(
-      //             borderRadius: BorderRadius.circular(20),
-      //             child: CachedNetworkImage(
-      //               imageUrl: party.partyMainImageUrl,
-      //               placeholder: (context, url) => new CircularProgressIndicator(),
-      //               errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
-      //               fit: BoxFit.fill,
-      //               width: 180,
-      //               height: 180,
-      //             ),
-      //           ),
-      //           SizedBox(height: 10),
-      //           Text(
-      //             '${party.partyTitle}',
-      //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
-      //           ),
-      //           SizedBox(height: 10,),
-      //           Text(
-      //             '${int.parse(party.totalAmount)==0 ? 0 : (int.parse(party.totalAmount)/party.partyMemberNumTotal).ceil()}원',
-      //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis),
-      //           ),
-      //         ],
-      //       )
-      //     ),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: CachedNetworkImage(
-              imageUrl: party.partyMainImageUrl,
-              placeholder: (context, url) => new CircularProgressIndicator(),
-              errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
-              fit: BoxFit.fill,
-              width: 180,
-              height: 180,
-            ),
+          Container(
+            height: 146,
+            // margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: party.partyMainImageUrl,
+                    placeholder: (context, url) => new CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+                    fit: BoxFit.fill,
+                    width: 180,
+                    height: 180,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '${party.partyTitle}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
+                ),
+                SizedBox(height: 10,),
+                Text(
+                  '${int.parse(party.totalAmount)==0 ? 0 : (int.parse(party.totalAmount)/party.partyMemberNumTotal).ceil()}원',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis),
+                ),
+              ],
+            )
           ),
-          SizedBox(height: 10),
-          Text(
-            '${party.partyTitle}',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
-          ),
-          SizedBox(height: 10,),
-          Text(
-            '${int.parse(party.totalAmount)==0 ? 0 : (int.parse(party.totalAmount)/party.partyMemberNumTotal).ceil()}원',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis),
-          ),
+      // child: Column(
+      //   children: [
+      //     ClipRRect(
+      //       borderRadius: BorderRadius.circular(20),
+      //       child: CachedNetworkImage(
+      //         imageUrl: party.partyMainImageUrl,
+      //         placeholder: (context, url) => new CircularProgressIndicator(),
+      //         errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+      //         fit: BoxFit.fill,
+      //         width: 180,
+      //         height: 180,
+      //       ),
+      //     ),
+      //     SizedBox(height: 10),
+      //     Text(
+      //       '${party.partyTitle}',
+      //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
+      //     ),
+      //     SizedBox(height: 10,),
+      //     Text(
+      //       '${int.parse(party.totalAmount)==0 ? 0 : (int.parse(party.totalAmount)/party.partyMemberNumTotal).ceil()}원',
+      //       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis),
+      //     ),
         ],
-
-
       ),
     ),
   );
