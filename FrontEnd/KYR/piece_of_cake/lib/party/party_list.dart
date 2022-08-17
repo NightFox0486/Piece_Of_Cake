@@ -1,12 +1,10 @@
-import 'dart:ffi';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
 
-import 'package:piece_of_cake/widget.dart';
 import 'package:provider/provider.dart';
 
 import '../models/kakao_login_model.dart';
@@ -35,6 +33,7 @@ class _PartyListState extends State<PartyList> {
     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
     bookmarkList = partyProvider.bookmarkList;
+    List<Party> list = [];
     for (PartyResVO partyResVO in partyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
       UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
@@ -59,8 +58,11 @@ class _PartyListState extends State<PartyList> {
           totalAmount: partyResVO.totalAmount,
           partyMainImageUrl: partyResVO.partyMainImageUrl
       );
-      partyList.add(party);
+      // partyList.add(party);
+      list.add(party);
     }
+    partyList = list;
+    list = [];
     for (PartyResVO partyResVO in bookmarkPartyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
       UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
@@ -85,8 +87,10 @@ class _PartyListState extends State<PartyList> {
           totalAmount: partyResVO.totalAmount,
           partyMainImageUrl: partyResVO.partyMainImageUrl
       );
-      bookmarkPartyList.add(party);
+      // bookmarkPartyList.add(party);
+      list.add(party);
     }
+    bookmarkPartyList = list;
 
     setState(() {
 
@@ -123,9 +127,13 @@ class _PartyListState extends State<PartyList> {
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
                     ),

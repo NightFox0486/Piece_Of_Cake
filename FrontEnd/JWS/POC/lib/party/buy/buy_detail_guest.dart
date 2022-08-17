@@ -26,7 +26,6 @@ class BuyDetailGuest extends StatefulWidget {
 }
 
 class _BuyDetailGuestState extends State<BuyDetailGuest> {
-  final CollectionReference _chats = FirebaseFirestore.instance.collection('chats');
   final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
 

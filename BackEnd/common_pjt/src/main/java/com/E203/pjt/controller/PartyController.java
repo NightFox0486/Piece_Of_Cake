@@ -28,6 +28,24 @@ public class PartyController {
     return partyResVOList;
   }
 
+  @GetMapping(value = "/party/pie")
+  public List<PartyResVO> listPieParty() {
+    List<PartyResVO> piePartyResVOList = partyService.listPieParty();
+    return piePartyResVOList;
+  }
+
+  @GetMapping(value = "/party/buy")
+  public List<PartyResVO> listBuyParty() {
+    List<PartyResVO> buyPartyResVOList = partyService.listBuyParty();
+    return buyPartyResVOList;
+  }
+
+  @GetMapping(value = "/party/dlv")
+  public List<PartyResVO> listDlvParty() {
+    List<PartyResVO> dlvPartyResVOList = partyService.listDlvParty();
+    return dlvPartyResVOList;
+  }
+
   @PostMapping(value = "/party")
   public PartyResVO createParty(@RequestBody PartyReqVO partyReqVO) {
 //    System.out.println("[PartyController] createParty() called");
@@ -43,6 +61,17 @@ public class PartyController {
 //    System.out.println("parameter partySeq: "+partySeq);
     PartyResVO partyResVO = partyService.detailParty(partySeq);
     return partyResVO;
+  }
+
+  @DeleteMapping(value = "/party/{partySeq}")
+  public void cancelParty(@PathVariable Integer partySeq) {
+    partyService.deleteParty(partySeq);
+  }
+
+  // 파티 호스트가 파티 완료를 누르면 !!!
+  @PostMapping(value = "/party/{partySeq}")
+  public Boolean doneParty(@PathVariable Integer partySeq) {
+    return partyService.doneParty(partySeq);
   }
 
   @GetMapping(value = "/latest-party")
@@ -79,11 +108,11 @@ public class PartyController {
   }
 
   @PatchMapping(value = "/party/{partySeq}")
-  public void addPartyMainImage(@PathVariable Integer partySeq){
-    System.out.println("patchtest");
-    System.out.println(partySeq);
+  public void addPartyMainImage(@PathVariable Integer partySeq, @RequestBody String partyMainImageUrl){
+    // System.out.println("patchtest");
+    // System.out.println(partySeq);
     // System.out.println(partyMainImageUrl);
-    // partyService.putPartyMainImageUrl(partySeq, partyMainImageUrl);
+    partyService.putPartyMainImageUrl(partySeq, partyMainImageUrl);
   }
 
 }

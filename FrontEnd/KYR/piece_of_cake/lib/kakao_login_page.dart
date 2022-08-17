@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:cached_network_image/cached_network_image.dart';
+=======
+import 'package:piece_of_cake/models/palette.dart';
+>>>>>>> develop
 import 'package:provider/provider.dart';
 
 import 'main.dart';
@@ -15,14 +19,33 @@ class KakaoLoginPage extends StatefulWidget {
 class _KakaoLoginPageState extends State<KakaoLoginPage> {
   @override
   Widget build(BuildContext context) {
+    var palette = Provider.of<Palette>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Kakao Login Page'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Kakao Login Page'),
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
+            SizedBox(
+              // height: 50,
+            ),
+            Image.asset('assets/images/logo_transparent.png'),
+            // SizedBox(
+            //   child: Text(
+            //     'Piece\nOf\nCake',
+            //     style: TextStyle(
+            //       fontSize: 50,
+            //       fontWeight: FontWeight.w900,
+            //       color: palette.createMaterialColor(Color(0xff764624)),
+            //     ),
+            //   ),
+            // ),
+            SizedBox(
+              // height: 150,
+              // height: 50,
+            ),
             ElevatedButton(
               onPressed: () async {
                 // await KakaoLoginModel().setUser();
@@ -32,11 +55,26 @@ class _KakaoLoginPageState extends State<KakaoLoginPage> {
                 Route route = MaterialPageRoute(builder: (context) => const HomePage());
                 Navigator.pushReplacement(context, route);
               },
-              child: const Text('Log In'),
+              style: ElevatedButton.styleFrom(
+                primary: palette.createMaterialColor(Color(0xffFFE400)),
+                side: BorderSide(width: 2, color: palette.createMaterialColor(Color(0xff3F1D1D))),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+              ),
+              child: Text(
+                '카카오 로그인',
+                style: TextStyle(
+                  color: palette.createMaterialColor(Color(0xff3F1D1D)),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ],
         ),
       ),
+      backgroundColor: palette.createMaterialColor(Color(0xffF9F1BF)),
     );
   }
 }

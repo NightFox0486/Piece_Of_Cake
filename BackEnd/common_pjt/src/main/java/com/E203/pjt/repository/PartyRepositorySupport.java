@@ -18,11 +18,57 @@ public class PartyRepositorySupport {
     QParty party = QParty.party;
     QMyParty myParty = QMyParty.myParty;
 
+    public Long dynamicQueryPartyMemberNumCurrent(Integer partySeq) {
+        Long result = jpaQueryFactory
+                .select(myParty.user.userSeq)
+                .from(myParty)
+                .where(myParty.party.partySeq.eq(partySeq))
+                .stream().count();
+        return result;
+    }
+
+    // 파티 목록 최신순
     public List<Party> dynamicQueryPartyList() {
         List<Party> result = jpaQueryFactory
                 .select(party)
                 .from(party)
-                .where(party.partyStatus.eq(1))
+                .where(party.partyStatus.ne(0))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
+    // 파티 목록 최신순
+    public List<Party> dynamicQueryPiePartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.ne(0)
+                        .and(party.partyCode.eq("001")))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
+    // 파티 목록 최신순
+    public List<Party> dynamicQueryBuyPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.ne(0)
+                        .and(party.partyCode.eq("002")))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
+    // 파티 목록 최신순
+    public List<Party> dynamicQueryDlvPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.ne(0)
+                        .and(party.partyCode.eq("003")))
                 .orderBy(party.partyRegDt.desc())
                 .fetch();
         return result;
@@ -33,7 +79,7 @@ public class PartyRepositorySupport {
         List<Party> result = jpaQueryFactory
                 .select(party)
                 .from(party)
-                .where(party.partyStatus.eq(1))
+                .where(party.partyStatus.ne(0))
                 .orderBy(party.partyRegDt.desc())
                 .limit(10)
                 .fetch();

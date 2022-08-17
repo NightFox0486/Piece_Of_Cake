@@ -1,16 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:piece_of_cake/models/kakao_login_model.dart';
-
 import 'package:piece_of_cake/vo.dart';
-import 'package:provider/provider.dart';
 
 class PartyModel with ChangeNotifier {
   List<PartyResVO> _partyResVOList = [];
   List<PartyResVO> get partyResVOList => _partyResVOList;
+  List<PartyResVO> _piePartyResVOList = [];
+  List<PartyResVO> get piePartyResVOList => _piePartyResVOList;
+  List<PartyResVO> _buyPartyResVOList = [];
+  List<PartyResVO> get buyPartyResVOList => _buyPartyResVOList;
+  List<PartyResVO> _dlvPartyResVOList = [];
+  List<PartyResVO> get dlvPartyResVOList => _dlvPartyResVOList;
   List<PartyResVO> _latestPartyResVOList = [];
   List<PartyResVO> get latestPartyResVOList => _latestPartyResVOList;
   List<PartyResVO> _bookmarkPartyResVOList = [];  // bookmark list의 party들 목록
@@ -21,6 +22,10 @@ class PartyModel with ChangeNotifier {
   List<PartyResVO> get partyResVOGuestList => _partyGuestList;
   List<PartyResVO> _partyHostList = [];
   List<PartyResVO> get partyResVOHostList => _partyHostList;
+  // List<String> _partyPhotoFileUrlList = [];
+  // List<String> get partyPhotoFileUrlList => _partyPhotoFileUrlList;
+  var _partyPhotoFileUrlList = [];
+  List get partyPhotoFileUrlList => _partyPhotoFileUrlList;
   PartyResVO? _currentParty;
   PartyResVO? get currentParty => _currentParty;
 
@@ -34,6 +39,48 @@ class PartyModel with ChangeNotifier {
       // print('[PartyModel] fetchPartyList() this._partyList: ${this._partyResVOList}');
     }else {
       throw Exception('Failed to load party list.');
+    }
+    // notifyListeners();
+  }
+
+  Future fetchPiePartyList() async {
+    final response = await
+    http.get(Uri.parse('http://10.0.2.2:9090/party/pie'));
+    if (response.statusCode==200) {
+      this._piePartyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
+          .toList();
+      // print('[PartyModel] fetchPartyList() this._partyList: ${this._partyResVOList}');
+    }else {
+      throw Exception('Failed to load pie party list.');
+    }
+    // notifyListeners();
+  }
+
+  Future fetchBuyPartyList() async {
+    final response = await
+    http.get(Uri.parse('http://10.0.2.2:9090/party/buy'));
+    if (response.statusCode==200) {
+      this._buyPartyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
+          .toList();
+      // print('[PartyModel] fetchPartyList() this._partyList: ${this._partyResVOList}');
+    }else {
+      throw Exception('Failed to load buy party list.');
+    }
+    // notifyListeners();
+  }
+
+  Future fetchDlvPartyList() async {
+    final response = await
+    http.get(Uri.parse('http://10.0.2.2:9090/party/dlv'));
+    if (response.statusCode==200) {
+      this._dlvPartyResVOList = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => PartyResVO.fromJson(e))
+          .toList();
+      // print('[PartyModel] fetchPartyList() this._partyList: ${this._partyResVOList}');
+    }else {
+      throw Exception('Failed to load dlv party list.');
     }
     // notifyListeners();
   }
@@ -125,6 +172,42 @@ class PartyModel with ChangeNotifier {
     // notifyListeners();
   }
 
+  Future fetchDetailParty(int partySeq) async {
+    final response =  await http.get(
+      Uri.parse('http://10.0.2.2:9090/party/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      _currentParty = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    } else {
+      throw Exception('Failed to load deteail party');
+    }
+  }
+
+  Future cancelParty(int partySeq) async {
+    final response = await http.delete(
+      Uri.parse('http://10.0.2.2:9090/party/${partySeq}'),
+    );
+    print('[PartyModel] cancelParty() response.statusCode: ${response.statusCode}');
+    if (response.statusCode==200 ){
+      // 할 거 없 ?
+    } else {
+      throw Exception('Failed to delete party.');
+    }
+  }
+
+  Future doneParty(int partySeq) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:9090/party/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      var result = jsonDecode(utf8.decode(response.bodyBytes));
+      print('[PartyModel] doneParty() result: ${result}');
+    } else {
+      throw Exception('Failed to process party done.');
+    }
+    // notifyListeners();
+  }
+
   Future fetchBookmarkPartyList(userSeq) async {
     final response = await http.get(Uri.parse('http://10.0.2.2:9090/bookmark/${userSeq}'));
     if (response.statusCode==200) {
@@ -209,6 +292,18 @@ class PartyModel with ChangeNotifier {
     await fetchPartyList();
     await fetchBookmarkPartyList(bookmarkReqVO.userSeq);
     fetchBookmarkList(bookmarkReqVO.userSeq);
+    // notifyListeners();
+  }
+
+  Future fetchPartyPhotoList(int partySeq) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:9090/photo/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      this._partyPhotoFileUrlList = jsonDecode(utf8.decode(response.bodyBytes));
+    } else {
+      throw Exception('Failed to load party photo list');
+    }
     // notifyListeners();
   }
 

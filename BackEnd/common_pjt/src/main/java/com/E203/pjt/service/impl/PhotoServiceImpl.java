@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.E203.pjt.model.dto.req.PhotoPostReqVO;
 import com.E203.pjt.model.entity.Photo;
+import com.E203.pjt.repository.PhotoRepositorySupport;
 import com.E203.pjt.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,14 @@ import com.E203.pjt.repository.PhotoRepository;
 @RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
   private final PhotoRepository photoRepository;
+  private final PhotoRepositorySupport photoRepositorySupport;
   private final PartyRepository partyRepository;
+
+  @Override
+  public List<String> listPartyPhoto(Integer partySeq) {
+    List<String> result = photoRepositorySupport.dynamicQueryListPartyPhoto(partySeq);
+    return result;
+  }
 
   @Override
   public Photo insertPhoto(PhotoPostReqVO photoPostReqVO) {

@@ -1,5 +1,6 @@
 // package com.E203.pjt;
-
+//
+// import com.E203.pjt.model.dto.req.MyPartyReqVO;
 // import com.E203.pjt.model.dto.req.PartyReqVO;
 // import com.E203.pjt.model.dto.req.UserReqVO;
 // import com.E203.pjt.model.dto.req.BookmarkReqVO;
@@ -10,6 +11,7 @@
 // import com.E203.pjt.repository.PartyRepository;
 // import com.E203.pjt.repository.PartyRepositorySupport;
 // import com.E203.pjt.repository.UserRepository;
+// import com.E203.pjt.service.MyPartyService;
 // import com.E203.pjt.service.PartyService;
 // import com.E203.pjt.service.UserService;
 // import com.E203.pjt.service.BookmarkService;
@@ -18,41 +20,44 @@
 // import org.springframework.boot.test.context.SpringBootTest;
 // import org.springframework.test.annotation.Rollback;
 // import org.springframework.transaction.annotation.Transactional;
-
+//
 // import javax.persistence.EntityManager;
 // import javax.persistence.PersistenceContext;
 // import java.time.LocalDateTime;
 // import java.util.List;
-
+//
 // @SpringBootTest
 // @Transactional
 // @Rollback(value = false)
 // public class DataTests {
-
+//
 //     @PersistenceContext
 //     EntityManager em;
-
+//
 //     @Autowired
 //     UserService userService;
-
+//
 //     @Autowired
 //     PartyRepository partyRepository;
-
+//
 //     @Autowired
 //     PartyRepositorySupport partyRepositorySupport;
-
+//
 //     @Autowired
 //     BookmarkService bookmarkService;
-
+//
 //     @Autowired
 //     UserRepository userRepository;
-
+//
 //     @Autowired
 //     PartyService partyService;
-
+//
 //     @Autowired
 //     BookmarkRepository bookmarkRepository;
-
+//
+//     @Autowired
+//     MyPartyService myPartyService;
+//
 //     @Test
 //     void makeKakaoUsers() {
 //         UserReqVO userReqVO = new UserReqVO();
@@ -66,7 +71,7 @@
 //         em.flush();
 //         em.clear();
 //     }
-
+//
 //     @Test
 //     void makeUsers() {
 //         for (int i=0; i<5; i++) {
@@ -86,7 +91,7 @@
 //             em.clear();
 //         }
 //     }
-
+//
 //     @Test
 //     void deleteParties() {
 //         partyRepository.deleteAll();
@@ -119,11 +124,11 @@
 //                 partyService.createParty(partyReqVO);
 //             }
 //         }
-
+//
 // //        em.flush();
 // //        em.clear();
 //     }
-
+//
 //     @Test
 //     void deleteBookmarks() {
 //         bookmarkRepository.deleteAll();
@@ -139,7 +144,7 @@
 //             }
 //         }
 //     }
-
+//
 //     @Test
 //     void fetchPartyListInProgress() {
 //         List<Party> partyList = partyRepository.findAllByPartyStatus(1);
@@ -147,7 +152,7 @@
 //         System.out.println(party.toString());
 //         }
 //     }
-
+//
 //     @Test
 //     void fetchPartyHostList() {
 //         Integer userSeq = 1;
@@ -163,7 +168,7 @@
 // //        }
 //         System.out.println("end");
 //     }
-
+//
 //     @Test
 //     void fetchPartyGuestList() {
 //         Integer userSeq = 1;
@@ -172,7 +177,7 @@
 //         System.out.println(party.getPartyTitle());
 //         }
 //     }
-
+//
 //     @Test
 //     void checkCreatePartyReturnValue() {
 //         PartyReqVO partyReqVO = new PartyReqVO();
@@ -198,14 +203,14 @@
 //         PartyResVO result = partyService.createParty(partyReqVO);
 //         System.out.println("result: "+result.toString());
 //     }
-
+//
 //     @Test
 //     void checkDeletePartyCascade() {
 // //        Party party = partyRepository.findByPartySeq(1);
-//         partyService.deleteParty(1);
-
+//         partyService.deleteParty(11);
+//
 //     }
-
+//
 //     @Test
 //     void checkListPartyHost() {
 //         List<PartyResVO> result = partyService.listPartyHost(2);
@@ -213,11 +218,20 @@
 //             System.out.println(partyResVO.getUserSeq());
 //         }
 //     }
-
+//
 //     @Test
 //     void deleteUser() {
 //         User user = userRepository.findByUserSeq(2);
 //         userRepository.delete(user);
 //     }
+//
+//     @Test
+//     void checkInsertMyPartyPartySuccess() {
+//         MyPartyReqVO myPartyReqVO = new MyPartyReqVO();
+//         myPartyReqVO.setPartySeq(1);
+//         myPartyReqVO.setUserSeq(2);
+//         myPartyReqVO.setMyPartyRole("guest");
+//         myPartyService.insertMyParty(myPartyReqVO);
+//     }
 // }
-
+//

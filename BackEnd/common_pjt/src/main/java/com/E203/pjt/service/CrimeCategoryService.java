@@ -1,11 +1,11 @@
-package com.E203.pjt.service;
+// package com.E203.pjt.service;
 
-import com.E203.pjt.model.entity.CrimeCategory;
+// import com.E203.pjt.model.entity.CrimeCategory;
 
-import java.util.List;
+// import java.util.List;
 
-public interface CrimeCategoryService {
+// public interface CrimeCategoryService {
 
-    List<CrimeCategory> getAllCodes();
+//     List<CrimeCategory> getAllCodes();
 
-}
+// }

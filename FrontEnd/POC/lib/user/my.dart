@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:piece_of_cake/models/kakao_login_model.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:provider/provider.dart';
 import '../models/party_model.dart';
 import '../notice.dart';
@@ -166,47 +167,55 @@ class _MyState extends State<My> {
     });
   }
 
+  Widget _iconWidget() {
+    return Icon(
+      Icons.local_fire_department,
+      size: 25,
+      color: Colors.amberAccent,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('my page');
     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
+    final palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
-    print('rating: ${kakaoUserProvider.userResVO!.userRating}');
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Page'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Notice()),
-              );
-            },
-            icon: Icon(Icons.notifications)
-          ),
-        ],
-      ),
       body: ListView(
         children: [
+          SizedBox(
+            height: 10,
+          ),
+          Image.asset("assets/images/garlands.png"),
           Container(
             decoration: BoxDecoration(
-              color: Colors.amber,
-                borderRadius: BorderRadius.circular(20)
+              // color: palette.createMaterialColor(Color(0xffFBB6CB)),
+              borderRadius: BorderRadius.circular(20),
+              // border: Border.all(
+              //   width: 3,
+              //   color: palette.createMaterialColor(Color(0xff8581E1)),
+              // )
             ),
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Column(
               children: [
                 Container(
                   margin: EdgeInsets.only(top:15),
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(Provider.of<KakaoLoginModel>(context).user?.kakaoAccount?.profile?.nickname ?? '',
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          // color: palette.createMaterialColor(Color(0xff764624)),
+                          color: Colors.grey,
+                        ),
+                      ),
                       CircleAvatar(
-                        radius: 60,
+                        radius: 45,
                         backgroundColor: Colors.transparent,
                         child: SizedBox(
                           child: ClipOval(
@@ -223,45 +232,93 @@ class _MyState extends State<My> {
                 ),
                 Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20)
+                      color: Colors.white,
+                      // color: palette.createMaterialColor(Color(0xffFFF3DA)),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        width: 3,
+                        color: palette.createMaterialColor(Color(0xff8581E1)),
+                      )
                     ),
                     margin: EdgeInsets.all(20),
                     child: Container(
                       margin: EdgeInsets.all(20),
                       child: Column(
                         children: [
-                          Text('당신은,,', style: TextStyle(fontSize: 20),),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              child: Text(
+                                '당신은...',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Text(
+                          //   '당신은 ...',
+                          //   style: TextStyle(fontSize: 15),
+                          // ),
                           Container(
                             margin: EdgeInsets.all(5),
                           ),
                           SfLinearGauge(
-                              markerPointers: [
-                                // todo: rating point => value
-                                // LinearShapePointer(value: kakaoUserProvider.userResVO!.userRating!.toDouble(), height: 25, width: 25, color: Colors.amber,)
-                                LinearShapePointer(value: kakaoUserProvider.userResVO!.userRating==null ? 50 : kakaoUserProvider.userResVO!.userRating, height: 25, width: 25, color: Colors.amber,)
-                              ],
-                              showTicks: false,
-                              axisTrackStyle: LinearAxisTrackStyle(
-                                  thickness: 15,
-                                  gradient: LinearGradient(
-                                      colors: [Colors.purple, Colors.blue],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                      stops: [0.1, 0.5],
-                                      tileMode: TileMode.clamp
-                                  )
+                            markerPointers: <LinearWidgetPointer>[
+                              LinearWidgetPointer(
+                                value: kakaoUserProvider.userResVO!.userRating==null ? 50 : kakaoUserProvider.userResVO!.userRating,
+                                // child: _iconWidget(),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.red,
+                                        blurRadius: 6.0,
+                                      ),
+                                    ]
+                                  ),
+                                  height: 50,
+                                  child: _iconWidget(),
+                                ),
                               )
+                            ],
+                              // markerPointers: [
+                              //   // todo: rating point => value
+                              //   LinearShapePointer(
+                              //     value: kakaoUserProvider.userResVO!.userRating==null ? 50 : kakaoUserProvider.userResVO!.userRating,
+                              //     height: 25,
+                              //     width: 20,
+                              //     color: palette.createMaterialColor(Color(0xff8581E1)),
+                              //   )
+                              // ],
+                            showTicks: false,
+                            axisTrackStyle: const LinearAxisTrackStyle(
+                              thickness: 10,
+                              gradient: LinearGradient(
+                                colors: [Colors.purple, Colors.blue],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                stops: [0.1, 0.5],
+                                tileMode: TileMode.clamp
+                              )
+                            ),
                           ),
                           Container(
-                            margin: EdgeInsets.all(5),
+                            margin: EdgeInsets.all(8),
                           ),
                           // >=70 위대한 갯츠비
                           // >=30 아모르 파티너
                           // 뉴비 환영
                           // 시작은 50점
                           // todo: user.rating -> 삼항연산자
-                          Text('${kakaoUserProvider.userResVO!.userRating>=70 ? '위대한 갯츠비' : kakaoUserProvider.userResVO!.userRating>=30 ? '아모르 파티너' : '뉴비 환영'}', style: TextStyle(fontSize: 20)),
+                          Text(
+                            '${kakaoUserProvider.userResVO!.userRating>=70 ? '위대한 갯츠비' : kakaoUserProvider.userResVO!.userRating>=30 ? '아모르 파티너' : '뉴비 환영'}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600
+                            ),
+                          ),
                         ],
                       ),
                     )
@@ -270,8 +327,15 @@ class _MyState extends State<My> {
             ),
 
           Container(
-            padding: EdgeInsets.fromLTRB(20, 10, 10, 0),
-            child: Text("파티 참여 내역"),
+            padding: EdgeInsets.fromLTRB(30, 10, 10, 0),
+            child: Text(
+              "파티 참여 내역",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey
+              ),
+            ),
           ),
           Container(
             padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -283,27 +347,40 @@ class _MyState extends State<My> {
           // 파티 참여 내역
           for (var party in partyGuestList)
             InkWell(
-              splashColor: Colors.deepPurpleAccent,
+              // splashColor: Colors.deepPurpleAccent,
+              splashColor: palette.createMaterialColor(Color(0xffEAF6BD)),
               hoverColor: Colors.pink,
               highlightColor: Colors.amber,
               child: Container(
                 height: 146,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.pink), borderRadius: BorderRadius.circular(20)
-                ),
+                  // color: palette.createMaterialColor(Color(0xffCCF5FC)),
+                  border: Border.all(
+                    // color: Colors.pink,
+                    color: palette.createMaterialColor(Color(0xffD1ADE6)),
+                  ),
+                  borderRadius: BorderRadius.circular(20)
+              ),
                 child: Row(
                   children: [
                     Flexible(
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Flexible(
                       flex: 6,
@@ -312,9 +389,29 @@ class _MyState extends State<My> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${party.partyTitle}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),overflow: TextOverflow.ellipsis,),
-                            Text('${party.partyAddr}', style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis,),
-                            Text('${party.partyContent}', style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,),
+                            Text(
+                              '${party.partyTitle}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)
+                              ,overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${party.partyAddr}',
+                              style: TextStyle(fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${party.partyContent}',
+                              style: TextStyle(fontSize: 15),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -333,15 +430,14 @@ class _MyState extends State<My> {
                                     }
                                     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
                                     bookmarkList = partyProvider.bookmarkList;
-                                    setState(() {
-
-                                    });
+                                    setState(() {});
                                   },
                                   bubblesSize: 0,
                                   likeBuilder: (bool isLiked) {
                                     return Icon(
                                       bookmarkList.contains(party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                                      color: Colors.deepPurpleAccent,
+                                      // color: Colors.deepPurpleAccent,
+                                      color: palette.createMaterialColor(Color(0xffFF9EB1)),
                                       size: 20,
                                     );
                                   },
@@ -395,8 +491,15 @@ class _MyState extends State<My> {
               },
             ),
           Container(
-            padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
-            child: Text("파티 개설 내역"),
+            padding: EdgeInsets.fromLTRB(30, 40, 10, 0),
+            child: Text(
+              "파티 개설 내역",
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey
+              ),
+            ),
           ),
           Container(
             padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -408,15 +511,21 @@ class _MyState extends State<My> {
           // 파티 개설 내역
           for (var party in partyHostList)
             InkWell(
-              splashColor: Colors.deepPurpleAccent,
+              // splashColor: Colors.deepPurpleAccent,
+              splashColor: palette.createMaterialColor(Color(0xffEAF6BD)),
               hoverColor: Colors.pink,
               highlightColor: Colors.amber,
               child: Container(
                 height: 146,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.pink), borderRadius: BorderRadius.circular(20)
+                  // color: palette.createMaterialColor(Color(0xffCCF5FC)),
+                    border: Border.all(
+                      // color: Colors.pink,
+                      color: palette.createMaterialColor(Color(0xffD1ADE6)),
+                    ),
+                    borderRadius: BorderRadius.circular(20)
                 ),
                 child: Row(
                   children: [
@@ -424,11 +533,18 @@ class _MyState extends State<My> {
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Flexible(
                       flex: 6,
@@ -437,9 +553,29 @@ class _MyState extends State<My> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${party.partyTitle}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),overflow: TextOverflow.ellipsis,),
-                            Text('${party.partyAddr}', style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis,),
-                            Text('${party.partyContent}', style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,),
+                            Text(
+                              '${party.partyTitle}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18)
+                              ,overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${party.partyAddr}',
+                              style: TextStyle(fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${party.partyContent.substring(0, 20)}...',
+                              style: TextStyle(fontSize: 15),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -458,15 +594,14 @@ class _MyState extends State<My> {
                                     }
                                     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
                                     bookmarkList = partyProvider.bookmarkList;
-                                    setState(() {
-
-                                    });
+                                    setState(() {});
                                   },
                                   bubblesSize: 0,
                                   likeBuilder: (bool isLiked) {
                                     return Icon(
                                       bookmarkList.contains(party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                                      color: Colors.deepPurpleAccent,
+                                      // color: Colors.deepPurpleAccent,
+                                      color: palette.createMaterialColor(Color(0xffFF9EB1)),
                                       size: 20,
                                     );
                                   },
@@ -518,7 +653,18 @@ class _MyState extends State<My> {
                     break;
                 }
               },
-            )
+            ),
+          Container(
+            margin: EdgeInsets.all(50),
+            alignment: Alignment.topCenter,
+            child: Text(
+              'Piece Of Cake',
+              style: TextStyle(
+                color: Colors.grey
+
+              ),
+            ),
+          ),
           ],
       ),
     );
