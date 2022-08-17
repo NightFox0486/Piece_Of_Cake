@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:provider/provider.dart';
+import '../models/kakao_login_model.dart';
 import '../notice.dart';
 import 'chat_route.dart';
 
@@ -16,34 +18,18 @@ class ChatRoomListMy extends StatefulWidget {
 
 class _ChatRoomListMyState extends State<ChatRoomListMy> {
 
-  final CollectionReference _chats = FirebaseFirestore.instance.collection('chats');
-  final _database = FirebaseFirestore.instance;
   kakao.User? user;
-
-  void _createChatRoom() async{
-    user = await kakao.UserApi.instance.me();
-
-    // 채팅방 명 변경 필요
-    String chatName = user!.id.toString() + 'todb';
-
-    await _database.collection('chats').doc(chatName).set({
-      'created_at': Timestamp.now(),
-      'guestNickname': 'todb',
-      'guestSeq': 'todb',
-      'username': user!.kakaoAccount!.profile!.nickname,
-      'uid': "kakao:" + user!.id.toString(),
-      'last_text': 'hi',
-      'partyseq': 1,
-    }, SetOptions(merge: true));
-  }
 
   @override
   Widget build(BuildContext context) {
+    var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
+    final Query<Map<String, dynamic>> _chats = FirebaseFirestore.instance.collection('chats').where("seq", arrayContains: kakaoUserProvider.userResVO!.userKakaoLoginId.toString());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text('ChatListMy'),
+        title: Text('내 채팅'),
         actions: [
           IconButton(
               onPressed: () {
@@ -54,11 +40,6 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
               },
               icon: Icon(Icons.notifications)
           ),
-          IconButton(
-              onPressed: () {
-                _createChatRoom();
-              }, icon: Icon(Icons.add_box),
-          )
         ],
       ),
       extendBodyBehindAppBar: true,
@@ -78,7 +59,7 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ChatRoute(chatId: 'ga9sFTVvHouGUsWIxC8j')),
+                        MaterialPageRoute(builder: (context) => ChatRoute(chatId: documentSnapshot['chatroomName'])),
                       );
                     },
                     child: Container(
@@ -115,7 +96,10 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Text(documentSnapshot['guestNickname'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
+                                        //Text(documentSnapshot['guestNickname'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
+                                        Text(kakaoUserProvider.userResVO!.userKakaoLoginId.toString() == documentSnapshot['guestSeq']
+                                            ? documentSnapshot['hostNickname'] : documentSnapshot['guestNickname'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
+
                                         Text(documentSnapshot['last_text'], style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, color: Colors.black54)),
                                       ],
                                     ),
@@ -126,7 +110,8 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Text('15:40', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis, color: Colors.black54),),
+
+                                        Text(documentSnapshot['last_message_at'].toDate().toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis, color: Colors.black54),),
                                         Text('안읽음', style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, color: Colors.deepOrangeAccent)),
                                       ],
                                     ),

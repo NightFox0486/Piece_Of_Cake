@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
+import 'package:piece_of_cake/models/party_model.dart';
 import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../chat/chat_list_my.dart';
+import '../../chat/chat_route.dart';
 import '../../models/kakao_login_model.dart';
 import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -12,11 +15,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import '../../vo.dart';
 
 class BuyDetailGuest extends StatefulWidget {
-  // final PartyResVO partyResVO;
   final Party party;
-  // final UserResVO writer;
   const BuyDetailGuest(
-      // {Key? key, required this.partyResVO, required this.writer})
       {Key? key, required this.party})
       : super(key: key
   );
@@ -26,14 +26,9 @@ class BuyDetailGuest extends StatefulWidget {
 }
 
 class _BuyDetailGuestState extends State<BuyDetailGuest> {
+  final CollectionReference _chats = FirebaseFirestore.instance.collection('chats');
+  final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
-  final urlImages = [
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-  ];
 
   final List<String> sins = [
     '부정적인 태도',
@@ -46,21 +41,23 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
 
   final formKey = GlobalKey<FormState>();
 
-
   @override
-
   Widget buildImage(String urlImage, int index) => Container(
     margin: EdgeInsets.symmetric(horizontal: 6),
     color: Colors.white,
     child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Image.asset(
-            urlImage,
-            fit: BoxFit.cover
-        )
+      borderRadius: BorderRadius.circular(20),
+      child: CachedNetworkImage(
+        imageUrl: urlImage,
+        placeholder: (context, url) => new CircularProgressIndicator(),
+        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+        fit: BoxFit.fill,
+      ),
     ),
 
   );
+
+  var urlImages = [];
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
       activeIndex: activeIndex,
@@ -71,23 +68,69 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
       )
   );
 
+  List<int> partySeqListGuest = [];
+  List<PartyResVO> partyResVOGuestList = [];
+  List<int> bookmarkList = [];
+
+  void setList(kakaoUserProvider, partyProvider) async {
+    await partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO.userSeq);
+    partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
+    bookmarkList = partyProvider.bookmarkList;
+    await partyProvider.fetchPartyGuestList(kakaoUserProvider.userResVO.userSeq);
+    partyResVOGuestList = partyProvider.partyResVOGuestList;
+    await partyProvider.fetchPartyPhotoList(widget.party.partySeq);
+    urlImages = partyProvider.partyPhotoFileUrlList;
+    List<int> list = [];
+    for (PartyResVO partyResVO in partyResVOGuestList) {
+      list.add(partyResVO.partySeq);
+    }
+    partySeqListGuest = list;
+    setState(() {
+
+    });
+  }
+
+  void loadSetState() async {
+    setState(() {
+    });
+  }
+
+
+
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
-    // kakaoUserProvider.setCurrentPartyWriter(widget.partyResVO.userSeq);
-    // var writer = kakaoUserProvider.writer;
+    var partyProvider = Provider.of<PartyModel>(context);
+    void _createChatRoom() async{
+      String? chatName =
+          'H' + widget.party.userResVO.userKakaoLoginId.toString() +
+              "G" + kakaoUserProvider.userResVO!.userKakaoLoginId.toString() +
+              "P" + widget.party.partySeq.toString();
+
+      await _database.collection('chats').doc(chatName).set({
+        'created_at': Timestamp.now(),
+        'guestNickname': kakaoUserProvider.user?.kakaoAccount?.profile?.nickname,
+        'guestSeq': kakaoUserProvider.userResVO!.userKakaoLoginId,
+        'hostNickname': widget.party.userResVO.userNickname,
+        'hostSeq': widget.party.userResVO.userKakaoLoginId,
+        'last_text': ' ',
+        'last_message_at': Timestamp.now(),
+        'partyseq': widget.party.partySeq,
+        'chatroomName': chatName,
+        'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId])
+      }, SetOptions(merge: true));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatRoute(chatId: chatName)),
+      );
+    }
+
+
+    setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('BuyDetailGuest'),
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.edit),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => BuyCreate()),
-          //     );
-          //   },
-          // ),
           IconButton(
             icon: const Icon(Icons.gavel),
             onPressed: () {
@@ -176,8 +219,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                   ),
                                 ),
                               )
-
-
                             ],
                           ),
                         );
@@ -233,28 +274,43 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.account_circle, size: 40,),
-                                  Text('${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
+                                  CircleAvatar(
+                                      radius: 18,
+                                      backgroundColor: Colors.transparent,
+                                      child: SizedBox(
+                                        child: ClipOval(
+                                          child: CachedNetworkImage(
+                                            imageUrl: kakaoUserProvider.user?.kakaoAccount?.profile?.profileImageUrl ?? '',
+                                            placeholder: (context, url) => new CircularProgressIndicator(),
+                                            errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+                                          ),
+                                        ),
+                                      )
+                                  ),
+                                  Text(' ${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.person, size: 40),
+                                  Icon(Icons.account_circle, size: 40,),
                                   Text('${widget.party.partyMemberNumCurrent}/${widget.party.partyMemberNumTotal}', style: TextStyle(fontSize: 25))
                                 ],
                               )
                             ]
                         ),
+                        Container(
+                          margin: EdgeInsets.all(1),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                                '${widget.party.partyRegDt[0]}/'+
-                                    '${widget.party.partyRegDt[1]}/'+
-                                    '${widget.party.partyRegDt[2]} '+
-                                    '${widget.party.partyRegDt[3]}:'+
-                                    '${widget.party.partyRegDt[4]}:'+
-                                    '${widget.party.partyRegDt[5]}'
+                              '${widget.party.partyRegDt[0]}/'+
+                                  '${widget.party.partyRegDt[1]}/'+
+                                  '${widget.party.partyRegDt[2]} '+
+                                  '${widget.party.partyRegDt[3]}:'+
+                                  '${widget.party.partyRegDt[4]}:'+
+                                  '${widget.party.partyRegDt[5]}',
                             )
                           ],
                         ),
@@ -355,12 +411,10 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                       // todo: map
                                     ),
                                   ),
-
                                 )
                               ],
                             )
                         ),
-
                       ],
                     ),
                   ),
@@ -378,16 +432,39 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
             children: [
               Flexible(flex: 2,
                 child: Container(
-                    height: 80,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    child: IconButton(onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ChatListMy()),
+                  height: 70,
+                  margin: EdgeInsets.only(bottom: 7),
+                  child: LikeButton(
+                    onTap: (bool isLiked) async {
+                      var bookmarkReqVO = BookmarkReqVO(
+                        userSeq: kakaoUserProvider.userResVO!.userSeq,
+                        partySeq: widget.party.partySeq,
+                      );
+                      if (isLiked) {
+                        // todo: delete bookmark
+                        await partyProvider.deleteBookmark(bookmarkReqVO);
+                      } else {
+                        // todo: insert bookmark
+                        await partyProvider.insertBookmark(bookmarkReqVO);
+                      }
+                      // setBookmark(kakaoUserProvider, partyProvider);
+                      setState(() {
+
+                      });
+                      loadSetState();
+                    },
+                    bubblesSize: 0,
+                    likeBuilder: (bool isLiked) {
+                      return Icon(
+                        bookmarkList.contains(widget.party.partySeq) ? Icons.favorite : Icons.favorite_border,
+                        color: Colors.deepPurpleAccent,
+                        size: 40,
                       );
                     },
-                      icon: Icon(Icons.question_answer, size: 35,),
-                    )),
+                    isLiked: bookmarkList.contains(widget.party.partySeq) ? true : false,
+                    // likeCount: widget.party.partyBookmarkCount,
+                  ),
+                ),
               ),
               Flexible(flex: 8,
                   child:
@@ -395,18 +472,18 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                          width: 150.0,
+                          width: 135.0,
                           height: 60.0,
                           margin: EdgeInsets.symmetric(vertical: 3.0),
                           child: SizedBox.expand(
                             child: OutlinedButton(
-                              onPressed: () {
-
+                              onPressed:  () async {
+                                _createChatRoom();
                               },
                               style: OutlinedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(
 
-                                    borderRadius: BorderRadius.all(Radius.circular(25))
+                                    borderRadius: BorderRadius.all(Radius.circular(15))
                                 ),
                                 side: BorderSide(width: 5.0, color: Colors.amber),
                               ),
@@ -421,20 +498,36 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                           )
                       ),
                       Container(
-                          width: 150.0,
+                          width: 135.0,
                           height: 60.0,
                           margin: EdgeInsets.symmetric(vertical: 3.0),
                           child: SizedBox.expand(
                             child: ElevatedButton(
-                              onPressed: () {
-
+                              onPressed: () async {
+                                if (partySeqListGuest.contains(widget.party.partySeq)) {
+                                  if (widget.party.partyStatus==2) {
+                                    // '파티 성사': 파티 성사
+                                    setState(() { });
+                                  } else {
+                                    // '참여 취소': 파티 모집중 & 참여 ㅇㅇ 상태
+                                    await partyProvider.deleteMyParty(widget.party.partySeq, kakaoUserProvider.userResVO!.userSeq);
+                                    setState(() { });
+                                  }
+                                } else {
+                                  // '파티 참여': 파티 모집중 & 참여 ㄴㄴ 상태
+                                  await partyProvider.insertMyParty(widget.party.partySeq, kakaoUserProvider.userResVO!.userSeq);
+                                  setState(() { });
+                                }
+                                loadSetState();
                               },
-                              style: OutlinedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(25))
-                                  )
+                              style: ElevatedButton.styleFrom(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(15))
+                                ),
+                                primary: partySeqListGuest.contains(widget.party.partySeq) ? widget.party.partyStatus==2 ? Colors.grey : Colors.cyan : Colors.pink,
                               ),
-                              child: Text('파티 참여',
+                              // todo: 파티 참여 / 참여 취소 (모집중일때만 가능)
+                              child: Text(partySeqListGuest.contains(widget.party.partySeq) ? (widget.party.partyStatus==2 ? '파티 성사' : '참여 취소') : '파티 참여',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
@@ -445,13 +538,10 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                           )
                       ),
                     ],
-
                   ))
             ],
           )
       ),
     );
-
-
   }
 }

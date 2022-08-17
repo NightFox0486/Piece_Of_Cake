@@ -33,6 +33,10 @@ class _ComposeMessageState extends State<ComposeMessage> {
         'created_at': Timestamp.now(),
         'username': userData['username'],
       });
+      await widget.database.collection('chats').doc(widget.chatId).set({
+        'last_text': _messageController.text,
+        'last_message_at': Timestamp.now(),
+      }, SetOptions(merge: true));
       _messageController.clear();
       setState(() => _message = '');
     } on FirebaseException catch (error) {

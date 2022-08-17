@@ -4,19 +4,15 @@ import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../chat/chat_list_my.dart';
+import '../../chat/chatroom_my_route.dart';
 import '../../models/kakao_login_model.dart';
-import '../../report.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 
+import '../../models/party_model.dart';
 import '../../vo.dart';
 
 class DlvDetailHost extends StatefulWidget {
-  // final PartyResVO partyResVO;
   final Party party;
-  // final UserResVO writer;
   const DlvDetailHost(
-      // {Key? key, required this.partyResVO, required this.writer})
       {Key? key, required this.party})
       : super(key: key
   );
@@ -27,13 +23,6 @@ class DlvDetailHost extends StatefulWidget {
 
 class _DlvDetailHostState extends State<DlvDetailHost> {
   int activeIndex = 0;
-  final urlImages = [
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-    'assets/images/harry.png',
-  ];
 
   final List<String> sins = [
     '부정적인 태도',
@@ -46,9 +35,35 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
 
   final formKey = GlobalKey<FormState>();
 
+  var urlImages = [];
+  List<int> partySeqListGuest = [];
+  List<PartyResVO> partyResVOGuestList = [];
+  List<int> bookmarkList = [];
+
+  void setList(kakaoUserProvider, partyProvider) async {
+    await partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO.userSeq);
+    partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
+    bookmarkList = partyProvider.bookmarkList;
+    await partyProvider.fetchPartyGuestList(kakaoUserProvider.userResVO.userSeq);
+    partyResVOGuestList = partyProvider.partyResVOGuestList;
+    await partyProvider.fetchPartyPhotoList(widget.party.partySeq);
+    urlImages = partyProvider.partyPhotoFileUrlList;
+    List<int> list = [];
+    for (PartyResVO partyResVO in partyResVOGuestList) {
+      list.add(partyResVO.partySeq);
+    }
+    partySeqListGuest = list;
+    setState(() {
+
+    });
+  }
+
+  void loadSetState() async {
+    setState(() {
+    });
+  }
 
   @override
-
   Widget buildImage(String urlImage, int index) => Container(
     margin: EdgeInsets.symmetric(horizontal: 6),
     color: Colors.white,
@@ -73,8 +88,8 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
 
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
-    // kakaoUserProvider.setCurrentPartyWriter(widget.partyResVO.userSeq);
-    // var writer = kakaoUserProvider.writer;
+    var partyProvider = Provider.of<PartyModel>(context);
+    setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('BuyDetailHost'),
@@ -88,105 +103,6 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
               );
             },
           ),
-          // IconButton(
-          //   icon: const Icon(Icons.gavel),
-          //   onPressed: () {
-          //     showDialog(
-          //         context: context,
-          //         builder: (_) => AlertDialog(
-          //           shape: RoundedRectangleBorder(
-          //               borderRadius:
-          //               BorderRadius.all(
-          //                   Radius.circular(10.0))),
-          //           content: Builder(
-          //             builder: (context) {
-          //               // Get available height and width of the build area of this widget. Make a choice depending on the size.
-          //               var height = MediaQuery.of(context).size.height;
-          //               var width = MediaQuery.of(context).size.width;
-          //
-          //               return SizedBox(
-          //                 height: height - 200,
-          //                 width: width - 100,
-          //                 child: Column(
-          //                   children: [
-          //                     Text('게시글 신고', style: TextStyle(fontSize: 25),),
-          //                     DropdownButtonHideUnderline(
-          //                       child: DropdownButtonFormField2(
-          //                         isExpanded: true,
-          //                         hint: Text(
-          //                           'Select Sin',
-          //                           style: TextStyle(
-          //                             fontSize: 25,
-          //                             color: Theme
-          //                                 .of(context)
-          //                                 .hintColor,
-          //                           ),
-          //                         ),
-          //                         items: sins
-          //                             .map((item) =>
-          //                             DropdownMenuItem<String>(
-          //                               value: item,
-          //                               child: Text(
-          //                                 item,
-          //                                 style: const TextStyle(
-          //                                   fontSize: 20,
-          //                                 ),
-          //                               ),
-          //                             ))
-          //                             .toList(),
-          //                         value: selectedValue,
-          //                         onChanged: (value) {
-          //                           setState(() {
-          //                             selectedValue = value as String;
-          //                           });
-          //                         },
-          //                         // buttonHeight: 40,
-          //                         // buttonWidth: 140,
-          //                         itemHeight: 40,
-          //                       ),
-          //                     ),
-          //                     Form(
-          //                         key: formKey,
-          //                         child: Expanded(
-          //                           child: SizedBox(
-          //                             child: TextFormField(
-          //                               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-          //                               maxLines: 20,
-          //                               onSaved: (val) {},
-          //                               validator: (val) {
-          //                                 return null;
-          //                               },
-          //                             ),
-          //                           ),
-          //                         )
-          //                     ),
-          //                     Container(
-          //                       margin: EdgeInsets.all(10),
-          //                     ),
-          //                     SizedBox(
-          //                       height: 50,
-          //                       width: 130,
-          //                       child: ElevatedButton(
-          //                           onPressed: () {
-          //
-          //                           },
-          //
-          //                           child: Text('신고하기',
-          //                               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
-          //                           ),
-          //                       ),
-          //                     )
-          //
-          //
-          //                   ],
-          //                 ),
-          //               );
-          //             },
-          //           ),
-          //         )
-          //     );
-          //   },
-          // ),
         ],
       ),
       body: Container(
@@ -233,7 +149,19 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.account_circle, size: 40,),
+                                  CircleAvatar(
+                                      radius: 18,
+                                      backgroundColor: Colors.transparent,
+                                      child: SizedBox(
+                                        child: ClipOval(
+                                          child: CachedNetworkImage(
+                                            imageUrl: kakaoUserProvider.user?.kakaoAccount?.profile?.profileImageUrl ?? '',
+                                            placeholder: (context, url) => new CircularProgressIndicator(),
+                                            errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+                                          ),
+                                        ),
+                                      )
+                                  ),
                                   Text('${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
                                 ],
                               ),
@@ -355,12 +283,10 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                                       // todo: map
                                     ),
                                   ),
-
                                 )
                               ],
                             )
                         ),
-
                       ],
                     ),
                   ),
@@ -378,12 +304,12 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
             children: [
               Flexible(flex: 2,
                 child: Container(
-                    height: 80,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    height: 70,
+                    margin: EdgeInsets.only(bottom: 7),
                     child: IconButton(onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ChatListMy()),
+                        MaterialPageRoute(builder: (context) => ChatRoomListMy()),
                       );
 
                     },
@@ -396,7 +322,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                          width: 150.0,
+                          width: 135.0,
                           height: 60.0,
                           margin: EdgeInsets.symmetric(vertical: 3.0),
                           child: SizedBox.expand(
@@ -409,9 +335,12 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
 
                                     borderRadius: BorderRadius.all(Radius.circular(25))
                                 ),
-                                side: BorderSide(width: 5.0, color: Colors.amber),
+                                side: BorderSide(
+                                  width: 5.0,
+                                  color: widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? Colors.grey : Colors.cyan,
+                                ),
                               ),
-                              child: Text('파티 취소',
+                              child: Text(widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? '취소 불가': '파티 취소',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
@@ -422,7 +351,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                           )
                       ),
                       Container(
-                          width: 150.0,
+                          width: 135.0,
                           height: 60.0,
                           margin: EdgeInsets.symmetric(vertical: 3.0),
                           child: SizedBox.expand(
@@ -430,12 +359,13 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                               onPressed: () {
 
                               },
-                              style: OutlinedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(25))
-                                  )
+                              style: ElevatedButton.styleFrom(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(25))
+                                ),
+                                primary: widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? Colors.pink : Colors.grey,
                               ),
-                              child: Text('파티 성공',
+                              child: Text(widget.party.partyMemberNumCurrent==widget.party.partyMemberNumTotal ? '파티 성공' : '모집중',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
@@ -446,13 +376,10 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                           )
                       ),
                     ],
-
                   ))
             ],
           )
       ),
     );
-
-
   }
 }
