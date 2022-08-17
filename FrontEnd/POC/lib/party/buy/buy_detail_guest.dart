@@ -10,8 +10,12 @@ import '../../chat/chat_list_my.dart';
 import '../../models/kakao_login_model.dart';
 import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:piece_of_cake/report.dart';
 import '../../vo.dart';
+import 'dart:async';
+import 'dart:convert';
 
 class BuyDetailGuest extends StatefulWidget {
   final Party party;
@@ -22,6 +26,24 @@ class BuyDetailGuest extends StatefulWidget {
 
   @override
   State<BuyDetailGuest> createState() => _BuyDetailGuestState();
+}
+
+
+Future insertReport(Report report) async {
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:9090/report/party'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(report),
+  );
+  // print('response.body: ${response.body}');
+  if (response.statusCode==200) {
+
+  } else {
+    throw Exception('Failed to insert report.');
+  }
+  // notifyListeners();
 }
 
 class _BuyDetailGuestState extends State<BuyDetailGuest> {
@@ -262,6 +284,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                               Row(
                                 children: [
                                   Icon(Icons.account_circle, size: 40,),
+
                                   Text('${widget.party.partyMemberNumCurrent}/${widget.party.partyMemberNumTotal}', style: TextStyle(fontSize: 25))
                                 ],
                               )

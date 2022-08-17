@@ -73,6 +73,9 @@
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/KYR/piece_of_cake/build" />
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/KYR/piece_of_cake/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/KYR/piece_of_cake/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/LSM/POC/build" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/LSM/POC/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/LSM/POC/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
