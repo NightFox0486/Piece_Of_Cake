@@ -5,11 +5,14 @@ import 'package:piece_of_cake/models/kakao_login_model.dart';
 import 'package:piece_of_cake/models/party_model.dart';
 import 'package:piece_of_cake/party/buy/buy_detail_guest.dart';
 import 'package:piece_of_cake/party/buy/buy_detail_host.dart';
+import 'package:piece_of_cake/party/buy/buy_party_list.dart';
 import 'package:piece_of_cake/party/dlv/dlv_detail_guest.dart';
 import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
+import 'package:piece_of_cake/party/dlv/dlv_party_list.dart';
 import 'package:piece_of_cake/party/party_list.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
+import 'package:piece_of_cake/party/pie/pie_party_list.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:provider/provider.dart';
 import 'user/my.dart';
@@ -30,6 +33,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Party> partyList = [];
   List<PartyResVO> partyResVOList = [];
+  List<Party> piePartyList = [];
+  List<PartyResVO> piePartyResVOList = [];
+  List<Party> buyPartyList = [];
+  List<PartyResVO> buyPartyResVOList = [];
+  List<Party> dlvPartyList = [];
+  List<PartyResVO> dlvPartyResVOList = [];
   List<int> bookmarkList = [];
   List<Party> bookmarkPartyList = [];
   List<PartyResVO> bookmarkPartyResVOList = [];
@@ -39,6 +48,12 @@ class _HomePageState extends State<HomePage> {
   void setList(kakaoUserProvider, partyProvider) async {
     await partyProvider.fetchPartyList();
     partyResVOList = partyProvider.partyResVOList;
+    await partyProvider.fetchPiePartyList();
+    piePartyResVOList = partyProvider.buyPartyResVOList;
+    await partyProvider.fetchBuyPartyList();
+    buyPartyResVOList = partyProvider.buyPartyResVOList;
+    await partyProvider.fetchDlvPartyList();
+    dlvPartyResVOList = partyProvider.buyPartyResVOList;
     await partyProvider.fetchBookmarkPartyList(kakaoUserProvider.userResVO.userSeq);
     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
     partyProvider.fetchBookmarkList(kakaoUserProvider.userResVO.userSeq);
@@ -74,6 +89,93 @@ class _HomePageState extends State<HomePage> {
       list.add(party);
     }
     partyList = list;
+    list = [];
+    for (PartyResVO partyResVO in piePartyResVOList) {
+      await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
+      UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
+      var party = Party(
+          partySeq: partyResVO.partySeq,
+          userResVO: userResVO,
+          partyCode: partyResVO.partyCode,
+          partyTitle: partyResVO.partyTitle,
+          partyContent: partyResVO.partyContent,
+          partyBookmarkCount: partyResVO.partyBookmarkCount,
+          partyRegDt: partyResVO.partyRegDt,
+          partyUpdDt: partyResVO.partyUpdDt,
+          partyRdvDt: partyResVO.partyRdvDt,
+          partyRdvLat: partyResVO.partyRdvLat,
+          partyRdvLng: partyResVO.partyRdvLng,
+          partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+          partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+          partyAddr: partyResVO.partyAddr,
+          partyAddrDetail: partyResVO.partyAddrDetail,
+          partyStatus: partyResVO.partyStatus,
+          itemLink: partyResVO.itemLink,
+          totalAmount: partyResVO.totalAmount,
+          partyMainImageUrl: partyResVO.partyMainImageUrl
+      );
+      // partyList.add(party);
+      list.add(party);
+    }
+    piePartyList = list;
+    list = [];
+    for (PartyResVO partyResVO in buyPartyResVOList) {
+      await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
+      UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
+      var party = Party(
+          partySeq: partyResVO.partySeq,
+          userResVO: userResVO,
+          partyCode: partyResVO.partyCode,
+          partyTitle: partyResVO.partyTitle,
+          partyContent: partyResVO.partyContent,
+          partyBookmarkCount: partyResVO.partyBookmarkCount,
+          partyRegDt: partyResVO.partyRegDt,
+          partyUpdDt: partyResVO.partyUpdDt,
+          partyRdvDt: partyResVO.partyRdvDt,
+          partyRdvLat: partyResVO.partyRdvLat,
+          partyRdvLng: partyResVO.partyRdvLng,
+          partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+          partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+          partyAddr: partyResVO.partyAddr,
+          partyAddrDetail: partyResVO.partyAddrDetail,
+          partyStatus: partyResVO.partyStatus,
+          itemLink: partyResVO.itemLink,
+          totalAmount: partyResVO.totalAmount,
+          partyMainImageUrl: partyResVO.partyMainImageUrl
+      );
+      // partyList.add(party);
+      list.add(party);
+    }
+    buyPartyList = list;
+    list = [];
+    for (PartyResVO partyResVO in dlvPartyResVOList) {
+      await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
+      UserResVO userResVO = kakaoUserProvider.currentPartyWriter;
+      var party = Party(
+          partySeq: partyResVO.partySeq,
+          userResVO: userResVO,
+          partyCode: partyResVO.partyCode,
+          partyTitle: partyResVO.partyTitle,
+          partyContent: partyResVO.partyContent,
+          partyBookmarkCount: partyResVO.partyBookmarkCount,
+          partyRegDt: partyResVO.partyRegDt,
+          partyUpdDt: partyResVO.partyUpdDt,
+          partyRdvDt: partyResVO.partyRdvDt,
+          partyRdvLat: partyResVO.partyRdvLat,
+          partyRdvLng: partyResVO.partyRdvLng,
+          partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+          partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+          partyAddr: partyResVO.partyAddr,
+          partyAddrDetail: partyResVO.partyAddrDetail,
+          partyStatus: partyResVO.partyStatus,
+          itemLink: partyResVO.itemLink,
+          totalAmount: partyResVO.totalAmount,
+          partyMainImageUrl: partyResVO.partyMainImageUrl
+      );
+      // partyList.add(party);
+      list.add(party);
+    }
+    dlvPartyList = list;
     list = [];
     for (PartyResVO partyResVO in bookmarkPartyResVOList) {
       await kakaoUserProvider.setCurrentPartyWriter(partyResVO.userSeq);
@@ -226,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PartyList()),
+                          MaterialPageRoute(builder: (context) => PiePartyList()),
                         );
                       },
                       child: Text('소분', style: TextStyle(fontSize: 20),)
@@ -239,7 +341,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PartyList()),
+                          MaterialPageRoute(builder: (context) => BuyPartyList()),
                         );
                       },
                       child: Text('공구', style: TextStyle(fontSize: 20),)
@@ -252,7 +354,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PartyList()),
+                          MaterialPageRoute(builder: (context) => DlvPartyList()),
                         );
                       },
                       child: Text('배달', style: TextStyle(fontSize: 20),)
