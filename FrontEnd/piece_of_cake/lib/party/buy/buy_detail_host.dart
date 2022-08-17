@@ -10,6 +10,7 @@ import '../../models/kakao_login_model.dart';
 import '../../vo.dart';
 import 'buy_modify.dart';
 
+//
 class BuyDetailHost extends StatefulWidget {
   final Party party;
   const BuyDetailHost({Key? key, required this.party}) : super(key: key);
