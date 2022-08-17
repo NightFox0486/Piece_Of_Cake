@@ -14,11 +14,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import '../../vo.dart';
 
 class BuyDetailGuest extends StatefulWidget {
-  // final PartyResVO partyResVO;
   final Party party;
-  // final UserResVO writer;
   const BuyDetailGuest(
-      // {Key? key, required this.partyResVO, required this.writer})
       {Key? key, required this.party})
       : super(key: key
   );
@@ -47,15 +44,17 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
     color: Colors.white,
     child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: Image.asset(
-            urlImage,
-            fit: BoxFit.cover
-        )
+        child: CachedNetworkImage(
+          imageUrl: urlImage,
+          placeholder: (context, url) => new CircularProgressIndicator(),
+          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+          fit: BoxFit.fill,
+        ),
     ),
 
   );
 
-  List<String> urlImages = [];
+  var urlImages = [];
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
       activeIndex: activeIndex,
@@ -76,6 +75,8 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
     bookmarkList = partyProvider.bookmarkList;
     await partyProvider.fetchPartyGuestList(kakaoUserProvider.userResVO.userSeq);
     partyResVOGuestList = partyProvider.partyResVOGuestList;
+    await partyProvider.fetchPartyPhotoList(widget.party.partySeq);
+    urlImages = partyProvider.partyPhotoFileUrlList;
     List<int> list = [];
     for (PartyResVO partyResVO in partyResVOGuestList) {
       list.add(partyResVO.partySeq);
@@ -88,29 +89,17 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
 
   void loadSetState() async {
     setState(() {
-
     });
-
   }
 
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
     setList(kakaoUserProvider, partyProvider);
-    // setBookmark(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('BuyDetailGuest'),
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.edit),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => BuyCreate()),
-          //     );
-          //   },
-          // ),
           IconButton(
             icon: const Icon(Icons.gavel),
             onPressed: () {
@@ -199,8 +188,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                   ),
                                 ),
                               )
-
-
                             ],
                           ),
                         );
@@ -393,12 +380,10 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                       // todo: map
                                     ),
                                   ),
-
                                 )
                               ],
                             )
                         ),
-
                       ],
                     ),
                   ),
@@ -418,8 +403,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                 child: Container(
                     height: 70,
                     margin: EdgeInsets.only(bottom: 7),
-                    child:
-                      LikeButton(
+                    child: LikeButton(
                         onTap: (bool isLiked) async {
                           var bookmarkReqVO = BookmarkReqVO(
                             userSeq: kakaoUserProvider.userResVO!.userSeq,
@@ -523,13 +507,10 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                           )
                       ),
                     ],
-
                   ))
             ],
           )
       ),
     );
-
-
   }
 }
