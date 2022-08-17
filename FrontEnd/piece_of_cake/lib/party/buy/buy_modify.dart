@@ -26,7 +26,7 @@ class Arguments {
 }
 
 class BuyModify extends StatefulWidget {
-  final party;
+  final Party party;
   const BuyModify({Key? key, required this.party}) : super(key: key);
 
   @override
@@ -71,11 +71,8 @@ class _BuyModifyState extends State<BuyModify> {
         userSeq: kakaoUserProvider.userResVO!.userSeq);
     // print(name);
     final response = await http.patch(
-      Uri.parse('http://i7e203.p.ssafy.io:9090/party'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(partyReqVO),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${widget.party.partySeq}'),
+      body: widget.party,
     );
     // print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
@@ -169,15 +166,19 @@ class _BuyModifyState extends State<BuyModify> {
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '제품링크',
+                            hintText: widget.party.itemLink,
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              itemLink = val as String;
+                              if (val == null || val.isEmpty) {
+                                itemLink = widget.party.itemLink;
+                              } else {
+                                itemLink = val as String;
+                              }
                             });
                           },
                           validator: (val) {
@@ -198,21 +199,22 @@ class _BuyModifyState extends State<BuyModify> {
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '제목',
+                            hintText: widget.party.partyTitle,
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              name = val as String;
+                              if (val == null || val.isEmpty) {
+                                name = widget.party.partyTitle;
+                              } else {
+                                name = val as String;
+                              }
                             });
                           },
                           validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return "Please enter something";
-                            }
                             return null;
                           },
                         ),
@@ -226,22 +228,23 @@ class _BuyModifyState extends State<BuyModify> {
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '총 가격',
+                            hintText: widget.party.totalAmount,
                             suffixText: '원',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              totalAmount = val as String;
+                              if (val == null || val.isEmpty) {
+                                totalAmount = widget.party.totalAmount;
+                              } else {
+                                totalAmount = val as String;
+                              }
                             });
                           },
                           validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return "Please enter something";
-                            }
                             return null;
                           },
                         ),
@@ -255,22 +258,25 @@ class _BuyModifyState extends State<BuyModify> {
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '소분 인원',
+                            hintText:
+                                widget.party.partyMemberNumTotal.toString(),
                             suffixText: '명',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              memberNumTotal = int.parse(val!);
+                              if (val == null || val.isEmpty) {
+                                memberNumTotal =
+                                    widget.party.partyMemberNumTotal;
+                              } else {
+                                memberNumTotal = int.parse(val!);
+                              }
                             });
                           },
                           validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return "Please enter something";
-                            }
                             return null;
                           },
                         ),
@@ -286,9 +292,9 @@ class _BuyModifyState extends State<BuyModify> {
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           child: TextFormField(
                             autovalidateMode: AutovalidateMode.always,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: '내용',
+                              hintText: widget.party.partyContent,
                             ),
                             maxLines: 5,
                             keyboardType: TextInputType.multiline,
@@ -296,13 +302,14 @@ class _BuyModifyState extends State<BuyModify> {
                                 fontWeight: FontWeight.normal, fontSize: 20),
                             onSaved: (val) {
                               setState(() {
-                                content = val as String;
+                                if (val == null || val.isEmpty) {
+                                  content = widget.party.partyContent;
+                                } else {
+                                  content = val as String;
+                                }
                               });
                             },
                             validator: (val) {
-                              if (val == null || val.isEmpty) {
-                                return "Please enter something";
-                              }
                               return null;
                             },
                           ),
@@ -322,7 +329,7 @@ class _BuyModifyState extends State<BuyModify> {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  Rdv_Address,
+                  widget.party.partyAddr,
                   style: TextStyle(fontSize: 20),
                 )),
           ),

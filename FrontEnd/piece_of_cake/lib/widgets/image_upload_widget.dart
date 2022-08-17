@@ -80,7 +80,7 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     if (index == 0) {
       var partyMainImageUrl = url;
       final response = await http.patch(
-        Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+        Uri.parse('http://i7e203.p.ssafy.io:9090/partyimage/${partySeq}'),
         // headers: <String, String>{
         //   'Content-Type': 'application/json; charset=UTF-8',
         // },
