@@ -124,6 +124,18 @@ class PartyModel with ChangeNotifier {
     // notifyListeners();
   }
 
+  Future doneParty(int partySeq) async {
+    final response = await http.delete(
+      Uri.parse('http://10.0.2.2:9090/party/{partySeq}'),
+    );
+    if (response.statusCode==200) {
+      // 할 거 없 ?
+    } else {
+      throw Exception('Failed to process party done.');
+    }
+    // notifyListeners();
+  }
+
   Future fetchBookmarkPartyList(userSeq) async {
     final response = await http.get(Uri.parse('http://10.0.2.2:9090/bookmark/${userSeq}'));
     if (response.statusCode==200) {
