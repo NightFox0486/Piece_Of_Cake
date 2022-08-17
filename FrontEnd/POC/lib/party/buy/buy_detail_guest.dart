@@ -2,20 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:piece_of_cake/models/party_model.dart';
-import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../chat/chat_list_my.dart';
 import '../../models/kakao_login_model.dart';
-import '../../report.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:piece_of_cake/report.dart';
+
 import '../../vo.dart';
-import 'dart:async';
-import 'dart:convert';
 
 class BuyDetailGuest extends StatefulWidget {
   final Party party;
@@ -73,7 +66,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
           fit: BoxFit.fill,
         ),
     ),
-
   );
 
   var urlImages = [];
@@ -109,7 +101,9 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
     });
   }
 
-  void loadSetState() async {
+  void loadSetState(partyProvider, partySeq) async {
+    await partyProvider.fetchDetailParty(partySeq);
+    widget.party.partyMemberNumCurrent = partyProvider.currentParty.partyMemberNumCurrent;
     setState(() {
     });
   }
@@ -220,7 +214,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                       insertReport(report);
                                     });
                                   },
-
                                   child: Text('신고하기',
                                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
                                   ),
@@ -300,7 +293,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                               Row(
                                 children: [
                                   Icon(Icons.account_circle, size: 40,),
-
                                   Text('${widget.party.partyMemberNumCurrent}/${widget.party.partyMemberNumTotal}', style: TextStyle(fontSize: 25))
                                 ],
                               )
@@ -456,10 +448,8 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                             await partyProvider.insertBookmark(bookmarkReqVO);
                           }
                           // setBookmark(kakaoUserProvider, partyProvider);
-                          setState(() {
-
-                          });
-                          loadSetState();
+                          setState(() {});
+                          loadSetState(partyProvider, widget.party.partySeq);
                         },
                         bubblesSize: 0,
                         likeBuilder: (bool isLiked) {
@@ -490,7 +480,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                               },
                               style: OutlinedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(
-
                                     borderRadius: BorderRadius.all(Radius.circular(15))
                                 ),
                                 side: BorderSide(width: 5.0, color: Colors.amber),
@@ -515,18 +504,16 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                 if (partySeqListGuest.contains(widget.party.partySeq)) {
                                   if (widget.party.partyStatus==2) {
                                     // '파티 성사': 파티 성사
-                                    setState(() { });
                                   } else {
                                     // '참여 취소': 파티 모집중 & 참여 ㅇㅇ 상태
                                     await partyProvider.deleteMyParty(widget.party.partySeq, kakaoUserProvider.userResVO!.userSeq);
-                                    setState(() { });
                                   }
                                 } else {
                                   // '파티 참여': 파티 모집중 & 참여 ㄴㄴ 상태
                                   await partyProvider.insertMyParty(widget.party.partySeq, kakaoUserProvider.userResVO!.userSeq);
-                                  setState(() { });
                                 }
-                                loadSetState();
+                                setState(() { });
+                                loadSetState(partyProvider, widget.party.partySeq);
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(

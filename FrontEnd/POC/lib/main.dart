@@ -5,6 +5,7 @@ import 'package:piece_of_cake/kakao_login_page.dart';
 import 'package:provider/provider.dart';
 import 'models/kakao_login_model.dart';
 import 'models/party_model.dart';
+import 'models/palette.dart';
 import 'user/my.dart';
 import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
@@ -30,6 +31,7 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (_) => KakaoLoginModel()),
           ChangeNotifierProvider(create: (_) => PartyModel()),
+          ChangeNotifierProvider(create: (_) => Palette()),
         ],
         child: MyApp(),
       )
@@ -40,12 +42,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var palette = Provider.of<Palette>(context);
     return MaterialApp(
       // Remove the debug banner
         debugShowCheckedModeBanner: false,
         title: 'Piece Of Cake',
         theme: ThemeData(
-          primarySwatch: Colors.amber,
+          fontFamily: 'DungGeunMo',
+          primarySwatch: palette.createMaterialColor(Color(0xffffffff)),
+          // primarySwatch: palette.createMaterialColor(Color(0xffC4DCBF)),
+          // canvasColor: palette.createMaterialColor(Color(0xffFFFBE4)),
         ),
         home: const KakaoLoginPage()
     );
@@ -64,8 +70,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
 
-  // final kakaoLoginViewModel = KakaoLoginViewModel(KakaoLogin());
-
   int index = 0;
   final screens = [
     HomePage(),
@@ -76,11 +80,28 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    var palette = Provider.of<Palette>(context);
     final items = <Widget>[
-      Icon(Icons.home, size:30),
-      Icon(Icons.celebration, size:30),
-      Icon(Icons.question_answer, size:30),
-      Icon(Icons.person, size:30),
+      const Icon(
+        Icons.home,
+        size:30,
+        color: Colors.white,
+      ),
+      const Icon(
+        Icons.celebration,
+        size:30,
+        color: Colors.white,
+      ),
+      const Icon(
+        Icons.question_answer,
+        size:30,
+        color: Colors.white,
+      ),
+      const Icon(
+        Icons.person,
+        size:30,
+        color: Colors.white,
+      ),
 
     ];
 
@@ -91,52 +112,23 @@ class _MainPageState extends State<MainPage> {
         items: items,
         key: navigationKey,
         backgroundColor: Colors.transparent,
-        color: Colors.amber,
+        // color: Colors.amber,
+        color: palette.createMaterialColor(Color(0xff8581E1)),
         height: 55,
         onTap: (index) => setState(() => this.index = index),
       ),
-      // floatingActionButton: ExpandableFab(
-      //     distance: 120,
-      //     children: [
-      //       ElevatedButton.icon(
-      //         onPressed: () {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => DlvCreate()),
-      //           );
-      //         },
-      //         icon: Icon(Icons.delivery_dining),
-      //         label: Text('배달')
-      //       ),
-      //       ElevatedButton.icon(
-      //           onPressed: () {
-      //             Navigator.push(
-      //               context,
-      //               MaterialPageRoute(builder: (context) => BuyCreate()),
-      //             );
-      //           },
-      //           icon: Icon(Icons.shopping_bag),
-      //           label: Text('공구')
-      //       ),
-      //       ElevatedButton.icon(
-      //           onPressed: () {
-      //             Navigator.push(
-      //               context,
-      //               MaterialPageRoute(builder: (context) => PieCreate()),
-      //             );
-      //           },
-      //           icon: Icon(Icons.safety_divider),
-      //           label: Text('소분')
-      //       ),
-      //     ]),
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         activeIcon: Icons.close,
         spacing: 10,
         overlayOpacity: 0.7,
         curve: Curves.bounceIn,
-        backgroundColor: Colors.amber,
-        activeBackgroundColor: Colors.redAccent,
+        // backgroundColor: Colors.amber,
+        foregroundColor: Colors.white,
+        backgroundColor: palette.createMaterialColor(Color(0xffD1ADE6)),
+        // activeBackgroundColor: Colors.redAccent,
+        activeForegroundColor: Colors.white,
+        activeBackgroundColor: palette.createMaterialColor(Color(0xffFF9EB1)),
         elevation: 16.0,
         children: [
           SpeedDialChild(
@@ -146,10 +138,10 @@ class _MainPageState extends State<MainPage> {
                 MaterialPageRoute(builder: (context) => DlvCreate()),
               );
             },
-            child: Icon(Icons.delivery_dining, size: 30,),
+            child: Icon(Icons.delivery_dining, size: 25,),
             label: '배달',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+            labelStyle: TextStyle(fontSize: 15),
+            backgroundColor: palette.createMaterialColor(Color(0xffFFF3DA)),
           ),
           SpeedDialChild(
               onTap: () {
@@ -158,10 +150,10 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => BuyCreate()),
                 );
               },
-            child: Icon(Icons.shopping_bag, size: 30,),
+            child: Icon(Icons.shopping_bag, size: 25,),
             label: '공구',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+            labelStyle: TextStyle(fontSize: 15),
+            backgroundColor: palette.createMaterialColor(Color(0xffEAF6BD)),
           ),
           SpeedDialChild(
               onTap: () {
@@ -170,10 +162,10 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(builder: (context) => PieCreate()),
                 );
               },
-            child: Icon(Icons.safety_divider, size: 30,),
+            child: Icon(Icons.safety_divider, size: 25,),
             label: '소분',
-            labelStyle: TextStyle(fontSize: 20),
-            backgroundColor: Colors.amber
+            labelStyle: TextStyle(fontSize: 15),
+            backgroundColor: palette.createMaterialColor(Color(0xffCCF5FC)),
           ),
         ],
       ),

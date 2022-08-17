@@ -107,23 +107,23 @@ class _BookmarkListState extends State<BookmarkList> {
     return Scaffold(
       appBar: AppBar(
           title: Text('Bookmark List'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Notice()),
-                  );
-                },
-                icon: Icon(Icons.notifications)
-            ),
-            IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: customSearch()
-                  );
-                },
-                icon: Icon(Icons.search))
-          ]
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(builder: (context) => Notice()),
+          //         );
+          //       },
+          //       icon: Icon(Icons.notifications)
+          //   ),
+          //   IconButton(
+          //       onPressed: () {
+          //         showSearch(context: context, delegate: customSearch()
+          //         );
+          //       },
+          //       icon: Icon(Icons.search))
+          // ]
       ),
       body: ListView(
         children: [

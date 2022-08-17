@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
@@ -126,9 +127,13 @@ class _PartyListState extends State<PartyList> {
                       flex: 4,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/harry.png',
+                        child: CachedNetworkImage(
+                          imageUrl: party.partyMainImageUrl,
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                           fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
                         ),
                       ),
                     ),

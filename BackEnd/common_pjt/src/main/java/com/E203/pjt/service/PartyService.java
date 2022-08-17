@@ -9,9 +9,15 @@ import com.E203.pjt.model.entity.Party;
 
 public interface PartyService {
   List<PartyResVO> listParty();
+  List<PartyResVO> listPieParty();
+  List<PartyResVO> listBuyParty();
+  List<PartyResVO> listDlvParty();
   PartyResVO createParty(PartyReqVO partyReqVO);
   PartyResVO detailParty(Integer partySeq);
   void deleteParty(Integer partySeq);
+
+  // 파티 호스트가 파티 완료 누르면 처리되는 사항
+  Boolean doneParty(Integer partySeq);
 
   // 최근 파티 목록
   List<PartyResVO> listLatestParty();

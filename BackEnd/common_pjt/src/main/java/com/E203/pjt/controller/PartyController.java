@@ -28,6 +28,24 @@ public class PartyController {
     return partyResVOList;
   }
 
+  @GetMapping(value = "/party/pie")
+  public List<PartyResVO> listPieParty() {
+    List<PartyResVO> piePartyResVOList = partyService.listPieParty();
+    return piePartyResVOList;
+  }
+
+  @GetMapping(value = "/party/buy")
+  public List<PartyResVO> listBuyParty() {
+    List<PartyResVO> buyPartyResVOList = partyService.listBuyParty();
+    return buyPartyResVOList;
+  }
+
+  @GetMapping(value = "/party/dlv")
+  public List<PartyResVO> listDlvParty() {
+    List<PartyResVO> dlvPartyResVOList = partyService.listDlvParty();
+    return dlvPartyResVOList;
+  }
+
   @PostMapping(value = "/party")
   public PartyResVO createParty(@RequestBody PartyReqVO partyReqVO) {
 //    System.out.println("[PartyController] createParty() called");
@@ -45,10 +63,16 @@ public class PartyController {
     return partyResVO;
   }
 
+  @DeleteMapping(value = "/party/{partySeq}")
+  public void cancelParty(@PathVariable Integer partySeq) {
+    partyService.deleteParty(partySeq);
+  }
+
   // 파티 호스트가 파티 완료를 누르면 !!!
-//  public void doneParty(@PathVariable Integer partySeq) {
-//
-//  }
+  @PostMapping(value = "/party/{partySeq}")
+  public Boolean doneParty(@PathVariable Integer partySeq) {
+    return partyService.doneParty(partySeq);
+  }
 
   @GetMapping(value = "/latest-party")
   public List<PartyResVO> listLatestParty() {

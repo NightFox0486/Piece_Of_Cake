@@ -33,7 +33,7 @@ class KakaoLoginModel with ChangeNotifier {
       );
       final response = await http.post(
         // Uri.parse('http://localhost:9090/kakao-login'),
-        Uri.parse('http://i7e203.p.ssafy.io:9090/kakao-login'),
+        Uri.parse('http://10.0.2.2:9090/kakao-login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -56,7 +56,7 @@ class KakaoLoginModel with ChangeNotifier {
   Future setCurrentPartyWriter(int userSeq) async {
     // print('[KakaoLoginModel] setCurrentPartyWriter(int userSeq) called');
     final response = await http.get(
-        Uri.parse('http://i7e203.p.ssafy.io:9090/user/${userSeq}')
+        Uri.parse('http://10.0.2.2:9090/user/${userSeq}')
     );
     if (response.statusCode==200) {
       UserResVO userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));

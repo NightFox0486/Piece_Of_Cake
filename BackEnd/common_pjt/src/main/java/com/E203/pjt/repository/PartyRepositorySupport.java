@@ -38,6 +38,42 @@ public class PartyRepositorySupport {
         return result;
     }
 
+    // 파티 목록 최신순
+    public List<Party> dynamicQueryPiePartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.ne(0)
+                        .and(party.partyCode.eq("001")))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
+    // 파티 목록 최신순
+    public List<Party> dynamicQueryBuyPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.ne(0)
+                        .and(party.partyCode.eq("002")))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
+    // 파티 목록 최신순
+    public List<Party> dynamicQueryDlvPartyList() {
+        List<Party> result = jpaQueryFactory
+                .select(party)
+                .from(party)
+                .where(party.partyStatus.ne(0)
+                        .and(party.partyCode.eq("003")))
+                .orderBy(party.partyRegDt.desc())
+                .fetch();
+        return result;
+    }
+
     // 최신 파티 목록 10개
     public List<Party> dynamicQueryLatestPartyList() {
         List<Party> result = jpaQueryFactory
