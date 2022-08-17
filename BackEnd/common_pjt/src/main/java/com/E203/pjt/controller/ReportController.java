@@ -17,7 +17,7 @@ public class ReportController {
     private final ReportService reportService;
 
     //유저신고
-    @PostMapping(value = "/chat")
+    @PostMapping(value = "/chat/")
     public void createReportUser(@RequestBody Report report) {
         System.out.println(report);
         System.out.println(reportService.createReportUser(report));
