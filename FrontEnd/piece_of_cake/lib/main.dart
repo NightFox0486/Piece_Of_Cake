@@ -114,10 +114,11 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.transparent,
         // color: Colors.amber,
         color: palette.createMaterialColor(Color(0xff8581E1)),
-        height: 52,
+        height: 50,
         onTap: (index) => setState(() => this.index = index),
       ),
       floatingActionButton: SpeedDial(
+        buttonSize: Size(40.0, 40.0),
         icon: Icons.add,
         activeIcon: Icons.close,
         spacing: 10,
@@ -129,7 +130,7 @@ class _MainPageState extends State<MainPage> {
         // activeBackgroundColor: Colors.redAccent,
         activeForegroundColor: Colors.white,
         activeBackgroundColor: palette.createMaterialColor(Color(0xffFF9EB1)),
-        elevation: 16.0,
+        elevation: 6.0,
         children: [
           SpeedDialChild(
             onTap: () {
