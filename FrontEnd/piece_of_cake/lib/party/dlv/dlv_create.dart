@@ -70,7 +70,7 @@ class _DlvCreateState extends State<DlvCreate> {
         partyRdvLng: this._center.longitude.toString(),
         partyTitle: name!,
         totalAmount: this.totalAmount!,
-        partyMainImageUrl: 'assets/images/harry.png',
+        partyMainImageUrl: 'https://firebasestorage.googleapis.com/v0/b/chat-ad85f.appspot.com/o/harry.png?alt=media&token=30bbb443-7e05-4311-9643-f90e66da4ad9',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
     // print(name);
     final response = await http.post(
