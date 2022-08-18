@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../chat/chatroom_party_route.dart';
+import '../../chat/chat_list_my.dart';
 import '../../models/kakao_login_model.dart';
 import '../../models/party_model.dart';
 import '../../vo.dart';
@@ -52,21 +53,29 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
       list.add(partyResVO.partySeq);
     }
     partySeqListGuest = list;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void cancelParty(kakaoUserProvider, partyProvider, partySeq) async {
     await partyProvider.cancelParty(partySeq);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void setPartySuccess(kakaoUserProvider, partyProvider, partySeq) async {
     await partyProvider.doneParty(partySeq);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void loadSetState() async {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -74,31 +83,44 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
     margin: EdgeInsets.symmetric(horizontal: 6),
     color: Colors.white,
     child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Image.asset(
-            urlImage,
-            fit: BoxFit.cover
-        )
+      borderRadius: BorderRadius.circular(20),
+      child: CachedNetworkImage(
+        imageUrl: widget.party.partyMainImageUrl,
+        placeholder: (context, url) => new CircularProgressIndicator(),
+        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+        fit: BoxFit.cover,
+        width: 180,
+        height: 180,
+      ),
     ),
 
   );
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
-      activeIndex: activeIndex,
-      count: urlImages.length,
-      effect: JumpingDotEffect(
-        dotWidth: 20,
-        dotHeight: 20,
-      )
-  );
+  // Widget buildIndicator() => AnimatedSmoothIndicator(
+  //     activeIndex: activeIndex,
+  //     count: urlImages.length,
+  //     effect: JumpingDotEffect(
+  //       dotWidth: 20,
+  //       dotHeight: 20,
+  //     )
+  // );
 
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('DlvDetailHost'),
+        title: Text(
+          '배달 파티',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -142,7 +164,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                           },
                         ),
                         const SizedBox(height: 32),
-                        buildIndicator(),
+                        // buildIndicator(),
                       ],
                     ),
                   ),
@@ -315,7 +337,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
                     child: IconButton(onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ChatRoomListParty(partySeq: widget.party.partySeq,)),
+                        MaterialPageRoute(builder: (context) => ChatListMy()),
                       );
 
                     },

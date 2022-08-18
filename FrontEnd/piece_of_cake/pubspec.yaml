@@ -35,18 +35,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   curved_navigation_bar: ^1.0.3
-  kakao_flutter_sdk_user: ^1.2.1
+  kakao_flutter_sdk: ^1.2.1
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^0.3.0-nullsafety.0
   like_button: ^2.0.4
   flutter_speed_dial: ^6.0.0
-  dropdown_button2: ^1.7.1
-  syncfusion_flutter_gauges: ^20.2.43
-  kakao_flutter_sdk: ^1.2.1
   provider: ^6.0.3
   flutter_plugin_android_lifecycle: ^2.0.7
   cached_network_image: ^3.2.1
   flutter_native_splash: ^2.2.7
+  dropdown_button2: ^1.7.1
+  syncfusion_flutter_gauges: ^20.2.43
   firebase_core: ^1.20.0
   firebase_storage: ^10.3.4
   image_picker: ^0.8.5+3
@@ -56,6 +55,9 @@ dependencies:
   google_maps_flutter: ^2.1.10
   geolocator: ^8.0.1
   permission_handler: ^8.3.0
+  bootpay: ^4.2.5
+  bootpay_bio: ^4.2.2
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
@@ -97,39 +99,6 @@ flutter:
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
-  fonts:
-    - family: Hahmlet
-      fonts:
-        - asset: fonts/Hahmlet/static/Hahmlet-Black.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Bold.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-ExtraBold.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-ExtraLight.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Light.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Medium.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Regular.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-SemiBold.ttf
-        - asset: fonts/Hahmlet/static/Hahmlet-Thin.ttf
-    - family: DungGeunMo
-      fonts:
-        - asset: fonts/DungGeunMo.ttf
-    - family: IBM_Plex_Sans_KR
-      fonts:
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Bold.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-ExtraLight.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Light.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Medium.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Regular.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-SemiBold.ttf
-        - asset: fonts/IBM_Plex_Sans_KR/IBMPlexSansKR-Thin.ttf
-    - family: Noto_Sans_KR
-      fonts:
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Black.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Bold.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Light.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Medium.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Regular.otf
-        - asset: fonts/Noto_Sans_KR/NotoSansKR-Thin.otf
-
   # example:
   # fonts:
   #   - family: Schyler

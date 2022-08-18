@@ -52,21 +52,29 @@ class _PieDetailHostState extends State<PieDetailHost> {
       list.add(partyResVO.partySeq);
     }
     partySeqListGuest = list;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void cancelParty(kakaoUserProvider, partyProvider, partySeq) async {
     await partyProvider.cancelParty(partySeq);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void setPartySuccess(kakaoUserProvider, partyProvider, partySeq) async {
     await partyProvider.doneParty(partySeq);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void loadSetState() async {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

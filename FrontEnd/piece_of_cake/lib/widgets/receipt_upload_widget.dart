@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:piece_of_cake/firebase_options.dart';
 import 'package:piece_of_cake/vo.dart';
+
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   await Firebase.initializeApp(
@@ -18,7 +19,7 @@ import 'package:piece_of_cake/vo.dart';
 //   final storage = FirebaseStorage.instance;
 //   runApp(const ReceiptUploadWidget());
 // }
-
+//
 GlobalKey<_ReceiptUploadState> receiptKey = GlobalKey();
 
 class ReceiptUploadWidget extends StatefulWidget {
@@ -61,22 +62,22 @@ class _ReceiptUploadState extends State<ReceiptUploadWidget> {
       await ref.putFile(io.File(file.path), metadata);
     }
     String url = await ref.getDownloadURL();
-    if (url != null) {
-      ReceiptUploadReqVO receiptUploadReqVO = ReceiptUploadReqVO(
-        fileName: ref.fullPath,
-        fileUrl: url,
-        partySeq: partySeq,
-      );
+    // if (url != null) {
+    //   ReceiptUploadReqVO receiptUploadReqVO = ReceiptUploadReqVO(
+    //     fileName: ref.fullPath,
+    //     fileUrl: url,
+    //     partySeq: partySeq,
+    //   );
 
-      final response = await http.post(
-        Uri.parse('http://i7e203.p.ssafy.io:9090/photo'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(receiptUploadReqVO),
-      );
-      print('response.body: ${response.body}');
-    }
+    //   final response = await http.post(
+    //     Uri.parse('http://i7e203.p.ssafy.io:9090/photo'),
+    //     headers: <String, String>{
+    //       'Content-Type': 'application/json; charset=UTF-8',
+    //     },
+    //     body: jsonEncode(receiptUploadReqVO),
+    //   );
+    //   print('response.body: ${response.body}');
+    // }
     // if (index == 0) {
     //   var partyMainReceiptUrl = url;
     //   final response = await http.patch(

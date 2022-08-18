@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:piece_of_cake/party/dlv/dlv_detail_host.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
@@ -93,15 +94,16 @@ class _BuyPartyListState extends State<BuyPartyList> {
     }
     bookmarkPartyList = list;
 
-    setState(() {
-
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final kakaoUserProvider = Provider.of<KakaoLoginModel>(context, listen: false);
     final partyProvider = Provider.of<PartyModel>(context, listen: false);
+    final palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
@@ -115,27 +117,42 @@ class _BuyPartyListState extends State<BuyPartyList> {
               hoverColor: Colors.pink,
               highlightColor: Colors.amber,
               child: Container(
-                height: 156,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                height: 146,
+                margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.pink), borderRadius: BorderRadius.circular(20)
+                  // color: palette.createMaterialColor(Color(0xffCCF5FC)),
+                    border: Border.all(
+                      // color: Colors.pink,
+                      // color: palette.createMaterialColor(Color(0xffD1ADE6)),
+                      color: party.partyCode=='001' ?
+                      palette.createMaterialColor(Color(0xffFFF3DA)) :
+                      party.partyCode=='002' ?
+                      palette.createMaterialColor(Color(0xffEAF6BD)) :
+                      palette.createMaterialColor(Color(0xffCCF5FC))
+                      ,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(20)
                 ),
                 child: Row(
                   children: [
                     Flexible(
                       flex: 4,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(10),
                         child: CachedNetworkImage(
                           imageUrl: party.partyMainImageUrl,
                           placeholder: (context, url) => new CircularProgressIndicator(),
                           errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           width: 180,
                           height: 180,
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Flexible(
                       flex: 6,
@@ -144,9 +161,26 @@ class _BuyPartyListState extends State<BuyPartyList> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${party.partyTitle}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),overflow: TextOverflow.ellipsis,),
-                            Text('${party.partyAddr}', style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis,),
-                            Text('${party.partyContent}', style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,),
+                            Text(
+                                '${party.partyTitle.length >= 10 ? party.partyTitle.substring(0, 10).padRight(3, '.') : party.partyTitle}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18)
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${party.partyAddr.length >= 20 ? party.partyAddr.substring(0, 20).padRight(3, '.') : party.partyAddr}',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${party.partyContent.length >= 20 ? party.partyContent.substring(0, 20).padRight(3, '.') : party.partyContent}',
+                              style: TextStyle(fontSize: 15),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -165,9 +199,7 @@ class _BuyPartyListState extends State<BuyPartyList> {
                                     }
                                     bookmarkPartyResVOList = partyProvider.bookmarkPartyResVOList;
                                     bookmarkList = partyProvider.bookmarkList;
-                                    setState(() {
-
-                                    });
+                                    setState(() {});
                                   },
                                   bubblesSize: 0,
                                   likeBuilder: (bool isLiked) {

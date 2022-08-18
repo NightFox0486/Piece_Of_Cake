@@ -79,6 +79,12 @@
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/piece_of_cake/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/piece_of_cake/build" />
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/piece_of_cake/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/JWS/POC/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/JWS/POC/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/JWS/POC/build" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/JWS/chatme/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/JWS/chatme/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/FrontEnd/JWS/chatme/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

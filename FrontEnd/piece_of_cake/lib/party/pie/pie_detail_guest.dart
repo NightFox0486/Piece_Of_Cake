@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../chat/chat_route.dart';
 import '../../models/kakao_login_model.dart';
 import '../../models/party_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../../report.dart';
 import '../../vo.dart';
 
 class PieDetailGuest extends StatefulWidget {
@@ -25,9 +26,9 @@ class PieDetailGuest extends StatefulWidget {
 }
 
 class _PieDetailGuestState extends State<PieDetailGuest> {
-  final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
 
+  String? content = '';
   final List<String> sins = [
     '부정적인 태도',
     '자리비움',
@@ -39,30 +40,51 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
 
   final formKey = GlobalKey<FormState>();
 
+  Future insertReport(Report report) async {
+    final response = await http.post(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/report/party'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(report),
+    );
+    // print('response.body: ${response.body}');
+    if (response.statusCode == 200) {
+      return Report.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to insert report.');
+    }
+    // notifyListeners();
+  }
+
   @override
   Widget buildImage(String urlImage, int index) => Container(
     margin: EdgeInsets.symmetric(horizontal: 6),
     color: Colors.white,
     child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Image.asset(
-            urlImage,
-            fit: BoxFit.cover
-        )
+      borderRadius: BorderRadius.circular(20),
+      child: CachedNetworkImage(
+        imageUrl: widget.party.partyMainImageUrl,
+        placeholder: (context, url) => new CircularProgressIndicator(),
+        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+        fit: BoxFit.cover,
+        width: 180,
+        height: 180,
+      ),
     ),
 
   );
 
   var urlImages = [];
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
-      activeIndex: activeIndex,
-      count: urlImages.length,
-      effect: JumpingDotEffect(
-        dotWidth: 20,
-        dotHeight: 20,
-      )
-  );
+  // Widget buildIndicator() => AnimatedSmoothIndicator(
+  //     activeIndex: activeIndex,
+  //     count: urlImages.length,
+  //     effect: JumpingDotEffect(
+  //       dotWidth: 20,
+  //       dotHeight: 20,
+  //     )
+  // );
 
   List<int> partySeqListGuest = [];
   List<PartyResVO> partyResVOGuestList = [];
@@ -81,49 +103,27 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
       list.add(partyResVO.partySeq);
     }
     partySeqListGuest = list;
-    setState(() {
-
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void loadSetState(partyProvider, partySeq) async {
     await partyProvider.fetchDetailParty(partySeq);
     widget.party.partyMemberNumCurrent = partyProvider.currentParty.partyMemberNumCurrent;
-    setState(() {
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
-    void _createChatRoom() async{
-      String? chatName =
-          'H' + widget.party.userResVO.userKakaoLoginId.toString() +
-              "G" + kakaoUserProvider.userResVO!.userKakaoLoginId.toString() +
-              "P" + widget.party.partySeq.toString();
-
-      await _database.collection('chats').doc(chatName).set({
-        'created_at': Timestamp.now(),
-        'guestNickname': kakaoUserProvider.user?.kakaoAccount?.profile?.nickname,
-        'guestSeq': kakaoUserProvider.userResVO!.userKakaoLoginId,
-        'hostNickname': widget.party.userResVO.userNickname,
-        'hostSeq': widget.party.userResVO.userKakaoLoginId,
-        'last_text': ' ',
-        'last_message_at': Timestamp.now(),
-        'partyseq': widget.party.partySeq,
-        'chatroomName': chatName,
-        'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId])
-      }, SetOptions(merge: true));
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ChatRoute(chatId: chatName)),
-      );
-    }
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('PieDetailGuest'),
+        title: Text('소분 파티'),
         actions: [
           IconButton(
             icon: const Icon(Icons.gavel),
@@ -189,8 +189,15 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                       child: TextFormField(
                                         style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
                                         maxLines: 20,
-                                        onSaved: (val) {},
+                                        onSaved: (val) {
+                                          setState(() {
+                                            content = val as String;
+                                          });
+                                        },
                                         validator: (val) {
+                                          if (val == null || val.isEmpty) {
+                                            return "Please enter content";
+                                          }
                                           return null;
                                         },
                                       ),
@@ -205,7 +212,17 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                 width: 130,
                                 child: ElevatedButton(
                                   onPressed: () {
-
+                                    setState(() {
+                                      Report report = Report(
+                                        reportSeq: 0,
+                                        reportedUserSeq: 123,
+                                        reportingUserSeq: 456,
+                                        reportContent: content!,
+                                        crimeName: selectedValue!,
+                                      );
+                                      insertReport(report);
+                                      Navigator.of(context).pop();
+                                    });
                                   },
                                   child: Text('신고하기',
                                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
@@ -254,7 +271,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                           },
                         ),
                         const SizedBox(height: 32),
-                        buildIndicator(),
+                        // buildIndicator(),
                       ],
                     ),
                   ),
@@ -448,7 +465,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                       likeBuilder: (bool isLiked) {
                         return Icon(
                           bookmarkList.contains(widget.party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                          color: Colors.deepPurpleAccent,
+                          color: palette.createMaterialColor(Color(0xffFF9EB1)),
                           size: 40,
                         );
                       },
@@ -468,8 +485,8 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                           margin: EdgeInsets.symmetric(vertical: 3.0),
                           child: SizedBox.expand(
                             child: OutlinedButton(
-                              onPressed:  () async {
-                                _createChatRoom();
+                              onPressed: () {
+
                               },
                               style: OutlinedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/main.dart';
 import 'package:piece_of_cake/models/kakao_login_model.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:piece_of_cake/widgets/image_upload_widget.dart';
 import 'package:piece_of_cake/widgets/map_setting.dart';
@@ -89,7 +90,7 @@ class _BuyCreateState extends State<BuyCreate> {
 
   LatLng _center = LatLng(45.521563, -122.677433);
 
-  String Rdv_Address = '주소 적힐곳';
+  String Rdv_Address = '만날 장소는 ?';
 
   List<Marker> _markers = [];
 
@@ -136,9 +137,18 @@ class _BuyCreateState extends State<BuyCreate> {
   Widget build(BuildContext context) {
     final kakaoUserProvider =
         Provider.of<KakaoLoginModel>(context, listen: false);
+    final palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyCreate'),
+        title: Text(
+          '공구 파티 생성중...',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -333,10 +343,16 @@ class _BuyCreateState extends State<BuyCreate> {
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: TextButton(
-                child: Text('랑데뷰 포인트 설정'),
                 onPressed: () {
                   _setRdvPoint(context, _center);
                 },
+                child: const Text(
+                  '랑데뷰 포인트 설정 하기',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ),
           ),
