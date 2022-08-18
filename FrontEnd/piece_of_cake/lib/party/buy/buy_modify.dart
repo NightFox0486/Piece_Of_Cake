@@ -35,17 +35,29 @@ class BuyModify extends StatefulWidget {
 
 class _BuyModifyState extends State<BuyModify> {
   final formKey = GlobalKey<FormState>();
+  bool check = false;
   String? itemLink = '';
   String? name = '';
   String? content = '';
   String? totalAmount = '';
   int memberNumTotal = 2;
   int? memberNumCurrent = 1;
-  String addr = '';
+  String? addr = '';
   String? addrDetail = '';
 
   createParty(var kakaoUserProvider) {
     insertParty(kakaoUserProvider);
+  }
+
+  setValue() {
+    this.itemLink = widget.party.itemLink;
+    this.name = widget.party.partyTitle;
+    this.content = widget.party.partyContent;
+    this.totalAmount = widget.party.totalAmount;
+    this.memberNumTotal = widget.party.partyMemberNumTotal;
+    this.memberNumCurrent = widget.party.partyMemberNumCurrent;
+    this.addr = widget.party.partyAddr;
+    this.addrDetail = widget.party.partyAddrDetail;
   }
 
   Future insertParty(var kakaoUserProvider) async {
@@ -58,7 +70,7 @@ class _BuyModifyState extends State<BuyModify> {
         partyUpdDt: widget.party.partyUpdDt,
         partySeq: widget.party.partySeq,
         itemLink: this.itemLink!,
-        partyAddr: this.addr,
+        partyAddr: this.addr!,
         partyAddrDetail: this.addrDetail!,
         partyStatus: 1,
         partyBookmarkCount: 0,
@@ -68,24 +80,26 @@ class _BuyModifyState extends State<BuyModify> {
         partyMemberNumTotal: memberNumTotal,
         partyRdvLat: this._center.latitude.toString(),
         partyRdvLng: this._center.longitude.toString(),
-        partyTitle: name!,
+        partyTitle: this.name!,
         totalAmount: this.totalAmount!,
-        partyMainImageUrl: 'assets/images/harry.png',
+        partyMainImageUrl: widget.party.partyMainImageUrl,
         userSeq: kakaoUserProvider.userResVO!.userSeq);
 
     // print(name);
-    final response = await http.put(
+    final response = await http.patch(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party/${widget.party.partySeq}'),
-      // body: jsonEncode(widget.party),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
       body: jsonEncode(partyResVO),
     );
     print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
     // print(response.body.substring(response.body.indexOf("partySeq") + 10, response.body.indexOf("userSeq") - 2));
-    int partySeq = int.parse(response.body.substring(
-        response.body.indexOf("partySeq") + 10,
-        response.body.indexOf("userSeq") - 2));
-    imageKey.currentState?.addImage(partySeq);
+    // int partySeq = int.parse(response.body.substring(
+    //     response.body.indexOf("partySeq") + 10,
+    //     response.body.indexOf("userSeq") - 2));
+    // imageKey.currentState?.addImage(partySeq);
   }
 
   // late GoogleMapController mapController;
@@ -123,11 +137,13 @@ class _BuyModifyState extends State<BuyModify> {
     List<String> splitAddr = Rdv_Address.split(' ');
     addrDetail = splitAddr[splitAddr.length - 1];
     splitAddr.removeAt(0);
+    String address = '';
     for (int i = 0; i < splitAddr.length; i++) {
-      addr += '${splitAddr[i]}';
-      if (i != splitAddr.length - 1) addr += ' ';
+      address += '${splitAddr[i]}';
+      if (i != splitAddr.length - 1) address += ' ';
     }
     ;
+    addr = address;
     // mapController.animateCamera(CameraUpdate.newCameraPosition(
     //     CameraPosition(target: _center, zoom: 15.0)));
     // _markers = [];
@@ -137,6 +153,10 @@ class _BuyModifyState extends State<BuyModify> {
 
   @override
   Widget build(BuildContext context) {
+    if (!check) {
+      setValue();
+      check = true;
+    }
     final kakaoUserProvider =
         Provider.of<KakaoLoginModel>(context, listen: false);
     return Scaffold(
@@ -179,11 +199,8 @@ class _BuyModifyState extends State<BuyModify> {
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              if (val == null || val.isEmpty) {
-                                itemLink = widget.party.itemLink;
-                              } else {
-                                itemLink = val as String;
-                              }
+                              print(val);
+                              this.itemLink = val as String;
                             });
                           },
                           validator: (val) {
