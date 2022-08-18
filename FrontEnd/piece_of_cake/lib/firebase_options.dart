@@ -50,11 +50,17 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAKodPwkqSFcn6yyR1kjXdrpR3O9TVcjko',
-    appId: '1:189872052067:android:039a7239613e2d90e3e556',
-    messagingSenderId: '189872052067',
-    projectId: 'imagestorage-168a8',
-    storageBucket: 'imagestorage-168a8.appspot.com',
+    // apiKey: 'AIzaSyAKodPwkqSFcn6yyR1kjXdrpR3O9TVcjko',
+    // appId: '1:189872052067:android:039a7239613e2d90e3e556',
+    // messagingSenderId: '189872052067',
+    // projectId: 'imagestorage-168a8',
+    // storageBucket: 'imagestorage-168a8.appspot.com',
+    apiKey: 'AIzaSyAzZ4yzikQ8kEC_fKqBmZhbE2W8-YjkT_k',
+    appId: '1:505795639238:android:10f443ea2012ebc5b3a4c7',
+    messagingSenderId: '505795639238',
+    projectId: 'chat-ad85f',
+    databaseURL: 'https://chat-ad85f-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'chat-ad85f.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
