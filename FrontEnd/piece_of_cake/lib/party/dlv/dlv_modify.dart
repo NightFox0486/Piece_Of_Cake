@@ -12,7 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
 // GlobalKey<_MapSettingState> mapKey = GlobalKey();
-GlobalKey<_BuyModifyState> buyModifyKey = GlobalKey();
+GlobalKey<_DlvModifyState> dlvModifyKey = GlobalKey();
 
 class ReturnValue {
   String? result;
@@ -25,15 +25,15 @@ class Arguments {
   Arguments({this.center: const LatLng(0.0, 0.0), this.returnValue});
 }
 
-class BuyModify extends StatefulWidget {
+class DlvModify extends StatefulWidget {
   final Party party;
-  const BuyModify({Key? key, required this.party}) : super(key: key);
+  const DlvModify({Key? key, required this.party}) : super(key: key);
 
   @override
-  State<BuyModify> createState() => _BuyModifyState();
+  State<DlvModify> createState() => _DlvModifyState();
 }
 
-class _BuyModifyState extends State<BuyModify> {
+class _DlvModifyState extends State<DlvModify> {
   final formKey = GlobalKey<FormState>();
   String? itemLink = '';
   String? name = '';
@@ -44,8 +44,8 @@ class _BuyModifyState extends State<BuyModify> {
   String? addr = '';
   String? addrDetail = '';
 
-  createParty(var kakaoUserProvider) {
-    insertParty(kakaoUserProvider);
+  Future<Party> createParty(var kakaoUserProvider) async {
+    return await insertParty(kakaoUserProvider);
   }
 
   // setValue() {
@@ -73,13 +73,11 @@ class _BuyModifyState extends State<BuyModify> {
         partyAddrDetail: this.addrDetail!,
         partyStatus: 1,
         partyBookmarkCount: 0,
-        partyCode: '002',
+        partyCode: '003',
         partyContent:
             this.content == '' ? widget.party.partyContent : this.content!,
         partyMemberNumCurrent: memberNumCurrent!,
-        partyMemberNumTotal: this.memberNumTotal == 2
-            ? widget.party.partyMemberNumTotal
-            : this.memberNumTotal,
+        partyMemberNumTotal: widget.party.partyMemberNumTotal,
         partyRdvLat: this._center.latitude.toString(),
         partyRdvLng: this._center.longitude.toString(),
         partyTitle: this.name == '' ? widget.party.partyTitle : this.name!,
@@ -165,7 +163,7 @@ class _BuyModifyState extends State<BuyModify> {
         Provider.of<KakaoLoginModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyModify'),
+        title: Text('DlvModify'),
         actions: [
           IconButton(
               onPressed: () {
@@ -205,7 +203,7 @@ class _BuyModifyState extends State<BuyModify> {
                           validator: (val) {
                             if (val == null || val.isEmpty) {
                               itemLink = val as String;
-                              return "제품링크";
+                              return "배달업체링크";
                             }
                             itemLink = val as String;
                             return null;
@@ -270,37 +268,6 @@ class _BuyModifyState extends State<BuyModify> {
                               return "총 금액";
                             }
                             totalAmount = val as String;
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.amber),
-                          borderRadius: BorderRadius.circular((15))),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: '',
-                            suffixText: '명',
-                          ),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {
-                            setState(() {
-                              memberNumTotal = int.parse(val!);
-                            });
-                          },
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              memberNumTotal = 2;
-                              return "공구 인원";
-                            }
-                            memberNumTotal = int.parse(val);
                             return null;
                           },
                         ),

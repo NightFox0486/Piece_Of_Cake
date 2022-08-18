@@ -12,7 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
 // GlobalKey<_MapSettingState> mapKey = GlobalKey();
-GlobalKey<_BuyModifyState> buyModifyKey = GlobalKey();
+GlobalKey<_PieModifyState> pieModifyKey = GlobalKey();
 
 class ReturnValue {
   String? result;
@@ -25,17 +25,17 @@ class Arguments {
   Arguments({this.center: const LatLng(0.0, 0.0), this.returnValue});
 }
 
-class BuyModify extends StatefulWidget {
+class PieModify extends StatefulWidget {
   final Party party;
-  const BuyModify({Key? key, required this.party}) : super(key: key);
+  const PieModify({Key? key, required this.party}) : super(key: key);
 
   @override
-  State<BuyModify> createState() => _BuyModifyState();
+  State<PieModify> createState() => _PieModifyState();
 }
 
-class _BuyModifyState extends State<BuyModify> {
+class _PieModifyState extends State<PieModify> {
   final formKey = GlobalKey<FormState>();
-  String? itemLink = '';
+
   String? name = '';
   String? content = '';
   String? totalAmount = '';
@@ -68,12 +68,12 @@ class _BuyModifyState extends State<BuyModify> {
         partyRegDt: widget.party.partyRegDt,
         partyUpdDt: widget.party.partyUpdDt,
         partySeq: widget.party.partySeq,
-        itemLink: this.itemLink == '' ? widget.party.itemLink : this.itemLink!,
+        itemLink: widget.party.itemLink,
         partyAddr: this.addr!,
         partyAddrDetail: this.addrDetail!,
         partyStatus: 1,
         partyBookmarkCount: 0,
-        partyCode: '002',
+        partyCode: '003',
         partyContent:
             this.content == '' ? widget.party.partyContent : this.content!,
         partyMemberNumCurrent: memberNumCurrent!,
@@ -165,7 +165,7 @@ class _BuyModifyState extends State<BuyModify> {
         Provider.of<KakaoLoginModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyModify'),
+        title: Text('PieModify'),
         actions: [
           IconButton(
               onPressed: () {
@@ -182,37 +182,6 @@ class _BuyModifyState extends State<BuyModify> {
                 key: formKey,
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.amber),
-                          borderRadius: BorderRadius.circular((15))),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          autovalidateMode: AutovalidateMode.always,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: '',
-                          ),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 20),
-                          onSaved: (val) {
-                            setState(() {
-                              itemLink = val as String;
-                            });
-                          },
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              itemLink = val as String;
-                              return "제품링크";
-                            }
-                            itemLink = val as String;
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
                     Container(
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -298,7 +267,7 @@ class _BuyModifyState extends State<BuyModify> {
                           validator: (val) {
                             if (val == null || val.isEmpty) {
                               memberNumTotal = 2;
-                              return "공구 인원";
+                              return "소분 인원";
                             }
                             memberNumTotal = int.parse(val);
                             return null;

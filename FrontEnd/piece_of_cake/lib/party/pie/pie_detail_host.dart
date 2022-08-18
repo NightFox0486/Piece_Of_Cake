@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:piece_of_cake/chat/chatroom_party_route.dart';
 import 'package:piece_of_cake/party/buy/buy_create.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:piece_of_cake/party/pie/pie_modify.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/kakao_login_model.dart';
@@ -79,20 +80,23 @@ class _PieDetailHostState extends State<PieDetailHost> {
 
   @override
   Widget buildImage(String urlImage, int index) => Container(
-      margin: EdgeInsets.symmetric(horizontal: 6),
-      color: Colors.white,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: CachedNetworkImage(
-          imageUrl: widget.party.partyMainImageUrl,
-          placeholder: (context, url) => new CircularProgressIndicator(),
-          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
-          fit: BoxFit.cover,
-          width: 180,
-          height: 180,
+        margin: EdgeInsets.symmetric(horizontal: 6),
+        color: Colors.white,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: CachedNetworkImage(
+            imageUrl: widget.party.partyMainImageUrl,
+            placeholder: (context, url) => new CircularProgressIndicator(),
+            errorWidget: (context, url, error) => new Icon(
+              Icons.error,
+              size: 100,
+            ),
+            fit: BoxFit.cover,
+            width: 180,
+            height: 180,
+          ),
         ),
-      ),
-    );
+      );
 
   // Widget buildIndicator() => AnimatedSmoothIndicator(
   //     activeIndex: activeIndex,
@@ -124,7 +128,10 @@ class _PieDetailHostState extends State<PieDetailHost> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BuyCreate()),
+                MaterialPageRoute(
+                    builder: (context) => PieModify(
+                          party: widget.party,
+                        )),
               );
             },
           ),
@@ -339,7 +346,9 @@ class _PieDetailHostState extends State<PieDetailHost> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChatRoomListParty(partySeq: widget.party.partySeq)),
+                          MaterialPageRoute(
+                              builder: (context) => ChatRoomListParty(
+                                  partySeq: widget.party.partySeq)),
                         );
                       },
                       icon: Icon(
