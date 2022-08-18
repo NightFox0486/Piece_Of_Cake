@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/palette.dart';
 import '../notice.dart';
 import 'chat_route.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -22,9 +23,8 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
 
   @override
   Widget build(BuildContext context) {
-    var palette = Provider.of<Palette>(context);
     final Query<Map<String, dynamic>> _chats = FirebaseFirestore.instance.collection('chats').where("partyseq", isEqualTo: widget.partySeq);
-
+    var palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -51,11 +51,10 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
               itemCount: streamSnapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
-
+                var toDateTime = documentSnapshot['last_message_at'].toDate();
                 return InkWell(
-                    splashColor: Colors.amber,
-                    hoverColor: Colors.lightGreenAccent,
-                    highlightColor: Colors.amber,
+                    splashColor: palette.createMaterialColor(Color(0xffD1ADE6)),
+                    highlightColor: palette.createMaterialColor(Color(0xffD1ADE6)),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -68,8 +67,7 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(width: 1.0, color: Colors.amber),
-                            // bottom: BorderSide(width: 1.0, color: Colors.amber),
+                            bottom: BorderSide(width: 1.0, color: palette.createMaterialColor(Color(0xff8581E1))),
                           )
                       ),
                       child: Row(
@@ -91,7 +89,7 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
-                                    flex: 7,
+                                    flex: 6,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -102,13 +100,13 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
                                     ),
                                   ),
                                   Flexible(
-                                    flex: 3,
+                                    flex: 4,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Text('15:40', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis, color: Colors.black54),),
-                                        Text('안읽음', style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, color: Colors.deepOrangeAccent)),
+                                        Text(DateFormat.yMMMd().format(toDateTime), style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: palette.createMaterialColor(Color(0xff8581E1)))),
+                                        Text(DateFormat.jm().format(toDateTime), style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: palette.createMaterialColor(Color(0xff8581E1)))),
                                       ],
                                     ),
                                   ),

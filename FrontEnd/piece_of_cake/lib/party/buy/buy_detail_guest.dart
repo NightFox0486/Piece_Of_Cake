@@ -109,7 +109,6 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
         'guestSeq': kakaoUserProvider.userResVO!.userKakaoLoginId,
         'hostNickname': widget.party.userResVO.userNickname,
         'hostSeq': widget.party.userResVO.userKakaoLoginId,
-        'last_text': ' ',
         'last_message_at': Timestamp.now(),
         'partyseq': widget.party.partySeq,
         'chatroomName': chatName,

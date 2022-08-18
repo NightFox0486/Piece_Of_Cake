@@ -55,7 +55,6 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                 final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
                 var toDateTime = documentSnapshot['last_message_at'].toDate();
                 return InkWell(
-                  
                     splashColor: palette.createMaterialColor(Color(0xffD1ADE6)),
                     highlightColor: palette.createMaterialColor(Color(0xffD1ADE6)),
                     onTap: () {
@@ -71,7 +70,6 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                       decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(width: 1.0, color: palette.createMaterialColor(Color(0xff8581E1))),
-                            // bottom: BorderSide(width: 1.0, color: Colors.amber),
                           )
                       ),
                       child: Row(
@@ -93,12 +91,11 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
-                                    flex: 7,
+                                    flex: 6,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        //Text(documentSnapshot['guestNickname'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
                                         Text(kakaoUserProvider.userResVO!.userKakaoLoginId.toString() == documentSnapshot['guestSeq']
                                             ? documentSnapshot['hostNickname'] : documentSnapshot['guestNickname'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
                                         Text(documentSnapshot['last_text'], style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, color: Colors.black54)),
@@ -106,13 +103,13 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                     ),
                                   ),
                                   Flexible(
-                                    flex: 3,
+                                    flex: 4,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Text(DateFormat.yMMMd().format(toDateTime), style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),),
-                                        Text('안읽음', style: TextStyle(fontSize: 13, overflow: TextOverflow.ellipsis, color: palette.createMaterialColor(Color(0xff8581E1)))),
+                                        Text(DateFormat.yMMMd().format(toDateTime), style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: palette.createMaterialColor(Color(0xff8581E1)))),
+                                        Text(DateFormat.jm().format(toDateTime), style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: palette.createMaterialColor(Color(0xff8581E1)))),
                                       ],
                                     ),
                                   ),
