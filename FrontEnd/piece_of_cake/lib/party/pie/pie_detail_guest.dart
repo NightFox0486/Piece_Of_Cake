@@ -33,11 +33,10 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
 
   String? content = '';
   final List<String> sins = [
-    '부정적인 태도',
-    '자리비움',
-    '의도적으로 적에게 죽어줌',
+    '광고',
     '욕설',
-    '혐오발언',
+    '사기',
+    '거래불가능 품목',
   ];
   String? selectedValue;
 
@@ -150,7 +149,15 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('소분 파티'),
+        title: Text(
+          '소분 파티',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.gavel),
@@ -433,7 +440,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.all(10),
-                                  child: Text('부산광역시 강서구 송정동 송정삼정그린코아더시티 로비 편의점 앞',
+                                  child: Text('${widget.party.partyAddr}\n${widget.party.partyAddrDetail}',
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w100),

@@ -40,7 +40,8 @@ class KakaoLoginModel with ChangeNotifier {
         body: jsonEncode(userReqVO),
       );
       if (response.statusCode==200) {
-        this._userResVO = UserResVO.fromJson(jsonDecode(response.body));
+        // this._userResVO = UserResVO.fromJson(jsonDecode(response.body));
+        this._userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
         // print('login post req 200');
         // print(jsonDecode(response.body));
       }else {

@@ -7,6 +7,7 @@ import 'package:piece_of_cake/party/buy/buy_modify.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/kakao_login_model.dart';
+import '../../models/palette.dart';
 import '../../vo.dart';
 
 class BuyDetailHost extends StatefulWidget {
@@ -21,11 +22,10 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
   int activeIndex = 0;
 
   final List<String> sins = [
-    '부정적인 태도',
-    '자리비움',
-    '의도적으로 적에게 죽어줌',
+    '광고',
     '욕설',
-    '혐오발언',
+    '사기',
+    '거래불가능 품목',
   ];
   String? selectedValue;
 
@@ -96,10 +96,19 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('공구 파티'),
+        title: Text(
+          '공구 파티',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -285,7 +294,7 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                '부산광역시 강서구 송정동 송정삼정그린코아더시티 로비 편의점 앞',
+                                '${widget.party.partyAddr}\n${widget.party.partyAddrDetail}',
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w100),
                                 textAlign: TextAlign.center,

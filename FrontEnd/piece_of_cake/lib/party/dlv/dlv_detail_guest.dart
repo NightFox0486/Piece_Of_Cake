@@ -30,11 +30,10 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
   int activeIndex = 0;
 
   final List<String> sins = [
-    '부정적인 태도',
-    '자리비움',
-    '의도적으로 적에게 죽어줌',
+    '광고',
     '욕설',
-    '혐오발언',
+    '사기',
+    '거래불가능 품목',
   ];
   String? selectedValue;
 
@@ -402,7 +401,7 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.all(10),
-                                  child: Text('부산광역시 강서구 송정동 송정삼정그린코아더시티 로비 편의점 앞',
+                                  child: Text('${widget.party.partyAddr}\n${widget.party.partyAddrDetail}',
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w100),

@@ -31,19 +31,19 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
   final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
 
-  String? content = '';
+  String content = '';
   final List<String> sins = [
-    '부정적인 태도',
-    '자리비움',
-    '의도적으로 적에게 죽어줌',
+    '광고',
     '욕설',
-    '혐오발언',
+    '사기',
+    '거래불가능 품목',
   ];
-  String? selectedValue;
+  String selectedValue = '';
 
   final formKey = GlobalKey<FormState>();
 
   Future insertReport(Report report) async {
+    print('report: ${report.crimeName}, ${report.reportContent}, ${report.reportedUserSeq}, ${report.reportingUserSeq}, ${report.reportSeq}');
     final response = await http.post(
       Uri.parse('http://i7e203.p.ssafy.io:9090/report/party'),
       headers: <String, String>{
@@ -51,7 +51,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
       },
       body: jsonEncode(report),
     );
-    // print('response.body: ${response.body}');
+    print('response.body: ${response.body}');
     if (response.statusCode == 200) {
       return Report.fromJson(jsonDecode(response.body));
     } else {
@@ -148,7 +148,15 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('공구 파티'),
+        title: Text(
+          '공구 파티',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.gavel),
@@ -189,14 +197,14 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                       DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
-                                          item,
+                                          '${item}',
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
                                         ),
                                       ))
                                       .toList(),
-                                  value: selectedValue,
+                                  // value: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue = value as String;
@@ -209,25 +217,55 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                               ),
                               Form(
                                   key: formKey,
-                                  child: Expanded(
-                                    child: SizedBox(
-                                      child: TextFormField(
-                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-                                        maxLines: 20,
-                                        onSaved: (val) {
-                                          setState(() {
-                                            content = val as String;
-                                          });
-                                        },
-                                        validator: (val) {
-                                          if (val == null || val.isEmpty) {
-                                            return "Please enter content";
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                  )
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: TextFormField(
+                                          autovalidateMode: AutovalidateMode.always,
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: '신고 내용',
+                                          ),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 18,
+                                          ),
+                                          onChanged: (val) {
+                                            setState(() {
+                                              content = val as String;
+                                            });
+                                          },
+                                          validator: (val) {
+                                            if (val==null || val.isEmpty) {
+                                              return "신고 내용을 작성해주세요.";
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  // child: Expanded(
+                                  //   child: SizedBox(
+                                  //     child: TextFormField(
+                                  //       style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
+                                  //       maxLines: 20,
+                                  //       onSaved: (val) {
+                                  //         setState(() {
+                                  //           content = val as String;
+                                  //           print(val);
+                                  //           print(content);
+                                  //         });
+                                  //       },
+                                  //       validator: (val) {
+                                  //         if (val == null || val.isEmpty) {
+                                  //           return "Please enter content";
+                                  //         }
+                                  //         return null;
+                                  //       },
+                                  //     ),
+                                  //   ),
+                                  // )
                               ),
                               Container(
                                 margin: EdgeInsets.all(10),
@@ -237,15 +275,16 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                 width: 130,
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    Report report1 = Report(
+                                      reportSeq: 0,
+                                      reportedUserSeq: 123,
+                                      reportingUserSeq: 456,
+                                      reportContent: content,
+                                      crimeName: selectedValue,
+                                    );
+                                    insertReport(report1);
                                     setState(() {
-                                      Report report = Report(
-                                        reportSeq: 0,
-                                        reportedUserSeq: 123,
-                                        reportingUserSeq: 456,
-                                        reportContent: content!,
-                                        crimeName: selectedValue!,
-                                      );
-                                      insertReport(report);
+
                                       Navigator.of(context).pop();
                                     });
                                   },
