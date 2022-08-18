@@ -114,7 +114,7 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     setState(() {});
   }
 
-  void addImage(int partySeq) {
+  Future addImage(int partySeq) async {
     print('test');
     //addImgStorage(0);
     for (int i = 0; i < imageFileList!.length; i++) {
