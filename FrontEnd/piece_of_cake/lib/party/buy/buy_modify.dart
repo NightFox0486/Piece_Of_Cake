@@ -74,12 +74,12 @@ class _BuyModifyState extends State<BuyModify> {
         userSeq: kakaoUserProvider.userResVO!.userSeq);
 
     // print(name);
-    final response = await http.patch(
+    final response = await http.put(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party/${widget.party.partySeq}'),
       // body: jsonEncode(widget.party),
       body: jsonEncode(partyResVO),
     );
-    // print('response.body: ${response.body}');
+    print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
     // print(response.body.substring(response.body.indexOf("partySeq") + 10, response.body.indexOf("userSeq") - 2));
     int partySeq = int.parse(response.body.substring(
