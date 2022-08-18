@@ -10,6 +10,11 @@ import '../../models/kakao_login_model.dart';
 import '../../models/palette.dart';
 import '../../models/party_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import '../../vo.dart';
+import '../../report.dart';
 
 import '../../vo.dart';
 
@@ -29,16 +34,34 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
   final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
 
+  String content = '';
   final List<String> sins = [
     '광고',
     '욕설',
     '사기',
     '거래불가능 품목',
   ];
-  String? selectedValue;
+  String selectedValue = '';
 
   final formKey = GlobalKey<FormState>();
 
+  Future insertReport(Report report) async {
+    print('report: ${report.crimeName}, ${report.reportContent}, ${report.reportedUserSeq}, ${report.reportingUserSeq}, ${report.reportSeq}');
+    final response = await http.post(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/report'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(report),
+    );
+    print('response.body: ${response.body}');
+    if (response.statusCode == 200) {
+      return Report.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to insert report.');
+    }
+    // notifyListeners();
+  }
   @override
   Widget buildImage(String urlImage, int index) => Container(
     margin: EdgeInsets.symmetric(horizontal: 6),
@@ -92,6 +115,7 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
   void loadSetState(partyProvider, partySeq) async {
     await partyProvider.fetchDetailParty(partySeq);
     widget.party.partyMemberNumCurrent = partyProvider.currentParty.partyMemberNumCurrent;
+    widget.party.partyStatus = partyProvider.currentParty.partyStatus;
     if (mounted) {
       setState(() {});
     }
@@ -177,14 +201,14 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                                       DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
-                                          item,
+                                          '${item}',
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
                                         ),
                                       ))
                                       .toList(),
-                                  value: selectedValue,
+                                  // value: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue = value as String;
@@ -196,19 +220,56 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                                 ),
                               ),
                               Form(
-                                  key: formKey,
-                                  child: Expanded(
-                                    child: SizedBox(
+                                key: formKey,
+                                child: Column(
+                                  children: [
+                                    Container(
                                       child: TextFormField(
-                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-                                        maxLines: 20,
-                                        onSaved: (val) {},
+                                        autovalidateMode: AutovalidateMode.always,
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: '신고 내용',
+                                        ),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 18,
+                                        ),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            content = val as String;
+                                          });
+                                        },
                                         validator: (val) {
+                                          if (val==null || val.isEmpty) {
+                                            return "신고 내용을 작성해주세요.";
+                                          }
                                           return null;
                                         },
                                       ),
-                                    ),
-                                  )
+                                    )
+                                  ],
+                                ),
+                                // child: Expanded(
+                                //   child: SizedBox(
+                                //     child: TextFormField(
+                                //       style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
+                                //       maxLines: 20,
+                                //       onSaved: (val) {
+                                //         setState(() {
+                                //           content = val as String;
+                                //           print(val);
+                                //           print(content);
+                                //         });
+                                //       },
+                                //       validator: (val) {
+                                //         if (val == null || val.isEmpty) {
+                                //           return "Please enter content";
+                                //         }
+                                //         return null;
+                                //       },
+                                //     ),
+                                //   ),
+                                // )
                               ),
                               Container(
                                 margin: EdgeInsets.all(10),
@@ -218,7 +279,18 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                                 width: 130,
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    Report report = Report(
+                                      reportSeq: 0,
+                                      reportedUserSeq: 123,
+                                      reportingUserSeq: 456,
+                                      reportContent: content,
+                                      crimeName: selectedValue,
+                                    );
+                                    insertReport(report);
+                                    setState(() {
 
+                                      Navigator.of(context).pop();
+                                    });
                                   },
                                   child: Text('신고하기',
                                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
@@ -526,10 +598,11 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                                 shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(15))
                                 ),
-                                primary: partySeqListGuest.contains(widget.party.partySeq) ? widget.party.partyStatus==2 ? Colors.grey : Colors.cyan : Colors.pink,
+                                primary: partySeqListGuest.contains(widget.party.partySeq) ? (widget.party.partyStatus==2 ? Colors.grey : Colors.cyan ) : Colors.pink,
                               ),
                               // todo: 파티 참여 / 참여 취소 (모집중일때만 가능)
                               child: Text(partySeqListGuest.contains(widget.party.partySeq) ? (widget.party.partyStatus==2 ? '파티 성사' : '참여 취소') : '파티 참여',
+                              // child: Text(widget.party.partyStatus==2 ? ( partySeqListGuest.contains(widget.party.partySeq) ?  '파티 성사' : '참여 취소') : '파티 참여',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,

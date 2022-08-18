@@ -115,8 +115,9 @@ public class PartyController {
     partyService.putPartyMainImageUrl(partySeq, partyMainImageUrl);
   }
 
-  @PutMapping(value = "/party/{partySeq}")
-  public void changeParty(@PathVariable Integer partySeq, @RequestBody PartyResVO party){
-    System.out.println(party); // System.out.println("patchtest");}
+  @PatchMapping(value = "/party/{partySeq}")
+  public void changeParty(@PathVariable Integer partySeq, @RequestBody PartyResVO partyResVO){
+    System.out.println(partyResVO); // System.out.println("patchtest");}
+    
   }
 }

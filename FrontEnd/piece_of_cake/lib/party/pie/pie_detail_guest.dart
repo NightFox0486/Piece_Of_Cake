@@ -31,14 +31,14 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
   final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
 
-  String? content = '';
+  String content = '';
   final List<String> sins = [
     '광고',
     '욕설',
     '사기',
     '거래불가능 품목',
   ];
-  String? selectedValue;
+  String selectedValue = '';
 
   final formKey = GlobalKey<FormState>();
 
@@ -113,6 +113,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
   void loadSetState(partyProvider, partySeq) async {
     await partyProvider.fetchDetailParty(partySeq);
     widget.party.partyMemberNumCurrent = partyProvider.currentParty.partyMemberNumCurrent;
+    widget.party.partyStatus = partyProvider.currentParty.partyStatus;
     if (mounted) {
       setState(() {});
     }
@@ -198,14 +199,14 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                       DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
-                                          item,
+                                          '${item}',
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
                                         ),
                                       ))
                                       .toList(),
-                                  value: selectedValue,
+                                  // value: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue = value as String;
@@ -217,26 +218,56 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                 ),
                               ),
                               Form(
-                                  key: formKey,
-                                  child: Expanded(
-                                    child: SizedBox(
+                                key: formKey,
+                                child: Column(
+                                  children: [
+                                    Container(
                                       child: TextFormField(
-                                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-                                        maxLines: 20,
-                                        onSaved: (val) {
+                                        autovalidateMode: AutovalidateMode.always,
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: '신고 내용',
+                                        ),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 18,
+                                        ),
+                                        onChanged: (val) {
                                           setState(() {
                                             content = val as String;
                                           });
                                         },
                                         validator: (val) {
-                                          if (val == null || val.isEmpty) {
-                                            return "Please enter content";
+                                          if (val==null || val.isEmpty) {
+                                            return "신고 내용을 작성해주세요.";
                                           }
                                           return null;
                                         },
                                       ),
-                                    ),
-                                  )
+                                    )
+                                  ],
+                                ),
+                                // child: Expanded(
+                                //   child: SizedBox(
+                                //     child: TextFormField(
+                                //       style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
+                                //       maxLines: 20,
+                                //       onSaved: (val) {
+                                //         setState(() {
+                                //           content = val as String;
+                                //           print(val);
+                                //           print(content);
+                                //         });
+                                //       },
+                                //       validator: (val) {
+                                //         if (val == null || val.isEmpty) {
+                                //           return "Please enter content";
+                                //         }
+                                //         return null;
+                                //       },
+                                //     ),
+                                //   ),
+                                // )
                               ),
                               Container(
                                 margin: EdgeInsets.all(10),
@@ -246,15 +277,16 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                 width: 130,
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    Report report1 = Report(
+                                      reportSeq: 0,
+                                      reportedUserSeq: 123,
+                                      reportingUserSeq: 456,
+                                      reportContent: content,
+                                      crimeName: selectedValue,
+                                    );
+                                    insertReport(report1);
                                     setState(() {
-                                      Report report = Report(
-                                        reportSeq: 0,
-                                        reportedUserSeq: 123,
-                                        reportingUserSeq: 456,
-                                        reportContent: content!,
-                                        crimeName: selectedValue!,
-                                      );
-                                      insertReport(report);
+
                                       Navigator.of(context).pop();
                                     });
                                   },
@@ -564,10 +596,11 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                 shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(15))
                                 ),
-                                primary: partySeqListGuest.contains(widget.party.partySeq) ? widget.party.partyStatus==2 ? Colors.grey : Colors.cyan : Colors.pink,
+                                primary: partySeqListGuest.contains(widget.party.partySeq) ? (widget.party.partyStatus==2 ? Colors.grey : Colors.cyan ) : Colors.pink,
                               ),
                               // todo: 파티 참여 / 참여 취소 (모집중일때만 가능)
                               child: Text(partySeqListGuest.contains(widget.party.partySeq) ? (widget.party.partyStatus==2 ? '파티 성사' : '참여 취소') : '파티 참여',
+                              // child: Text(widget.party.partyStatus==2 ? ( partySeqListGuest.contains(widget.party.partySeq) ?  '파티 성사' : '참여 취소') : '파티 참여',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
