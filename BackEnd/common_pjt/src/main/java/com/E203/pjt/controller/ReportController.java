@@ -18,16 +18,21 @@ public class ReportController {
 
     //유저신고
     @PostMapping(value = "/chat/")
-    public void createReportUser(@RequestBody Report report) {
-        System.out.println(report);
-        System.out.println(reportService.createReportUser(report));
+    public Report createReportUser(@RequestBody Report report) {
+//        System.out.println(report);
+//        System.out.println(reportService.createReportUser(report));
+        Report result = reportService.createReportUser(report);
+        return result;
+
     }
 
     //게시글신고
     @PostMapping(value = "/party")
-    public void createReportParty(@RequestBody Report report) {
-        System.out.println(report);
-        System.out.println(reportService.createReportParty(report));
+    public Report createReportParty(@RequestBody Report report) {
+//        System.out.println(report);
+//        System.out.println(reportService.createReportParty(report));
+        Report result = reportService.createReportParty(report);
+        return result;
     }
 
     }
