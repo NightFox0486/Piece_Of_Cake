@@ -19,13 +19,14 @@ class Report {
         reportContent: json['reportContent'],
         crimeName: json['crimeName']);
   }
-// Map<String, dynamic> toJson(){
-//   final Map<String, dynamic> data = new Map<string, dynamic>();
-//   data['reportSeq'] = this.reportSeq;
-//   data['reportedUserSeq'] = this.reportedUserSeq;
-//   data['reportingUserSeq'] = this.reportingUserSeq;
-//   data['reportContent'] = this.reportContent;
-//   data['crimeName'] = this.crimeName;
-//   return data;
-// }
+
+  Map<String, dynamic> toJson(){
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['reportSeq'] = this.reportSeq;
+    data['reportedUserSeq'] = this.reportedUserSeq;
+    data['reportingUserSeq'] = this.reportingUserSeq;
+    data['reportContent'] = this.reportContent;
+    data['crimeName'] = this.crimeName;
+    return data;
+  }
 }
