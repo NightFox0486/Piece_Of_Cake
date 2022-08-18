@@ -85,7 +85,9 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                     child: ClipOval(
                                       // child: Image.asset("assets/images/harry.png"),
                                       child: CachedNetworkImage(
-                                        imageUrl: documentSnapshot['profileImage'],
+                                        // imageUrl: documentSnapshot['profileImage'],
+                                        imageUrl: kakaoUserProvider.userResVO!.userKakaoLoginId.toString() == documentSnapshot['guestSeq']
+                                            ? documentSnapshot['hostProfileImage'] : documentSnapshot['guestProfileImage'],
                                         placeholder: (context, url) => new CircularProgressIndicator(),
                                         errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                                       ),
