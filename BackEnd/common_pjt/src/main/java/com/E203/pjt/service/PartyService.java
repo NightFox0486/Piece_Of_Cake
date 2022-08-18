@@ -35,5 +35,5 @@ public interface PartyService {
   List<Party> getMyPartyDoneList(Integer userSeq);
 
   void putPartyMainImageUrl(Integer partySeq, String partyMainImageUrl);
-  void changeParty(Integer partySeq, Party party);
+  void changeParty(Integer partySeq, PartyResVO partyResVO);
 }
