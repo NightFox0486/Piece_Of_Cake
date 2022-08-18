@@ -39,10 +39,10 @@ public class User {
   private Double userRating;
 //  private Integer userRating;
 
-  @Column(name = "user_lat", nullable = true, length = 20)
+  @Column(name = "user_lat", nullable = true, length = 40)
   private String userLat;
 
-  @Column(name = "user_lng", nullable = true, length = 20)
+  @Column(name = "user_lng", nullable = true, length = 40)
   private String userLng;
 
   @Column(name = "user_account", nullable = true, length = 45)
