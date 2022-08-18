@@ -215,6 +215,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                             crimeName: selectedValue!,
                                           );
                                           insertReport(report);
+                                          Navigator.of(context).pop();
                                         });
                                       },
                                       child: Text('신고하기',
