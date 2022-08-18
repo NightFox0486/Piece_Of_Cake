@@ -99,7 +99,7 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyDetailHost'),
+        title: Text('공구 파티'),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),

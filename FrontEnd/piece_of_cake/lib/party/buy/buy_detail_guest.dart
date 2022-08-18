@@ -118,7 +118,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyDetailGuest'),
+        title: Text('공구 파티'),
         actions: [
           IconButton(
             icon: const Icon(Icons.gavel),
@@ -460,7 +460,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                         likeBuilder: (bool isLiked) {
                           return Icon(
                             bookmarkList.contains(widget.party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                            color: Colors.deepPurpleAccent,
+                            color: palette.createMaterialColor(Color(0xffFF9EB1)),
                             size: 40,
                           );
                         },
