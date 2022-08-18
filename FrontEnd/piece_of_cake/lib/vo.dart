@@ -9,10 +9,9 @@ class MyPartyReqVO {
   });
   factory MyPartyReqVO.fromJson(Map<String, dynamic> json) {
     return MyPartyReqVO(
-      userSeq: json['userSeq'],
-      partySeq: json['partySeq'],
-      myPartyRole: json['myPartyRole']
-    );
+        userSeq: json['userSeq'],
+        partySeq: json['partySeq'],
+        myPartyRole: json['myPartyRole']);
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -22,6 +21,7 @@ class MyPartyReqVO {
     return data;
   }
 }
+
 class BookmarkReqVO {
   int userSeq;
   int partySeq;
@@ -44,6 +44,7 @@ class BookmarkReqVO {
     return data;
   }
 }
+
 class PartyReqVO {
   int userSeq;
   String partyCode;
