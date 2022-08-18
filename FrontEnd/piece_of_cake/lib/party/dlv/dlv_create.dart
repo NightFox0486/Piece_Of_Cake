@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../models/palette.dart';
+import 'dlv_detail_host.dart';
 
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
 // GlobalKey<_MapSettingState> mapKey = GlobalKey();
@@ -47,11 +48,11 @@ class _DlvCreateState extends State<DlvCreate> {
   String addr = '';
   String? addrDetail = '';
 
-  createParty(var kakaoUserProvider) {
-    insertParty(kakaoUserProvider);
+  Future<Party> createParty(var kakaoUserProvider) async {
+    return await insertParty(kakaoUserProvider);
   }
 
-  Future insertParty(var kakaoUserProvider) async {
+  Future<Party> insertParty(var kakaoUserProvider) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
     }
@@ -85,7 +86,43 @@ class _DlvCreateState extends State<DlvCreate> {
     int partySeq = int.parse(response.body.substring(
         response.body.indexOf("partySeq") + 10,
         response.body.indexOf("userSeq") - 2));
-    imageKey.currentState?.addImage(partySeq);
+    await imageKey.currentState?.addImage(partySeq);
+    final responseParty = await http.get(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+      // headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // },
+      // body: jsonEncode(partyReqVO),
+    );
+    PartyResVO partyResVO =
+        PartyResVO.fromJson(jsonDecode(utf8.decode(responseParty.bodyBytes)));
+    final responseUser = await http.get(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/user/${partyResVO.userSeq}'));
+
+    UserResVO userResVO =
+        UserResVO.fromJson(jsonDecode(utf8.decode(responseUser.bodyBytes)));
+    Party party = new Party(
+      itemLink: partyResVO.itemLink,
+      partyAddr: partyResVO.partyAddr,
+      partyAddrDetail: partyResVO.partyAddrDetail,
+      partyBookmarkCount: partyResVO.partyBookmarkCount,
+      partyCode: partyResVO.partyCode,
+      partyContent: partyResVO.partyContent,
+      partyMainImageUrl: partyResVO.partyMainImageUrl,
+      partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+      partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+      partyRdvDt: partyResVO.partyRdvDt,
+      partyRdvLat: partyResVO.partyRdvLat,
+      partyRdvLng: partyResVO.partyRdvLng,
+      partyRegDt: partyResVO.partyRegDt,
+      partySeq: partyResVO.partySeq,
+      partyStatus: partyResVO.partyStatus,
+      partyTitle: partyResVO.partyTitle,
+      partyUpdDt: partyResVO.partyUpdDt,
+      totalAmount: partyResVO.totalAmount,
+      userResVO: userResVO,
+    );
+    return party;
   }
 
   // late GoogleMapController mapController;
@@ -153,8 +190,13 @@ class _DlvCreateState extends State<DlvCreate> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                createParty(kakaoUserProvider);
+              onPressed: () async {
+                Party party = await createParty(kakaoUserProvider);
+                print(party);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DlvDetailHost(party: party)));
               },
               icon: Icon(Icons.done))
         ],
@@ -322,7 +364,7 @@ class _DlvCreateState extends State<DlvCreate> {
                 child: const Text(
                   '랑데뷰 포인트 설정 하기',
                   style: TextStyle(
-                      fontSize: 20,
+                    fontSize: 20,
                     color: Colors.black,
                   ),
                 ),
