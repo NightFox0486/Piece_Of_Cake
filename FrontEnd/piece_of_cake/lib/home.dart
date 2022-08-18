@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -241,6 +244,20 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  late UserResVO writer;
+  Future setCurrentPartyWriter(int userSeq) async {
+    // print('[KakaoLoginModel] setCurrentPartyWriter(int userSeq) called');
+    final response = await http.get(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/user/${userSeq}')
+    );
+    if (response.statusCode==200) {
+      UserResVO userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      writer = userResVO;
+      // print('${_currentPartyWriter!.userNickname}');
+    } else {
+      throw Exception('Failed to load current party writer.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
@@ -257,28 +274,6 @@ class _HomePageState extends State<HomePage> {
             fontSize: 15
           ),
         ),
-        // title: Row(
-        //   children: [
-        //     Text(
-        //       'Piece ',
-        //       style: TextStyle(
-        //         color: palette.createMaterialColor(Color(0xffFF9EB1)),
-        //       ),
-        //     ),
-        //     Text(
-        //       'Of ',
-        //       style: TextStyle(
-        //         color: palette.createMaterialColor(Color(0xffD6F6BD)),
-        //       ),
-        //     ),
-        //     Text(
-        //       'Cake',
-        //       style: TextStyle(
-        //         color: palette.createMaterialColor(Color(0xffCCE8FC))
-        //       ),
-        //     )
-        //   ],
-        // ),
         actions: [
           IconButton(
               onPressed: () {
@@ -429,9 +424,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
   Widget buildCard(kakaoUserProvider, Party party, palette) => InkWell(
-    onTap: () {
-      kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
-      var writer = kakaoUserProvider.currentPartyWriter;
+    onTap: () async {
+      // kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+      // var writer = kakaoUserProvider.currentPartyWriter;
+      await setCurrentPartyWriter(party.userResVO.userSeq);
       switch (party.partyCode) {
         case '001':
           Navigator.push(
