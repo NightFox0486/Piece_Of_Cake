@@ -78,20 +78,28 @@ class _PieDetailHostState extends State<PieDetailHost> {
 
   @override
   Widget buildImage(String urlImage, int index) => Container(
-        margin: EdgeInsets.symmetric(horizontal: 6),
-        color: Colors.white,
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(urlImage, fit: BoxFit.cover)),
-      );
+      margin: EdgeInsets.symmetric(horizontal: 6),
+      color: Colors.white,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: CachedNetworkImage(
+          imageUrl: widget.party.partyMainImageUrl,
+          placeholder: (context, url) => new CircularProgressIndicator(),
+          errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+          fit: BoxFit.cover,
+          width: 180,
+          height: 180,
+        ),
+      ),
+    );
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
-      activeIndex: activeIndex,
-      count: urlImages.length,
-      effect: JumpingDotEffect(
-        dotWidth: 20,
-        dotHeight: 20,
-      ));
+  // Widget buildIndicator() => AnimatedSmoothIndicator(
+  //     activeIndex: activeIndex,
+  //     count: urlImages.length,
+  //     effect: JumpingDotEffect(
+  //       dotWidth: 20,
+  //       dotHeight: 20,
+  //     ));
 
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
@@ -99,7 +107,7 @@ class _PieDetailHostState extends State<PieDetailHost> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('PieDetailHost'),
+        title: Text('소분 파티'),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -141,7 +149,7 @@ class _PieDetailHostState extends State<PieDetailHost> {
                       },
                     ),
                     const SizedBox(height: 32),
-                    buildIndicator(),
+                    // buildIndicator(),
                   ],
                 ),
               ),

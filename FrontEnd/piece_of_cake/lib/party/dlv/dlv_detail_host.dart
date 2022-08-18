@@ -83,11 +83,15 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
     margin: EdgeInsets.symmetric(horizontal: 6),
     color: Colors.white,
     child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Image.asset(
-            urlImage,
-            fit: BoxFit.cover
-        )
+      borderRadius: BorderRadius.circular(20),
+      child: CachedNetworkImage(
+        imageUrl: widget.party.partyMainImageUrl,
+        placeholder: (context, url) => new CircularProgressIndicator(),
+        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+        fit: BoxFit.cover,
+        width: 180,
+        height: 180,
+      ),
     ),
 
   );
@@ -109,7 +113,7 @@ class _DlvDetailHostState extends State<DlvDetailHost> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '배달 파티 목록',
+          '배달 파티',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: palette.createMaterialColor(Color(0xff8581E1)),
