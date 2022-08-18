@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,6 +19,7 @@ import 'package:piece_of_cake/party/pie/pie_detail_guest.dart';
 import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
 import 'package:piece_of_cake/party/pie/pie_party_list.dart';
 import 'package:piece_of_cake/vo.dart';
+import 'package:piece_of_cake/widgets/map_setting.dart';
 import 'package:provider/provider.dart';
 import 'user/my.dart';
 import 'party/pie/pie_create.dart';
@@ -257,6 +259,44 @@ class _HomePageState extends State<HomePage> {
       throw Exception('Failed to load current party writer.');
     }
   }
+
+  LatLng _center = LatLng(45.521563, -122.677433);
+  // String userAddress = '';
+  void _setUserLatLng(kakaoUserProvider, BuildContext context, LatLng center) async {
+    _center = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapSetting()),
+    );
+    kakaoUserProvider.userResVO.userLat = _center.latitude.toString();
+    kakaoUserProvider.userResVO.userLng = _center.longitude.toString();
+    // final Uri getAddress = Uri.parse(
+    //     'https://maps.googleapis.com/maps/api/geocode/json?latlng=$Lat,$Lng&key=AIzaSyBdf3QkB2KbMDzdfPXYxoBBfyFSk_fxBqk&language=ko');
+    // final response = await http.get(getAddress);
+    UserReqVO userReqVO = UserReqVO(
+      userEmail: kakaoUserProvider.userResVO.userEmail,
+      userPhone: kakaoUserProvider.userResVO.userPhone,
+      userNickname: kakaoUserProvider.userResVO.userNickname,
+      userImage: kakaoUserProvider.userResVO.userImage,
+      userRating: kakaoUserProvider.userResVO.userRating,
+      userLat: _center.latitude.toString(),
+      userLng: _center.longitude.toString(),
+      userKakaoLoginId: kakaoUserProvider.userResVO.userKakaoLoginId,
+    );
+    final response = await http.put(
+      // Uri.parse('http://i7e203.p.ssafy.io:9090/user'),
+      Uri.parse('http://10.0.2.2:9090/user'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userReqVO),
+    );
+    if (response.statusCode==200) {
+      kakaoUserProvider.userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    } else {
+      throw Exception('Failed to update user latlng.');
+    }
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
@@ -276,10 +316,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => gps()),
-                // );
+                _setUserLatLng(kakaoUserProvider, context, _center);
               },
               icon: Icon(Icons.my_location)
           ),
