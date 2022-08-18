@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/kakao_login_model.dart';
+import '../../models/palette.dart';
 import '../../models/party_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
@@ -51,14 +52,14 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
 
   var urlImages = [];
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
-      activeIndex: activeIndex,
-      count: urlImages.length,
-      effect: JumpingDotEffect(
-        dotWidth: 20,
-        dotHeight: 20,
-      )
-  );
+  // Widget buildIndicator() => AnimatedSmoothIndicator(
+  //     activeIndex: activeIndex,
+  //     count: urlImages.length,
+  //     effect: JumpingDotEffect(
+  //       dotWidth: 20,
+  //       dotHeight: 20,
+  //     )
+  // );
 
   List<int> partySeqListGuest = [];
   List<PartyResVO> partyResVOGuestList = [];
@@ -93,10 +94,19 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyDetailGuest'),
+        title: Text(
+          '배달 파티 목록',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.gavel),
@@ -227,7 +237,7 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                           },
                         ),
                         const SizedBox(height: 32),
-                        buildIndicator(),
+                        // buildIndicator(),
                       ],
                     ),
                   ),
@@ -423,7 +433,7 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                       likeBuilder: (bool isLiked) {
                         return Icon(
                           bookmarkList.contains(widget.party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                          color: Colors.deepPurpleAccent,
+                          color: palette.createMaterialColor(Color(0xffFF9EB1)),
                           size: 40,
                         );
                       },
