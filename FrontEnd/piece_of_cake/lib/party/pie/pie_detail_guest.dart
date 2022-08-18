@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/kakao_login_model.dart';
@@ -60,25 +61,29 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
     margin: EdgeInsets.symmetric(horizontal: 6),
     color: Colors.white,
     child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Image.asset(
-            urlImage,
-            fit: BoxFit.cover
-        )
+      borderRadius: BorderRadius.circular(20),
+      child: CachedNetworkImage(
+        imageUrl: widget.party.partyMainImageUrl,
+        placeholder: (context, url) => new CircularProgressIndicator(),
+        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+        fit: BoxFit.cover,
+        width: 180,
+        height: 180,
+      ),
     ),
 
   );
 
   var urlImages = [];
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
-      activeIndex: activeIndex,
-      count: urlImages.length,
-      effect: JumpingDotEffect(
-        dotWidth: 20,
-        dotHeight: 20,
-      )
-  );
+  // Widget buildIndicator() => AnimatedSmoothIndicator(
+  //     activeIndex: activeIndex,
+  //     count: urlImages.length,
+  //     effect: JumpingDotEffect(
+  //       dotWidth: 20,
+  //       dotHeight: 20,
+  //     )
+  // );
 
   List<int> partySeqListGuest = [];
   List<PartyResVO> partyResVOGuestList = [];
@@ -113,10 +118,11 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('PieDetailGuest'),
+        title: Text('소분 파티'),
         actions: [
           IconButton(
             icon: const Icon(Icons.gavel),
@@ -264,7 +270,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                           },
                         ),
                         const SizedBox(height: 32),
-                        buildIndicator(),
+                        // buildIndicator(),
                       ],
                     ),
                   ),
@@ -458,7 +464,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                       likeBuilder: (bool isLiked) {
                         return Icon(
                           bookmarkList.contains(widget.party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                          color: Colors.deepPurpleAccent,
+                          color: palette.createMaterialColor(Color(0xffFF9EB1)),
                           size: 40,
                         );
                       },

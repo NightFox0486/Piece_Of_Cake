@@ -9,6 +9,7 @@ import '../../models/kakao_login_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../models/palette.dart';
 import '../../vo.dart';
 import '../../report.dart';
 
@@ -72,14 +73,14 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
 
   var urlImages = [];
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
-      activeIndex: activeIndex,
-      count: urlImages.length,
-      effect: JumpingDotEffect(
-        dotWidth: 20,
-        dotHeight: 20,
-      )
-  );
+  // Widget buildIndicator() => AnimatedSmoothIndicator(
+  //     activeIndex: activeIndex,
+  //     count: urlImages.length,
+  //     effect: JumpingDotEffect(
+  //       dotWidth: 20,
+  //       dotHeight: 20,
+  //     )
+  // );
 
   List<int> partySeqListGuest = [];
   List<PartyResVO> partyResVOGuestList = [];
@@ -114,10 +115,11 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuyDetailGuest'),
+        title: Text('공구 파티'),
         actions: [
           IconButton(
             icon: const Icon(Icons.gavel),
@@ -265,7 +267,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                           },
                         ),
                         const SizedBox(height: 32),
-                        buildIndicator(),
+                        // buildIndicator(),
                       ],
                     ),
                   ),
@@ -459,7 +461,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                         likeBuilder: (bool isLiked) {
                           return Icon(
                             bookmarkList.contains(widget.party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                            color: Colors.deepPurpleAccent,
+                            color: palette.createMaterialColor(Color(0xffFF9EB1)),
                             size: 40,
                           );
                         },

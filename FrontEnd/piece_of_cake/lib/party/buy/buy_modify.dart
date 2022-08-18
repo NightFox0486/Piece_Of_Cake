@@ -10,12 +10,9 @@ import 'package:provider/provider.dart';
 // import 'package:piece_of_cake/widgets/map_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../models/palette.dart';
-import '../../widgets/receipt_upload_widget.dart';
-
 // GlobalKey<_ImageUploadState> globalKey = GlobalKey();
 // GlobalKey<_MapSettingState> mapKey = GlobalKey();
-GlobalKey<_PieCreateState> pieCreateKey = GlobalKey();
+GlobalKey<_BuyModifyState> buyModifyKey = GlobalKey();
 
 class ReturnValue {
   String? result;
@@ -28,16 +25,17 @@ class Arguments {
   Arguments({this.center: const LatLng(0.0, 0.0), this.returnValue});
 }
 
-class PieCreate extends StatefulWidget {
-  const PieCreate({Key? key}) : super(key: key);
+class BuyModify extends StatefulWidget {
+  final Party party;
+  const BuyModify({Key? key, required this.party}) : super(key: key);
 
   @override
-  State<PieCreate> createState() => _PieCreateState();
+  State<BuyModify> createState() => _BuyModifyState();
 }
 
-class _PieCreateState extends State<PieCreate> {
+class _BuyModifyState extends State<BuyModify> {
   final formKey = GlobalKey<FormState>();
-
+  String? itemLink = '';
   String? name = '';
   String? content = '';
   String? totalAmount = '';
@@ -55,12 +53,12 @@ class _PieCreateState extends State<PieCreate> {
       formKey.currentState!.save();
     }
     PartyReqVO partyReqVO = PartyReqVO(
-        itemLink: 'none',
+        itemLink: this.itemLink!,
         partyAddr: this.addr,
         partyAddrDetail: this.addrDetail!,
         partyStatus: 1,
         partyBookmarkCount: 0,
-        partyCode: '001',
+        partyCode: '002',
         partyContent: content!,
         partyMemberNumCurrent: memberNumCurrent!,
         partyMemberNumTotal: memberNumTotal,
@@ -71,7 +69,7 @@ class _PieCreateState extends State<PieCreate> {
         partyMainImageUrl: 'assets/images/harry.png',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
     // print(name);
-    final response = await http.post(
+    final response = await http.patch(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -85,16 +83,15 @@ class _PieCreateState extends State<PieCreate> {
         response.body.indexOf("partySeq") + 10,
         response.body.indexOf("userSeq") - 2));
     imageKey.currentState?.addImage(partySeq);
-    receiptKey.currentState?.addReceipt(partySeq);
   }
 
   // late GoogleMapController mapController;
 
   LatLng _center = LatLng(45.521563, -122.677433);
 
-  String Rdv_Address = '만날 장소는 ?';
+  String Rdv_Address = '주소 적힐곳';
 
-  // List<Marker> _markers = [];
+  List<Marker> _markers = [];
 
   // void _onMapCreated(GoogleMapController controller) {
   //   mapController = controller;
@@ -139,18 +136,9 @@ class _PieCreateState extends State<PieCreate> {
   Widget build(BuildContext context) {
     final kakaoUserProvider =
         Provider.of<KakaoLoginModel>(context, listen: false);
-    final palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '소분 파티 생성중...',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: palette.createMaterialColor(Color(0xff8581E1)),
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text('BuyCreate'),
         actions: [
           IconButton(
               onPressed: () {
@@ -180,20 +168,24 @@ class _PieCreateState extends State<PieCreate> {
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '제목',
+                            hintText: widget.party.itemLink,
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              name = val as String;
+                              if (val == null || val.isEmpty) {
+                                itemLink = widget.party.itemLink;
+                              } else {
+                                itemLink = val as String;
+                              }
                             });
                           },
                           validator: (val) {
                             if (val == null || val.isEmpty) {
-                              return "Please enter something";
+                              return "제품링크";
                             }
                             return null;
                           },
@@ -208,21 +200,58 @@ class _PieCreateState extends State<PieCreate> {
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          autovalidateMode: AutovalidateMode.always,
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '총 가격',
+                            hintText: widget.party.partyTitle,
+                          ),
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 20),
+                          onSaved: (val) {
+                            setState(() {
+                              if (val == null || val.isEmpty) {
+                                name = widget.party.partyTitle;
+                              } else {
+                                name = val as String;
+                              }
+                            });
+                          },
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return "제목";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.amber),
+                          borderRadius: BorderRadius.circular((15))),
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: widget.party.totalAmount,
                             suffixText: '원',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              totalAmount = val as String;
+                              if (val == null || val.isEmpty) {
+                                totalAmount = widget.party.totalAmount;
+                              } else {
+                                totalAmount = val as String;
+                              }
                             });
                           },
                           validator: (val) {
                             if (val == null || val.isEmpty) {
-                              return "Please enter something";
+                              return "총 금액";
                             }
                             return null;
                           },
@@ -237,30 +266,32 @@ class _PieCreateState extends State<PieCreate> {
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '소분 인원',
+                            hintText:
+                                widget.party.partyMemberNumTotal.toString(),
                             suffixText: '명',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              memberNumTotal = int.parse(val!);
+                              if (val == null || val.isEmpty) {
+                                memberNumTotal =
+                                    widget.party.partyMemberNumTotal;
+                              } else {
+                                memberNumTotal = int.parse(val!);
+                              }
                             });
                           },
                           validator: (val) {
                             if (val == null || val.isEmpty) {
-                              return "Please enter something";
+                              return "공구 인원";
                             }
                             return null;
                           },
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(20),
-                      child: ReceiptUploadWidget(key: receiptKey),
                     ),
                     Container(
                       margin: EdgeInsets.all(10),
@@ -272,9 +303,9 @@ class _PieCreateState extends State<PieCreate> {
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           child: TextFormField(
                             autovalidateMode: AutovalidateMode.always,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: '내용',
+                              hintText: widget.party.partyContent,
                             ),
                             maxLines: 5,
                             keyboardType: TextInputType.multiline,
@@ -282,12 +313,16 @@ class _PieCreateState extends State<PieCreate> {
                                 fontWeight: FontWeight.normal, fontSize: 20),
                             onSaved: (val) {
                               setState(() {
-                                content = val as String;
+                                if (val == null || val.isEmpty) {
+                                  content = widget.party.partyContent;
+                                } else {
+                                  content = val as String;
+                                }
                               });
                             },
                             validator: (val) {
                               if (val == null || val.isEmpty) {
-                                return "Please enter something";
+                                return "내용";
                               }
                               return null;
                             },
@@ -308,7 +343,7 @@ class _PieCreateState extends State<PieCreate> {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  Rdv_Address,
+                  widget.party.partyAddr,
                   style: TextStyle(fontSize: 20),
                 )),
           ),
@@ -320,19 +355,33 @@ class _PieCreateState extends State<PieCreate> {
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: TextButton(
+                child: Text('랑데뷰 포인트 설정'),
                 onPressed: () {
                   _setRdvPoint(context, _center);
                 },
-                child: const Text(
-                  '랑데뷰 포인트 설정 하기',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
               ),
             ),
           ),
+          // Container(
+          //   margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+          //   child: Wrap(children: [
+          //     SizedBox(
+          //       width: 200,
+          //       height: 200,
+          //       child: GoogleMap(
+          //         markers: Set.from(_markers),
+          //         myLocationEnabled: true,
+          //         myLocationButtonEnabled: false,
+          //         mapType: MapType.normal,
+          //         onMapCreated: _onMapCreated,
+          //         initialCameraPosition: CameraPosition(
+          //           target: _center,
+          //           zoom: 11.0,
+          //         ),
+          //       ),
+          //     ),
+          //   ]),
+          // ),
         ],
       ),
     );
