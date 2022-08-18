@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/main.dart';
 import 'package:piece_of_cake/models/kakao_login_model.dart';
+import 'package:piece_of_cake/party/pie/pie_detail_host.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:piece_of_cake/widgets/image_upload_widget.dart';
 import 'package:piece_of_cake/widgets/map_setting.dart';
@@ -46,11 +47,11 @@ class _PieCreateState extends State<PieCreate> {
   String addr = '';
   String? addrDetail = '';
 
-  createParty(var kakaoUserProvider) {
-    insertParty(kakaoUserProvider);
+  Future<Party> createParty(var kakaoUserProvider) async {
+    return await insertParty(kakaoUserProvider);
   }
 
-  Future insertParty(var kakaoUserProvider) async {
+  Future<Party> insertParty(var kakaoUserProvider) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
     }
@@ -84,8 +85,44 @@ class _PieCreateState extends State<PieCreate> {
     int partySeq = int.parse(response.body.substring(
         response.body.indexOf("partySeq") + 10,
         response.body.indexOf("userSeq") - 2));
-    imageKey.currentState?.addImage(partySeq);
-    receiptKey.currentState?.addReceipt(partySeq);
+    await imageKey.currentState?.addImage(partySeq);
+    await receiptKey.currentState?.addReceipt(partySeq);
+    final responseParty = await http.get(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+      // headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // },
+      // body: jsonEncode(partyReqVO),
+    );
+    PartyResVO partyResVO =
+        PartyResVO.fromJson(jsonDecode(utf8.decode(responseParty.bodyBytes)));
+    final responseUser = await http.get(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/user/${partyResVO.userSeq}'));
+
+    UserResVO userResVO =
+        UserResVO.fromJson(jsonDecode(utf8.decode(responseUser.bodyBytes)));
+    Party party = new Party(
+      itemLink: partyResVO.itemLink,
+      partyAddr: partyResVO.partyAddr,
+      partyAddrDetail: partyResVO.partyAddrDetail,
+      partyBookmarkCount: partyResVO.partyBookmarkCount,
+      partyCode: partyResVO.partyCode,
+      partyContent: partyResVO.partyContent,
+      partyMainImageUrl: partyResVO.partyMainImageUrl,
+      partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+      partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+      partyRdvDt: partyResVO.partyRdvDt,
+      partyRdvLat: partyResVO.partyRdvLat,
+      partyRdvLng: partyResVO.partyRdvLng,
+      partyRegDt: partyResVO.partyRegDt,
+      partySeq: partyResVO.partySeq,
+      partyStatus: partyResVO.partyStatus,
+      partyTitle: partyResVO.partyTitle,
+      partyUpdDt: partyResVO.partyUpdDt,
+      totalAmount: partyResVO.totalAmount,
+      userResVO: userResVO,
+    );
+    return party;
   }
 
   // late GoogleMapController mapController;
@@ -153,8 +190,13 @@ class _PieCreateState extends State<PieCreate> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                createParty(kakaoUserProvider);
+              onPressed: () async {
+                Party party = await createParty(kakaoUserProvider);
+                print(party);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PieDetailHost(party: party)));
               },
               icon: Icon(Icons.done))
         ],
