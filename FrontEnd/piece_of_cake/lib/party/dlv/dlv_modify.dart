@@ -44,8 +44,8 @@ class _DlvModifyState extends State<DlvModify> {
   String? addr = '';
   String? addrDetail = '';
 
-  Future<Party> createParty(var kakaoUserProvider) async {
-    return await insertParty(kakaoUserProvider);
+  createParty(var kakaoUserProvider) {
+    insertParty(kakaoUserProvider);
   }
 
   // setValue() {
