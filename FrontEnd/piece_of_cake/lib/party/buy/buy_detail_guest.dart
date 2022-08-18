@@ -30,17 +30,17 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
 
   String? content = '';
   final List<String> sins = [
-    '부정적인 태도',
-    '자리비움',
-    '의도적으로 적에게 죽어줌',
+    '광고',
     '욕설',
-    '혐오발언',
+    '사기',
+    '거래불가능 품목',
   ];
   String? selectedValue;
 
   final formKey = GlobalKey<FormState>();
 
   Future insertReport(Report report) async {
+    print('report: ${report.crimeName}, ${report.reportContent}');
     final response = await http.post(
       Uri.parse('http://i7e203.p.ssafy.io:9090/report/party'),
       headers: <String, String>{
@@ -48,7 +48,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
       },
       body: jsonEncode(report),
     );
-    // print('response.body: ${response.body}');
+    print('response.body: ${response.body}');
     if (response.statusCode == 200) {
       return Report.fromJson(jsonDecode(response.body));
     } else {
@@ -189,6 +189,8 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                         onSaved: (val) {
                                           setState(() {
                                             content = val as String;
+                                            print(val);
+                                            print(content);
                                           });
                                         },
                                         validator: (val) {
@@ -209,15 +211,16 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
                                 width: 130,
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    Report report1 = Report(
+                                      reportSeq: 0,
+                                      reportedUserSeq: 123,
+                                      reportingUserSeq: 456,
+                                      reportContent: content!,
+                                      crimeName: selectedValue!,
+                                    );
+                                    insertReport(report1);
                                     setState(() {
-                                      Report report = Report(
-                                        reportSeq: 0,
-                                        reportedUserSeq: 123,
-                                        reportingUserSeq: 456,
-                                        reportContent: content!,
-                                        crimeName: selectedValue!,
-                                      );
-                                      insertReport(report);
+
                                       Navigator.of(context).pop();
                                     });
                                   },
