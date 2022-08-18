@@ -35,7 +35,7 @@ public class PhotoController {
 
   @PostMapping(value = "/photo")
   public Photo createParty(@RequestBody PhotoPostReqVO photoPostReqVO, HttpSession session) {
-    System.out.println(photoPostReqVO);
+    // System.out.println(photoPostReqVO);
     Photo result = PhotoService.insertPhoto(photoPostReqVO);
     return result;
   }
