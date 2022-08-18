@@ -65,8 +65,8 @@ public class 데이터생성및삭제 {
 //
 //    @Test
 //    void 호스트_파티삭제() {
-////        Party party = partyRepository.findByPartySeq(10);
-//        Party party = partyRepository.findByPartySeq(partySeqHostPartyCreateDelete);
+//        Party party = partyRepository.findByPartySeq(36);
+////        Party party = partyRepository.findByPartySeq(partySeqHostPartyCreateDelete);
 //        partyRepository.delete(party);
 //    }
 
