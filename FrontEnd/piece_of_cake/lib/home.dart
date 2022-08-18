@@ -241,6 +241,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void setCurrentPartyWriter(kakaoUserProvider, userSeq) async {
+    await kakaoUserProvider.setCurrentPartyWriter(userSeq);
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
@@ -257,28 +264,6 @@ class _HomePageState extends State<HomePage> {
             fontSize: 15
           ),
         ),
-        // title: Row(
-        //   children: [
-        //     Text(
-        //       'Piece ',
-        //       style: TextStyle(
-        //         color: palette.createMaterialColor(Color(0xffFF9EB1)),
-        //       ),
-        //     ),
-        //     Text(
-        //       'Of ',
-        //       style: TextStyle(
-        //         color: palette.createMaterialColor(Color(0xffD6F6BD)),
-        //       ),
-        //     ),
-        //     Text(
-        //       'Cake',
-        //       style: TextStyle(
-        //         color: palette.createMaterialColor(Color(0xffCCE8FC))
-        //       ),
-        //     )
-        //   ],
-        // ),
         actions: [
           IconButton(
               onPressed: () {
@@ -430,7 +415,8 @@ class _HomePageState extends State<HomePage> {
   }
   Widget buildCard(kakaoUserProvider, Party party, palette) => InkWell(
     onTap: () {
-      kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+      // kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+      setCurrentPartyWriter(kakaoUserProvider, party.userResVO.userSeq);
       var writer = kakaoUserProvider.currentPartyWriter;
       switch (party.partyCode) {
         case '001':

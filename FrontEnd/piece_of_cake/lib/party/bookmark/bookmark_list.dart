@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
@@ -15,6 +17,7 @@ import 'package:piece_of_cake/models/party_model.dart';
 import 'package:piece_of_cake/notice.dart';
 import 'package:piece_of_cake/search.dart';
 import 'package:piece_of_cake/widget.dart';
+import 'package:http/http.dart' as http;
 
 class BookmarkList extends StatefulWidget {
   const BookmarkList({Key? key}) : super(key: key);
@@ -100,6 +103,22 @@ class _BookmarkListState extends State<BookmarkList> {
       setState(() {});
     }
   }
+
+  late UserResVO writer;
+  Future setCurrentPartyWriter(int userSeq) async {
+    // print('[KakaoLoginModel] setCurrentPartyWriter(int userSeq) called');
+    final response = await http.get(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/user/${userSeq}')
+    );
+    if (response.statusCode==200) {
+      UserResVO userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      writer = userResVO;
+      // print('${_currentPartyWriter!.userNickname}');
+    } else {
+      throw Exception('Failed to load current party writer.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print('bookmark list');
