@@ -33,18 +33,17 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('내 채팅'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Notice()),
-                );
-              },
-              icon: Icon(Icons.notifications)
+          title: new Center(
+              child: new Text(
+                '당신의 채팅 목록',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: palette.createMaterialColor(Color(0xff8581E1)),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
           ),
-        ],
       ),
       extendBodyBehindAppBar: true,
       body: StreamBuilder(

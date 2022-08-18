@@ -30,8 +30,15 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
     var palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('파티 채팅'),
+        title: Text(
+          '채팅방',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () {
