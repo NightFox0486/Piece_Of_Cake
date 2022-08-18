@@ -192,10 +192,12 @@ class _BuyCreateState extends State<BuyCreate> {
               onPressed: () async {
                 Party party = await createParty(kakaoUserProvider);
                 print(party);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BuyDetailHost(party: party)));
+                Route route = MaterialPageRoute(builder: (context) => BuyDetailHost(party: party));
+                Navigator.pushReplacement(context, route);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => BuyDetailHost(party: party)));
               },
               icon: Icon(Icons.done))
         ],
