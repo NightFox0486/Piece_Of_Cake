@@ -45,7 +45,7 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
   Future insertReport(Report report) async {
     print('report: ${report.crimeName}, ${report.reportContent}, ${report.reportedUserSeq}, ${report.reportingUserSeq}, ${report.reportSeq}');
     final response = await http.post(
-      Uri.parse('http://i7e203.p.ssafy.io:9090/report/party'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/report'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

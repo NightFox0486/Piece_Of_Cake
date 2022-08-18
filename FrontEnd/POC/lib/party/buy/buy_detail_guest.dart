@@ -38,7 +38,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
 
   Future insertReport(Report report) async {
     final response = await http.post(
-      Uri.parse('http://i7e203.p.ssafy.io:9090/report/party'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/report'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
