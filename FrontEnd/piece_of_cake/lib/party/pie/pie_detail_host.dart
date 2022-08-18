@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../chat/chat_list_my.dart';
 import '../../models/kakao_login_model.dart';
+import '../../models/palette.dart';
 import '../../models/party_model.dart';
 import '../../vo.dart';
 
@@ -104,10 +105,19 @@ class _PieDetailHostState extends State<PieDetailHost> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('소분 파티'),
+        title: Text(
+          '소분 파티',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -290,7 +300,7 @@ class _PieDetailHostState extends State<PieDetailHost> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                '부산광역시 강서구 송정동 송정삼정그린코아더시티 로비 편의점 앞',
+                                '${widget.party.partyAddr}\n${widget.party.partyAddrDetail}',
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w100),
                                 textAlign: TextAlign.center,
