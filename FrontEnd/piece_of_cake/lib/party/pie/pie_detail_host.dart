@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:piece_of_cake/chat/chatroom_party_route.dart';
@@ -11,8 +14,8 @@ import '../../models/party_model.dart';
 import '../../vo.dart';
 
 class PieDetailHost extends StatefulWidget {
-  final Party party;
-  const PieDetailHost({Key? key, required this.party}) : super(key: key);
+  Party party;
+  PieDetailHost({Key? key, required this.party}) : super(key: key);
 
   @override
   State<PieDetailHost> createState() => _PieDetailHostState();
@@ -77,6 +80,41 @@ class _PieDetailHostState extends State<PieDetailHost> {
     }
   }
 
+  void setParty(kakaoUserProvider, int partySeq) async {
+    final response = await http.get(
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+    );
+    if (response.statusCode==200) {
+      PartyResVO partyResVO = PartyResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      widget.party = Party(
+          partySeq: partyResVO.partySeq,
+          userResVO: kakaoUserProvider.userResVO,
+          partyCode: partyResVO.partyCode,
+          partyTitle: partyResVO.partyTitle,
+          partyContent: partyResVO.partyContent,
+          partyBookmarkCount: partyResVO.partyBookmarkCount,
+          partyRegDt: partyResVO.partyRegDt,
+          partyUpdDt: partyResVO.partyUpdDt,
+          partyRdvDt: partyResVO.partyRdvDt,
+          partyRdvLat: partyResVO.partyRdvLat,
+          partyRdvLng: partyResVO.partyRdvLng,
+          partyMemberNumTotal: partyResVO.partyMemberNumTotal,
+          partyMemberNumCurrent: partyResVO.partyMemberNumCurrent,
+          partyAddr: partyResVO.partyAddr,
+          partyAddrDetail: partyResVO.partyAddrDetail,
+          partyStatus: partyResVO.partyStatus,
+          itemLink: partyResVO.itemLink,
+          totalAmount: partyResVO.totalAmount,
+          partyMainImageUrl: partyResVO.partyMainImageUrl
+      );
+    } else {
+      throw Exception('Failed to load detail party');
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget buildImage(String urlImage, int index) => Container(
       margin: EdgeInsets.symmetric(horizontal: 6),
@@ -107,6 +145,7 @@ class _PieDetailHostState extends State<PieDetailHost> {
     var partyProvider = Provider.of<PartyModel>(context);
     var palette = Provider.of<Palette>(context);
     setList(kakaoUserProvider, partyProvider);
+    setParty(kakaoUserProvider, widget.party.partySeq);
     return Scaffold(
       appBar: AppBar(
         title: Text(
