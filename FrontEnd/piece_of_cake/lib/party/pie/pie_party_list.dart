@@ -94,9 +94,9 @@ class _PiePartyListState extends State<PiePartyList> {
     }
     bookmarkPartyList = list;
 
-    setState(() {
-
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -222,7 +222,8 @@ class _PiePartyListState extends State<PiePartyList> {
                                   likeBuilder: (bool isLiked) {
                                     return Icon(
                                       bookmarkList.contains(party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                                      color: Colors.deepPurpleAccent,
+                                      // color: Colors.deepPurpleAccent,
+                                      color: palette.createMaterialColor(Color(0xffFF9EB1)),
                                       size: 20,
                                     );
                                   },
