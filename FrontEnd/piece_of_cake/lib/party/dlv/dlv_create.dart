@@ -193,10 +193,12 @@ class _DlvCreateState extends State<DlvCreate> {
               onPressed: () async {
                 Party party = await createParty(kakaoUserProvider);
                 print(party);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DlvDetailHost(party: party)));
+                Route route = MaterialPageRoute(builder: (context) => DlvDetailHost(party: party));
+                Navigator.pushReplacement(context, route);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => DlvDetailHost(party: party)));
               },
               icon: Icon(Icons.done))
         ],

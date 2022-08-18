@@ -193,10 +193,12 @@ class _PieCreateState extends State<PieCreate> {
               onPressed: () async {
                 Party party = await createParty(kakaoUserProvider);
                 print(party);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PieDetailHost(party: party)));
+                Route route = MaterialPageRoute(builder: (context) => PieDetailHost(party: party));
+                Navigator.pushReplacement(context, route);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => PieDetailHost(party: party)));
               },
               icon: Icon(Icons.done))
         ],
