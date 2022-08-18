@@ -215,7 +215,13 @@ class _BookmarkListState extends State<BookmarkList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              '${party.partyTitle.length >= 10 ? party.partyTitle.substring(0, 10).padRight(3, '.') : party.partyTitle}',
+                              party.partyTitle.length >= 10 ?
+                                (party.partyTitle.substring(0, 10).contains('\n') ?
+                                party.partyTitle.substring(0, party.partyTitle.indexOf('\n', 0)) :
+                              '${party.partyTitle.substring(0, 10)}...') :
+                              (party.partyTitle.contains('\n') ?
+                                party.partyTitle.substring(0, party.partyTitle.indexOf('\n', 0)) :
+                                party.partyTitle),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
@@ -226,7 +232,14 @@ class _BookmarkListState extends State<BookmarkList> {
                             height: 8,
                           ),
                           Text(
-                            '${party.partyAddr.length >= 10 ? party.partyAddr.substring(0, 10).padRight(3, '.') : party.partyAddr}',
+                            // '${party.partyAddr.length >= 10 ? party.partyAddr.substring(0, 10).padRight(3, '.') : party.partyAddr}',
+                            party.partyAddr.length >= 10 ?
+                            (party.partyAddr.substring(0, 10).contains('\n') ?
+                            party.partyAddr.substring(0, party.partyAddr.indexOf('\n', 0)) :
+                            '${party.partyAddr.substring(0, 10)}...') :
+                            (party.partyAddr.contains('\n') ?
+                            party.partyAddr.substring(0, party.partyAddr.indexOf('\n', 0)) :
+                            party.partyAddr),
                             style: TextStyle(
                               fontSize: 12,
                               overflow: TextOverflow.ellipsis,
@@ -236,7 +249,13 @@ class _BookmarkListState extends State<BookmarkList> {
                             height: 8,
                           ),
                           Text(
-                            '${party.partyContent.length >= 10 ? party.partyContent.substring(0, 10).padRight(3, '.') : party.partyContent}',
+                            party.partyContent.length >= 10 ?
+                            (party.partyContent.substring(0, 10).contains('\n') ?
+                            party.partyContent.substring(0, party.partyContent.indexOf('\n', 0)) :
+                            '${party.partyContent.substring(0, 10)}...') :
+                            (party.partyContent.contains('\n') ?
+                            party.partyContent.substring(0, party.partyContent.indexOf('\n', 0)) :
+                            party.partyContent),
                             style: TextStyle(
                               fontSize: 15,
                               overflow: TextOverflow.ellipsis,
