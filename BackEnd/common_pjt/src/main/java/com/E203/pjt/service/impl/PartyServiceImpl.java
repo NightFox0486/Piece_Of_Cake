@@ -325,10 +325,7 @@ public class PartyServiceImpl implements PartyService {
 
   @Override
   public void changeParty(Integer partySeq, PartyResVO partyResVO) {
-    User user = userRepository.findByUserSeq(partyResVO.getUserSeq());
-    Party party = new Party();
-    party.setPartySeq(partySeq);
-    party.setUser(user);
+    Party party = partyRepository.findByPartySeq(partySeq);
     party.setPartyCode(partyResVO.getPartyCode());
     party.setPartyTitle(partyResVO.getPartyTitle());
     party.setPartyContent(partyResVO.getPartyContent());
