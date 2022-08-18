@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:piece_of_cake/models/palette.dart';
 import 'package:piece_of_cake/party/buy/buy_create.dart';
+import 'package:provider/provider.dart';
 
 GlobalKey<_MapSettingState> mapKey = GlobalKey();
 //
@@ -35,9 +37,18 @@ class _MapSettingState extends State<MapSetting> {
 
   @override
   Widget build(BuildContext context) {
+    var palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Map_Setting'),
+        title: Text(
+          '만날 장소 등록',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () async {
