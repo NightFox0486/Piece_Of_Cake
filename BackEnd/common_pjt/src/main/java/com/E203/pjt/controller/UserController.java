@@ -33,8 +33,6 @@ public class UserController {
 
   @PutMapping(value = "/user")
   public UserResVO updateUserLatLng(@RequestBody UserReqVO userReqVO) {
-    System.out.println("[UserController] updateUserLatLng");
-    System.out.println("userReqVO"+userReqVO);
     UserResVO userResVO = userService.updateUserLatLng(userReqVO);
     return userResVO;
   }

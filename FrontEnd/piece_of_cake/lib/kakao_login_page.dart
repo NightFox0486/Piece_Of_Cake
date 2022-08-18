@@ -63,7 +63,7 @@ class _KakaoLoginPageState extends State<KakaoLoginPage> {
             ElevatedButton(
               onPressed: () async {
                 // await KakaoLoginModel().setUser();
-                await Provider.of<KakaoLoginModel>(context, listen: false).setUser();
+                await Provider.of<KakaoLoginModel>(context, listen: false).setKakaoLoginUser();
                 print('login');
                 print('user: ${Provider.of<KakaoLoginModel>(context, listen: false).user}');
                 Route route = MaterialPageRoute(builder: (context) => const MainPage());

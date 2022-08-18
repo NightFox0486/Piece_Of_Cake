@@ -283,15 +283,16 @@ class _HomePageState extends State<HomePage> {
       userKakaoLoginId: kakaoUserProvider.userResVO.userKakaoLoginId,
     );
     final response = await http.put(
-      // Uri.parse('http://i7e203.p.ssafy.io:9090/user'),
-      Uri.parse('http://10.0.2.2:9090/user'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/user'),
+      // Uri.parse('http://10.0.2.2:9090/user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(userReqVO),
     );
     if (response.statusCode==200) {
-      kakaoUserProvider.userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      kakaoUserProvider.setUser(UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
+
     } else {
       throw Exception('Failed to update user latlng.');
     }

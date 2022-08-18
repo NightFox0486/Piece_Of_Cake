@@ -38,11 +38,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserResVO updateUserLatLng(UserReqVO userReqVO) {
-    System.out.println("[UserServiceImpl] updateUserLatLng called");
-    System.out.println("lat: "+userReqVO.getUserLat()+", lng: "+userReqVO.getUserLng());
     User user = userRepository.findByUserKakaoLoginId(userReqVO.getUserKakaoLoginId());
-    System.out.println(user.getUserNickname());
-    System.out.println("lat: "+user.getUserLat()+", lng: "+user.getUserLng());
     user.setUserLat(userReqVO.getUserLat());
     user.setUserLng(userReqVO.getUserLng());
     user = userRepository.save(user);
@@ -58,7 +54,6 @@ public class UserServiceImpl implements UserService {
     userResVO.setUserLng(user.getUserLng());
     userResVO.setUserAccount(user.getUserAccount());
     userResVO.setUserKakaoLoginId(user.getUserKakaoLoginId());
-    System.out.println("lat: "+userResVO.getUserLat()+", lng: "+userResVO.getUserLng());
     return userResVO;
   }
 
