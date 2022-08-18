@@ -107,7 +107,14 @@ class _PiePartyListState extends State<PiePartyList> {
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pie Party List'),
+        title: Text(
+          '소분 파티 목록',
+          style: TextStyle(
+            color: palette.createMaterialColor(Color(0xff8581E1)),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        )
       ),
       body: ListView(
         children: [
@@ -163,23 +170,31 @@ class _PiePartyListState extends State<PiePartyList> {
                           children: [
                             Text(
                                 '${party.partyTitle.length >= 10 ? party.partyTitle.substring(0, 10).padRight(3, '.') : party.partyTitle}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${party.partyAddr.length >= 10 ? party.partyAddr.substring(0, 10).padRight(3, '.') : party.partyAddr}',
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18)
+                                fontSize: 12,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             SizedBox(
                               height: 8,
                             ),
                             Text(
-                              '${party.partyAddr.length >= 20 ? party.partyAddr.substring(0, 20).padRight(3, '.') : party.partyAddr}',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              '${party.partyContent.length >= 20 ? party.partyContent.substring(0, 20).padRight(3, '.') : party.partyContent}',
-                              style: TextStyle(fontSize: 15),
+                              '${party.partyContent.length >= 10 ? party.partyContent.substring(0, 10).padRight(3, '.') : party.partyContent}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,

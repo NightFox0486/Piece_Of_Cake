@@ -100,6 +100,7 @@ class ChatListMy extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: palette.createMaterialColor(Color(0xff8581E1)),
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             )
