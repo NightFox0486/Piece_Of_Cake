@@ -367,6 +367,7 @@ class UserReqVO {
       userNickname: json['userNickname'],
       userImage: json['userImage'],
       userRating: json['userRating'],
+      userKakaoLoginId: json['userKakaoLoginId']
     );
   }
   Map<String, dynamic> toJson() {

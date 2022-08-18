@@ -6,6 +6,7 @@ import 'package:piece_of_cake/models/party_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../chat/chat_route.dart';
 import '../../models/kakao_login_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'dart:convert';
@@ -27,6 +28,7 @@ class BuyDetailGuest extends StatefulWidget {
 }
 
 class _BuyDetailGuestState extends State<BuyDetailGuest> {
+  final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
 
   String? content = '';
@@ -117,6 +119,7 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
+    var palette = Provider.of<Palette>(context);
     void _createChatRoom() async{
       String? chatName =
           'H' + widget.party.userResVO.userKakaoLoginId.toString() +

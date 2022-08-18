@@ -17,7 +17,6 @@ import 'package:piece_of_cake/party/pie/pie_party_list.dart';
 import 'package:piece_of_cake/vo.dart';
 import 'package:provider/provider.dart';
 import 'user/my.dart';
-import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
 import 'party/bookmark/bookmark_list.dart';
 import './notice.dart';

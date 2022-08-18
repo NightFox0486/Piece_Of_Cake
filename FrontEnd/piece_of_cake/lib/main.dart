@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:piece_of_cake/kakao_login_page.dart';
 import 'package:provider/provider.dart';
+import 'chat/chatroom_my_route.dart';
 import 'models/kakao_login_model.dart';
 import 'models/party_model.dart';
 import 'models/palette.dart';
 import 'user/my.dart';
-import 'chat/chat_list_my.dart';
 import 'party/pie/pie_create.dart';
 import './home.dart';
 import 'party/dlv/dlv_create.dart';
@@ -74,7 +74,7 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     HomePage(),
     BookmarkList(),
-    ChatListMy(),
+    ChatRoomListMy(),
     My(),
   ];
 
