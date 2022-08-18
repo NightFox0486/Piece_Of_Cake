@@ -323,4 +323,9 @@ public class PartyServiceImpl implements PartyService {
     partyRepository.save(party);
   }
 
+  @Override
+  public void changeParty(Integer partySeq, Party party) {
+    partyRepository.save(party);
+  }
+
 }
