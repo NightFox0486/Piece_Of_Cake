@@ -81,9 +81,20 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
         margin: EdgeInsets.symmetric(horizontal: 6),
         color: Colors.white,
         child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(urlImage, fit: BoxFit.cover)),
-      );
+          borderRadius: BorderRadius.circular(20),
+          child: CachedNetworkImage(
+            imageUrl: widget.party.partyMainImageUrl,
+            placeholder: (context, url) => new CircularProgressIndicator(),
+            errorWidget: (context, url, error) => new Icon(
+              Icons.error,
+              size: 100,
+            ),
+            fit: BoxFit.cover,
+            width: 180,
+            height: 180,
+          ),
+        ),
+  );
 
   // Widget buildIndicator() => AnimatedSmoothIndicator(
   //     activeIndex: activeIndex,
