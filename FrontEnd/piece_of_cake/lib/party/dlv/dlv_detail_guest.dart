@@ -141,7 +141,8 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
         'partyseq': widget.party.partySeq,
         'chatroomName': chatName,
         'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId]),
-        'profileImage': widget.writer.userImage,
+        'hostProfileImage': widget.writer.userImage,
+        'guestProfileImage': kakaoUserProvider.user?.kakaoAccount?.profile?.profileImageUrl
       }, SetOptions(merge: true));
 
       Navigator.push(
