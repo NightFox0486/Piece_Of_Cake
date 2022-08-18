@@ -344,7 +344,10 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChatRoomListParty(partySeq: widget.party.partySeq,)),
+                          MaterialPageRoute(
+                              builder: (context) => ChatRoomListParty(
+                                    partySeq: widget.party.partySeq,
+                                  )),
                         );
                       },
                       icon: Icon(
