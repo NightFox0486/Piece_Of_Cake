@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/kakao_login_model.dart';
 import '../models/palette.dart';
 import '../notice.dart';
 import 'chat_route.dart';
@@ -10,9 +11,9 @@ import 'package:intl/intl.dart';
 
 
 class ChatRoomListParty extends StatefulWidget {
+  final int partySeq;
 
   const ChatRoomListParty({Key? key, required this.partySeq}) : super(key: key);
-  final int partySeq;
 
 
   @override
@@ -24,6 +25,7 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
 
   @override
   Widget build(BuildContext context) {
+    var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     final Query<Map<String, dynamic>> _chats = FirebaseFirestore.instance.collection('chats').where("partyseq", isEqualTo: widget.partySeq);
     var palette = Provider.of<Palette>(context);
     return Scaffold(
@@ -80,7 +82,9 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
                                 child: SizedBox(
                                     child: ClipOval(
                                       child: CachedNetworkImage(
-                                        imageUrl: documentSnapshot['profileImage'],
+                                        // imageUrl: documentSnapshot['profileImage'],
+                                        imageUrl: kakaoUserProvider.userResVO!.userKakaoLoginId.toString() == documentSnapshot['guestSeq']
+                                            ? documentSnapshot['hostProfileImage'] : documentSnapshot['guestProfileImage'],
                                         placeholder: (context, url) => new CircularProgressIndicator(),
                                         errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
                                       ),

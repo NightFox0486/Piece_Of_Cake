@@ -94,7 +94,7 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
             height: 180,
           ),
         ),
-      );
+  );
 
   // Widget buildIndicator() => AnimatedSmoothIndicator(
   //     activeIndex: activeIndex,
