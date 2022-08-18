@@ -70,11 +70,8 @@ class _BuyModifyState extends State<BuyModify> {
         userSeq: kakaoUserProvider.userResVO!.userSeq);
     // print(name);
     final response = await http.patch(
-      Uri.parse('http://i7e203.p.ssafy.io:9090/party'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(partyReqVO),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/party/${widget.party.partySeq}'),
+      body: jsonEncode(widget.party),
     );
     // print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
@@ -280,7 +277,7 @@ class _BuyModifyState extends State<BuyModify> {
                                 memberNumTotal =
                                     widget.party.partyMemberNumTotal;
                               } else {
-                                memberNumTotal = int.parse(val!);
+                                memberNumTotal = int.parse(val);
                               }
                             });
                           },
