@@ -29,11 +29,10 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
 
   String? content = '';
   final List<String> sins = [
-    '부정적인 태도',
-    '자리비움',
-    '의도적으로 적에게 죽어줌',
+    '광고',
     '욕설',
-    '혐오발언',
+    '사기',
+    '거래불가능 품목',
   ];
   String? selectedValue;
 
