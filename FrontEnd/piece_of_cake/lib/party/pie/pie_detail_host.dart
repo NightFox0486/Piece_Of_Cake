@@ -290,7 +290,7 @@ class _PieDetailHostState extends State<PieDetailHost> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                '부산광역시 강서구 송정동 송정삼정그린코아더시티 로비 편의점 앞',
+                                '${widget.party.partyAddr}\n${widget.party.partyAddrDetail}',
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w100),
                                 textAlign: TextAlign.center,
