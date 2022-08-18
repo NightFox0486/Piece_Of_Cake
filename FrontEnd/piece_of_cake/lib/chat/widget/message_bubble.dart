@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/palette.dart';
 
 class MessageBubble extends StatelessWidget {
   final String messageText;
@@ -18,6 +21,8 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var palette = Provider.of<Palette>(context);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment:
@@ -33,8 +38,8 @@ class MessageBubble extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
               decoration: BoxDecoration(
                 color: ownMessage
-                    ? Theme.of(context).primaryColorDark
-                    : Theme.of(context).primaryColorLight,
+                    ? palette.createMaterialColor(Color(0xffD1ADE6))
+                    : palette.createMaterialColor(Color(0xff8581E1)),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
@@ -43,6 +48,7 @@ class MessageBubble extends StatelessWidget {
                 ),
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     username,

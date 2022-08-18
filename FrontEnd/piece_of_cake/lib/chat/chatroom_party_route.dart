@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/palette.dart';
 import '../notice.dart';
 import 'chat_route.dart';
 
@@ -20,13 +22,12 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
 
   @override
   Widget build(BuildContext context) {
-
+    var palette = Provider.of<Palette>(context);
     final Query<Map<String, dynamic>> _chats = FirebaseFirestore.instance.collection('chats').where("partyseq", isEqualTo: widget.partySeq);
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
+        backgroundColor: Colors.white,
         title: Text('파티 채팅'),
         actions: [
           IconButton(

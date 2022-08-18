@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:provider/provider.dart';
 import '../models/kakao_login_model.dart';
+import '../models/palette.dart';
 import '../notice.dart';
 import 'chat_route.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -20,15 +22,15 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
 
   kakao.User? user;
 
+
   @override
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     final Query<Map<String, dynamic>> _chats = FirebaseFirestore.instance.collection('chats').where("seq", arrayContains: kakaoUserProvider.userResVO!.userKakaoLoginId.toString());
-
+    var palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
+        backgroundColor: Colors.white,
         title: Text('내 채팅'),
         actions: [
           IconButton(
@@ -51,11 +53,11 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
               itemCount: streamSnapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
-
+                var toDateTime = documentSnapshot['last_message_at'].toDate();
                 return InkWell(
-                    splashColor: Colors.amber,
-                    hoverColor: Colors.lightGreenAccent,
-                    highlightColor: Colors.amber,
+                  
+                    splashColor: palette.createMaterialColor(Color(0xffD1ADE6)),
+                    highlightColor: palette.createMaterialColor(Color(0xffD1ADE6)),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -68,7 +70,7 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(width: 1.0, color: Colors.amber),
+                            bottom: BorderSide(width: 1.0, color: palette.createMaterialColor(Color(0xff8581E1))),
                             // bottom: BorderSide(width: 1.0, color: Colors.amber),
                           )
                       ),
@@ -99,7 +101,6 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                         //Text(documentSnapshot['guestNickname'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
                                         Text(kakaoUserProvider.userResVO!.userKakaoLoginId.toString() == documentSnapshot['guestSeq']
                                             ? documentSnapshot['hostNickname'] : documentSnapshot['guestNickname'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis,),),
-
                                         Text(documentSnapshot['last_text'], style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, color: Colors.black54)),
                                       ],
                                     ),
@@ -110,9 +111,8 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-
-                                        Text(documentSnapshot['last_message_at'].toDate().toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis, color: Colors.black54),),
-                                        Text('안읽음', style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, color: Colors.deepOrangeAccent)),
+                                        Text(DateFormat.yMMMd().format(toDateTime), style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),),
+                                        Text('안읽음', style: TextStyle(fontSize: 13, overflow: TextOverflow.ellipsis, color: palette.createMaterialColor(Color(0xff8581E1)))),
                                       ],
                                     ),
                                   ),
