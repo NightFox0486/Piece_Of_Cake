@@ -35,7 +35,6 @@ class BuyModify extends StatefulWidget {
 
 class _BuyModifyState extends State<BuyModify> {
   final formKey = GlobalKey<FormState>();
-  bool check = false;
   String? itemLink = '';
   String? name = '';
   String? content = '';
@@ -49,16 +48,16 @@ class _BuyModifyState extends State<BuyModify> {
     insertParty(kakaoUserProvider);
   }
 
-  setValue() {
-    this.itemLink = widget.party.itemLink;
-    this.name = widget.party.partyTitle;
-    this.content = widget.party.partyContent;
-    this.totalAmount = widget.party.totalAmount;
-    this.memberNumTotal = widget.party.partyMemberNumTotal;
-    this.memberNumCurrent = widget.party.partyMemberNumCurrent;
-    this.addr = widget.party.partyAddr;
-    this.addrDetail = widget.party.partyAddrDetail;
-  }
+  // setValue() {
+  //   this.itemLink = widget.party.itemLink;
+  //   this.name = widget.party.partyTitle;
+  //   this.content = widget.party.partyContent;
+  //   this.totalAmount = widget.party.totalAmount;
+  //   this.memberNumTotal = widget.party.partyMemberNumTotal;
+  //   this.memberNumCurrent = widget.party.partyMemberNumCurrent;
+  //   this.addr = widget.party.partyAddr;
+  //   this.addrDetail = widget.party.partyAddrDetail;
+  // }
 
   Future insertParty(var kakaoUserProvider) async {
     if (formKey.currentState!.validate()) {
@@ -69,23 +68,32 @@ class _BuyModifyState extends State<BuyModify> {
         partyRegDt: widget.party.partyRegDt,
         partyUpdDt: widget.party.partyUpdDt,
         partySeq: widget.party.partySeq,
-        itemLink: this.itemLink!,
+        itemLink: this.itemLink == '' ? widget.party.itemLink : this.itemLink!,
         partyAddr: this.addr!,
         partyAddrDetail: this.addrDetail!,
         partyStatus: 1,
         partyBookmarkCount: 0,
         partyCode: '002',
-        partyContent: content!,
+        partyContent:
+            this.content == '' ? widget.party.partyContent : this.content!,
         partyMemberNumCurrent: memberNumCurrent!,
-        partyMemberNumTotal: memberNumTotal,
+        partyMemberNumTotal: this.memberNumTotal == 2
+            ? widget.party.partyMemberNumTotal
+            : this.memberNumTotal,
         partyRdvLat: this._center.latitude.toString(),
         partyRdvLng: this._center.longitude.toString(),
-        partyTitle: this.name!,
-        totalAmount: this.totalAmount!,
+        partyTitle: this.name == '' ? widget.party.partyTitle : this.name!,
+        totalAmount: this.totalAmount == ''
+            ? widget.party.totalAmount
+            : this.totalAmount!,
         partyMainImageUrl: widget.party.partyMainImageUrl,
         userSeq: kakaoUserProvider.userResVO!.userSeq);
 
-    // print(name);
+    print(partyResVO.itemLink);
+    print(partyResVO.partyTitle);
+    print(partyResVO.totalAmount);
+    print(partyResVO.partyMemberNumTotal);
+    print(partyResVO.partyContent);
     final response = await http.patch(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party/${widget.party.partySeq}'),
       headers: <String, String>{
@@ -153,10 +161,6 @@ class _BuyModifyState extends State<BuyModify> {
 
   @override
   Widget build(BuildContext context) {
-    if (!check) {
-      setValue();
-      check = true;
-    }
     final kakaoUserProvider =
         Provider.of<KakaoLoginModel>(context, listen: false);
     return Scaffold(
@@ -191,22 +195,23 @@ class _BuyModifyState extends State<BuyModify> {
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText: widget.party.itemLink,
+                            hintText: '',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              print(val);
-                              this.itemLink = val as String;
+                              itemLink = val as String;
                             });
                           },
                           validator: (val) {
                             if (val == null || val.isEmpty) {
+                              itemLink = val as String;
                               return "제품링크";
                             }
+                            itemLink = val as String;
                             return null;
                           },
                         ),
@@ -221,25 +226,23 @@ class _BuyModifyState extends State<BuyModify> {
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText: widget.party.partyTitle,
+                            hintText: '',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              if (val == null || val.isEmpty) {
-                                name = widget.party.partyTitle;
-                              } else {
-                                name = val as String;
-                              }
+                              name = val as String;
                             });
                           },
                           validator: (val) {
                             if (val == null || val.isEmpty) {
+                              name = val as String;
                               return "제목";
                             }
+                            name = val as String;
                             return null;
                           },
                         ),
@@ -253,26 +256,24 @@ class _BuyModifyState extends State<BuyModify> {
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText: widget.party.totalAmount,
+                            hintText: '',
                             suffixText: '원',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              if (val == null || val.isEmpty) {
-                                totalAmount = widget.party.totalAmount;
-                              } else {
-                                totalAmount = val as String;
-                              }
+                              totalAmount = val as String;
                             });
                           },
                           validator: (val) {
                             if (val == null || val.isEmpty) {
+                              totalAmount = val as String;
                               return "총 금액";
                             }
+                            totalAmount = val as String;
                             return null;
                           },
                         ),
@@ -286,28 +287,24 @@ class _BuyModifyState extends State<BuyModify> {
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText:
-                                widget.party.partyMemberNumTotal.toString(),
+                            hintText: '',
                             suffixText: '명',
                           ),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 20),
                           onSaved: (val) {
                             setState(() {
-                              if (val == null || val.isEmpty) {
-                                memberNumTotal =
-                                    widget.party.partyMemberNumTotal;
-                              } else {
-                                memberNumTotal = int.parse(val);
-                              }
+                              memberNumTotal = int.parse(val!);
                             });
                           },
                           validator: (val) {
                             if (val == null || val.isEmpty) {
+                              memberNumTotal = 2;
                               return "공구 인원";
                             }
+                            memberNumTotal = int.parse(val);
                             return null;
                           },
                         ),
@@ -323,9 +320,9 @@ class _BuyModifyState extends State<BuyModify> {
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           child: TextFormField(
                             autovalidateMode: AutovalidateMode.always,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
-                              hintText: widget.party.partyContent,
+                              hintText: '',
                             ),
                             maxLines: 5,
                             keyboardType: TextInputType.multiline,
@@ -333,17 +330,15 @@ class _BuyModifyState extends State<BuyModify> {
                                 fontWeight: FontWeight.normal, fontSize: 20),
                             onSaved: (val) {
                               setState(() {
-                                if (val == null || val.isEmpty) {
-                                  content = widget.party.partyContent;
-                                } else {
-                                  content = val as String;
-                                }
+                                content = val as String;
                               });
                             },
                             validator: (val) {
                               if (val == null || val.isEmpty) {
+                                content = val as String;
                                 return "내용";
                               }
+                              content = val as String;
                               return null;
                             },
                           ),

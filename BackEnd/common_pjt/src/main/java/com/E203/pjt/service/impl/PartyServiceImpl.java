@@ -326,6 +326,25 @@ public class PartyServiceImpl implements PartyService {
   @Override
   public void changeParty(Integer partySeq, PartyResVO partyResVO) {
     Party party = new Party();
+    party.setPartySeq(partySeq);
+    // party.setUser(partyResVO.getUserSeq());
+    party.setPartyCode(partyResVO.getPartyCode());
+    party.setPartyTitle(partyResVO.getPartyTitle());
+    party.setPartyContent(partyResVO.getPartyContent());
+    party.setPartyBookmarkCount(partyResVO.getPartyBookmarkCount());
+    party.setPartyRegDt(partyResVO.getPartyRegDt());
+    party.setPartyUpdDt(partyResVO.getPartyUpdDt());
+    party.setPartyRdvDt(partyResVO.getPartyRdvDt());
+    party.setPartyRdvLat(partyResVO.getPartyRdvLat());
+    party.setPartyRdvLng(partyResVO.getPartyRdvLng());
+    party.setPartyMemberNumTotal(partyResVO.getPartyMemberNumTotal());
+    party.setPartyMemberNumCurrent(partyResVO.getPartyMemberNumCurrent());
+    party.setPartyAddr(partyResVO.getPartyAddr());
+    party.setPartyAddrDetail(partyResVO.getPartyAddrDetail());
+    party.setPartyStatus(partyResVO.getPartyStatus());
+    party.setItemLink(partyResVO.getItemLink());
+    party.setTotalAmount(partyResVO.getTotalAmount());
+    party.setPartyMainImageUrl(partyResVO.getPartyMainImageUrl());
     partyRepository.save(party);
   }
 
