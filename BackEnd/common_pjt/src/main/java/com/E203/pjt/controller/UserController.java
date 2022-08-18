@@ -31,13 +31,13 @@ public class UserController {
     return userResVO;
   }
 
-//  @PostMapping(value = "/users")
-//  public void createUsers(User user) {
-//    System.out.println(user);
-//    System.out.println(userService.createUser(user));
-//  }
-
-  //ResponseEntity<Map<String, String>>
+  @PutMapping(value = "/user")
+  public UserResVO updateUserLatLng(@RequestBody UserReqVO userReqVO) {
+    System.out.println("[UserController] updateUserLatLng");
+    System.out.println("userReqVO"+userReqVO);
+    UserResVO userResVO = userService.updateUserLatLng(userReqVO);
+    return userResVO;
+  }
 
   @PostMapping(value = "/user")
   @ResponseBody

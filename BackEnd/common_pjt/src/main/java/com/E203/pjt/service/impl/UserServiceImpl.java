@@ -37,6 +37,32 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public UserResVO updateUserLatLng(UserReqVO userReqVO) {
+    System.out.println("[UserServiceImpl] updateUserLatLng called");
+    System.out.println("lat: "+userReqVO.getUserLat()+", lng: "+userReqVO.getUserLng());
+    User user = userRepository.findByUserKakaoLoginId(userReqVO.getUserKakaoLoginId());
+    System.out.println(user.getUserNickname());
+    System.out.println("lat: "+user.getUserLat()+", lng: "+user.getUserLng());
+    user.setUserLat(userReqVO.getUserLat());
+    user.setUserLng(userReqVO.getUserLng());
+    user = userRepository.save(user);
+    UserResVO userResVO = new UserResVO();
+    userResVO.setUserSeq(user.getUserSeq());
+    userResVO.setUserEmail(user.getUserEmail());
+    userResVO.setUserPhone(user.getUserPhone());
+    userResVO.setUserNickname(user.getUserNickname());
+    userResVO.setUserPassword(user.getUserPassword());
+    userResVO.setUserImage(user.getUserImage());
+    userResVO.setUserRating(user.getUserRating());
+    userResVO.setUserLat(user.getUserLat());
+    userResVO.setUserLng(user.getUserLng());
+    userResVO.setUserAccount(user.getUserAccount());
+    userResVO.setUserKakaoLoginId(user.getUserKakaoLoginId());
+    System.out.println("lat: "+userResVO.getUserLat()+", lng: "+userResVO.getUserLng());
+    return userResVO;
+  }
+
+  @Override
   public UserResVO createUser(UserReqVO userReqVO) {
     User user = userReqVO.toEntity();
     User result = userRepository.save(user);
