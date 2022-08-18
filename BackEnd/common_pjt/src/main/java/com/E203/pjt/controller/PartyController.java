@@ -116,7 +116,7 @@ public class PartyController {
   }
 
   @PutMapping(value = "/party/{partySeq}")
-  public void changeParty(@PathVariable Integer partySeq, @RequestBody PartyResVO party){
+  public void changeParty(@PathVariable Integer partySeq, @RequestBody Party party){
     System.out.println(party); // System.out.println("patchtest");}
   }
 }
