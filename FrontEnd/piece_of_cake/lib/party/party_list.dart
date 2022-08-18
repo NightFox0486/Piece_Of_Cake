@@ -221,7 +221,8 @@ class _PartyListState extends State<PartyList> {
                                   likeBuilder: (bool isLiked) {
                                     return Icon(
                                       bookmarkList.contains(party.partySeq) ? Icons.favorite : Icons.favorite_border,
-                                      color: Colors.deepPurpleAccent,
+                                      // color: Colors.deepPurpleAccent,
+                                      color: palette.createMaterialColor(Color(0xffFF9EB1)),
                                       size: 20,
                                     );
                                   },
