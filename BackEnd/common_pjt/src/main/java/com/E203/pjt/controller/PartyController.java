@@ -118,6 +118,6 @@ public class PartyController {
   @PatchMapping(value = "/party/{partySeq}")
   public void changeParty(@PathVariable Integer partySeq, @RequestBody PartyResVO partyResVO){
     System.out.println(partyResVO); // System.out.println("patchtest");}
-    
+    partyService.changeParty(partySeq, partyResVO);
   }
 }
