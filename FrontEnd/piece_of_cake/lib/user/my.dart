@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
@@ -164,6 +167,21 @@ class _MyState extends State<My> {
 
     if (mounted) {
       setState(() {});
+    }
+  }
+
+  late UserResVO writer;
+  Future setCurrentPartyWriter(int userSeq) async {
+    // print('[KakaoLoginModel] setCurrentPartyWriter(int userSeq) called');
+    final response = await http.get(
+        Uri.parse('http://i7e203.p.ssafy.io:9090/user/${userSeq}')
+    );
+    if (response.statusCode==200) {
+      UserResVO userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      writer = userResVO;
+      // print('${_currentPartyWriter!.userNickname}');
+    } else {
+      throw Exception('Failed to load current party writer.');
     }
   }
 
@@ -466,9 +484,10 @@ class _MyState extends State<My> {
                   ],
                 ),
               ),
-              onTap: () {
-                kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
-                var writer = kakaoUserProvider.currentPartyWriter;
+              onTap: () async {
+                // kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+                // var writer = kakaoUserProvider.currentPartyWriter;
+                await setCurrentPartyWriter(party.userResVO.userSeq);
                 switch (party.partyCode) {
                   case '001':
                     Navigator.push(
@@ -642,9 +661,10 @@ class _MyState extends State<My> {
                   ],
                 ),
               ),
-              onTap: () {
-                kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
-                var writer = kakaoUserProvider.currentPartyWriter;
+              onTap: () async {
+                // kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+                // var writer = kakaoUserProvider.currentPartyWriter;
+                await setCurrentPartyWriter(party.userResVO.userSeq);
                 switch (party.partyCode) {
                   case '001':
                     Navigator.push(

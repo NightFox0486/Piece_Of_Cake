@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ import 'package:piece_of_cake/models/party_model.dart';
 import 'package:piece_of_cake/notice.dart';
 import 'package:piece_of_cake/search.dart';
 import 'package:piece_of_cake/widget.dart';
-import 'package:http/http.dart' as http;
 
 class BookmarkList extends StatefulWidget {
   const BookmarkList({Key? key}) : super(key: key);
@@ -283,9 +283,10 @@ class _BookmarkListState extends State<BookmarkList> {
                   ],
                 ),
               ),
-              onTap: () {
-                kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
-                var writer = kakaoUserProvider.currentPartyWriter;
+              onTap: () async {
+                // kakaoUserProvider.setCurrentPartyWriter(party.userResVO.userSeq);
+                // var writer = kakaoUserProvider.currentPartyWriter;
+                await setCurrentPartyWriter(party.userResVO.userSeq);
                 switch (party.partyCode) {
                   case '001':
                     Navigator.push(
