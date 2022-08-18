@@ -59,7 +59,7 @@ class KakaoLoginModel with ChangeNotifier {
     final response = await http.get(
         Uri.parse('http://i7e203.p.ssafy.io:9090/user/${userSeq}')
     );
-    if (response.statusCode==200) {
+    if (response.statusCode==200){
       UserResVO userResVO = UserResVO.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       _currentPartyWriter = userResVO;
       // print('${_currentPartyWriter!.userNickname}');
