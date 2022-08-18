@@ -335,6 +335,50 @@ class Party {
     required this.totalAmount,
     required this.partyMainImageUrl,
   });
+  factory Party.fromJson(Map<String, dynamic> json) {
+    return Party(
+      partySeq: json['partySeq'],
+      userResVO: json['userResVo'],
+      partyCode: json['partyCode'],
+      partyTitle: json['partyTitle'],
+      partyContent: json['partyContent'],
+      partyBookmarkCount: json['partyBookmarkCount'],
+      partyRegDt: json['partyRegDt'],
+      partyUpdDt: json['partyUpdDt'],
+      partyRdvDt: json['partyRdvDt'],
+      partyRdvLat: json['partyRdvLat'],
+      partyRdvLng: json['partyRdvLng'],
+      partyMemberNumTotal: json['partyMemberNumTotal'],
+      partyMemberNumCurrent: json['partyMemberNumCurrent'],
+      partyAddr: json['partyAddr'],
+      partyAddrDetail: json['partyAddrDetail'],
+      partyStatus: json['partyStatus'],
+      itemLink: json['partyItemLink'],
+      totalAmount: json['partyTotalAmount'],
+      partyMainImageUrl: json['partyMainImageUrl'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['partySeq'] = this.partySeq;
+    data['userResVO'] = this.userResVO;
+    data['partyCode'] = this.partyCode;
+    data['partyTitle'] = this.partyTitle;
+    data['partyContent'] = this.partyContent;
+    data['partyBookmarkCount'] = this.partyBookmarkCount;
+    data['partyRegDt'] = this.partyRegDt;
+    data['partyRdvDt'] = this.partyRdvDt;
+    data['partyRdvLat'] = this.partyRdvLat;
+    data['partyRdvLng'] = this.partyRdvLng;
+    data['partyMemberNumCurrent'] = this.partyMemberNumCurrent;
+    data['partyMemberNumTotal'] = this.partyMemberNumTotal;
+    data['partyAddr'] = this.partyAddr;
+    data['partyAddrDetail'] = this.partyAddrDetail;
+    data['partyStatus'] = this.partyStatus;
+    data['itemLink'] = this.itemLink;
+    data['partyMainImageUrl'] = this.partyMainImageUrl;
+    return data;
+  }
 }
 
 class UserReqVO {

@@ -52,7 +52,11 @@ class _BuyModifyState extends State<BuyModify> {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
     }
-    PartyReqVO partyReqVO = PartyReqVO(
+    PartyResVO partyResVO = PartyResVO(
+        partyRdvDt: widget.party.partyRdvDt,
+        partyRegDt: widget.party.partyRegDt,
+        partyUpdDt: widget.party.partyUpdDt,
+        partySeq: widget.party.partySeq,
         itemLink: this.itemLink!,
         partyAddr: this.addr,
         partyAddrDetail: this.addrDetail!,
@@ -68,10 +72,12 @@ class _BuyModifyState extends State<BuyModify> {
         totalAmount: this.totalAmount!,
         partyMainImageUrl: 'assets/images/harry.png',
         userSeq: kakaoUserProvider.userResVO!.userSeq);
+
     // print(name);
     final response = await http.patch(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party/${widget.party.partySeq}'),
-      body: jsonEncode(widget.party),
+      // body: jsonEncode(widget.party),
+      body: jsonEncode(partyResVO),
     );
     // print('response.body: ${response.body}');
     //print(Party.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
