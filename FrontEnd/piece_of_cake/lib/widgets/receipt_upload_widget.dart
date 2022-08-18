@@ -16,41 +16,41 @@ import 'package:piece_of_cake/vo.dart';
 //     options: DefaultFirebaseOptions.currentPlatform,
 //   );
 //   final storage = FirebaseStorage.instance;
-//   runApp(const ImageUploadWidget());
+//   runApp(const ReceiptUploadWidget());
 // }
 
-GlobalKey<_ImageUploadState> imageKey = GlobalKey();
+GlobalKey<_ReceiptUploadState> receiptKey = GlobalKey();
 
-class ImageUploadWidget extends StatefulWidget {
-  const ImageUploadWidget({Key? key}) : super(key: key);
+class ReceiptUploadWidget extends StatefulWidget {
+  const ReceiptUploadWidget({Key? key}) : super(key: key);
 
   @override
-  State<ImageUploadWidget> createState() => _ImageUploadState();
+  State<ReceiptUploadWidget> createState() => _ReceiptUploadState();
 }
 
-class _ImageUploadState extends State<ImageUploadWidget> {
+class _ReceiptUploadState extends State<ReceiptUploadWidget> {
   final ImagePicker imagePicker = ImagePicker();
-  List<XFile>? imageFileList = [];
-  List<String> imageUrlList = [];
+  List<XFile>? ReceiptFileList = [];
+  List<String> ReceiptUrlList = [];
 
-  void selectImages() async {
-    final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
-    if (selectedImages != null) {
-      imageFileList!.addAll(selectedImages);
+  void selectReceipts() async {
+    final List<XFile>? selectedReceipts = await imagePicker.pickMultiImage();
+    if (selectedReceipts != null) {
+      ReceiptFileList!.addAll(selectedReceipts);
     }
     setState(() {});
   }
 
   Future<String>? uploadFile(XFile? file, int index, int partySeq) async {
     if (file == null) {
-      print("input images is null");
+      print("input receipts is null");
       return null!;
     }
 
     Reference ref = FirebaseStorage.instance
         .ref()
-        .child('image-test')
-        .child('/test-image$partySeq-$index.jpg');
+        .child('receipt-test')
+        .child('/test-receipt$partySeq-$index.jpg');
     final metadata = SettableMetadata(
       contentType: 'image/jpeg',
       customMetadata: {'picked-file-path': file.path},
@@ -62,7 +62,7 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     }
     String url = await ref.getDownloadURL();
     if (url != null) {
-      ImageUploadReqVO imageUploadReqVO = ImageUploadReqVO(
+      ReceiptUploadReqVO receiptUploadReqVO = ReceiptUploadReqVO(
         fileName: ref.fullPath,
         fileUrl: url,
         partySeq: partySeq,
@@ -73,26 +73,26 @@ class _ImageUploadState extends State<ImageUploadWidget> {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(imageUploadReqVO),
+        body: jsonEncode(receiptUploadReqVO),
       );
       print('response.body: ${response.body}');
     }
-    if (index == 0) {
-      var partyMainImageUrl = url;
-      final response = await http.patch(
-        Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
-        // headers: <String, String>{
-        //   'Content-Type': 'application/json; charset=UTF-8',
-        // },
-        body: partyMainImageUrl,
-        // body: jsonEncode({'partyMainImageUrl': url}),
-      );
-      print('response.body: ${response.body}');
-    }
+    // if (index == 0) {
+    //   var partyMainReceiptUrl = url;
+    //   final response = await http.patch(
+    //     Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
+    //     // headers: <String, String>{
+    //     //   'Content-Type': 'application/json; charset=UTF-8',
+    //     // },
+    //     body: partyMainReceiptUrl,
+    //     // body: jsonEncode({'partyMainImageUrl': url}),
+    //   );
+    //   print('response.body: ${response.body}');
+    // }
     return url;
   }
 
-  addImgStorage(XFile file, int index, int partySeq) async {
+  addRecStorage(XFile file, int index, int partySeq) async {
     // final file = await ImagePicker().pickImage(source: ImageSource.gallery);
     String? url = await uploadFile(file, index, partySeq);
     // if (url != null) {
@@ -114,11 +114,11 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     setState(() {});
   }
 
-  void addImage(int partySeq) {
+  void addReceipt(int partySeq) {
     print('test');
     //addImgStorage(0);
-    for (int i = 0; i < imageFileList!.length; i++) {
-      addImgStorage(imageFileList![i], i, partySeq);
+    for (int i = 0; i < ReceiptFileList!.length; i++) {
+      addRecStorage(ReceiptFileList![i], i, partySeq);
     }
     // db에 저장
   }
@@ -136,14 +136,14 @@ class _ImageUploadState extends State<ImageUploadWidget> {
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: List.generate(
-          imageFileList!.length + 1,
+          ReceiptFileList!.length + 1,
           (index) => //Padding(
               // padding: const EdgeInsets.symmetric(vertical: 50,  horizontal: 50),
               // child:
-              index == imageFileList!.length
+              index == ReceiptFileList!.length
                   ? GestureDetector(
                       onTap: () {
-                        selectImages();
+                        selectReceipts();
                       },
                       child: Container(
                           margin: EdgeInsets.all(5),
@@ -178,7 +178,7 @@ class _ImageUploadState extends State<ImageUploadWidget> {
                           color: Colors.white,
                           image: DecorationImage(
                               image: FileImage(
-                                  io.File(imageFileList![index].path)),
+                                  io.File(ReceiptFileList![index].path)),
                               fit: BoxFit.cover)),
                     ),
 

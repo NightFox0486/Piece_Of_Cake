@@ -167,7 +167,7 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                                       ),
                                     )
                                 ),
-                                Text('${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
+                                Text(' ${widget.party.userResVO.userNickname}', style: TextStyle(fontSize: 25),)
                               ],
                             ),
                             Row(

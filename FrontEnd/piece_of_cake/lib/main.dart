@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Piece Of Cake',
         theme: ThemeData(
-          fontFamily: 'Noto_Sans_KR',
+          // fontFamily: 'Noto_Sans_KR',
           primarySwatch: palette.createMaterialColor(Color(0xffffffff)),
           // primarySwatch: palette.createMaterialColor(Color(0xffC4DCBF)),
           // canvasColor: palette.createMaterialColor(Color(0xffFFFBE4)),

@@ -35,23 +35,27 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   curved_navigation_bar: ^1.0.3
-  kakao_flutter_sdk: ^1.2.1
+  kakao_flutter_sdk_user: ^1.2.1
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^0.3.0-nullsafety.0
   like_button: ^2.0.4
   flutter_speed_dial: ^6.0.0
+  dropdown_button2: ^1.7.1
+  syncfusion_flutter_gauges: ^20.2.43
+  kakao_flutter_sdk: ^1.2.1
   provider: ^6.0.3
   flutter_plugin_android_lifecycle: ^2.0.7
   cached_network_image: ^3.2.1
   flutter_native_splash: ^2.2.7
-  dropdown_button2: ^1.7.1
-  syncfusion_flutter_gauges: ^20.2.43
   firebase_core: ^1.20.0
   firebase_storage: ^10.3.4
   image_picker: ^0.8.5+3
   dotted_border: ^2.0.0+2
   cloud_firestore: ^2.5.3
   firebase_auth: ^3.1.1
+  google_maps_flutter: ^2.1.10
+  geolocator: ^8.0.1
+  permission_handler: ^8.3.0
 
 dev_dependencies:
   flutter_test:
