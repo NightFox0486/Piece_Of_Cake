@@ -85,7 +85,7 @@ class _BuyCreateState extends State<BuyCreate> {
     int partySeq = int.parse(response.body.substring(
         response.body.indexOf("partySeq") + 10,
         response.body.indexOf("userSeq") - 2));
-    imageKey.currentState?.addImage(partySeq);
+    await imageKey.currentState?.addImage(partySeq);
     final responseParty = await http.get(
       Uri.parse('http://i7e203.p.ssafy.io:9090/party/${partySeq}'),
       // headers: <String, String>{

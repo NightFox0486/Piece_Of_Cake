@@ -115,7 +115,7 @@ class _ReceiptUploadState extends State<ReceiptUploadWidget> {
     setState(() {});
   }
 
-  void addReceipt(int partySeq) {
+  Future addReceipt(int partySeq) async {
     print('test');
     //addImgStorage(0);
     for (int i = 0; i < ReceiptFileList!.length; i++) {
