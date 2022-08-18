@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:piece_of_cake/chat/chatroom_party_route.dart';
 import 'package:piece_of_cake/models/party_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:piece_of_cake/party/buy/buy_modify.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../chat/chat_list_my.dart';
 import '../../models/kakao_login_model.dart';
 import '../../models/palette.dart';
 import '../../vo.dart';
@@ -333,7 +333,7 @@ class _BuyDetailHostState extends State<BuyDetailHost> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChatListMy()),
+                          MaterialPageRoute(builder: (context) => ChatRoomListParty(partySeq: widget.party.partySeq,)),
                         );
                       },
                       icon: Icon(

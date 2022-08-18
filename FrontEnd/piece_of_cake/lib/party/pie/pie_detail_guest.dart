@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:piece_of_cake/models/palette.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../chat/chat_route.dart';
 import '../../models/kakao_login_model.dart';
 import '../../models/party_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -26,6 +28,7 @@ class PieDetailGuest extends StatefulWidget {
 }
 
 class _PieDetailGuestState extends State<PieDetailGuest> {
+  final _database = FirebaseFirestore.instance;
   int activeIndex = 0;
 
   String content = '';
@@ -120,6 +123,30 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     var partyProvider = Provider.of<PartyModel>(context);
     var palette = Provider.of<Palette>(context);
+    void _createChatRoom() async{
+      String? chatName =
+          'H' + widget.party.userResVO.userKakaoLoginId.toString() +
+              "G" + kakaoUserProvider.userResVO!.userKakaoLoginId.toString() +
+              "P" + widget.party.partySeq.toString();
+
+      await _database.collection('chats').doc(chatName).set({
+        'created_at': Timestamp.now(),
+        'guestNickname': kakaoUserProvider.user?.kakaoAccount?.profile?.nickname,
+        'guestSeq': kakaoUserProvider.userResVO!.userKakaoLoginId,
+        'hostNickname': widget.party.userResVO.userNickname,
+        'hostSeq': widget.party.userResVO.userKakaoLoginId,
+        'last_message_at': Timestamp.now(),
+        'partyseq': widget.party.partySeq,
+        'chatroomName': chatName,
+        'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId]),
+        'profileImage': widget.writer.userImage,
+      }, SetOptions(merge: true));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatRoute(chatId: chatName)),
+      );
+    }
     setList(kakaoUserProvider, partyProvider);
     return Scaffold(
       appBar: AppBar(
@@ -525,7 +552,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                           child: SizedBox.expand(
                             child: OutlinedButton(
                               onPressed: () {
-
+                                _createChatRoom();
                               },
                               style: OutlinedButton.styleFrom(
                                 shape: const RoundedRectangleBorder(
