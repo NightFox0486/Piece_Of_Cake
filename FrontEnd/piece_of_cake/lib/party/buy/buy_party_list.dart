@@ -115,7 +115,7 @@ class _BuyPartyListState extends State<BuyPartyList> {
             fontSize: 15,
             fontWeight: FontWeight.bold,
           ),
-        )
+        ),
       ),
       body: ListView(
         children: [

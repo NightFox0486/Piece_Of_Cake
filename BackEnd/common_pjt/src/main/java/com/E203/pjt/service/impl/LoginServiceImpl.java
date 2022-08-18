@@ -20,6 +20,9 @@ public class LoginServiceImpl implements LoginService {
         User user = userRepository.findByUserKakaoLoginId(userReqVO.getUserKakaoLoginId());
         UserResVO userResVO = new UserResVO();
         if (user!=null) {
+            user.setUserNickname(userReqVO.getUserNickname());
+            userRepository.save(user);
+
             userResVO.setUserSeq(user.getUserSeq());
             userResVO.setUserEmail(user.getUserEmail());
             userResVO.setUserPhone(user.getUserPhone());
