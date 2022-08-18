@@ -132,10 +132,12 @@ class _BuyDetailGuestState extends State<BuyDetailGuest> {
         'guestSeq': kakaoUserProvider.userResVO!.userKakaoLoginId,
         'hostNickname': widget.party.userResVO.userNickname,
         'hostSeq': widget.party.userResVO.userKakaoLoginId,
+        'last_text': ' ',
         'last_message_at': Timestamp.now(),
         'partyseq': widget.party.partySeq,
         'chatroomName': chatName,
-        'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId])
+        'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId]),
+        'profileImage': widget.writer.userImage,
       }, SetOptions(merge: true));
 
       Navigator.push(

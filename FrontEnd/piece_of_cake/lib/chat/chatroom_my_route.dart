@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
@@ -12,14 +13,14 @@ import 'package:intl/intl.dart';
 
 class ChatRoomListMy extends StatefulWidget {
   const ChatRoomListMy({Key? key}) : super(key: key);
-  
+
 
   @override
   State<ChatRoomListMy> createState() => _ChatRoomListMyState();
 }
 
 class _ChatRoomListMyState extends State<ChatRoomListMy> {
-
+  final _database = FirebaseFirestore.instance;
   kakao.User? user;
 
 
@@ -27,6 +28,7 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
   Widget build(BuildContext context) {
     var kakaoUserProvider = Provider.of<KakaoLoginModel>(context);
     final Query<Map<String, dynamic>> _chats = FirebaseFirestore.instance.collection('chats').where("seq", arrayContains: kakaoUserProvider.userResVO!.userKakaoLoginId.toString());
+
     var palette = Provider.of<Palette>(context);
     return Scaffold(
       appBar: AppBar(
@@ -54,6 +56,7 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
               itemBuilder: (context, index) {
                 final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
                 var toDateTime = documentSnapshot['last_message_at'].toDate();
+
                 return InkWell(
                     splashColor: palette.createMaterialColor(Color(0xffD1ADE6)),
                     highlightColor: palette.createMaterialColor(Color(0xffD1ADE6)),
@@ -80,7 +83,12 @@ class _ChatRoomListMyState extends State<ChatRoomListMy> {
                                 backgroundColor: Colors.transparent,
                                 child: SizedBox(
                                     child: ClipOval(
-                                      child: Image.asset("assets/images/harry.png"),
+                                      // child: Image.asset("assets/images/harry.png"),
+                                      child: CachedNetworkImage(
+                                        imageUrl: documentSnapshot['profileImage'],
+                                        placeholder: (context, url) => new CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+                                      ),
                                     )
                                 )
                             ),

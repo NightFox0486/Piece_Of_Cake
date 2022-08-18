@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +79,11 @@ class _ChatRoomListPartyState extends State<ChatRoomListParty> {
                                 backgroundColor: Colors.transparent,
                                 child: SizedBox(
                                     child: ClipOval(
-                                      child: Image.asset("assets/images/harry.png"),
+                                      child: CachedNetworkImage(
+                                        imageUrl: documentSnapshot['profileImage'],
+                                        placeholder: (context, url) => new CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) => new Icon(Icons.error, size: 100,),
+                                      ),
                                     )
                                 )
                             ),

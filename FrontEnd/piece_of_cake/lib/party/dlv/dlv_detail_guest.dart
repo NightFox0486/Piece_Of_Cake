@@ -117,7 +117,8 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
         'last_message_at': Timestamp.now(),
         'partyseq': widget.party.partySeq,
         'chatroomName': chatName,
-        'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId])
+        'seq': FieldValue.arrayUnion([widget.party.userResVO.userKakaoLoginId, kakaoUserProvider.userResVO!.userKakaoLoginId]),
+        'profileImage': widget.writer.userImage,
       }, SetOptions(merge: true));
 
       Navigator.push(
@@ -482,7 +483,7 @@ class _DlvDetailGuestState extends State<DlvDetailGuest> {
                           margin: EdgeInsets.symmetric(vertical: 3.0),
                           child: SizedBox.expand(
                             child: OutlinedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 _createChatRoom();
                               },
                               style: OutlinedButton.styleFrom(
