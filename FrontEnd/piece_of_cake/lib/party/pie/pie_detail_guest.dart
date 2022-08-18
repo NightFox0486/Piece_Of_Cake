@@ -41,7 +41,7 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
 
   Future insertReport(Report report) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:9090/report/party'),
+      Uri.parse('http://i7e203.p.ssafy.io:9090/report/party'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
