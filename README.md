@@ -139,10 +139,8 @@ Piece Of Cake
 
 7. API URI 정리
    
-   ![](README_assets/2022-07-25-17-22-46-image.png)
-   
-   ![](README_assets/2022-07-25-17-22-54-image.png)
-   
-   ![](README_assets/2022-07-25-17-23-04-image.png)
-   
-   ![](README_assets/2022-07-25-17-23-12-image.png)
+![1](/uploads/f7cc78b7cd51fb906c6765274a4a5719/1.PNG)
+
+![2](/uploads/3821db41b6ab8f17cb27f771e6cee181/2.PNG)
+
+![3](/uploads/afc3a49036b975405c98e2ba2375ffbf/3.PNG)
