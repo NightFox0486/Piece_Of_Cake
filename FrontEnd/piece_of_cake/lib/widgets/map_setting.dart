@@ -41,7 +41,7 @@ class _MapSettingState extends State<MapSetting> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '만날 장소 등록',
+          '위치 등록',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: palette.createMaterialColor(Color(0xff8581E1)),
