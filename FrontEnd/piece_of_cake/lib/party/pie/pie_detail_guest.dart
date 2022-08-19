@@ -597,16 +597,34 @@ class _PieDetailGuestState extends State<PieDetailGuest> {
                                 shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(15))
                                 ),
-                                primary: partySeqListGuest.contains(widget.party.partySeq) ? (widget.party.partyStatus==2 ? Colors.grey : Colors.cyan ) : Colors.pink,
+                                primary: widget.party.partyStatus==2 ?
+                                Colors.grey :
+                                (partySeqListGuest.contains(widget.party.partySeq) ?
+                                Colors.cyan :
+                                Colors.pink),
+                                // partySeqListGuest
+                                //         .contains(widget.party.partySeq)
+                                //     ? (widget.party.partyStatus == 2
+                                //         ? Colors.grey
+                                //         : Colors.cyan)
+                                //     : Colors.pink,
                               ),
                               // todo: 파티 참여 / 참여 취소 (모집중일때만 가능)
-                              child: Text(partySeqListGuest.contains(widget.party.partySeq) ? (widget.party.partyStatus==2 ? '파티 성사' : '참여 취소') : '파티 참여',
-                              // child: Text(widget.party.partyStatus==2 ? ( partySeqListGuest.contains(widget.party.partySeq) ?  '파티 성사' : '참여 취소') : '파티 참여',
+                              child: Text(
+                                widget.party.partyStatus==2 ?
+                                '파티 성사' :
+                                (partySeqListGuest.contains(widget.party.partySeq) ?
+                                '참여 취소' :
+                                '파티 참여'),
+                                // ? (widget.party.partyStatus == 2
+                                //     ? '파티 성사'
+                                //     : '참여 취소')
+                                // : '파티 참여',
+                                // child: Text(widget.party.partyStatus==2 ? ( partySeqListGuest.contains(widget.party.partySeq) ?  '파티 성사' : '참여 취소') : '파티 참여',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
-                                    fontWeight: FontWeight.bold
-                                ),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           )
