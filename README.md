@@ -101,27 +101,37 @@ Piece Of Cake
 
 4. 개발환경 및 사용기술
 
-   - DB
-     
-     - MySQL
-     
-     - Firebase
-   
-   - Backend
-     
-     - SpringBoot
-     
-     - JPA
+  - 개발 환경
+    
+    - IDE
 
-     - Swagger
-   
-   - Frontend
-     
-     - Flutter
-     
-     - Dart
-     
-     - Android Studio
+      - IntelliJ IDEA 2022.1.3 (Ultimate Edition)
+
+      - Android Studio Chipmunk | 2021.2.1 Patch 1
+
+      - Visual Studio Code 1.70
+
+    - DB
+      
+      - MySQL
+      
+      - Firebase
+    
+    - Backend
+      
+      - SpringBoot
+      
+      - JPA
+
+      - Swagger
+    
+    - Frontend
+      
+      - Flutter
+      
+      - Dart
+      
+      - Android Studio
 
 5. ERD
    
