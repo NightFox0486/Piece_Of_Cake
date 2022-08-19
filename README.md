@@ -106,6 +106,8 @@ Piece Of Cake
      - SpringBoot
      
      - JPA
+
+     - Swagger
    
    - Frontend
      
