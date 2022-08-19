@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
             child: Center(
                 child: RaisedButton(
-                    child: Text("카카오 로그인"),
+                    child: Text('카카오 로그인'),
                     onPressed: () async {
                       if (await isKakaoTalkInstalled()) {
                         try {
