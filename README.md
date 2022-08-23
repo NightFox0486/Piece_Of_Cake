@@ -72,4 +72,5 @@ __한 번에 많이 사버린 물건들, 우리가 나눠 줄게요__
   - [시연시나리오](./exec/POC 시연시나리오.pptx)
   - [중간발표자료](./exec/POC 기획발표.pdf)
   - [최종발표자료](./exec/POC PPT.pdf)
-## [![프로젝트 UCC](http://img.youtube.com/vi/P5cEbKiwnyk/0.jpg)](https://youtu.be/P5cEbKiwnyk)
+## 프로젝트 UCC
+[![프로젝트 UCC](http://img.youtube.com/vi/P5cEbKiwnyk/0.jpg)](https://youtu.be/P5cEbKiwnyk)
