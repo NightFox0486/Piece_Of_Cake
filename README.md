@@ -52,11 +52,7 @@ __한 번에 많이 사버린 물건들, 우리가 나눠 줄게요__
     + FrontEnd
         - flutter 3.0.5, dart
         - android api 30
-### 디자인
 
-## 프로젝트 파일 구조
-### Back
-### Front
 
 ## 프로젝트 산출물
   - [프로젝트 메모 및 공유 : Notion](https://www.notion.so/POC-Piece-Of-Cake-747cecc1fafc41f2b8a7c1a3c11417a7)
