@@ -61,20 +61,15 @@ __한 번에 많이 사버린 물건들, 우리가 나눠 줄게요__
 ## 프로젝트 산출물
   - [프로젝트 메모 및 공유 : Notion](https://www.notion.so/POC-Piece-Of-Cake-747cecc1fafc41f2b8a7c1a3c11417a7)
   - [프로젝트 회의록](https://www.notion.so/a41db0b89e454000aae4dbe1bcf467fa)
-  
-  - [프로젝트 컨벤션 목록]
-  - [프로젝트 스토리보드 및 디자인]
-  - [기획서]
+  - [팀미팅](https://www.notion.so/289e81ff9a5a48abb374c1c9831ad304)
+  - [아이디어](https://www.notion.so/c389beaca1944dff8be369416f6aa853)
+  - [주요 기술](https://www.notion.so/3478b026007544ac85c1f0f655af88e3)
   - [API Docs](https://www.notion.so/API-dc99bd1cae20410ba95981b98f311a8b)
   - [와이어 프레임](https://www.figma.com/file/H1xtuuJxNAsshflfcBblrj/Untitled?node-id=0%3A1)
-  - [서비스 아키텍처]
-  - [요구사항 명세서](https://www.notion.so/d4bdf9c5d55640298a25ca934e1403c6)
-  - [데이터베이서:ERD]
-  - [시퀀스 다이어그램]
-  - [Git 협업]
+  - [컴포넌트 구조](https://www.notion.so/84f7cab63cbd4dbca6cd3cb135dc0028)
+  - [요구사항 정의서 & 기능 명세서](https://www.notion.so/d4bdf9c5d55640298a25ca934e1403c6)
+  - [데이터베이스:ERD](https://www.notion.so/ERD-121d9fe4e21c4a2ba0f4406f768c171c)
   - [Jira 이슈 관리](https://jira.ssafy.com/projects/S07P12E203/summary)
-  - [AWS EC2 환경 설정]
-  - [공통코드-메타데이터]
 
 ## 프로젝트 결과물
   - [포팅메뉴얼](./exec/Piece Of Cake 포팅 매뉴얼 .docx)
