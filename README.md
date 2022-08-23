@@ -59,5 +59,26 @@ __한 번에 많이 사버린 물건들, 우리가 나눠 줄게요__
 ### Front
 
 ## 프로젝트 산출물
+  - [프로젝트 메모 및 공유 : Notion](https://www.notion.so/POC-Piece-Of-Cake-747cecc1fafc41f2b8a7c1a3c11417a7)
+  - [프로젝트 회의록](https://www.notion.so/a41db0b89e454000aae4dbe1bcf467fa)
+  
+  - [프로젝트 컨벤션 목록]
+  - [프로젝트 스토리보드 및 디자인]
+  - [기획서]
+  - [API Docs](https://www.notion.so/API-dc99bd1cae20410ba95981b98f311a8b)
+  - [와이어 프레임](https://www.figma.com/file/H1xtuuJxNAsshflfcBblrj/Untitled?node-id=0%3A1)
+  - [서비스 아키텍처]
+  - [요구사항 명세서](https://www.notion.so/d4bdf9c5d55640298a25ca934e1403c6)
+  - [데이터베이서:ERD]
+  - [시퀀스 다이어그램]
+  - [Git 협업]
+  - [Jira 이슈 관리](https://jira.ssafy.com/projects/S07P12E203/summary)
+  - [AWS EC2 환경 설정]
+  - [공통코드-메타데이터]
+
 ## 프로젝트 결과물
-## 프로젝트 UCC
+  - [포팅메뉴얼](./exec/Piece Of Cake 포팅 매뉴얼.docx)
+  - [시연시나리오](./exec/POC 시연시나리오.pptx)
+  - [중간발표자료]
+  - [최종발표자료]
+## [프로젝트 UCC](https://youtu.be/P5cEbKiwnyk)
