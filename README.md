@@ -4,8 +4,8 @@
 __한 번에 많이 사버린 물건들, 우리가 나눠 줄게요__
 > 저렴한 가격에 대량으로 물건들을 구매해 본 적이 있으신가요?
 > 가격은 싸지만 그렇게 쌓여가는 물건들 ...
->
 > 혼자 쓰기엔 너무 많고 필요한 만큼만 사자니 너무 비싸진 않으셨나요?
+> 배고픈데 혼자 시켜먹기에 배달비가 부담스럽지 않으셨나요?
 > Piece Of Cake 에서 답을 찾아 드릴게요!!!
 
 
@@ -21,12 +21,12 @@ __한 번에 많이 사버린 물건들, 우리가 나눠 줄게요__
     + Sub2 : 2022.07.18 ~ 2022.07.29
     + Sub3 : 2022.08.01 ~ 2022.08.19
 2. 인원(총 6인)
-    + 김유리 :
-    + 백승진 : 팀장, Back-End, Front-End, AWS
-    + 서상균 : 
-    + 이수민 :
-    + 이태엽 :
-    + 장원석 :
+    + 김유리 : Back-End, Front-End, DB
+    + 백승진 : 팀장, Back-End, Front-End, AWS, Firebase, PM
+    + 서상균 : Front-End, UCC Director, Presentation
+    + 이수민 : Back-End, Payment, Presentation Assistant
+    + 이태엽 : Front-End
+    + 장원석 : Back-End, Front-End, Firebase
 
 ### 기술 스택
 1. 이슈관리 : Jira
@@ -74,6 +74,6 @@ __한 번에 많이 사버린 물건들, 우리가 나눠 줄게요__
 ## 프로젝트 결과물
   - [포팅메뉴얼](./exec/Piece Of Cake 포팅 매뉴얼 .docx)
   - [시연시나리오](./exec/POC 시연시나리오.pptx)
-  - [중간발표자료]
-  - [최종발표자료]
+  - [중간발표자료](./exec/POC 기획발표.pdf)
+  - [최종발표자료](./exec/POC PPT.pdf)
 ## [프로젝트 UCC](https://youtu.be/P5cEbKiwnyk)
